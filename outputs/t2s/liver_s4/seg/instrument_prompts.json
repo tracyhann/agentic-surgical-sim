@@ -1,0 +1,759 @@
+{
+ "clip": "liver_s4",
+ "instruments": {
+  "needle_holder_R": {
+   "type": "needle holder",
+   "shaft": "dark grey/black shaft with white 'KARL STORZ Germany' lettering, polished silver distal sleeve with a thin white collar ring, short dark jaws; looks larger than L because it comes closer to the camera",
+   "enters_from": "right edge (upper-right quadrant); never fully leaves the view",
+   "visible_frames": [
+    [
+     0,
+     176
+    ]
+   ],
+   "confidence": "high for 0-146; low for 147-176 (out of focus)",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       436,
+       181
+      ],
+      [
+       470,
+       180
+      ],
+      [
+       560,
+       194
+      ]
+     ],
+     "neg": [
+      [
+       370,
+       215
+      ],
+      [
+       480,
+       140
+      ],
+      [
+       510,
+       240
+      ],
+      [
+       280,
+       330
+      ]
+     ]
+    },
+    {
+     "frame": 12,
+     "pos": [
+      [
+       460,
+       296
+      ],
+      [
+       550,
+       320
+      ],
+      [
+       600,
+       351
+      ]
+     ],
+     "neg": [
+      [
+       390,
+       245
+      ],
+      [
+       437,
+       382
+      ],
+      [
+       480,
+       250
+      ],
+      [
+       200,
+       302
+      ]
+     ]
+    },
+    {
+     "frame": 29,
+     "pos": [
+      [
+       415,
+       262
+      ],
+      [
+       480,
+       266
+      ],
+      [
+       560,
+       290
+      ]
+     ],
+     "neg": [
+      [
+       400,
+       210
+      ],
+      [
+       520,
+       360
+      ],
+      [
+       600,
+       230
+      ],
+      [
+       240,
+       360
+      ]
+     ]
+    },
+    {
+     "frame": 50,
+     "pos": [
+      [
+       490,
+       345
+      ],
+      [
+       520,
+       368
+      ],
+      [
+       585,
+       402
+      ]
+     ],
+     "neg": [
+      [
+       450,
+       280
+      ],
+      [
+       470,
+       420
+      ],
+      [
+       600,
+       330
+      ],
+      [
+       340,
+       375
+      ]
+     ]
+    },
+    {
+     "frame": 66,
+     "pos": [
+      [
+       385,
+       252
+      ],
+      [
+       475,
+       276
+      ],
+      [
+       562,
+       307
+      ]
+     ],
+     "neg": [
+      [
+       330,
+       210
+      ],
+      [
+       470,
+       230
+      ],
+      [
+       560,
+       370
+      ],
+      [
+       335,
+       392
+      ]
+     ]
+    },
+    {
+     "frame": 76,
+     "pos": [
+      [
+       430,
+       190
+      ],
+      [
+       465,
+       196
+      ],
+      [
+       550,
+       218
+      ],
+      [
+       605,
+       232
+      ]
+     ],
+     "neg": [
+      [
+       440,
+       160
+      ],
+      [
+       480,
+       260
+      ],
+      [
+       350,
+       230
+      ],
+      [
+       206,
+       365
+      ]
+     ]
+    },
+    {
+     "frame": 86,
+     "pos": [
+      [
+       515,
+       146
+      ],
+      [
+       560,
+       148
+      ],
+      [
+       605,
+       152
+      ]
+     ],
+     "neg": [
+      [
+       520,
+       110
+      ],
+      [
+       530,
+       190
+      ],
+      [
+       470,
+       200
+      ],
+      [
+       100,
+       309
+      ]
+     ]
+    },
+    {
+     "frame": 104,
+     "pos": [
+      [
+       500,
+       157
+      ],
+      [
+       550,
+       157
+      ],
+      [
+       600,
+       158
+      ]
+     ],
+     "neg": [
+      [
+       540,
+       120
+      ],
+      [
+       480,
+       200
+      ],
+      [
+       370,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 120,
+     "pos": [
+      [
+       482,
+       256
+      ],
+      [
+       560,
+       272
+      ],
+      [
+       608,
+       290
+      ]
+     ],
+     "neg": [
+      [
+       470,
+       213
+      ],
+      [
+       400,
+       240
+      ],
+      [
+       520,
+       308
+      ]
+     ]
+    },
+    {
+     "frame": 134,
+     "pos": [
+      [
+       468,
+       171
+      ],
+      [
+       520,
+       170
+      ],
+      [
+       590,
+       170
+      ]
+     ],
+     "neg": [
+      [
+       520,
+       130
+      ],
+      [
+       480,
+       205
+      ],
+      [
+       400,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 147,
+     "pos": [
+      [
+       510,
+       99
+      ],
+      [
+       550,
+       90
+      ],
+      [
+       600,
+       86
+      ]
+     ],
+     "neg": [
+      [
+       520,
+       45
+      ],
+      [
+       470,
+       170
+      ],
+      [
+       390,
+       170
+      ]
+     ]
+    },
+    {
+     "frame": 162,
+     "pos": [
+      [
+       500,
+       133
+      ],
+      [
+       560,
+       128
+      ],
+      [
+       605,
+       122
+      ]
+     ],
+     "neg": [
+      [
+       540,
+       70
+      ],
+      [
+       480,
+       170
+      ],
+      [
+       400,
+       170
+      ]
+     ]
+    },
+    {
+     "frame": 174,
+     "pos": [
+      [
+       560,
+       122
+      ],
+      [
+       592,
+       124
+      ],
+      [
+       614,
+       125
+      ]
+     ],
+     "neg": [
+      [
+       540,
+       75
+      ],
+      [
+       480,
+       170
+      ],
+      [
+       400,
+       170
+      ]
+     ]
+    }
+   ],
+   "notes": "One instrument for the whole clip. The shaft stays in view, so there is no exit or re-entry and identity is certain. Role in the instrument tie: the blue suture loops are wrapped around its distal sleeve (about 18-30 and 40-62). It then takes the loops to the knot and grasps the short tail (63-75), and pulls up and right to cinch the knot (76-95). 96-115: it is withdrawn and only a thin dark distal shaft shows along the right edge (x 465-625, y 145-170); its tip is at about (465,152), next to the sponge. 116-146: it comes back along the top of the sponge to the right side of the knot. The jaws are open at 118 and lie at (440-480, 160-260); it probably holds or presses the tail or knot. 147-150: it is lifted fast and out of focus, the lettered shaft at (480-625, 60-110). 151-176: it shows only as a blurred dark-grey band across the upper right (about x 400-625, y 95-145). At 174-176 its metal end is at (540-600, 100-130). The prompts at 147, 162 and 174 are low confidence: the band has little contrast against the shadowed diaphragm and sponge edge. If the tracker drifts onto the sponge or onto the shadow under the diaphragm there, drop R for 151-172 rather than accept a wrong mask. 'needle holder' rests on its role and the short jaws. No needle was seen in its jaws in this clip."
+  },
+  "needle_holder_L": {
+   "type": "needle holder",
+   "shaft": "plain light-grey polished metal shaft (no lettering, slimmer-looking), long specular stripe along its upper side, slender jaws",
+   "enters_from": "lower-left (left edge / bottom-left corner)",
+   "visible_frames": [
+    [
+     0,
+     97
+    ]
+   ],
+   "confidence": "high (identity and range); type medium-low (could be a grasper)",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       200,
+       374
+      ],
+      [
+       280,
+       330
+      ],
+      [
+       330,
+       291
+      ]
+     ],
+     "neg": [
+      [
+       230,
+       300
+      ],
+      [
+       300,
+       380
+      ],
+      [
+       400,
+       266
+      ],
+      [
+       520,
+       188
+      ]
+     ]
+    },
+    {
+     "frame": 12,
+     "pos": [
+      [
+       110,
+       343
+      ],
+      [
+       200,
+       302
+      ],
+      [
+       280,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       187,
+       245
+      ],
+      [
+       187,
+       345
+      ],
+      [
+       380,
+       254
+      ],
+      [
+       550,
+       320
+      ]
+     ]
+    },
+    {
+     "frame": 29,
+     "pos": [
+      [
+       150,
+       410
+      ],
+      [
+       240,
+       360
+      ],
+      [
+       320,
+       310
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       300
+      ],
+      [
+       300,
+       400
+      ],
+      [
+       380,
+       330
+      ],
+      [
+       480,
+       266
+      ]
+     ]
+    },
+    {
+     "frame": 50,
+     "pos": [
+      [
+       310,
+       405
+      ],
+      [
+       340,
+       375
+      ],
+      [
+       380,
+       343
+      ]
+     ],
+     "neg": [
+      [
+       260,
+       350
+      ],
+      [
+       330,
+       430
+      ],
+      [
+       450,
+       280
+      ],
+      [
+       520,
+       368
+      ]
+     ]
+    },
+    {
+     "frame": 66,
+     "pos": [
+      [
+       300,
+       413
+      ],
+      [
+       335,
+       391
+      ],
+      [
+       370,
+       367
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       350
+      ],
+      [
+       340,
+       430
+      ],
+      [
+       420,
+       390
+      ],
+      [
+       475,
+       276
+      ]
+     ]
+    },
+    {
+     "frame": 76,
+     "pos": [
+      [
+       130,
+       400
+      ],
+      [
+       206,
+       365
+      ],
+      [
+       262,
+       336
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       300
+      ],
+      [
+       260,
+       410
+      ],
+      [
+       330,
+       350
+      ],
+      [
+       550,
+       218
+      ]
+     ]
+    },
+    {
+     "frame": 86,
+     "pos": [
+      [
+       55,
+       330
+      ],
+      [
+       100,
+       309
+      ],
+      [
+       130,
+       296
+      ]
+     ],
+     "neg": [
+      [
+       110,
+       260
+      ],
+      [
+       110,
+       350
+      ],
+      [
+       200,
+       300
+      ],
+      [
+       560,
+       148
+      ]
+     ]
+    }
+   ],
+   "notes": "Holds and wraps the long blue end of the suture, so it is the needle-side hand. The needle itself is never visible. It works next to R at the knot in 0-62 and drops back to the lower left in 63-80. In 80-97 it retracts out through the left edge: the shaft shortens to the edge at (20-110, 290-345), and only its tip shows at about (20-60, 330-350) in 92-97. It is gone from 98 on and does not re-enter. In 98-176 the taut suture still runs straight from the knot to the lower-left corner, so L probably keeps holding it just outside the view. The white specks at (30-130, 340-430) in 98-176 are wet-tissue glints on the dark lower lobe, not the instrument. Do not let the tracker keep an L mask after 97. Avoid prompting on its specular stripe: the points sit on the grey body of the shaft."
+  }
+ },
+ "needle_passes": [],
+ "suture_site": {
+  "note": "Extra key. No needle pass is visible, but the stitch (an already-placed bite) runs through the red knob at the tip of the left lobe / left end of the triangular ligament, and this clip ties and cinches it. Approximate knot location, where the suture leaves the tissue at the lower-left of the red knob (+/- 15 px):",
+  "points": [
+   {
+    "frame": 7,
+    "px": [
+     355,
+     258
+    ]
+   },
+   {
+    "frame": 100,
+    "px": [
+     350,
+     230
+    ]
+   },
+   {
+    "frame": 165,
+    "px": [
+     350,
+     210
+    ]
+   }
+  ],
+  "tissue": "red knob = appendix fibrosa / left end of the left triangular ligament at the tip of the liver's left lobe (leak site)"
+ },
+ "shots": [
+  [
+   0,
+   174
+  ]
+ ],
+ "transitions": [
+  {
+   "frames": [
+    175,
+    176
+   ],
+   "type": "start of a page-curl wipe out of this scene. The bottom-left corner of the same picture curls away to black (about 4% of that corner at 175, 11% at 176); the next scene's picture is not yet visible"
+  }
+ ],
+ "notes": "Single continuous shot 0-174. There are no hard cuts, jump cuts or dissolves inside. In the scan of every consecutive pair after phase-correlation alignment, the largest residual was 14.6 (typical 6-10) and the colour-histogram distance stayed under 0.07. The larger residuals (about 62-63, 69-70, 76-77, 126-127 and 136-137) are fast camera moves of up to 18 px. Frame 0 is clean: it is after the previous wipe, which ended at source ~36.0 s. Frames 175-176 are the start of the next page-curl wipe (source ~50.4 s); trim them for 3D. Content: the whole clip is an intracorporeal instrument knot tie on one stitch that was placed earlier. 0-35: first set of wraps around R next to the knot. 36-62: wraps around R's distal sleeve, low in the image. 63-75: R carries the wraps to the knot and grasps the short tail. 76-97: both pull apart to cinch, and L leaves through the lower-left edge with the long end. 98-176: R alone; it checks or holds at the knot in 116-146, then withdraws. Only two instruments appear. There is no suction, scissors or third instrument, and no instrument exchange (R's shaft is never out of view). NEEDLE: none visible in any frame (checked at high zoom around the knot and both jaws in 0-64 and 116-147). So no needle pass through tissue happens in this clip and needle_passes is empty. The scene spec's suture opening still applies to the knob; see the extra key 'suture_site'. Thread: a violet/blue braided suture (the loops and the long end) plus a thin dark strand, probably the short tail, arcing from the knot to the right in 18-62. Neither is prompted, apart from negative points placed exactly on the blue thread at frames 0 (400,266) and 12 (380,254). Each positive and negative point was checked on frames rendered from data/frames.npz and lies inside valid.png. Most negatives sit on the red knob, the sponge/gauze to its right, the diaphragm above, the omentum below and the other instrument's shaft. Extra keys: suture_site, transitions."
+}

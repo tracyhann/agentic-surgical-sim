@@ -1,0 +1,95 @@
+{
+ "clip": "chole_derot",
+ "version": "v02",
+ "source": {
+  "organs": "prompts.json",
+  "instruments": "instrument_prompts.json"
+ },
+ "n": 247,
+ "width": 640,
+ "seconds": 1143.3,
+ "objects": [
+  "instrument_grasper_top",
+  "instrument_dissector_right",
+  "gallbladder",
+  "neck_pedicle",
+  "liver",
+  "peri-gallbladder fat"
+ ],
+ "confidence": {
+  "gallbladder": "high",
+  "neck_pedicle": "medium",
+  "liver": "medium",
+  "peri-gallbladder fat": "medium",
+  "instrument_grasper_top": "high",
+  "instrument_dissector_right": "high"
+ },
+ "shots": [
+  [
+   0,
+   246
+  ]
+ ],
+ "qc": {
+  "instrument_grasper_top": {
+   "frames_present": 0.721,
+   "area_mean": 0.0415,
+   "temporal_iou_median": 0.546,
+   "temporal_iou_p10": 0.144,
+   "area_jump_p90": 0.341,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_dissector_right": {
+   "frames_present": 0.879,
+   "area_mean": 0.0409,
+   "temporal_iou_median": 0.549,
+   "temporal_iou_p10": 0.099,
+   "area_jump_p90": 0.335,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "gallbladder": {
+   "frames_present": 1.0,
+   "area_mean": 0.3619,
+   "temporal_iou_median": 0.87,
+   "temporal_iou_p10": 0.746,
+   "area_jump_p90": 0.134,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "neck_pedicle": {
+   "frames_present": 0.988,
+   "area_mean": 0.0881,
+   "temporal_iou_median": 0.762,
+   "temporal_iou_p10": 0.372,
+   "area_jump_p90": 0.499,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "liver": {
+   "frames_present": 1.0,
+   "area_mean": 0.1967,
+   "temporal_iou_median": 0.93,
+   "temporal_iou_p10": 0.637,
+   "area_jump_p90": 0.29,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "peri-gallbladder fat": {
+   "frames_present": 0.866,
+   "area_mean": 0.0461,
+   "temporal_iou_median": 0.908,
+   "temporal_iou_p10": 0.644,
+   "area_jump_p90": 0.338,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  }
+ }
+}

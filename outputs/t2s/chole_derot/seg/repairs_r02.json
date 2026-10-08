@@ -1,0 +1,138 @@
+{
+ "source": "visual QA r01 (independent agent); applied in seg v03",
+ "add_prompts": [
+  {
+   "object": "neck_pedicle",
+   "frame": 168,
+   "pos": [
+    [
+     455,
+     150
+    ]
+   ],
+   "neg": [
+    [
+     330,
+     220
+    ],
+    [
+     250,
+     150
+    ]
+   ]
+  },
+  {
+   "object": "neck_pedicle",
+   "frame": 200,
+   "pos": [
+    [
+     420,
+     200
+    ]
+   ],
+   "neg": [
+    [
+     200,
+     250
+    ],
+    [
+     310,
+     80
+    ]
+   ]
+  },
+  {
+   "object": "neck_pedicle",
+   "frame": 108,
+   "pos": [],
+   "neg": [
+    [
+     430,
+     120
+    ]
+   ]
+  },
+  {
+   "object": "gallbladder",
+   "frame": 16,
+   "pos": [],
+   "neg": [
+    [
+     525,
+     165
+    ]
+   ]
+  },
+  {
+   "object": "gallbladder",
+   "frame": 208,
+   "pos": [],
+   "neg": [
+    [
+     455,
+     150
+    ]
+   ]
+  },
+  {
+   "object": "gallbladder",
+   "frame": 228,
+   "pos": [],
+   "neg": [
+    [
+     500,
+     110
+    ]
+   ]
+  },
+  {
+   "object": "gallbladder",
+   "frame": 246,
+   "pos": [],
+   "neg": [
+    [
+     490,
+     100
+    ]
+   ]
+  },
+  {
+   "object": "peri-gallbladder fat",
+   "frame": 41,
+   "pos": [],
+   "neg": [
+    [
+     250,
+     320
+    ]
+   ]
+  }
+ ],
+ "blank": {
+  "neck_pedicle": [
+   [
+    175,
+    199
+   ]
+  ],
+  "instrument_dissector_right": [
+   [
+    232,
+    246
+   ]
+  ],
+  "peri-gallbladder fat": [
+   [
+    0,
+    50
+   ]
+  ]
+ },
+ "subtract": {
+  "gallbladder": [
+   "neck_pedicle"
+  ]
+ },
+ "note_r02b": "negative-only prompts dropped the object in v03; v04 derives positives from v02 (keep_points) and applies explicit precedence (subtract)",
+ "reviewed_version": "v02"
+}

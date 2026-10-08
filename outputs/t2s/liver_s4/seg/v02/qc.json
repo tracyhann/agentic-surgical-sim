@@ -1,0 +1,107 @@
+{
+ "clip": "liver_s4",
+ "version": "v02",
+ "source": {
+  "organs": "prompts.json",
+  "instruments": "instrument_prompts.json"
+ },
+ "n": 177,
+ "width": 640,
+ "seconds": 669.2,
+ "objects": [
+  "instrument_needle_holder_R",
+  "instrument_needle_holder_L",
+  "liver",
+  "left triangular ligament",
+  "diaphragm",
+  "fat / omentum",
+  "gauze or sponge at leak site"
+ ],
+ "confidence": {
+  "liver": "medium",
+  "left triangular ligament": "medium",
+  "diaphragm": "medium",
+  "fat / omentum": "high",
+  "gauze or sponge at leak site": "low",
+  "instrument_needle_holder_R": "high for 0-146; low for 147-176 (out of focus)",
+  "instrument_needle_holder_L": "high (identity and range); type medium-low (could be a grasper)"
+ },
+ "shots": [
+  [
+   0,
+   174
+  ]
+ ],
+ "qc": {
+  "instrument_needle_holder_R": {
+   "frames_present": 1.0,
+   "area_mean": 0.0351,
+   "temporal_iou_median": 0.777,
+   "temporal_iou_p10": 0.422,
+   "area_jump_p90": 0.14,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_needle_holder_L": {
+   "frames_present": 0.571,
+   "area_mean": 0.0402,
+   "temporal_iou_median": 0.76,
+   "temporal_iou_p10": 0.197,
+   "area_jump_p90": 0.28,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "liver": {
+   "frames_present": 1.0,
+   "area_mean": 0.1821,
+   "temporal_iou_median": 0.926,
+   "temporal_iou_p10": 0.83,
+   "area_jump_p90": 0.085,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "left triangular ligament": {
+   "frames_present": 1.0,
+   "area_mean": 0.015,
+   "temporal_iou_median": 0.861,
+   "temporal_iou_p10": 0.669,
+   "area_jump_p90": 0.152,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "diaphragm": {
+   "frames_present": 1.0,
+   "area_mean": 0.2429,
+   "temporal_iou_median": 0.963,
+   "temporal_iou_p10": 0.827,
+   "area_jump_p90": 0.128,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "fat / omentum": {
+   "frames_present": 1.0,
+   "area_mean": 0.2451,
+   "temporal_iou_median": 0.948,
+   "temporal_iou_p10": 0.83,
+   "area_jump_p90": 0.073,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "gauze or sponge at leak site": {
+   "frames_present": 1.0,
+   "area_mean": 0.0267,
+   "temporal_iou_median": 0.88,
+   "temporal_iou_p10": 0.568,
+   "area_jump_p90": 0.23,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{"source": "visual QA r01 (independent agent); applied in seg v03 with per-shot tracking (memory reset at the 9 cuts)",
+ "reviewed_version": "v02",
+ "add_prompts": [
+  {"object": "white curved cord", "frame": 125, "pos": [[225, 230]], "neg": []},
+  {"object": "white curved cord", "frame": 133, "pos": [[235, 215]], "neg": []},
+  {"object": "mediastinal pleura", "frame": 370, "pos": [], "neg": [[320, 320]]},
+  {"object": "dissection bed (upper, shot D)", "frame": 375, "pos": [[290, 100]], "neg": [[250, 215], [130, 100]]},
+  {"object": "dissection bed (lower, shot D)", "frame": 375, "pos": [[120, 290]], "neg": [[250, 215], [130, 100]]},
+  {"object": "dissection bed", "frame": 115, "pos": [], "neg": [[270, 130]]},
+  {"object": "mediastinal lymph nodes and fat", "frame": 236, "pos": [], "neg": [[405, 150]]}
+ ],
+ "blank": {"dissection bed": [[366, 384]], "white curved cord": [[290, 384]]}}

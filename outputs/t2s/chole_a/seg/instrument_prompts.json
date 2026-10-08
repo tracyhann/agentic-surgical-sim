@@ -1,0 +1,842 @@
+{
+ "clip": "chole_a",
+ "instruments": {
+  "grasper": {
+   "type": "grasper",
+   "shaft": "dark teal / blue-grey insulated shaft, ~5 mm (25-35 px wide where it fills the top-left corner in f0-f90, ~15-20 px when only its distal end is in frame), bright metal collar ring, dark grey closed jaws clamped on the gallbladder neck",
+   "enters_from": "top-left (upper-left corner in f0-f45; top edge at x~120-200 from ~f60 on), pointing down-right",
+   "visible_frames": [
+    [
+     0,
+     250
+    ]
+   ],
+   "confidence": "high for presence and identity (one tool, never leaves the field); medium for the subtype (jaws stay buried in tissue, so grasper vs dissector cannot be confirmed - its role is static retraction of the neck)",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       25,
+       22
+      ],
+      [
+       50,
+       45
+      ],
+      [
+       95,
+       100
+      ]
+     ],
+     "neg": [
+      [
+       110,
+       20
+      ],
+      [
+       20,
+       90
+      ],
+      [
+       95,
+       160
+      ],
+      [
+       175,
+       150
+      ],
+      [
+       233,
+       130
+      ]
+     ]
+    },
+    {
+     "frame": 41,
+     "pos": [
+      [
+       95,
+       20
+      ],
+      [
+       120,
+       45
+      ],
+      [
+       160,
+       100
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       80
+      ],
+      [
+       175,
+       30
+      ],
+      [
+       150,
+       170
+      ],
+      [
+       250,
+       160
+      ]
+     ]
+    },
+    {
+     "frame": 62,
+     "pos": [
+      [
+       175,
+       20
+      ],
+      [
+       195,
+       55
+      ],
+      [
+       225,
+       115
+      ]
+     ],
+     "neg": [
+      [
+       130,
+       60
+      ],
+      [
+       240,
+       40
+      ],
+      [
+       205,
+       170
+      ],
+      [
+       270,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 83,
+     "pos": [
+      [
+       150,
+       40
+      ],
+      [
+       175,
+       80
+      ],
+      [
+       207,
+       137
+      ]
+     ],
+     "neg": [
+      [
+       110,
+       80
+      ],
+      [
+       215,
+       50
+      ],
+      [
+       195,
+       190
+      ],
+      [
+       250,
+       130
+      ]
+     ]
+    },
+    {
+     "frame": 125,
+     "pos": [
+      [
+       162,
+       10
+      ],
+      [
+       177,
+       45
+      ],
+      [
+       205,
+       95
+      ]
+     ],
+     "neg": [
+      [
+       120,
+       50
+      ],
+      [
+       215,
+       20
+      ],
+      [
+       205,
+       160
+      ],
+      [
+       260,
+       110
+      ]
+     ]
+    },
+    {
+     "frame": 166,
+     "pos": [
+      [
+       160,
+       7
+      ],
+      [
+       190,
+       70
+      ]
+     ],
+     "neg": [
+      [
+       120,
+       40
+      ],
+      [
+       210,
+       20
+      ],
+      [
+       200,
+       140
+      ],
+      [
+       150,
+       110
+      ]
+     ]
+    },
+    {
+     "frame": 188,
+     "pos": [
+      [
+       187,
+       10
+      ],
+      [
+       225,
+       70
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       40
+      ],
+      [
+       235,
+       25
+      ],
+      [
+       210,
+       140
+      ],
+      [
+       260,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 250,
+     "pos": [
+      [
+       170,
+       15
+      ],
+      [
+       182,
+       35
+      ],
+      [
+       215,
+       85
+      ]
+     ],
+     "neg": [
+      [
+       130,
+       50
+      ],
+      [
+       225,
+       25
+      ],
+      [
+       210,
+       150
+      ],
+      [
+       250,
+       120
+      ]
+     ]
+    }
+   ],
+   "notes": "Holds the gallbladder neck/infundibulum the whole clip and does not release or regrasp. From ~f60 the camera has zoomed out/panned, so only 40-90 px of shaft plus collar and jaws are in frame at the top edge. Avoid: (1) the bright specular streaks on the translucent gallbladder wall and the thin peritoneal strands that run from the jaws down and to the right; those are tissue, not metal; (2) the saturated highlight on the collar ring. Positive points sit on the teal shaft centreline and on the dark jaw body just below the collar."
+  },
+  "suction_cannula": {
+   "type": "suction cannula",
+   "shaft": "bright uniform silver straight metal tube without insulation (the whole shaft reads as a white highlight), ~15-20 px wide, constant diameter, ~5 mm class; blunt rounded tip with a row of >=3 side holes over the distal ~15-20 mm (holes visible f126-f160)",
+   "enters_from": "top-right (crosses the top edge at x~470-640, or the right edge near the top-right corner), running down-left at ~26-36 deg to the horizontal",
+   "visible_frames": [
+    [
+     0,
+     117
+    ],
+    [
+     124,
+     250
+    ]
+   ],
+   "confidence": "high for identity and visibility ranges; medium-high for the type (side holes + blunt tip = suction-irrigation cannula, not a needle or trocar)",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       157,
+       173
+      ],
+      [
+       233,
+       130
+      ],
+      [
+       329,
+       76
+      ]
+     ],
+     "neg": [
+      [
+       122,
+       193
+      ],
+      [
+       203,
+       178
+      ],
+      [
+       176,
+       130
+      ],
+      [
+       282,
+       134
+      ],
+      [
+       255,
+       86
+      ],
+      [
+       95,
+       100
+      ]
+     ]
+    },
+    {
+     "frame": 41,
+     "pos": [
+      [
+       269,
+       231
+      ],
+      [
+       342,
+       182
+      ],
+      [
+       434,
+       121
+      ]
+     ],
+     "neg": [
+      [
+       236,
+       253
+      ],
+      [
+       316,
+       232
+      ],
+      [
+       286,
+       188
+      ],
+      [
+       390,
+       182
+      ],
+      [
+       361,
+       138
+      ]
+     ]
+    },
+    {
+     "frame": 83,
+     "pos": [
+      [
+       283,
+       253
+      ],
+      [
+       356,
+       203
+      ],
+      [
+       446,
+       141
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       275
+      ],
+      [
+       329,
+       252
+      ],
+      [
+       300,
+       210
+      ],
+      [
+       403,
+       201
+      ],
+      [
+       374,
+       160
+      ]
+     ]
+    },
+    {
+     "frame": 110,
+     "pos": [
+      [
+       270,
+       119
+      ],
+      [
+       347,
+       75
+      ],
+      [
+       443,
+       22
+      ]
+     ],
+     "neg": [
+      [
+       236,
+       138
+      ],
+      [
+       315,
+       120
+      ],
+      [
+       292,
+       80
+      ],
+      [
+       393,
+       76
+      ],
+      [
+       371,
+       36
+      ]
+     ]
+    },
+    {
+     "frame": 132,
+     "pos": [
+      [
+       437,
+       17
+      ],
+      [
+       445,
+       7
+      ]
+     ],
+     "neg": [
+      [
+       440,
+       42
+      ],
+      [
+       414,
+       18
+      ],
+      [
+       482,
+       24
+      ]
+     ]
+    },
+    {
+     "frame": 136,
+     "pos": [
+      [
+       410,
+       43
+      ],
+      [
+       446,
+       25
+      ],
+      [
+       480,
+       9
+      ]
+     ],
+     "neg": [
+      [
+       376,
+       60
+      ],
+      [
+       448,
+       52
+      ],
+      [
+       426,
+       7
+      ]
+     ]
+    },
+    {
+     "frame": 140,
+     "pos": [
+      [
+       287,
+       123
+      ],
+      [
+       364,
+       82
+      ],
+      [
+       462,
+       30
+      ]
+     ],
+     "neg": [
+      [
+       251,
+       142
+      ],
+      [
+       332,
+       128
+      ],
+      [
+       308,
+       83
+      ],
+      [
+       412,
+       86
+      ],
+      [
+       388,
+       40
+      ]
+     ]
+    },
+    {
+     "frame": 166,
+     "pos": [
+      [
+       309,
+       163
+      ],
+      [
+       385,
+       118
+      ],
+      [
+       479,
+       61
+      ]
+     ],
+     "neg": [
+      [
+       275,
+       184
+      ],
+      [
+       355,
+       165
+      ],
+      [
+       329,
+       123
+      ],
+      [
+       432,
+       118
+      ],
+      [
+       406,
+       76
+      ]
+     ]
+    },
+    {
+     "frame": 208,
+     "pos": [
+      [
+       340,
+       154
+      ],
+      [
+       417,
+       111
+      ],
+      [
+       513,
+       57
+      ]
+     ],
+     "neg": [
+      [
+       305,
+       173
+      ],
+      [
+       385,
+       156
+      ],
+      [
+       362,
+       114
+      ],
+      [
+       463,
+       112
+      ],
+      [
+       440,
+       71
+      ]
+     ]
+    },
+    {
+     "frame": 250,
+     "pos": [
+      [
+       307,
+       196
+      ],
+      [
+       383,
+       153
+      ],
+      [
+       480,
+       100
+      ]
+     ],
+     "neg": [
+      [
+       272,
+       216
+      ],
+      [
+       351,
+       199
+      ],
+      [
+       328,
+       157
+      ],
+      [
+       430,
+       155
+      ],
+      [
+       407,
+       113
+      ]
+     ]
+    }
+   ],
+   "notes": "This is the scene_spec 'decompression_device' (prompted there as 'needle'). It is not a needle. Exit: withdrawn quickly up-right f113-f117, gone f118-f123. Re-entry: f124, where only the rounded tip shows at the top edge (x~465-490, y~0-12) until ~f133. It then slides in down-left f134-f142; the tip with its side holes is held against the gallbladder neck f143-f160, with white foam/fluid at the tip, and it is pushed back into the gallbladder at f161. During f0-f112 and f161-f250 the distal ~60+ px (all side holes) are hidden inside the gallbladder outline, so the mask must cover only the visible shaft up to where it meets the gallbladder. Prompt points lie on the shaft centreline (the edges are saturated highlight) and start ~20 px back from the visible end so they do not land on wet tissue at the entry. f132 is the first prompt after re-entry, when only the tip shows (2 pos points)."
+  }
+ },
+ "puncture": {
+  "instrument": "suction_cannula",
+  "frames": [
+   0,
+   112
+  ],
+  "entry_px": [
+   140,
+   182
+  ],
+  "entry_px_frame": 0,
+  "reinsertion": {
+   "frames": [
+    161,
+    250
+   ],
+   "entry_px": [
+    246,
+    156
+   ],
+   "entry_px_frame": 161,
+   "entry_px_median_f166_250": [
+    311,
+    170
+   ]
+  },
+  "entry_track": [
+   [
+    0,
+    140,
+    182
+   ],
+   [
+    10,
+    205,
+    274
+   ],
+   [
+    20,
+    160,
+    258
+   ],
+   [
+    30,
+    204,
+    264
+   ],
+   [
+    41,
+    251,
+    243
+   ],
+   [
+    50,
+    274,
+    261
+   ],
+   [
+    60,
+    271,
+    220
+   ],
+   [
+    70,
+    277,
+    275
+   ],
+   [
+    83,
+    265,
+    265
+   ],
+   [
+    90,
+    276,
+    225
+   ],
+   [
+    100,
+    268,
+    198
+   ],
+   [
+    106,
+    257,
+    160
+   ],
+   [
+    112,
+    274,
+    140
+   ],
+   [
+    161,
+    246,
+    156
+   ],
+   [
+    166,
+    291,
+    175
+   ],
+   [
+    175,
+    302,
+    181
+   ],
+   [
+    185,
+    319,
+    186
+   ],
+   [
+    195,
+    326,
+    181
+   ],
+   [
+    208,
+    321,
+    164
+   ],
+   [
+    220,
+    311,
+    167
+   ],
+   [
+    230,
+    296,
+    178
+   ],
+   [
+    240,
+    296,
+    158
+   ],
+   [
+    250,
+    287,
+    207
+   ]
+  ],
+  "confidence": "medium",
+  "evidence": "Judgement: probable yes. The cannula is already inside at f0, so the puncture act itself is not in this clip; what we see is the cannula in the lumen, a withdrawal, and a re-insertion. (1) In every frame of f0-f112 and f161-f250, the cannula's perforated distal segment (>=60 px at this scale, side holes clearly visible f143-f160 when the tool lies outside) is hidden, and the shaft ends exactly at the gallbladder outline. The visible end lies at the same anatomical spot both times: the upper-right margin of the gallbladder body just below the neck held by the grasper (entry_track gives the per-frame image position of that visible end). (2) Re-insertion f160->f161: the tip, held with its holes visible against a whitish/foamy spot on the neck, disappears into that spot without moving sideways, and the gallbladder bulges/swings to the right in the same frame (cannula pushed into the organ). (3) White foam/fluid at the tip f0-f3 and f143-f159 fits aspiration at an opening. (4) The gallbladder body looks slack and wrinkled through the clip (fits decompression), and the clip is the legend's 24-33 s decompression window. Caveats: 640x360 compressed video; the shaft going behind the translucent sac rather than into it cannot be strictly ruled out; the hole is not seen directly, and the wall's actual deflation cannot be measured because the camera zoom keeps changing. The grasper never enters the lumen."
+ },
+ "shots": [
+  [
+   0,
+   250
+  ]
+ ],
+ "notes": "Two instruments only: grasper (top-left, holds the gallbladder neck, f0-f250) and suction-irrigation cannula (top-right, f0-f117 and f124-f250). Shot check: one continuous shot with no hard cut, dissolve, wipe or jump cut. The largest inter-frame changes are a fast camera pan at f5-f8 (~5-6 px/frame, smooth) and f161-f162 (the cannula is pushed into the gallbladder and the organ swings); both are continuous motion. f0 and f1 are near-identical (possibly a duplicated first frame; not a cut). The camera zooms out/pans over f0-f50, which changes the apparent sizes of the instruments and the gallbladder; it is fairly steady from ~f170."
+}

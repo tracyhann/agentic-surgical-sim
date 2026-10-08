@@ -1,0 +1,130 @@
+{
+ "clip": "lung_mln",
+ "version": "v02",
+ "source": {
+  "organs": "prompts.json",
+  "instruments": "instrument_prompts.json"
+ },
+ "n": 385,
+ "width": 640,
+ "seconds": 1161.8,
+ "objects": [
+  "mediastinal lymph nodes and fat",
+  "mediastinal pleura",
+  "dissection bed",
+  "white curved cord"
+ ],
+ "confidence": {
+  "mediastinal lymph nodes and fat": "medium",
+  "mediastinal pleura": "medium",
+  "dissection bed": "high",
+  "white curved cord": "high"
+ },
+ "shots": {
+  "A1": {
+   "frames": [
+    0,
+    38
+   ],
+   "content": "blurred, blood-filled close-up of the dissection; two instruments; not prompted"
+  },
+  "A2": {
+   "frames": [
+    39,
+    96
+   ],
+   "content": "dissection cavity with the white curved cord, two graspers working at its upper edge; dark glossy dome at left edge"
+  },
+  "B": {
+   "frames": [
+    97,
+    128
+   ],
+   "content": "zoomed-out view, Harmonic vapour/smoke; small orange fat piece held in a grasper; keyframe 128 is vapour-obscured"
+  },
+  "B2": {
+   "frames": [
+    129,
+    137
+   ],
+   "content": "short (9 frames) view of the cavity as vapour clears; not prompted"
+  },
+  "C1": {
+   "frames": [
+    138,
+    173
+   ],
+   "content": "cavity + white cord again, STORZ grasper at right, camera moving"
+  },
+  "C2": {
+   "frames": [
+    174,
+    239
+   ],
+   "content": "cavity from another angle; yellow fat block lifted by a grasper at the top right; Harmonic shaft passes through"
+  },
+  "C3": {
+   "frames": [
+    240,
+    289
+   ],
+   "content": "cavity; two instruments at the right lifting the cut tissue edge"
+  },
+  "C4": {
+   "frames": [
+    290,
+    365
+   ],
+   "content": "different field: vertical pleural incision/dissection channel, intact pleura over yellow fat on the right, mottled pink surface on the left; Harmonic + suction tip"
+  },
+  "D": {
+   "frames": [
+    366,
+    384
+   ],
+   "content": "two raw dissection beds; intact pleura over yellow fat on the right; white instrument at the bottom"
+  }
+ },
+ "qc": {
+  "mediastinal lymph nodes and fat": {
+   "frames_present": 0.525,
+   "area_mean": 0.0395,
+   "temporal_iou_median": 0.751,
+   "temporal_iou_p10": 0.413,
+   "area_jump_p90": 0.488,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "mediastinal pleura": {
+   "frames_present": 1.0,
+   "area_mean": 0.34,
+   "temporal_iou_median": 0.903,
+   "temporal_iou_p10": 0.711,
+   "area_jump_p90": 0.265,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "dissection bed": {
+   "frames_present": 0.987,
+   "area_mean": 0.1068,
+   "temporal_iou_median": 0.828,
+   "temporal_iou_p10": 0.493,
+   "area_jump_p90": 0.365,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "white curved cord": {
+   "frames_present": 0.556,
+   "area_mean": 0.0132,
+   "temporal_iou_median": 0.623,
+   "temporal_iou_p10": 0.293,
+   "area_jump_p90": 0.247,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  }
+ }
+}

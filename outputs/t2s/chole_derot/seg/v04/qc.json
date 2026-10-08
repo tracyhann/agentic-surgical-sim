@@ -1,0 +1,99 @@
+{
+ "clip": "chole_derot",
+ "version": "v04",
+ "source": {
+  "organs": "prompts.json",
+  "instruments": "instrument_prompts.json"
+ },
+ "n": 247,
+ "width": 640,
+ "seconds": 1348.4,
+ "objects": [
+  "instrument_grasper_top",
+  "instrument_dissector_right",
+  "gallbladder",
+  "neck_pedicle",
+  "liver",
+  "peri-gallbladder fat"
+ ],
+ "repairs": [
+  "repairs_r02.json"
+ ],
+ "per_shot": false,
+ "confidence": {
+  "gallbladder": "high",
+  "neck_pedicle": "medium",
+  "liver": "medium",
+  "peri-gallbladder fat": "medium",
+  "instrument_grasper_top": "high",
+  "instrument_dissector_right": "high"
+ },
+ "shots": [
+  [
+   0,
+   246
+  ]
+ ],
+ "qc": {
+  "instrument_grasper_top": {
+   "frames_present": 0.721,
+   "area_mean": 0.0415,
+   "temporal_iou_median": 0.546,
+   "temporal_iou_p10": 0.144,
+   "area_jump_p90": 0.341,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_dissector_right": {
+   "frames_present": 0.879,
+   "area_mean": 0.0409,
+   "temporal_iou_median": 0.549,
+   "temporal_iou_p10": 0.099,
+   "area_jump_p90": 0.335,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "gallbladder": {
+   "frames_present": 1.0,
+   "area_mean": 0.3323,
+   "temporal_iou_median": 0.859,
+   "temporal_iou_p10": 0.714,
+   "area_jump_p90": 0.147,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "neck_pedicle": {
+   "frames_present": 0.879,
+   "area_mean": 0.0471,
+   "temporal_iou_median": 0.708,
+   "temporal_iou_p10": 0.388,
+   "area_jump_p90": 0.493,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "liver": {
+   "frames_present": 1.0,
+   "area_mean": 0.1967,
+   "temporal_iou_median": 0.93,
+   "temporal_iou_p10": 0.637,
+   "area_jump_p90": 0.29,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "peri-gallbladder fat": {
+   "frames_present": 0.664,
+   "area_mean": 0.0467,
+   "temporal_iou_median": 0.907,
+   "temporal_iou_p10": 0.65,
+   "area_jump_p90": 0.381,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  }
+ }
+}

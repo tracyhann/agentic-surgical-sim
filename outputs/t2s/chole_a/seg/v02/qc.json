@@ -1,0 +1,121 @@
+{
+ "clip": "chole_a",
+ "version": "v02",
+ "source": {
+  "organs": "prompts.json",
+  "instruments": "instrument_prompts.json"
+ },
+ "n": 251,
+ "width": 640,
+ "seconds": 1196.3,
+ "objects": [
+  "instrument_grasper",
+  "instrument_suction_cannula",
+  "gallbladder",
+  "neck_pedicle",
+  "red strand band",
+  "blood",
+  "liver"
+ ],
+ "confidence": {
+  "gallbladder": "high",
+  "neck_pedicle": "medium",
+  "red strand band": "low",
+  "blood": "medium",
+  "liver": "medium",
+  "instrument_grasper": "high for presence and identity (one tool, never leaves the field); medium for the subtype (jaws stay buried in tissue, so grasper vs dissector cannot be confirmed - its role is static retraction of the neck)",
+  "instrument_suction_cannula": "high for identity and visibility ranges; medium-high for the type (side holes + blunt tip = suction-irrigation cannula, not a needle or trocar)"
+ },
+ "shots": [
+  [
+   0,
+   250
+  ]
+ ],
+ "qc": {
+  "instrument_grasper": {
+   "frames_present": 1.0,
+   "area_mean": 0.0216,
+   "temporal_iou_median": 0.935,
+   "temporal_iou_p10": 0.822,
+   "area_jump_p90": 0.051,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_suction_cannula": {
+   "frames_present": 0.968,
+   "area_mean": 0.0502,
+   "temporal_iou_median": 0.85,
+   "temporal_iou_p10": 0.573,
+   "area_jump_p90": 0.069,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "gallbladder": {
+   "frames_present": 1.0,
+   "area_mean": 0.1475,
+   "temporal_iou_median": 0.956,
+   "temporal_iou_p10": 0.893,
+   "area_jump_p90": 0.06,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "neck_pedicle": {
+   "frames_present": 1.0,
+   "area_mean": 0.0483,
+   "temporal_iou_median": 0.863,
+   "temporal_iou_p10": 0.684,
+   "area_jump_p90": 0.161,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "red strand band": {
+   "frames_present": 1.0,
+   "area_mean": 0.0474,
+   "temporal_iou_median": 0.906,
+   "temporal_iou_p10": 0.73,
+   "area_jump_p90": 0.184,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "blood": {
+   "frames_present": 1.0,
+   "area_mean": 0.0174,
+   "temporal_iou_median": 0.935,
+   "temporal_iou_p10": 0.829,
+   "area_jump_p90": 0.093,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "liver": {
+   "frames_present": 1.0,
+   "area_mean": 0.1633,
+   "temporal_iou_median": 0.961,
+   "temporal_iou_p10": 0.846,
+   "area_jump_p90": 0.1,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  }
+ },
+ "vs_v1_sam21": {
+  "instrument_grasper": {
+   "v1_object": "grasper",
+   "iou_median": 0.928
+  },
+  "gallbladder": {
+   "v1_object": "gallbladder",
+   "iou_median": 0.659
+  },
+  "liver": {
+   "v1_object": "liver",
+   "iou_median": 0.0
+  }
+ }
+}

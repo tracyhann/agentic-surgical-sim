@@ -1,0 +1,1835 @@
+{
+ "clip": "lung_mln",
+ "instruments": {
+  "harmonic": {
+   "type": "ultrasonic scalpel (Harmonic shears, 5 mm)",
+   "shaft": "straight 5 mm shaft, pale grey / cream with 'HARMONIC' printed in dark letters and a red band just behind the jaws; dark notched collar at the jaw base; the jaws (blade + clamp arm) look black-glossy (A2, B) or white (C2 186-203, D) depending on the light; under the red light of A1 the shaft looks olive and in C4 it looks streaky pale grey (motion-blurred lettering)",
+   "enters_from": "single incision; in the image from the bottom centre (A1, D), the bottom right (A2, B, B2, C1) and the right / lower right (C2, C3, C4)",
+   "visible_frames": [
+    [
+     0,
+     38
+    ],
+    [
+     39,
+     96
+    ],
+    [
+     97,
+     128
+    ],
+    [
+     129,
+     137
+    ],
+    [
+     138,
+     170
+    ],
+    [
+     185,
+     239
+    ],
+    [
+     240,
+     289
+    ],
+    [
+     290,
+     360
+    ],
+    [
+     366,
+     375
+    ]
+   ],
+   "confidence": "high",
+   "notes": "Identity is high where the 'HARMONIC' lettering and red band are readable (A1 from f17, B f116-128, B2, C1, C2 f204-239) and medium elsewhere, from the same jaw / collar / shaft build (A2 right-hand tool, C3 lower tool, C4 diagonal shaft from the right, D white jaw with the red band at the bottom). The QA reviewer's 'right grasper' at f64 (355,280) and 'white instrument' at f370 are this tool. C1: partly hidden behind the STORZ shaft around f159-163, gone from f171. C2: enters from the lower right at f185-186 (white jaw), fast motion and blur f190-203; the negative-only prompt at f175 (pos: []) is deliberate: without it the tracker copied the STORZ grasper into frames 174-185. D: leaves at the bottom by f375. Checked: every prompt frame gives a clean single-frame SAM 3 mask, and a per-shot tracking run of these prompts (instruments only, scratchpad) gives a continuous mask in every shot.",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       240,
+       230
+      ],
+      [
+       262,
+       285
+      ],
+      [
+       272,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       305,
+       250
+      ],
+      [
+       400,
+       260
+      ],
+      [
+       200,
+       300
+      ],
+      [
+       180,
+       180
+      ]
+     ]
+    },
+    {
+     "frame": 10,
+     "pos": [
+      [
+       275,
+       260
+      ],
+      [
+       285,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       380,
+       300
+      ],
+      [
+       230,
+       200
+      ],
+      [
+       320,
+       220
+      ]
+     ]
+    },
+    {
+     "frame": 21,
+     "pos": [
+      [
+       285,
+       240
+      ],
+      [
+       300,
+       310
+      ],
+      [
+       272,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       355,
+       250
+      ],
+      [
+       230,
+       250
+      ],
+      [
+       480,
+       260
+      ]
+     ]
+    },
+    {
+     "frame": 29,
+     "pos": [
+      [
+       450,
+       150
+      ],
+      [
+       495,
+       220
+      ],
+      [
+       525,
+       280
+      ]
+     ],
+     "neg": [
+      [
+       330,
+       220
+      ],
+      [
+       390,
+       285
+      ],
+      [
+       420,
+       280
+      ],
+      [
+       580,
+       150
+      ]
+     ]
+    },
+    {
+     "frame": 47,
+     "pos": [
+      [
+       430,
+       232
+      ],
+      [
+       470,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       365,
+       330
+      ],
+      [
+       385,
+       240
+      ],
+      [
+       490,
+       200
+      ],
+      [
+       300,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 64,
+     "pos": [
+      [
+       375,
+       265
+      ],
+      [
+       390,
+       320
+      ],
+      [
+       345,
+       190
+      ]
+     ],
+     "neg": [
+      [
+       270,
+       280
+      ],
+      [
+       450,
+       250
+      ],
+      [
+       320,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 79,
+     "pos": [
+      [
+       310,
+       170
+      ],
+      [
+       345,
+       228
+      ],
+      [
+       370,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       260,
+       250
+      ],
+      [
+       450,
+       250
+      ],
+      [
+       480,
+       150
+      ],
+      [
+       420,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 95,
+     "pos": [
+      [
+       355,
+       220
+      ],
+      [
+       395,
+       290
+      ],
+      [
+       410,
+       335
+      ]
+     ],
+     "neg": [
+      [
+       285,
+       300
+      ],
+      [
+       450,
+       250
+      ],
+      [
+       330,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 110,
+     "pos": [
+      [
+       348,
+       218
+      ],
+      [
+       395,
+       300
+      ],
+      [
+       372,
+       262
+      ]
+     ],
+     "neg": [
+      [
+       215,
+       210
+      ],
+      [
+       240,
+       300
+      ],
+      [
+       290,
+       160
+      ],
+      [
+       450,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 122,
+     "pos": [
+      [
+       335,
+       115
+      ],
+      [
+       365,
+       178
+      ],
+      [
+       400,
+       260
+      ],
+      [
+       430,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       250
+      ],
+      [
+       480,
+       200
+      ],
+      [
+       250,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 130,
+     "pos": [
+      [
+       330,
+       320
+      ],
+      [
+       345,
+       270
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       250
+      ],
+      [
+       250,
+       250
+      ],
+      [
+       330,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 136,
+     "pos": [
+      [
+       335,
+       190
+      ],
+      [
+       370,
+       290
+      ],
+      [
+       390,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       260,
+       250
+      ],
+      [
+       450,
+       250
+      ],
+      [
+       280,
+       150
+      ]
+     ]
+    },
+    {
+     "frame": 151,
+     "pos": [
+      [
+       255,
+       190
+      ],
+      [
+       275,
+       300
+      ],
+      [
+       290,
+       340
+      ]
+     ],
+     "neg": [
+      [
+       330,
+       200
+      ],
+      [
+       200,
+       250
+      ],
+      [
+       450,
+       160
+      ],
+      [
+       400,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 166,
+     "pos": [
+      [
+       385,
+       180
+      ],
+      [
+       390,
+       245
+      ]
+     ],
+     "neg": [
+      [
+       430,
+       200
+      ],
+      [
+       340,
+       200
+      ],
+      [
+       460,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 175,
+     "pos": [],
+     "neg": [
+      [
+       530,
+       240
+      ],
+      [
+       575,
+       275
+      ],
+      [
+       490,
+       205
+      ],
+      [
+       450,
+       185
+      ],
+      [
+       400,
+       250
+      ],
+      [
+       300,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 186,
+     "pos": [
+      [
+       505,
+       305
+      ],
+      [
+       530,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       500,
+       90
+      ],
+      [
+       470,
+       250
+      ],
+      [
+       580,
+       280
+      ]
+     ]
+    },
+    {
+     "frame": 220,
+     "pos": [
+      [
+       420,
+       190
+      ],
+      [
+       480,
+       260
+      ],
+      [
+       530,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       380,
+       250
+      ],
+      [
+       560,
+       200
+      ],
+      [
+       470,
+       40
+      ],
+      [
+       340,
+       140
+      ]
+     ]
+    },
+    {
+     "frame": 236,
+     "pos": [
+      [
+       390,
+       205
+      ],
+      [
+       430,
+       250
+      ],
+      [
+       465,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       500,
+       120
+      ],
+      [
+       330,
+       250
+      ],
+      [
+       520,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 242,
+     "pos": [
+      [
+       460,
+       270
+      ],
+      [
+       510,
+       300
+      ],
+      [
+       400,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       130
+      ],
+      [
+       480,
+       150
+      ],
+      [
+       300,
+       260
+      ],
+      [
+       460,
+       220
+      ]
+     ]
+    },
+    {
+     "frame": 264,
+     "pos": [
+      [
+       420,
+       260
+      ],
+      [
+       500,
+       250
+      ],
+      [
+       540,
+       290
+      ]
+     ],
+     "neg": [
+      [
+       440,
+       135
+      ],
+      [
+       510,
+       155
+      ],
+      [
+       350,
+       250
+      ],
+      [
+       560,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 283,
+     "pos": [
+      [
+       420,
+       282
+      ],
+      [
+       480,
+       280
+      ],
+      [
+       520,
+       310
+      ]
+     ],
+     "neg": [
+      [
+       460,
+       152
+      ],
+      [
+       590,
+       200
+      ],
+      [
+       380,
+       140
+      ],
+      [
+       360,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 303,
+     "pos": [
+      [
+       430,
+       150
+      ],
+      [
+       480,
+       190
+      ],
+      [
+       520,
+       215
+      ]
+     ],
+     "neg": [
+      [
+       340,
+       300
+      ],
+      [
+       440,
+       260
+      ],
+      [
+       330,
+       180
+      ],
+      [
+       500,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 340,
+     "pos": [
+      [
+       430,
+       185
+      ],
+      [
+       500,
+       220
+      ],
+      [
+       560,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       360,
+       330
+      ],
+      [
+       460,
+       280
+      ],
+      [
+       400,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 352,
+     "pos": [
+      [
+       400,
+       165
+      ],
+      [
+       470,
+       205
+      ],
+      [
+       540,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       285,
+       290
+      ],
+      [
+       420,
+       280
+      ],
+      [
+       480,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 368,
+     "pos": [
+      [
+       320,
+       290
+      ],
+      [
+       350,
+       320
+      ],
+      [
+       370,
+       340
+      ]
+     ],
+     "neg": [
+      [
+       372,
+       250
+      ],
+      [
+       250,
+       250
+      ],
+      [
+       440,
+       280
+      ]
+     ]
+    }
+   ]
+  },
+  "grasper_steel": {
+   "type": "endoscopic grasper (bright stainless-steel shaft, fenestrated jaws)",
+   "shaft": "glossy silver / stainless 5 mm shaft without visible lettering (blood spots on it in B); long jaws with an elongated window; looks grey-olive in the red light of A1",
+   "enters_from": "bottom centre of the image (A1, A2), large and close to the scope at the bottom left in B",
+   "visible_frames": [
+    [
+     0,
+     14
+    ],
+    [
+     39,
+     96
+    ],
+    [
+     97,
+     118
+    ]
+   ],
+   "confidence": "medium",
+   "notes": "Same tool in A2 (left of the Harmonic, both entering from the bottom) and B (big silver shaft in the foreground holding the small orange fat piece): medium-high. Its identity in A1 (the middle grey shaft with curved windowed jaws, between the Harmonic jaw and the dark suction tube, f0-14) is medium-low. It is a different tool from the dark KARL STORZ grasper (silver vs. charcoal shaft under similar light). Negative-only prompts (pos: []) at f15, f21 (A1) and f119, f120, f122 (B) are deliberate: after the tool leaves the view the tracker otherwise jumps onto the suction tube (A1 f15-38) or onto the dark glossy dome at the left / the upper left tissue (B f119-122). The QA seed f64 (270,280) is correct and used.",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       305,
+       250
+      ],
+      [
+       320,
+       300
+      ],
+      [
+       300,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       240,
+       230
+      ],
+      [
+       400,
+       260
+      ],
+      [
+       200,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 10,
+     "pos": [
+      [
+       380,
+       300
+      ],
+      [
+       400,
+       340
+      ],
+      [
+       365,
+       240
+      ]
+     ],
+     "neg": [
+      [
+       275,
+       260
+      ],
+      [
+       300,
+       200
+      ],
+      [
+       470,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 15,
+     "pos": [],
+     "neg": [
+      [
+       451,
+       313
+      ],
+      [
+       472,
+       317
+      ],
+      [
+       434,
+       294
+      ],
+      [
+       353,
+       266
+      ],
+      [
+       360,
+       314
+      ],
+      [
+       334,
+       208
+      ]
+     ]
+    },
+    {
+     "frame": 21,
+     "pos": [],
+     "neg": [
+      [
+       355,
+       250
+      ],
+      [
+       415,
+       320
+      ],
+      [
+       325,
+       195
+      ],
+      [
+       285,
+       240
+      ],
+      [
+       300,
+       310
+      ]
+     ]
+    },
+    {
+     "frame": 47,
+     "pos": [
+      [
+       365,
+       330
+      ],
+      [
+       385,
+       240
+      ],
+      [
+       340,
+       240
+      ]
+     ],
+     "neg": [
+      [
+       430,
+       232
+      ],
+      [
+       300,
+       200
+      ],
+      [
+       260,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 64,
+     "pos": [
+      [
+       270,
+       280
+      ],
+      [
+       285,
+       330
+      ],
+      [
+       255,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       375,
+       265
+      ],
+      [
+       200,
+       250
+      ],
+      [
+       300,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 79,
+     "pos": [
+      [
+       270,
+       300
+      ],
+      [
+       260,
+       200
+      ],
+      [
+       285,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       310,
+       170
+      ],
+      [
+       370,
+       300
+      ],
+      [
+       180,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 95,
+     "pos": [
+      [
+       285,
+       300
+      ],
+      [
+       290,
+       340
+      ],
+      [
+       275,
+       210
+      ]
+     ],
+     "neg": [
+      [
+       355,
+       220
+      ],
+      [
+       410,
+       335
+      ],
+      [
+       220,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 110,
+     "pos": [
+      [
+       215,
+       210
+      ],
+      [
+       240,
+       300
+      ],
+      [
+       195,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       348,
+       218
+      ],
+      [
+       290,
+       160
+      ],
+      [
+       120,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 119,
+     "pos": [],
+     "neg": [
+      [
+       60,
+       250
+      ],
+      [
+       120,
+       280
+      ],
+      [
+       100,
+       200
+      ],
+      [
+       380,
+       260
+      ],
+      [
+       200,
+       320
+      ]
+     ]
+    },
+    {
+     "frame": 120,
+     "pos": [],
+     "neg": [
+      [
+       66,
+       68
+      ],
+      [
+       98,
+       118
+      ],
+      [
+       96,
+       45
+      ],
+      [
+       60,
+       250
+      ],
+      [
+       120,
+       280
+      ],
+      [
+       200,
+       320
+      ]
+     ]
+    },
+    {
+     "frame": 122,
+     "pos": [],
+     "neg": [
+      [
+       66,
+       68
+      ],
+      [
+       98,
+       118
+      ],
+      [
+       60,
+       250
+      ],
+      [
+       120,
+       280
+      ],
+      [
+       200,
+       320
+      ]
+     ]
+    }
+   ]
+  },
+  "grasper_storz": {
+   "type": "endoscopic grasper (KARL STORZ, dark shaft)",
+   "shaft": "dark gunmetal / charcoal 5 mm shaft with white 'KARL STORZ' lettering; slim jaws (closed they look like a pale metal cylinder; windowed jaws with copper-coloured reflections of the fat in C3); a step to a thicker black sheath near the right edge in C3",
+   "enters_from": "from the bottom right towards the top centre (C1), from the right / upper right (C2, C3)",
+   "visible_frames": [
+    [
+     138,
+     173
+    ],
+    [
+     174,
+     239
+    ],
+    [
+     240,
+     289
+    ]
+   ],
+   "confidence": "high",
+   "notes": "'KARL STORZ' lettering readable in C1 and C2; holds and lifts the yellow fat block at the top right in C2. C3: the upper, horizontal tool with windowed jaws holding the cut tissue edge is taken to be the same grasper (medium; no lettering readable there, same role and same position relative to the Harmonic as in C2). Not seen in A1-B2, C4 or D. QA seed f210 (480,200) lies on the boundary between this shaft and the Harmonic shaft (single-frame SAM merged the two there), so the C2 prompts are at f175, f186, f220 and f236 instead.",
+   "prompts": [
+    {
+     "frame": 151,
+     "pos": [
+      [
+       450,
+       160
+      ],
+      [
+       520,
+       250
+      ],
+      [
+       560,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       275,
+       300
+      ],
+      [
+       400,
+       250
+      ],
+      [
+       330,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 171,
+     "pos": [
+      [
+       390,
+       280
+      ],
+      [
+       410,
+       330
+      ],
+      [
+       330,
+       150
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       250
+      ],
+      [
+       450,
+       200
+      ],
+      [
+       470,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 175,
+     "pos": [
+      [
+       530,
+       240
+      ],
+      [
+       575,
+       275
+      ],
+      [
+       490,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       400,
+       250
+      ],
+      [
+       520,
+       150
+      ],
+      [
+       460,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 186,
+     "pos": [
+      [
+       420,
+       55
+      ],
+      [
+       500,
+       90
+      ],
+      [
+       565,
+       125
+      ]
+     ],
+     "neg": [
+      [
+       505,
+       305
+      ],
+      [
+       470,
+       250
+      ],
+      [
+       350,
+       100
+      ]
+     ]
+    },
+    {
+     "frame": 220,
+     "pos": [
+      [
+       470,
+       40
+      ],
+      [
+       560,
+       60
+      ],
+      [
+       420,
+       30
+      ]
+     ],
+     "neg": [
+      [
+       480,
+       130
+      ],
+      [
+       380,
+       60
+      ],
+      [
+       480,
+       260
+      ],
+      [
+       420,
+       190
+      ]
+     ]
+    },
+    {
+     "frame": 236,
+     "pos": [
+      [
+       500,
+       120
+      ],
+      [
+       560,
+       160
+      ],
+      [
+       430,
+       80
+      ]
+     ],
+     "neg": [
+      [
+       465,
+       300
+      ],
+      [
+       390,
+       205
+      ],
+      [
+       380,
+       40
+      ]
+     ]
+    },
+    {
+     "frame": 242,
+     "pos": [
+      [
+       420,
+       130
+      ],
+      [
+       480,
+       150
+      ],
+      [
+       560,
+       160
+      ]
+     ],
+     "neg": [
+      [
+       460,
+       270
+      ],
+      [
+       300,
+       200
+      ],
+      [
+       460,
+       90
+      ]
+     ]
+    },
+    {
+     "frame": 264,
+     "pos": [
+      [
+       440,
+       135
+      ],
+      [
+       510,
+       155
+      ],
+      [
+       590,
+       165
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       260
+      ],
+      [
+       500,
+       250
+      ],
+      [
+       380,
+       100
+      ]
+     ]
+    },
+    {
+     "frame": 283,
+     "pos": [
+      [
+       460,
+       152
+      ],
+      [
+       590,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       282
+      ],
+      [
+       480,
+       280
+      ],
+      [
+       380,
+       140
+      ]
+     ]
+    }
+   ]
+  },
+  "suction": {
+   "type": "suction / irrigation tube",
+   "shaft": "dark grey-brown matte tube of constant diameter (about the width of the other 5 mm shafts), no jaws, open round tip with a metal rim (ring highlight)",
+   "enters_from": "from the lower right (A1), from the bottom (C4, D; vertical in D)",
+   "visible_frames": [
+    [
+     0,
+     38
+    ],
+    [
+     290,
+     361
+    ],
+    [
+     375,
+     384
+    ]
+   ],
+   "confidence": "medium",
+   "notes": "C4: clear (open round tip with a ring at the bottom of the incision channel, f290-361; QA seed f304 (340,300) correct). A1: the dark diagonal shaft from the lower right with a rounded tube end (f21, f29) is taken to be this tube (medium-low; it could also be a dark grasper with closed jaws); it is partly out of view or hidden around f12-16 and f31-35. D: the thin dark vertical rod with a rounded top end, clear from f375 (low-medium). The negative-only prompt at f368 (pos: []) is deliberate: without it the tracker put this tube on the white Harmonic jaw in f366-374. Not the small dark round metallic objects lying in the C4 tissue (around x 240-300, y 190-240): those are fixed in the tissue (clips or char) and are not instruments.",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       400,
+       260
+      ],
+      [
+       440,
+       320
+      ],
+      [
+       370,
+       210
+      ]
+     ],
+     "neg": [
+      [
+       305,
+       250
+      ],
+      [
+       480,
+       180
+      ],
+      [
+       240,
+       230
+      ]
+     ]
+    },
+    {
+     "frame": 21,
+     "pos": [
+      [
+       355,
+       250
+      ],
+      [
+       415,
+       320
+      ],
+      [
+       325,
+       195
+      ]
+     ],
+     "neg": [
+      [
+       285,
+       240
+      ],
+      [
+       480,
+       250
+      ],
+      [
+       300,
+       140
+      ]
+     ]
+    },
+    {
+     "frame": 29,
+     "pos": [
+      [
+       320,
+       215
+      ],
+      [
+       390,
+       285
+      ]
+     ],
+     "neg": [
+      [
+       450,
+       150
+      ],
+      [
+       495,
+       220
+      ],
+      [
+       250,
+       300
+      ],
+      [
+       300,
+       120
+      ]
+     ]
+    },
+    {
+     "frame": 303,
+     "pos": [
+      [
+       333,
+       260
+      ],
+      [
+       340,
+       300
+      ],
+      [
+       350,
+       335
+      ]
+     ],
+     "neg": [
+      [
+       480,
+       190
+      ],
+      [
+       260,
+       300
+      ],
+      [
+       400,
+       300
+      ],
+      [
+       250,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 340,
+     "pos": [
+      [
+       358,
+       296
+      ],
+      [
+       365,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       430,
+       185
+      ],
+      [
+       300,
+       300
+      ],
+      [
+       420,
+       330
+      ]
+     ]
+    },
+    {
+     "frame": 352,
+     "pos": [
+      [
+       262,
+       245
+      ],
+      [
+       285,
+       290
+      ],
+      [
+       300,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       470,
+       205
+      ],
+      [
+       230,
+       320
+      ],
+      [
+       360,
+       280
+      ]
+     ]
+    },
+    {
+     "frame": 368,
+     "pos": [],
+     "neg": [
+      [
+       320,
+       290
+      ],
+      [
+       350,
+       320
+      ],
+      [
+       370,
+       340
+      ],
+      [
+       300,
+       260
+      ],
+      [
+       340,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 378,
+     "pos": [
+      [
+       382,
+       220
+      ],
+      [
+       385,
+       280
+      ]
+     ],
+     "neg": [
+      [
+       340,
+       200
+      ],
+      [
+       430,
+       250
+      ],
+      [
+       300,
+       300
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "shots": [
+  [
+   0,
+   38
+  ],
+  [
+   39,
+   96
+  ],
+  [
+   97,
+   128
+  ],
+  [
+   129,
+   137
+  ],
+  [
+   138,
+   173
+  ],
+  [
+   174,
+   239
+  ],
+  [
+   240,
+   289
+  ],
+  [
+   290,
+   365
+  ],
+  [
+   366,
+   384
+  ]
+ ],
+ "notes": "Four physical instruments, all through the single incision: the Harmonic ultrasonic scalpel (all 9 shots), a stainless-steel windowed grasper (A1 start, A2, B), a dark KARL STORZ grasper (C1, C2, C3) and a suction tube (A1, C4, D). Per shot: A1 0-38 Harmonic + steel grasper (0-14) + suction; A2 39-96 steel grasper + Harmonic; B 97-128 steel grasper (97-118, then out of view after the camera move) + Harmonic; B2 129-137 Harmonic only (jaws open); C1 138-173 STORZ grasper + Harmonic (138-170); C2 174-239 STORZ grasper + Harmonic (from 185); C3 240-289 STORZ grasper (upper) + Harmonic (lower); C4 290-365 Harmonic + suction (both gone from about 361-362); D 366-384 Harmonic (white jaw, 366-375) then suction (375-384). Every visible instrument has positive prompts inside every shot where it is visible (two or more for shots longer than 40 frames). Prompts with an empty 'pos' list are deliberate negative-only corrections that tell the tracker the tool is absent there; t2s.seg3.combine keeps them because the same object has positive prompts in that shot. Verification: each prompt was checked as a single-frame SAM 3 mask, and the full prompt set was tracked shot by shot with the SAM 3 tracker (instruments only, in the session scratchpad, not written to the project). Final run: every instrument mask is present in its visible ranges (except suction f14 and f31-32 in A1, where the tube is hidden), no mask appears outside the visible_frames above, and masks overlap only by a few hundred pixels where shafts touch (C2 f212-216, C4 f318). Not instruments: the dark glossy dome with the thin dark curved rim at the left edge in A1, A2, B and C1 (lung edge or specimen bag) and the small dark round metallic objects in the C4 tissue. Expected weak spots: heavy motion blur in A1 (f8, f30-35), B (f124-128, Harmonic vapour), C2 (f188-203) and C4 (f310-322, f356-361), where the masks may be loose."
+}

@@ -169,36 +169,6 @@ def sheet(frames, masks, path, n_tiles=8):
     cv2.imwrite(str(path), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 85])
 
 
-def main(argv):
-    clip = argv[0]
-    if '--combine' in argv:
-        print(json.dumps(combine(clip, next((a for a in argv[1:] if a.startswith('v')), 'v02')), indent=1))
-        return
-    ver = next((a for a in argv[1:] if a.startswith('v')), 'v01')
-    frames, valid, info = D.load(clip)
-    spec = json.loads((D.OUT / clip / 'spec' / 'scene_spec.json').read_text())
-    prompts = argv[argv.index('--prompts') + 1].split(',') if '--prompts' in argv else prompts_of(spec)
-    out = D.OUT / clip / 'seg' / ver
-    out.mkdir(parents=True, exist_ok=True)
-    t0 = time.time()
-    masks, count, score = segment(frames, prompts)
-    for p in masks:
-        masks[p] &= valid
-    np.savez_compressed(out / 'masks.npz', **{p: np.packbits(m, axis=-1) for p, m in masks.items()})
-    np.savez_compressed(out / 'instances.npz', **{f'{p}__count': count[p] for p in prompts}, **{f'{p}__score': score[p] for p in prompts})
-    res = dict(clip=clip, version=ver, prompts=prompts, n=len(frames), width=int(frames.shape[2]), seconds=round(time.time() - t0, 1),
-               qc=qc(masks, count, score, valid))
-    if clip == 'chole_a':
-        res['vs_v1_sam21'] = compare_v1(masks, valid)
-    (out / 'qc.json').write_text(json.dumps(res, indent=1))
-    sheet(frames, masks, out / 'sheet.jpg')
-    print(json.dumps(res, indent=1))
-
-
-if __name__ == '__main__':
-    main(sys.argv[1:])
-
-
 def grid_keyframes(clip, n_keys=5, step=40):
     """Keyframes with a labelled pixel grid for the prompting agent: outputs/t2s/<clip>/seg/keyframes/k<frame>.jpg."""
     frames, valid, info = D.load(clip)
@@ -221,7 +191,29 @@ def grid_keyframes(clip, n_keys=5, step=40):
     return keys
 
 
-def combine(clip, ver, min_frames=0.0):
+def keep_points(prev, name, k, neg, W, n=2, clear=50):
+    """Positive points for an object at frame k from its previous mask: the deepest interior points at least
+    `clear` px from every negative point (so a repair that cuts a neighbour away does not delete the object)."""
+    if name not in prev.files:
+        return []
+    m = np.unpackbits(prev[name][k], axis=-1)[..., :W].astype(np.uint8)
+    if not m.any():
+        return []
+    yy, xx = np.mgrid[:m.shape[0], :m.shape[1]]
+    for x, y in neg:
+        m[(xx - x) ** 2 + (yy - y) ** 2 < clear ** 2] = 0
+    out = []
+    for _ in range(n):
+        if not m.any():
+            break
+        dt = cv2.distanceTransform(m, cv2.DIST_L2, 5)
+        y, x = np.unravel_index(int(np.argmax(dt)), dt.shape)
+        out.append([int(x), int(y)])
+        m[(xx - x) ** 2 + (yy - y) ** 2 < (2 * clear) ** 2] = 0
+    return out
+
+
+def combine(clip, ver, min_frames=0.0, per_shot=False):
     """vNN = every object tracked from agent point prompts in ONE SAM 3 tracker session: the instrument agent's
     instruments (seg/instrument_prompts.json) and the prompting agent's organs / tissue (seg/prompts.json).
     Instruments are in front of tissue (their pixels are removed from the tissue masks)."""
@@ -231,11 +223,48 @@ def combine(clip, ver, min_frames=0.0):
     seg = D.OUT / clip / 'seg'
     pj = json.loads((seg / 'prompts.json').read_text())
     ij = json.loads((seg / 'instrument_prompts.json').read_text()) if (seg / 'instrument_prompts.json').exists() else {'instruments': {}}
-    ins = {f'instrument_{k}': v['prompts'] for k, v in ij['instruments'].items() if v.get('prompts')}
-    org = {nm: o['prompts'] for nm, o in pj['objects'].items() if o.get('prompts')}
+    ins = {f'instrument_{k}': list(v['prompts']) for k, v in ij['instruments'].items() if v.get('prompts')}
+    org = {nm: list(o['prompts']) for nm, o in pj['objects'].items() if o.get('prompts')}
+    blank, subtract = {}, {}
+    W = frames.shape[2]
+    prev = None
+    for rp in sorted(seg.glob('repairs_r*.json')):          # QA repairs: extra prompts, new objects, blanked ranges
+        rj = json.loads(rp.read_text())
+        rv = rj.get('reviewed_version')                  # keep-points come from the version the QA looked at
+        prev = np.load(seg / rv / 'masks.npz') if rv and (seg / rv / 'masks.npz').exists() else prev
+        for a in rj.get('add_prompts', []):
+            tgt = ins if a['object'].startswith('instrument_') else org
+            pos = a.get('pos', [])
+            if not pos and prev is not None:          # a negative-only prompt makes SAM drop the object (r02):
+                pos = keep_points(prev, a['object'], a['frame'], a.get('neg', []), W)    # keep it with positives
+            tgt.setdefault(a['object'], []).append(dict(frame=a['frame'], pos=pos, neg=a.get('neg', [])))
+        for o, rr in rj.get('blank', {}).items():
+            blank.setdefault(o, []).extend(rr)
+        for o, others in rj.get('subtract', {}).items():
+            subtract.setdefault(o, []).extend(others)
+    for d in (ins, org):                                     # a tracker object needs at least one positive point
+        for nm in [nm for nm, pr in d.items() if not any(q['pos'] for q in pr)]:
+            d.pop(nm)
     t0 = time.time()
-    tracked = track_points(frames, {**ins, **org})
     n = len(frames)
+    shots = ij.get('shots') if per_shot else None
+    if shots and isinstance(shots, dict):
+        shots = [v['frames'] for v in shots.values()]
+    if shots:                                                # memory reset at every cut: track each shot on its own
+        tracked = {nm: np.zeros((n,) + valid.shape, bool) for nm in {**ins, **org}}
+        for a, b in shots:
+            sub = {nm: [dict(q, frame=q['frame'] - a) for q in pr if a <= q['frame'] <= b] for nm, pr in {**ins, **org}.items()}
+            sub = {nm: pr for nm, pr in sub.items() if any(q['pos'] for q in pr)}
+            if sub:
+                r = track_points(frames[a:b + 1], sub)
+                for nm, m in r.items():
+                    tracked[nm][a:b + 1] = m
+    else:
+        tracked = track_points(frames, {**ins, **org})
+    for o, rr in blank.items():
+        if o in tracked:
+            for a, b in rr:
+                tracked[o][a:b + 1] = False
     union = np.zeros((n,) + valid.shape, bool)
     masks = {}
     for nm in ins:
@@ -243,97 +272,20 @@ def combine(clip, ver, min_frames=0.0):
         union |= masks[nm]
     for nm in org:
         masks[nm] = tracked[nm] & valid & ~union
+    for nm, others in subtract.items():                     # explicit precedence between overlapping tissues
+        for o in others:
+            if nm in masks and o in masks:
+                masks[nm] &= ~masks[o]
+    for nm in ins:
+        pass
     np.savez_compressed(out / 'masks.npz', **{p: np.packbits(m, axis=-1) for p, m in masks.items()})
     cnt = {p: m.any((1, 2)).astype(np.int16) for p, m in masks.items()}
     res = dict(clip=clip, version=ver, source=dict(organs='prompts.json', instruments='instrument_prompts.json'), n=n,
                width=int(frames.shape[2]), seconds=round(time.time() - t0, 1), objects=list(masks),
-               confidence={**{nm: pj['objects'][nm].get('confidence') for nm in org},
+               repairs=[p.name for p in sorted(seg.glob('repairs_r*.json'))], per_shot=bool(shots),
+               confidence={**{nm: pj['objects'].get(nm, {}).get('confidence', 'repair') for nm in org},
                            **{f'instrument_{k}': v.get('confidence') for k, v in ij['instruments'].items() if v.get('prompts')}},
                shots=ij.get('shots') or pj.get('shots'),
-               qc=qc(masks, cnt, {p: np.ones(n, np.float32) for p in masks}, valid))
-    if clip == 'chole_a':
-        res['vs_v1_sam21'] = compare_v1(masks, valid)
-    (out / 'qc.json').write_text(json.dumps(res, indent=1))
-    sheet(frames, masks, out / 'sheet.jpg')
-    return res
-
-
-def main(argv):
-    clip = argv[0]
-    if '--combine' in argv:
-        print(json.dumps(combine(clip, next((a for a in argv[1:] if a.startswith('v')), 'v02')), indent=1))
-        return
-    ver = next((a for a in argv[1:] if a.startswith('v')), 'v01')
-    frames, valid, info = D.load(clip)
-    spec = json.loads((D.OUT / clip / 'spec' / 'scene_spec.json').read_text())
-    prompts = argv[argv.index('--prompts') + 1].split(',') if '--prompts' in argv else prompts_of(spec)
-    out = D.OUT / clip / 'seg' / ver
-    out.mkdir(parents=True, exist_ok=True)
-    t0 = time.time()
-    masks, count, score = segment(frames, prompts)
-    for p in masks:
-        masks[p] &= valid
-    np.savez_compressed(out / 'masks.npz', **{p: np.packbits(m, axis=-1) for p, m in masks.items()})
-    np.savez_compressed(out / 'instances.npz', **{f'{p}__count': count[p] for p in prompts}, **{f'{p}__score': score[p] for p in prompts})
-    res = dict(clip=clip, version=ver, prompts=prompts, n=len(frames), width=int(frames.shape[2]), seconds=round(time.time() - t0, 1),
-               qc=qc(masks, count, score, valid))
-    if clip == 'chole_a':
-        res['vs_v1_sam21'] = compare_v1(masks, valid)
-    (out / 'qc.json').write_text(json.dumps(res, indent=1))
-    sheet(frames, masks, out / 'sheet.jpg')
-    print(json.dumps(res, indent=1))
-
-
-if __name__ == '__main__':
-    main(sys.argv[1:])
-
-
-def grid_keyframes(clip, n_keys=5, step=40):
-    """Keyframes with a labelled pixel grid for the prompting agent: outputs/t2s/<clip>/seg/keyframes/k<frame>.jpg."""
-    frames, valid, info = D.load(clip)
-    d = D.OUT / clip / 'seg' / 'keyframes'
-    d.mkdir(parents=True, exist_ok=True)
-    keys = np.linspace(0, len(frames) - 1, n_keys + 2)[1:-1].astype(int).tolist()
-    for k in keys:
-        img = cv2.resize(frames[k], None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)     # 2x so the labels stay legible
-        H, W = frames[k].shape[:2]
-        for x in range(0, W, step):
-            cv2.line(img, (2 * x, 0), (2 * x, 2 * H - 1), (255, 255, 255), 1)
-            cv2.putText(img, str(x), (2 * x + 3, 14), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 0), 1, cv2.LINE_AA)
-        for y in range(0, H, step):
-            cv2.line(img, (0, 2 * y), (2 * W - 1, 2 * y), (255, 255, 255), 1)
-            cv2.putText(img, str(y), (3, 2 * y + 14), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 0), 1, cv2.LINE_AA)
-        cv2.imwrite(str(d / f'k{k:04d}.jpg'), cv2.cvtColor(img, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 88])
-        cv2.imwrite(str(d / f'k{k:04d}_plain.jpg'), cv2.cvtColor(frames[k], cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 92])
-    (d / 'keys.json').write_text(json.dumps(dict(keys=keys, size=[int(frames.shape[2]), int(frames.shape[1])], grid_px=step,
-                                                 note='grid images are 2x upscaled; labels are original-frame pixels')))
-    return keys
-
-
-def combine(clip, ver, text_ver='v01', min_frames=0.2):
-    """vNN = instruments as separate tracked instances from the text pass ('surgical instrument'; instances present in
-    >= min_frames of the clip) + every object of the prompting agent's prompts.json tracked from its points."""
-    frames, valid, info = D.load(clip)
-    out = D.OUT / clip / 'seg' / ver
-    out.mkdir(parents=True, exist_ok=True)
-    pj = json.loads((D.OUT / clip / 'seg' / 'prompts.json').read_text())
-    objs = {nm: o['prompts'] for nm, o in pj['objects'].items() if o.get('prompts')}
-    t0 = time.time()
-    tracked = track_points(frames, objs)
-    _, _, _, inst = segment(frames, ['surgical instrument'], instances_of=('surgical instrument',))
-    n = len(frames)
-    ins = sorted(((k, m) for k, m in inst.items() if m.any((1, 2)).mean() >= min_frames), key=lambda km: -km[1].any((1, 2)).sum())
-    masks = {}
-    for j, (_, m) in enumerate(ins):
-        masks[f'instrument_{j + 1}'] = m & valid
-    ins_union = np.any([m for m in masks.values()], 0) if masks else np.zeros((n,) + valid.shape, bool)
-    for nm, m in tracked.items():
-        masks[nm] = m & valid & ~ins_union             # instruments are in front of tissue
-    np.savez_compressed(out / 'masks.npz', **{p: np.packbits(m, axis=-1) for p, m in masks.items()})
-    cnt = {p: m.any((1, 2)).astype(np.int16) for p, m in masks.items()}
-    res = dict(clip=clip, version=ver, source=dict(text=text_ver, prompts='prompts.json'), n=n, width=int(frames.shape[2]),
-               seconds=round(time.time() - t0, 1), objects=list(masks),
-               confidence={nm: pj['objects'][nm].get('confidence') for nm in tracked},
                qc=qc(masks, cnt, {p: np.ones(n, np.float32) for p in masks}, valid))
     if clip == 'chole_a':
         res['vs_v1_sam21'] = compare_v1(masks, valid)
@@ -372,3 +324,59 @@ def probe_text(clip, ver='v01'):
     out.mkdir(parents=True, exist_ok=True)
     (out / 'text_probe.json').write_text(json.dumps(dict(clip=clip, threshold=0.5, prompts=res), indent=1))
     return res
+
+def main(argv):
+    clip = argv[0]
+    if '--combine' in argv:
+        print(json.dumps(combine(clip, next((a for a in argv[1:] if a.startswith('v')), 'v02'), per_shot='--per-shot' in argv), indent=1))
+        return
+    ver = next((a for a in argv[1:] if a.startswith('v')), 'v01')
+    frames, valid, info = D.load(clip)
+    spec = json.loads((D.OUT / clip / 'spec' / 'scene_spec.json').read_text())
+    prompts = argv[argv.index('--prompts') + 1].split(',') if '--prompts' in argv else prompts_of(spec)
+    out = D.OUT / clip / 'seg' / ver
+    out.mkdir(parents=True, exist_ok=True)
+    t0 = time.time()
+    masks, count, score = segment(frames, prompts)
+    for p in masks:
+        masks[p] &= valid
+    np.savez_compressed(out / 'masks.npz', **{p: np.packbits(m, axis=-1) for p, m in masks.items()})
+    np.savez_compressed(out / 'instances.npz', **{f'{p}__count': count[p] for p in prompts}, **{f'{p}__score': score[p] for p in prompts})
+    res = dict(clip=clip, version=ver, prompts=prompts, n=len(frames), width=int(frames.shape[2]), seconds=round(time.time() - t0, 1),
+               qc=qc(masks, count, score, valid))
+    if clip == 'chole_a':
+        res['vs_v1_sam21'] = compare_v1(masks, valid)
+    (out / 'qc.json').write_text(json.dumps(res, indent=1))
+    sheet(frames, masks, out / 'sheet.jpg')
+    print(json.dumps(res, indent=1))
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
+
+
+def qa_strips(clip, ver, n=12):
+    """For the visual QA agent: one row per object, n frames across the clip, the object's mask tinted on the frame."""
+    frames, valid, info = D.load(clip)
+    z = np.load(D.OUT / clip / 'seg' / ver / 'masks.npz')
+    W = frames.shape[2]
+    ids = np.linspace(0, len(frames) - 1, n).astype(int)
+    rows = []
+    for c, nm in zip(COLORS * 3, z.files):
+        m = np.unpackbits(z[nm], axis=-1)[..., :W].astype(bool)
+        tiles = []
+        for k in ids:
+            img = frames[k].astype(np.float32).copy()
+            img[m[k]] = 0.45 * img[m[k]] + 0.55 * np.array(c, np.float32)
+            cnt = cv2.findContours(m[k].astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
+            img = cv2.drawContours(np.ascontiguousarray(img), cnt, -1, c, 2)
+            t = cv2.resize(np.clip(img, 0, 255).astype(np.uint8), (192, int(192 * frames.shape[1] / W)))
+            cv2.putText(t, str(k), (4, 14), cv2.FONT_HERSHEY_SIMPLEX, 0.42, (255, 255, 255), 1)
+            tiles.append(t)
+        row = np.concatenate(tiles, 1)
+        bar = np.full((18, row.shape[1], 3), 25, np.uint8)
+        cv2.putText(bar, nm, (4, 13), cv2.FONT_HERSHEY_SIMPLEX, 0.45, c, 1)
+        rows += [bar, row]
+    path = D.OUT / clip / 'seg' / ver / 'strips.jpg'
+    cv2.imwrite(str(path), cv2.cvtColor(np.concatenate(rows, 0), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 85])
+    return path

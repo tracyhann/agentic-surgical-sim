@@ -1,0 +1,179 @@
+{
+ "clip": "lung_mln",
+ "version": "v03",
+ "source": {
+  "organs": "prompts.json",
+  "instruments": "instrument_prompts.json"
+ },
+ "n": 385,
+ "width": 640,
+ "seconds": 1011.6,
+ "objects": [
+  "instrument_harmonic",
+  "instrument_grasper_steel",
+  "instrument_grasper_storz",
+  "instrument_suction",
+  "mediastinal lymph nodes and fat",
+  "mediastinal pleura",
+  "dissection bed",
+  "white curved cord",
+  "dissection bed (upper, shot D)",
+  "dissection bed (lower, shot D)"
+ ],
+ "repairs": [
+  "repairs_r02.json"
+ ],
+ "per_shot": true,
+ "confidence": {
+  "mediastinal lymph nodes and fat": "medium",
+  "mediastinal pleura": "medium",
+  "dissection bed": "high",
+  "white curved cord": "high",
+  "dissection bed (upper, shot D)": "repair",
+  "dissection bed (lower, shot D)": "repair",
+  "instrument_harmonic": "high",
+  "instrument_grasper_steel": "medium",
+  "instrument_grasper_storz": "high",
+  "instrument_suction": "medium"
+ },
+ "shots": [
+  [
+   0,
+   38
+  ],
+  [
+   39,
+   96
+  ],
+  [
+   97,
+   128
+  ],
+  [
+   129,
+   137
+  ],
+  [
+   138,
+   173
+  ],
+  [
+   174,
+   239
+  ],
+  [
+   240,
+   289
+  ],
+  [
+   290,
+   365
+  ],
+  [
+   366,
+   384
+  ]
+ ],
+ "qc": {
+  "instrument_harmonic": {
+   "frames_present": 0.927,
+   "area_mean": 0.061,
+   "temporal_iou_median": 0.723,
+   "temporal_iou_p10": 0.345,
+   "area_jump_p90": 0.299,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_grasper_steel": {
+   "frames_present": 0.247,
+   "area_mean": 0.0844,
+   "temporal_iou_median": 0.795,
+   "temporal_iou_p10": 0.531,
+   "area_jump_p90": 0.169,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_grasper_storz": {
+   "frames_present": 0.395,
+   "area_mean": 0.0761,
+   "temporal_iou_median": 0.761,
+   "temporal_iou_p10": 0.377,
+   "area_jump_p90": 0.227,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "instrument_suction": {
+   "frames_present": 0.304,
+   "area_mean": 0.0324,
+   "temporal_iou_median": 0.769,
+   "temporal_iou_p10": 0.475,
+   "area_jump_p90": 0.281,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "mediastinal lymph nodes and fat": {
+   "frames_present": 0.374,
+   "area_mean": 0.0339,
+   "temporal_iou_median": 0.695,
+   "temporal_iou_p10": 0.469,
+   "area_jump_p90": 0.319,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "mediastinal pleura": {
+   "frames_present": 0.247,
+   "area_mean": 0.2946,
+   "temporal_iou_median": 0.93,
+   "temporal_iou_p10": 0.804,
+   "area_jump_p90": 0.088,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "dissection bed": {
+   "frames_present": 0.823,
+   "area_mean": 0.0827,
+   "temporal_iou_median": 0.824,
+   "temporal_iou_p10": 0.57,
+   "area_jump_p90": 0.331,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "white curved cord": {
+   "frames_present": 0.631,
+   "area_mean": 0.0184,
+   "temporal_iou_median": 0.609,
+   "temporal_iou_p10": 0.304,
+   "area_jump_p90": 0.334,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "dissection bed (upper, shot D)": {
+   "frames_present": 0.049,
+   "area_mean": 0.0824,
+   "temporal_iou_median": 0.851,
+   "temporal_iou_p10": 0.766,
+   "area_jump_p90": 0.173,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  },
+  "dissection bed (lower, shot D)": {
+   "frames_present": 0.047,
+   "area_mean": 0.0741,
+   "temporal_iou_median": 0.826,
+   "temporal_iou_p10": 0.709,
+   "area_jump_p90": 0.226,
+   "instances_median": 1.0,
+   "instances_max": 1,
+   "score_median": 1.0
+  }
+ }
+}

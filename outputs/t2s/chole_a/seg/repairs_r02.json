@@ -1,0 +1,220 @@
+{
+ "source": "visual QA r01 (independent agent); applied in seg v03",
+ "add_prompts": [
+  {
+   "object": "red strand band",
+   "frame": 20,
+   "pos": [],
+   "neg": [
+    [
+     345,
+     320
+    ]
+   ]
+  },
+  {
+   "object": "red strand band",
+   "frame": 112,
+   "pos": [],
+   "neg": [
+    [
+     420,
+     245
+    ]
+   ]
+  },
+  {
+   "object": "red strand band",
+   "frame": 170,
+   "pos": [],
+   "neg": [
+    [
+     425,
+     250
+    ]
+   ]
+  },
+  {
+   "object": "red strand band",
+   "frame": 208,
+   "pos": [],
+   "neg": [
+    [
+     440,
+     260
+    ]
+   ]
+  },
+  {
+   "object": "red strand band",
+   "frame": 250,
+   "pos": [],
+   "neg": [
+    [
+     445,
+     262
+    ]
+   ]
+  },
+  {
+   "object": "red-brown oval organ (unidentified)",
+   "frame": 20,
+   "pos": [
+    [
+     345,
+     320
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "red-brown oval organ (unidentified)",
+   "frame": 112,
+   "pos": [
+    [
+     420,
+     245
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "red-brown oval organ (unidentified)",
+   "frame": 170,
+   "pos": [
+    [
+     425,
+     250
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "red-brown oval organ (unidentified)",
+   "frame": 208,
+   "pos": [
+    [
+     440,
+     260
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "red-brown oval organ (unidentified)",
+   "frame": 250,
+   "pos": [
+    [
+     445,
+     262
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "neck_pedicle",
+   "frame": 75,
+   "pos": [
+    [
+     450,
+     230
+    ]
+   ],
+   "neg": [
+    [
+     500,
+     170
+    ]
+   ]
+  },
+  {
+   "object": "neck_pedicle",
+   "frame": 90,
+   "pos": [
+    [
+     445,
+     235
+    ]
+   ],
+   "neg": [
+    [
+     500,
+     170
+    ]
+   ]
+  },
+  {
+   "object": "neck_pedicle",
+   "frame": 170,
+   "pos": [
+    [
+     290,
+     115
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "neck_pedicle",
+   "frame": 205,
+   "pos": [
+    [
+     300,
+     110
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "liver",
+   "frame": 15,
+   "pos": [
+    [
+     40,
+     250
+    ]
+   ],
+   "neg": [
+    [
+     180,
+     100
+    ],
+    [
+     260,
+     60
+    ]
+   ]
+  },
+  {
+   "object": "gallbladder",
+   "frame": 90,
+   "pos": [
+    [
+     200,
+     110
+    ]
+   ],
+   "neg": []
+  },
+  {
+   "object": "blood",
+   "frame": 20,
+   "pos": [],
+   "neg": [
+    [
+     410,
+     300
+    ]
+   ]
+  }
+ ],
+ "blank": {},
+ "subtract": {
+  "red strand band": [
+   "red-brown oval organ (unidentified)",
+   "neck_pedicle"
+  ]
+ },
+ "note_r02b": "negative-only prompts dropped the object in v03; v04 derives positives from v02 (keep_points) and applies explicit precedence (subtract)",
+ "reviewed_version": "v02"
+}
