@@ -25,7 +25,8 @@ from . import data as D, views2, instruments as INS
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site' / 'v2' / 'data'
-TITLES = dict(chole_a='胆囊减压（镜头 A）', liver_s4='肝左叶尖端缝合', chole_derot='胆囊复位', lung_c2='肺纵隔清扫（一个镜头）')
+TITLES = dict(chole_a='胆囊减压（镜头 A）', liver_s4='肝左叶尖端缝合', chole_derot='胆囊复位', lung_c2='肺 · 镜头 C2', lung_c4='肺 · 镜头 C4',
+              lung_a2='肺 · 镜头 A2', lung_d='肺 · 镜头 D')
 NAMES_ZH = {
     'gallbladder': '胆囊', 'neck_pedicle': '胆囊颈和蒂（胆囊管、动脉）', 'liver': '肝', 'red strand band': '红色条索', 'blood': '血块',
     'red-brown oval organ (unidentified)': '红褐色椭圆器官（没认出来）', 'peri-gallbladder fat': '胆囊周围脂肪',
@@ -34,7 +35,8 @@ NAMES_ZH = {
     'instrument_grasper_top': '抓钳（上方）', 'instrument_dissector_right': '分离钳（右侧）',
     'instrument_needle_holder_R': '持针器（右）', 'instrument_needle_holder_L': '持针器（左）',
     'instrument_harmonic': '超声刀', 'instrument_grasper_storz': '抓钳（深色杆）', 'mediastinal lymph nodes and fat': '纵隔淋巴结和脂肪',
-    'dissection bed': '清扫面', 'white curved cord': '白色条索'}
+    'dissection bed': '清扫面', 'white curved cord': '白色条索', 'instrument_grasper_steel': '抓钳（钢色杆）', 'instrument_suction': '吸引管',
+    'mediastinal pleura': '纵隔胸膜', 'dissection bed (upper, shot D)': '清扫面（上）', 'dissection bed (lower, shot D)': '清扫面（下）'}
 TYPE_ZH = dict(grasper='抓钳', dissector='分离钳', needle_holder='持针器', suction='吸引管')
 PRIMARY = '#D9B840'
 PALETTE = ['#C77DB5', '#6FB7E8', '#8FD18A', '#E8915A', '#9E8CF0', '#5FD4C4', '#E0718A', '#B8C46A', '#D6A77A']
@@ -102,7 +104,8 @@ def main(argv):
     n, H, W = V.n, V.H, V.W
     sam = list(V.names)                                              # every SAM 3 object of the clip
     # ---- fitted structures (organ agent): the primary organ and the rest
-    sel = json.loads((D.OUT / clip / 'organs' / 'selection.json').read_text())
+    sp_ = D.OUT / clip / 'organs' / 'selection.json'
+    sel = json.loads(sp_.read_text()) if sp_.exists() else dict(fit=[])
     spec_fit = [o['name'].replace(' ', '_') for o in sel['fit'] if not o.get('generic')]
     fitted = {}
     for od in sorted((D.OUT / clip / 'organs').glob('*/')):
@@ -112,16 +115,22 @@ def main(argv):
         z = np.load(od / ver / 'model.npz')
         q = json.loads((od / ver / 'quality.json').read_text()) if (od / ver / 'quality.json').exists() else {}
         fitted[od.name] = dict(z=z, ver=ver, mask=q.get('mask', od.name.replace('_', ' ')), q=q)
-    prim = next((nm for nm in spec_fit if nm in fitted), sorted(fitted)[0])
-    P = fitted[prim]
-    z = P['z']
-    F = z['faces']
-    surf = np.unique(F)
-    remap = -np.ones(len(z['rest_verts']), int)
-    remap[surf] = np.arange(len(surf))
-    ref = int(z['start_frame']) if 'start_frame' in z.files else 0
-    qq, _ = V.project(z['verts4d'][ref].astype(float), ref)
-    uv_org = np.c_[np.clip(qq[surf, 0] / W, 0, 1), 1 - np.clip(qq[surf, 1] / H, 0, 1)]
+    prim = next((nm for nm in spec_fit if nm in fitted), sorted(fitted)[0] if fitted else None)
+    if prim is None:                               # a shot with instruments and static tissue only: no moving model
+        P = dict(mask=None, ver=None)
+        F, surf, remap, ref = np.zeros((0, 3), int), np.zeros(0, int), np.zeros(0, int), 0
+        X4p, uv_org = np.zeros((n, 0, 3)), np.zeros((0, 2))
+    else:
+        P = fitted[prim]
+        z = P['z']
+        F = z['faces']
+        surf = np.unique(F)
+        remap = -np.ones(len(z['rest_verts']), int)
+        remap[surf] = np.arange(len(surf))
+        ref = int(z['start_frame']) if 'start_frame' in z.files else 0
+        X4p = z['verts4d'].astype(float)
+        qq, _ = V.project(X4p[ref], ref)
+        uv_org = np.c_[np.clip(qq[surf, 0] / W, 0, 1), 1 - np.clip(qq[surf, 1] / H, 0, 1)]
     iio.imwrite(out / 'tex_tissue.jpg', filled_texture(V, ref), quality=86)
     # ---- background surface (labelled regions) and bodies
     bver = kv.get('background') or latest(clip, 'background')
@@ -133,10 +142,13 @@ def main(argv):
     body_names = [str(s) for s in zb['body_names']] if 'body_names' in zb.files else []
     # ---- instruments
     iver = kv.get('instruments') or latest(clip, 'instruments')
-    ins = np.load(D.OUT / clip / 'instruments' / iver / 'model.npz')
-    ins_names = [str(s) for s in ins['names']]
-    geoms, gtraj = instrument_geoms(ins, n)
-    qi = json.loads((D.OUT / clip / 'instruments' / iver / 'quality.json').read_text()).get('instruments', {})
+    if iver:
+        ins = np.load(D.OUT / clip / 'instruments' / iver / 'model.npz')
+        ins_names = [str(s) for s in ins['names']]
+        geoms, gtraj = instrument_geoms(ins, n)
+        qi = json.loads((D.OUT / clip / 'instruments' / iver / 'quality.json').read_text()).get('instruments', {})
+    else:                                          # no instrument could be fitted in this clip
+        ins, ins_names, geoms, gtraj, qi = {}, [], [], [], {}
     qb = json.loads((D.OUT / clip / 'background' / bver / 'quality.json').read_text()).get('bodies', {})
     iou_of = lambda f: (f['q'].get('bands', {}).get('4d', {}).get('all', {}) or {}).get('iou')
     # ---- the object list: every SAM 3 object and the model that reconstructs it
@@ -231,13 +243,13 @@ def main(argv):
     conditions = {}
 
     def add(key, X4, metrics):
-        pos = np.concatenate([X4[:, surf], rest], 1)
+        pos = np.concatenate([X4[:, surf] if len(surf) else np.zeros((n, 0, 3)), rest], 1)
         (out / f'{key}.txt').write_text(quant(pos))
         conditions[key] = dict(file=f'{key}.txt', steps=n, n_surface=len(surf), uv=r(uv_org), index=remap[F].ravel().tolist(),
                                object=oid.get(P['mask'], -1), geoms=geoms, geom_traj=gtraj, metrics=metrics,
-                               max_disp_mm=round(float(np.linalg.norm(X4 - X4[:1], axis=2).max()) * 1000, 1))
-    add('recon4d', z['verts4d'].astype(float), dict(note='4D reconstruction (organ agent %s)' % P['ver']))
-    if 'sim' in kv:
+                               max_disp_mm=round(float(np.linalg.norm(X4 - X4[:1], axis=2).max()) * 1000, 1) if X4.shape[1] else 0.0)
+    add('recon4d', X4p, dict(note='4D reconstruction (organ agent %s)' % P['ver']))
+    if 'sim' in kv and prim is not None:
         rd = D.OUT / clip / 'rounds' / kv['sim']
         tr = np.load(rd / 'traj.npz')
         f0, f1 = [int(v) for v in tr['frames']]
@@ -252,7 +264,7 @@ def main(argv):
         eq += [qm[1], qm[2], qm[3], qm[0]]
         ef.append(float(np.degrees(2 * np.arctan(H / 2 / V.f[k]))))
         ep += list(V.pos[k])
-    pivot = z['verts4d'][n // 2].astype(float).mean(0)
+    pivot = X4p[n // 2].mean(0) if X4p.shape[1] else zb['rest_verts'].astype(float)[zb['observed'].astype(bool)].mean(0)
     right, down, fwd = V.R[n // 2]                 # the free view starts beside the scope, with the image's up as up
     look = np.cos(np.radians(30)) * fwd + np.sin(np.radians(30)) * right + 0.15 * down
     look /= np.linalg.norm(look)
@@ -272,7 +284,7 @@ def main(argv):
     ip = SITE / 'index.json'
     idx = [e for e in (json.loads(ip.read_text()) if ip.exists() else []) if e['name'] != clip]
     idx.append(dict(name=clip, title=scene['title'], conditions=list(conditions), steps=n, size=[W, H]))
-    order = ['chole_a', 'liver_s4', 'chole_derot', 'lung_c2']
+    order = ['chole_a', 'liver_s4', 'chole_derot', 'lung_c2', 'lung_c4', 'lung_a2', 'lung_d']
     idx.sort(key=lambda e: order.index(e['name']) if e['name'] in order else 9)
     ip.write_text(json.dumps(idx, ensure_ascii=False, indent=1))
     print(f"[export] {clip}: " + '; '.join(f"{o['name']} -> {o['kind']}" for o in objects))

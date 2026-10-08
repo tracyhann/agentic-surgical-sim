@@ -40,11 +40,47 @@
  },
  {
   "name": "lung_c2",
-  "title": "肺纵隔清扫（一个镜头）",
+  "title": "肺 · 镜头 C2",
   "conditions": [
    "recon4d"
   ],
   "steps": 66,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "lung_c4",
+  "title": "肺 · 镜头 C4",
+  "conditions": [
+   "recon4d"
+  ],
+  "steps": 76,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "lung_a2",
+  "title": "肺 · 镜头 A2",
+  "conditions": [
+   "recon4d"
+  ],
+  "steps": 58,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "lung_d",
+  "title": "肺 · 镜头 D",
+  "conditions": [
+   "recon4d"
+  ],
+  "steps": 19,
   "size": [
    640,
    360

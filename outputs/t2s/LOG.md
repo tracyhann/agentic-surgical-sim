@@ -494,4 +494,23 @@ background surface as a back limit. Self-test: synthetic deforming superquadric,
   each); 5 of the lung video's 10 SAM 3 objects (steel grasper, suction, mediastinal pleura, the two dissection beds
   of shot D) appear only there and still have masks only.
 - Page: lung_c2 is the fourth scene; artifact version 4.
+- Three more lung shots, so that each of the lung video's 10 SAM 3 objects is reconstructed at least once
+  (t2s/shot.py: frames -> subclip -> geometry -> instruments -> organs incl. the generic fit of spec organs skipped
+  as tube / membrane -> background -> export + comparison video; one process at a time):
+  | clip (frames of lung_mln) | frames | keyframes, reprojection px | objects -> models | coverage |
+  |---|---|---|---|---|
+  | lung_c2 (174-239) | 66 | 7, 35.8 -> 4.4 | Harmonic, STORZ grasper rigid; lymph nodes + fat tet 4D (IoU 0.72); dissection bed, white cord surface regions | 5 / 5 |
+  | lung_c4 (290-365) | 76 | 8, 13.4 -> 2.4 | Harmonic (IoU 0.90), suction (0.88) rigid; mediastinal pleura generic tet 4D (IoU 0.94; 80 x 30 x 19 mm, 23.8 ml: a membrane as a solid, thickness unfounded); dissection bed 3 convex pieces | 4 / 4 |
+  | lung_a2 (39-96) | 58 | 6, 20.9 -> 4.8 | Harmonic (0.86), steel grasper (0.90) rigid; dissection bed body (0.70); white cord surface region; no moving model | 4 / 4 |
+  | lung_d (366-384) | 19 | 2, 14.7 -> 3.1 | suction rigid (0.81); pleura generic tet 4D (0.94); the two beds of D surface regions; Harmonic NOT fitted (1.4 % of the image: fewer than 3 frames with a width line) | 4 / 5 |
+  First attempts failed on two of them and were fixed in the modules: geom.write_config needed an 'organ' or 'strand'
+  object (lung_a2 has neither: the smallest static object now stands in), t2s.instruments aborted the whole clip when
+  one instrument could not be fitted (now skipped and logged), export_viewer needed a fitted organ and an instrument
+  model (now optional). Shots A1, B, B2, C1, C3 (0.7-4 s; A1 and B2 never prompted) are not reconstructed; their
+  objects all appear in the four shots above.
+- Coverage over all reconstructed clips: 38 of 39 object instances (chole_a 8 / 8, liver_s4 7 / 7, chole_derot 6 / 6,
+  lung shots 5 / 5, 4 / 4, 4 / 4, 4 / 5); every one of the 31 distinct SAM 3 objects of the four videos has a 3D
+  model in at least one clip. Quality differs a lot: weakest are chole_derot's neck_pedicle (IoU 0.51, torn mesh),
+  the membranes fitted as solids (pleura, triangular ligament) and the lung shots' geometry. None of the added
+  structures is in a simulation. Artifact version 5 (7 scenes).
 

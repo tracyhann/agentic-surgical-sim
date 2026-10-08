@@ -44,7 +44,10 @@ def write_config(clip, seg_ver):
         else:
             objects[n] = dict(role='static', prompts=[])
     if not any(o['role'] == 'organ' for o in objects.values()):
-        first = next(n for n, o in objects.items() if o['role'] == 'strand')
+        first = next((n for n, o in objects.items() if o['role'] == 'strand'), None)
+        if first is None:        # a shot with instruments and static tissue only (lung_a2): r2s needs one 'organ';
+            z = np.load(D.OUT / clip / 'seg' / seg_ver / 'masks.npz')        # the smallest static object costs least
+            first = min((n for n, o in objects.items() if o['role'] == 'static'), key=lambda n: float(np.unpackbits(z[n]).mean()))
         objects[first]['role'] = 'organ'
     c = D.CLIPS[clip]
     a, b = c['frames']

@@ -36,6 +36,14 @@ CLIPS = {
     # spec's primary organ - used for the 3D reconstruction of the lung video's objects (after r10)
     'lung_c2': dict(video='data/videos/commons_lung/vats_lobectomy_S2.mp4', frames=(783 + 2 * 174, 783 + 2 * 239), stride=2,
                     crop_rows=(60, 420), text='data/videos/commons_lung/SOURCE.md'),
+    # three more shots, so that each of the lung video's 10 SAM 3 objects is reconstructed at least once: C4 (290-365:
+    # Harmonic, suction, mediastinal pleura, dissection bed), A2 (39-96: steel grasper), D (366-384: the two beds of D)
+    'lung_c4': dict(video='data/videos/commons_lung/vats_lobectomy_S2.mp4', frames=(783 + 2 * 290, 783 + 2 * 365), stride=2,
+                    crop_rows=(60, 420), text='data/videos/commons_lung/SOURCE.md'),
+    'lung_a2': dict(video='data/videos/commons_lung/vats_lobectomy_S2.mp4', frames=(783 + 2 * 39, 783 + 2 * 96), stride=2,
+                    crop_rows=(60, 420), text='data/videos/commons_lung/SOURCE.md'),
+    'lung_d': dict(video='data/videos/commons_lung/vats_lobectomy_S2.mp4', frames=(783 + 2 * 366, 783 + 2 * 384), stride=2,
+                   crop_rows=(60, 420), text='data/videos/commons_lung/SOURCE.md'),
 }
 
 

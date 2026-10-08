@@ -2175,8 +2175,14 @@ def run(clip, ver='v01', overrides=None, log=print, reuse=False):
         tools = {}
         for inst in insts:
             others = [o['name'] for o in insts if o['name'] != inst['name']]
-            tools[inst['name']] = fit_one(V, clip, inst, others, ip, cfg, log)
+            try:
+                tools[inst['name']] = fit_one(V, clip, inst, others, ip, cfg, log)
+            except RuntimeError as e:        # too little of it in view to fit (lung_d: a 19-frame shot): no model for it
+                log(f"[skip] {inst['name']}: {e}")
+                continue
             tools[inst['name']]['inst'] = inst
+        if not tools:
+            raise RuntimeError(f'{clip}: no instrument could be fitted')
         cache.write_bytes(pickle.dumps({nm: dict({k: v for k, v in T.items() if k not in ('meas', 'ob')},
                                                  ob_extra={k: T['ob'][k] for k in ('h0', 'hmax') if k in T['ob']})
                                         for nm, T in tools.items()}))
