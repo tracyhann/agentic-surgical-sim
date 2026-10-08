@@ -12,7 +12,8 @@ Current best method (per-tissue models + 4D simulation, 2026-10-08): **[PIPELINE
 r2s/            the pipeline (config-driven; see r2s/README.md)
   clips/        one JSON per clip: source, camera, SAM prompts, instruments
 data/
-  videos/       source videos with SOURCE.md (Commons cholecystectomy, EndoNeRF prostatectomy, ROSMA)
+  videos/       source videos with SOURCE.md (Commons cholecystectomy, lung VATS lobectomy, liver diagnostic
+                laparoscopy; EndoNeRF prostatectomy, ROSMA)
   templates/    organ templates (BodyParts3D, CC BY-SA)
 models/         Depth Anything V2 Small, SAM 2.1 hiera-tiny (Hugging Face format), VGGT-1B (multi-view experiment)
 third_party/    vggt code (not installed; see third_party/README.md)

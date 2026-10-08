@@ -35,3 +35,5 @@ archive/**/*.xml
 archive/**/*.obj
 archive/**/*.stl
 archive/**/*.mtl
+data/videos/commons_lung/*.ogv
+data/videos/commons_liver/*.ogv

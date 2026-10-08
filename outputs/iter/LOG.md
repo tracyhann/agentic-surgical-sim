@@ -556,3 +556,17 @@ every 4D frame, the shift blended out over the first 3 segments (rest of the cen
   more than the 4D (fold p90 59 vs 26 deg): a global pre-tension removes more folds (39 deg) but fits worse.
   Adopted mem_rest='edges' (a measured boundary condition: material entering / leaving the view at the base);
   r31 combines it with pre-tension and stiffer bending.
+
+## r31 per-edge rest lengths + pre-tension / stiffer bending (against the remaining folds)
+| config (mem_rest edges) | sheet IoU | sheet rigid / nonrigid mm | fold p90 deg (4D 25.9) | area vs 4D (med / max) | gb IoU / inverted | duct IoU |
+|---|---|---|---|---|---|---|
+| r30 edges, bending 600 Pa | 0.732 | 1.14 / 1.30 | 58.8 | 1.07 / 1.27 | 0.653 / 108 | 0.676 |
+| pre-tension x0.95 | 0.743 | 1.25 / 1.32 | 50.4 | 0.98 / 1.19 | 0.651 / 92 | 0.680 |
+| pre-tension x0.9 | 0.716 | 1.47 / 1.43 | 38.6 | 0.91 / 1.11 | 0.652 / 94 | 0.692 |
+| bending 3000 Pa | **0.750** | **1.02 / 1.21** | 48.7 | 1.07 / 1.27 | 0.653 / 103 | 0.688 |
+| bending 3000 Pa + x0.95 | 0.733 | 1.28 / 1.33 | 44.9 | 0.98 / 1.19 | 0.651 / 87 | 0.678 |
+- A stiffer bending term turns the small crumples into larger smooth folds: best sheet fit of the study (IoU 0.750,
+  rigid 1.02 mm) with fewer folds (49 vs 59 deg); pre-tension removes more folds but costs fit. Adopted
+  mem_young 3000 (sheet IoU over the study: 0.34 r01 -> 0.65 r06 -> 0.68 r16 -> 0.70 r19 -> 0.73 r30 -> 0.75 r31).
+- This closes the v1 (per-tissue, hand-prompted) study; the text-guided v2 experiment continues on branch
+  v2-text2sim (separate worktree).
