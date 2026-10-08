@@ -543,3 +543,16 @@ every 4D frame, the shift blended out over the first 3 segments (rest of the cen
   explains the whole-body swing (r02-r03) that no bed spring reproduced; (3) the dark purple neck / duct colour is
   gangrene. To test next: gallbladder hanging from its pedicle (ducts) instead of a bed; volume loss during
   decompression.
+
+## r30 sheet rest lengths follow the 4D (mem_rest) against the crumpling (ducts v11, membrane v09 adopted)
+| mem_rest, mem_pre | sheet IoU (bands) | sheet 2D IoU | sheet rigid / nonrigid mm | sheet area vs 4D (med / max) | fold p90 deg (4D 25.9) | gb IoU / inverted |
+|---|---|---|---|---|---|---|
+| fixed (r29) | 0.675 (0.59 / 0.67 / 0.73) | 0.741 | 2.24 / 2.33 | 1.14 / 2.65 | 62.5 | 0.654 / 95 |
+| area (global scale) | 0.669 (0.55 / 0.67 / 0.73) | 0.753 | 2.25 / 2.28 | 1.08 / 1.25 | 54.8 | 0.656 / 114 |
+| area, x0.9 (pre-tension) | 0.669 (0.56 / 0.67 / 0.73) | 0.747 | 2.35 / 2.26 | 0.93 / 1.09 | **38.9** | 0.652 / 107 |
+| edges (each edge follows its 4D length) | **0.732** (0.63 / 0.73 / 0.79) | **0.771** | **1.14 / 1.30** | 1.07 / 1.27 | 58.8 | 0.653 / 108 |
+- Per-edge rest lengths from the 4D are the largest sheet gain of the study: IoU +0.057, rigid / nonrigid error
+  halved, area no longer runs to 2.65x of the 4D's. They remove the surplus that piled up, but the sheet still folds
+  more than the 4D (fold p90 59 vs 26 deg): a global pre-tension removes more folds (39 deg) but fits worse.
+  Adopted mem_rest='edges' (a measured boundary condition: material entering / leaving the view at the base);
+  r31 combines it with pre-tension and stiffer bending.

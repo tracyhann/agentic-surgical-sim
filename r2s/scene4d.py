@@ -30,7 +30,7 @@ PARAMS = dict(ts=6.25e-5, dt=0.05, settle=0.3, vertex_mass=6e-5, friction=0.3, d
               merge_mm=0.0, start='rest', bed_drive='recon', k_drive=20.0, mem_contact=1, mem_base='recon', sliver_deg=15.0, duct_end='recon', duct_nodes='glue_mid2', cams='refined', fibre_skip=1, tex_dir='', mode='sim', render=1, base_link_tc=0.05, probe_depth_mm=2.0, cf_lift_mm=0.0, cf_probe_mm=0.0, cf_no_probe=0, cf_release_frame=-1, cable_k=8.0, cable_damping=0.05, probe_ramp=1.0, mem_k=10.0, gb_shell_k=5.0,
               gb_young=1200.0, gb_poisson=0.45, gb_k_bed=0.5,
               mem_young=600.0, mem_thick=0.0006, duct_young=900.0, duct_thick=0.0015,
-              k_attach=20.0, grasp_ramp=0.25, grasp_r=0.004, grasp_n=60, probe_tip_len=0.02, grasp_target='tcp', noise_mm=0.0, noise_seed=0, probe_solref=0.002, gb_radius=0.0004, duct_snap=0, mem_rest='fixed', mem_pre=1.0)
+              k_attach=20.0, grasp_ramp=0.25, grasp_r=0.004, grasp_n=60, probe_tip_len=0.02, grasp_target='tcp', noise_mm=0.0, noise_seed=0, probe_solref=0.002, gb_radius=0.0004, duct_snap=0, mem_rest='edges', mem_pre=1.0)
 CAMS = dict(refined=str(ITER / 'tissues/backdrop/v08/cams_refined.npz'), clip=None)
 MASK_KEYS = dict(gallbladder=['body'], membrane=['membrane_clean', 'membrane'], ducts=[('duct', 'strands')])
 COLOR = dict(gallbladder=(230, 200, 40), membrane=(120, 220, 255), ducts=(200, 90, 220), backdrop=(200, 170, 160))
