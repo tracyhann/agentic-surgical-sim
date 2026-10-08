@@ -25,14 +25,16 @@ from . import data as D, views2, instruments as INS
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site' / 'v2' / 'data'
-TITLES = dict(chole_a='胆囊减压（镜头 A）', liver_s4='肝左叶尖端缝合', chole_derot='胆囊复位')
+TITLES = dict(chole_a='胆囊减压（镜头 A）', liver_s4='肝左叶尖端缝合', chole_derot='胆囊复位', lung_c2='肺纵隔清扫（一个镜头）')
 NAMES_ZH = {
     'gallbladder': '胆囊', 'neck_pedicle': '胆囊颈和蒂（胆囊管、动脉）', 'liver': '肝', 'red strand band': '红色条索', 'blood': '血块',
     'red-brown oval organ (unidentified)': '红褐色椭圆器官（没认出来）', 'peri-gallbladder fat': '胆囊周围脂肪',
     'left triangular ligament': '左三角韧带', 'diaphragm': '膈肌', 'fat / omentum': '脂肪 / 网膜',
     'gauze or sponge at leak site': '漏口处的纱布', 'instrument_grasper': '抓钳', 'instrument_suction_cannula': '吸引管',
     'instrument_grasper_top': '抓钳（上方）', 'instrument_dissector_right': '分离钳（右侧）',
-    'instrument_needle_holder_R': '持针器（右）', 'instrument_needle_holder_L': '持针器（左）'}
+    'instrument_needle_holder_R': '持针器（右）', 'instrument_needle_holder_L': '持针器（左）',
+    'instrument_harmonic': '超声刀', 'instrument_grasper_storz': '抓钳（深色杆）', 'mediastinal lymph nodes and fat': '纵隔淋巴结和脂肪',
+    'dissection bed': '清扫面', 'white curved cord': '白色条索'}
 TYPE_ZH = dict(grasper='抓钳', dissector='分离钳', needle_holder='持针器', suction='吸引管')
 PRIMARY = '#D9B840'
 PALETTE = ['#C77DB5', '#6FB7E8', '#8FD18A', '#E8915A', '#9E8CF0', '#5FD4C4', '#E0718A', '#B8C46A', '#D6A77A']
@@ -144,8 +146,9 @@ def main(argv):
         o = dict(name=nm, label=NAMES_ZH.get(nm, nm))
         if nm in ins_names:
             t = INS.tool_from_npz(ins, nm)
+            tz = TYPE_ZH.get(t.get('type'), str(t.get('type')))
             o.update(kind='instrument', color=rgb(next(steel)), iou=(qi.get(nm, {}).get('iou_vis') or qi.get(nm, {}).get('iou') or {}).get('median'),
-                     how=f"刚体模型（{TYPE_ZH.get(t.get('type'), t.get('type'))}，杆径 {2000 * t['radius']:.0f} mm），绕固定穿刺点逐帧拟合位姿")
+                     how=f"刚体模型（{tz if tz in o['label'] else '库里没有这种器械，用' + tz + '的模型近似'}，杆径 {2000 * t['radius']:.1f} mm），绕固定穿刺点逐帧拟合位姿")
         elif nm in by_mask:
             f = fitted[by_mask[nm]]
             vol = f['q'].get('volume', {}).get('rest_ml')
@@ -269,7 +272,7 @@ def main(argv):
     ip = SITE / 'index.json'
     idx = [e for e in (json.loads(ip.read_text()) if ip.exists() else []) if e['name'] != clip]
     idx.append(dict(name=clip, title=scene['title'], conditions=list(conditions), steps=n, size=[W, H]))
-    order = ['chole_a', 'liver_s4', 'chole_derot']
+    order = ['chole_a', 'liver_s4', 'chole_derot', 'lung_c2']
     idx.sort(key=lambda e: order.index(e['name']) if e['name'] in order else 9)
     ip.write_text(json.dumps(idx, ensure_ascii=False, indent=1))
     print(f"[export] {clip}: " + '; '.join(f"{o['name']} -> {o['kind']}" for o in objects))

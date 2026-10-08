@@ -480,4 +480,18 @@ background surface as a back limit. Self-test: synthetic deforming superquadric,
 - Still open: lung_mln's 10 objects. Its shot C2 (frames 174-239, 5.3 s; Harmonic, STORZ grasper, lymph nodes and
   fat, dissection bed, white cord) is now its own clip `lung_c2` (t2s.data.CLIPS, t2s.seg3.subclip from lung_mln
   v03); the geometry step is running. The other 8 shots (1-6 s each) are not processed.
+- lung_c2 (shot C2 of lung_mln, 66 frames, 12.5 fps), same modules as the other clips, one process at a time:
+  geometry (t2s.geom: depth prep 97 s at ~10-11 GB resident - the heaviest step of the day, run alone; sift
+  multi-view: 7 keyframes, 890 flow + 36 SIFT correspondences, none >= 10 keyframes apart, reprojection 35.8 -> 4.4
+  px, f 450 px; shaft-ruler error 5.3 mm median) -> instruments v01 (40 s; no ultrasonic-scalpel type in the library:
+  the Harmonic is fitted with the grasper model; IoU 0.83 / 0.80; STORZ grasper size scale 0.89) -> organ v20
+  ('mediastinal lymph nodes and fat', the spec's primary: 4D IoU 0.70 / 0.60 / 0.86, 22 x 9 x 8 mm, 0.63 ml, 0
+  inverted tets; 184 s) -> background v09 (dissection bed and white cord = labelled regions of the surface, no
+  bodies; surface depth error 1.3 mm median) -> export. 5 / 5 SAM 3 objects of the shot have a 3D model. recon_check:
+  the STORZ grasper's shaft overlaps the fat block's model in 6 of 14 frames (max 4.3 mm) - it is holding it; the
+  Harmonic in 1 of 11 (1.1 mm). No simulation. Weaker than the other clips (short shot, little static tissue).
+- Coverage now: 26 / 26 objects in the four reconstructed clips. NOT covered: the other 8 shots of lung_mln (1-6 s
+  each); 5 of the lung video's 10 SAM 3 objects (steel grasper, suction, mediastinal pleura, the two dissection beds
+  of shot D) appear only there and still have masks only.
+- Page: lung_c2 is the fourth scene; artifact version 4.
 

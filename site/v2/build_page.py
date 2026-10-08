@@ -15,7 +15,9 @@ KIND = dict(organ='主器官，体模型，逐帧形变', part='体模型，逐�
 
 def coverage():
     rows, tot, done = [], 0, 0
-    for e in json.loads((HERE / 'data' / 'index.json').read_text()):
+    scenes = json.loads((HERE / 'data' / 'index.json').read_text())
+    n_scenes = len(scenes)
+    for e in scenes:
         sc = json.loads((HERE / 'data' / e['name'] / 'scene.json').read_text())
         obs = sc.get('objects', [])
         tot += len(obs)
@@ -28,7 +30,7 @@ def coverage():
                         f'<td>{st}</td><td class="n">{iou}</td></tr>')
     head = '<thead><tr><th>片段</th><th>SAM 3 对象</th><th>三维模型</th><th>和掩码的重合 IoU</th></tr></thead>'
     return (f'<div class="ledger"><table>{head}<tbody>{"".join(rows)}</tbody></table>'
-            f'<p class="tcap">三段做了三维重建的视频里，{done} / {tot} 个 SAM 3 对象有自己的三维模型。IoU 是模型按内镜相机投影后和 SAM 3 掩码的重合；'
+            f'<p class="tcap">做了三维重建的 {n_scenes} 个片段里，{done} / {tot} 个 SAM 3 对象有自己的三维模型。IoU 是模型按内镜相机投影后和 SAM 3 掩码的重合；'
             f'背景表面上的区域没有单独算。</p></div>')
 
 

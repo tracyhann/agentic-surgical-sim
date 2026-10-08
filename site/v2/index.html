@@ -385,24 +385,34 @@
       <h2>SAM 3 分割出的每个对象，对应哪个三维模型</h2>
     </div>
     <p>10 轮结束时，有三个会动的结构只有掩码、没有三维模型：两段胆囊视频里的胆囊颈和蒂，肝视频里的左三角韧带。器官 agent 原先把它们归为"管状"和"膜状"，留给还没写的专门 agent。现在先用和主器官相同的通用体模型把它们补上。肝、膈肌、网膜原先只是背景表面的一部分，现在作为带标签的区域单独列出，在三维场景里可以按对象着色、单独显示或隐藏。</p>
-    <div class="ledger"><table><thead><tr><th>片段</th><th>SAM 3 对象</th><th>三维模型</th><th>和掩码的重合 IoU</th></tr></thead><tbody><tr><td rowspan="8">胆囊减压（镜头 A）</td><td>抓钳<br><span class="sam">instrument_grasper</span></td><td>刚体，逐帧位姿</td><td class="n">0.92</td></tr><tr><td>吸引管<br><span class="sam">instrument_suction_cannula</span></td><td>刚体，逐帧位姿</td><td class="n">0.89</td></tr><tr><td>胆囊<br><span class="sam">gallbladder</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.86</td></tr><tr><td>胆囊颈和蒂（胆囊管、动脉）<br><span class="sam">neck_pedicle</span></td><td>体模型，逐帧形变</td><td class="n">0.77</td></tr><tr><td>红色条索<br><span class="sam">red strand band</span></td><td>凸体，静态</td><td class="n">0.57</td></tr><tr><td>血块<br><span class="sam">blood</span></td><td>凸体，静态</td><td class="n">0.72</td></tr><tr><td>肝<br><span class="sam">liver</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>红褐色椭圆器官（没认出来）<br><span class="sam">red-brown oval organ (unidentified)</span></td><td>凸体，静态</td><td class="n">0.81</td></tr><tr><td rowspan="7">肝左叶尖端缝合</td><td>持针器（右）<br><span class="sam">instrument_needle_holder_R</span></td><td>刚体，逐帧位姿</td><td class="n">0.90</td></tr><tr><td>持针器（左）<br><span class="sam">instrument_needle_holder_L</span></td><td>刚体，逐帧位姿</td><td class="n">0.90</td></tr><tr><td>肝<br><span class="sam">liver</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.86</td></tr><tr><td>左三角韧带<br><span class="sam">left triangular ligament</span></td><td>体模型，逐帧形变</td><td class="n">0.73</td></tr><tr><td>膈肌<br><span class="sam">diaphragm</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>脂肪 / 网膜<br><span class="sam">fat / omentum</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>漏口处的纱布<br><span class="sam">gauze or sponge at leak site</span></td><td>凸体，静态</td><td class="n">0.64</td></tr><tr><td rowspan="6">胆囊复位</td><td>抓钳（上方）<br><span class="sam">instrument_grasper_top</span></td><td>刚体，逐帧位姿</td><td class="n">0.90</td></tr><tr><td>分离钳（右侧）<br><span class="sam">instrument_dissector_right</span></td><td>刚体，逐帧位姿</td><td class="n">0.83</td></tr><tr><td>胆囊<br><span class="sam">gallbladder</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.79</td></tr><tr><td>胆囊颈和蒂（胆囊管、动脉）<br><span class="sam">neck_pedicle</span></td><td>体模型，逐帧形变</td><td class="n">0.51</td></tr><tr><td>肝<br><span class="sam">liver</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>胆囊周围脂肪<br><span class="sam">peri-gallbladder fat</span></td><td>凸体，静态</td><td class="n">0.63</td></tr></tbody></table><p class="tcap">三段做了三维重建的视频里，21 / 21 个 SAM 3 对象有自己的三维模型。IoU 是模型按内镜相机投影后和 SAM 3 掩码的重合；背景表面上的区域没有单独算。</p></div>
+    <div class="ledger"><table><thead><tr><th>片段</th><th>SAM 3 对象</th><th>三维模型</th><th>和掩码的重合 IoU</th></tr></thead><tbody><tr><td rowspan="8">胆囊减压（镜头 A）</td><td>抓钳<br><span class="sam">instrument_grasper</span></td><td>刚体，逐帧位姿</td><td class="n">0.92</td></tr><tr><td>吸引管<br><span class="sam">instrument_suction_cannula</span></td><td>刚体，逐帧位姿</td><td class="n">0.89</td></tr><tr><td>胆囊<br><span class="sam">gallbladder</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.86</td></tr><tr><td>胆囊颈和蒂（胆囊管、动脉）<br><span class="sam">neck_pedicle</span></td><td>体模型，逐帧形变</td><td class="n">0.77</td></tr><tr><td>红色条索<br><span class="sam">red strand band</span></td><td>凸体，静态</td><td class="n">0.57</td></tr><tr><td>血块<br><span class="sam">blood</span></td><td>凸体，静态</td><td class="n">0.72</td></tr><tr><td>肝<br><span class="sam">liver</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>红褐色椭圆器官（没认出来）<br><span class="sam">red-brown oval organ (unidentified)</span></td><td>凸体，静态</td><td class="n">0.81</td></tr><tr><td rowspan="7">肝左叶尖端缝合</td><td>持针器（右）<br><span class="sam">instrument_needle_holder_R</span></td><td>刚体，逐帧位姿</td><td class="n">0.90</td></tr><tr><td>持针器（左）<br><span class="sam">instrument_needle_holder_L</span></td><td>刚体，逐帧位姿</td><td class="n">0.90</td></tr><tr><td>肝<br><span class="sam">liver</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.86</td></tr><tr><td>左三角韧带<br><span class="sam">left triangular ligament</span></td><td>体模型，逐帧形变</td><td class="n">0.73</td></tr><tr><td>膈肌<br><span class="sam">diaphragm</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>脂肪 / 网膜<br><span class="sam">fat / omentum</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>漏口处的纱布<br><span class="sam">gauze or sponge at leak site</span></td><td>凸体，静态</td><td class="n">0.64</td></tr><tr><td rowspan="6">胆囊复位</td><td>抓钳（上方）<br><span class="sam">instrument_grasper_top</span></td><td>刚体，逐帧位姿</td><td class="n">0.90</td></tr><tr><td>分离钳（右侧）<br><span class="sam">instrument_dissector_right</span></td><td>刚体，逐帧位姿</td><td class="n">0.83</td></tr><tr><td>胆囊<br><span class="sam">gallbladder</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.79</td></tr><tr><td>胆囊颈和蒂（胆囊管、动脉）<br><span class="sam">neck_pedicle</span></td><td>体模型，逐帧形变</td><td class="n">0.51</td></tr><tr><td>肝<br><span class="sam">liver</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>胆囊周围脂肪<br><span class="sam">peri-gallbladder fat</span></td><td>凸体，静态</td><td class="n">0.63</td></tr><tr><td rowspan="5">肺纵隔清扫（一个镜头）</td><td>超声刀<br><span class="sam">instrument_harmonic</span></td><td>刚体，逐帧位姿</td><td class="n">0.83</td></tr><tr><td>抓钳（深色杆）<br><span class="sam">instrument_grasper_storz</span></td><td>刚体，逐帧位姿</td><td class="n">0.80</td></tr><tr><td>纵隔淋巴结和脂肪<br><span class="sam">mediastinal lymph nodes and fat</span></td><td>主器官，体模型，逐帧形变</td><td class="n">0.72</td></tr><tr><td>清扫面<br><span class="sam">dissection bed</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr><tr><td>白色条索<br><span class="sam">white curved cord</span></td><td>背景表面的一块，静态</td><td class="n">–</td></tr></tbody></table><p class="tcap">做了三维重建的 4 个片段里，26 / 26 个 SAM 3 对象有自己的三维模型。IoU 是模型按内镜相机投影后和 SAM 3 掩码的重合；背景表面上的区域没有单独算。</p></div>
     <ul class="plain">
       <li>补上的三个结构质量不一。管和膜用体模型近似本来就不合适，复位段的胆囊颈尤其差：它前 160 帧只露出一小条，后面才转进画面，一个固定的静止形状描述不了它。</li>
       <li>这三个结构目前只是重建出来并显示，还没有接进物理仿真。复位段后半段器械操作的正是胆囊颈，下一步应该把它和胆囊连成一个可仿真的整体。</li>
-      <li>肺那段的 10 个对象还没有三维模型，见下一节。</li>
+      <li>肺视频只重建了 9 个镜头里的一个，见下一节。</li>
     </ul>
   </section>
 
   <section class="res">
     <div class="sec-head">
       <div class="tag">视频 + 分割</div>
-      <h2>肺纵隔淋巴结清扫（31 秒，目前只有分割）</h2>
+      <h2>肺纵隔淋巴结清扫（31 秒，9 个镜头，重建了其中一个）</h2>
     </div>
     <figure>
       <video src="media/lung_mln.mp4" poster="media/lung_mln_poster.jpg" controls muted loop playsinline preload="metadata"></video>
       <figcaption>左：原视频。右：SAM 3 按镜头分段跟踪的对象（纵隔胸膜、清扫面、淋巴结和脂肪、一条白色条索、4 把器械）。</figcaption>
     </figure>
-    <p>这 31 秒里有 9 个镜头，最长的连续片段只有约 6 秒。SAM 3 在这段视频里分割出 10 个对象，<b>它们目前都还没有三维模型</b>，这是"每个分割对象都要有三维重建"这条要求下唯一没补上的部分。正在做的是把含有主要解剖对象（淋巴结和脂肪）的那个镜头（5.3 秒）切成独立片段走完整流程；其余 8 个镜头每个只有 1–6 秒，还没有处理。有名字的血管和气道，提示 agent 都认不出来，没有硬猜。</p>
+<p>这 31 秒里有 9 个镜头，最长的连续片段只有约 6 秒。SAM 3 在整段视频里分割出 10 个对象。有名字的血管和气道，提示 agent 都认不出来，没有硬猜。</p>
+    <h3>10 轮之后补做：一个镜头的三维重建</h3>
+    <figure>
+      <video src="media/lung_c2.mp4" poster="media/lung_c2_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>含有主要解剖对象的那个镜头（5.3 秒，66 帧）：抓钳把淋巴结和脂肪块提起来，超声刀从旁边伸过去。上排：原视频；SAM 3 的 5 个对象。下排：4D 重建和它叠在视频上的样子。</figcaption>
+    </figure>
+    <ul class="plain">
+      <li>这个镜头单独切成一个片段，用和另外三段相同的流程：相机 7 个关键帧，重投影误差 35.8 → 4.4 px；两把器械各一个刚体模型；淋巴结和脂肪块从椭球出发拟合（4D 轮廓 IoU 0.70 / 0.60 / 0.86，0.6 ml）；清扫面和白色条索是背景表面上带标签的区域。5 个对象都有三维模型，在上面的三维场景里是第四个场景。</li>
+      <li>它比另外三段弱：镜头短，画面里静止的东西少，远距离匹配只有 36 对。抓钳在 14 帧里有 6 帧和脂肪块的模型重叠（最深 4.3 mm），因为它正夹着这块组织。没有做物理仿真。</li>
+      <li><b>其余 8 个镜头（每个 1–6 秒）没有重建。</b>整段视频的 10 个对象里，另外 5 个（一把钢色抓钳、吸引管、纵隔胸膜、另外两块清扫面）只出现在那些镜头里，目前只有掩码，没有三维模型。</li>
+    </ul>
   </section>
 
   <section class="res">
@@ -657,7 +667,8 @@
     }).join('');
     var NOTES = { chole_a: '这一段的物理仿真干净（没有非法穿插，不陷进背景），但胆囊跟着抓钳动的幅度只有重建的三分之一左右。',
       liver_s4: '这一段的物理仿真是第 8 轮的：不再崩坏，但肝是静止的，带动它的呼吸和缝线不在模型里。',
-      chole_derot: '这一段的物理仿真是负结果：胆囊停在起始位置附近，没有跟着器械转动。原因见下面"主要发现"。' };
+      chole_derot: '这一段的物理仿真是负结果：胆囊停在起始位置附近，没有跟着器械转动。原因见下面"主要发现"。',
+      lung_c2: '这一段只做了 4D 重建，没有做物理仿真。它是肺视频 9 个镜头里的一个（5.3 秒）。' };
     $('mcap').textContent = (NOTES[D.name] || '') + ' 轮廓 IoU 是仿真的器官投影和 SAM 3 掩码的重合（每 10 帧一次）；"不切深度"是同一个数但不按深度裁剪被遮挡的部分。4D 重建一行没有仿真指标。';
   }
 
