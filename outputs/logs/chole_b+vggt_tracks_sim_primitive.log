@@ -1,0 +1,6 @@
+19:21:00 chole_b+vggt_tracks: 197 frames 640x360
+WARNING: Nan, Inf or huge value in QACC at DOF 183. The simulation is unstable. Time = 0.0091.
+
+19:21:02 [sim] chole_b+vggt_tracks/primitive: unstable at control step 1; retrying with time step 0.0625 ms
+19:23:13 [sim] chole_b+vggt_tracks/primitive: 1133 organ vertices, max displacement 17.35 mm, grasp {}
+19:23:13 chole_b+vggt_tracks sim: done in 134 s

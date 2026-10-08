@@ -1,0 +1,6 @@
+17:08:04 chole_6s: 151 frames 640x360
+17:08:15 [eval] measured: outline_iou 0.746 (static 0.734), depth_err_mm_monocular 4.15 (static 5.6), track_err_px 9.88 (static 14.11), n_track_samples 1497 (static 1322), n_track_seeds 6 (static 6), track_err_px_frame0_seed 15.64 (static 34.25), n_track_samples_frame0_seed 426 (static 426)
+17:08:23 [eval] primitive: outline_iou 0.721 (static 0.726), depth_err_mm_monocular 4.26 (static 5.28), track_err_px 9.54 (static 13.13), n_track_samples 1617 (static 1467), n_track_seeds 6 (static 6), track_err_px_frame0_seed 19.0 (static 34.36), n_track_samples_frame0_seed 426 (static 426)
+17:08:30 [eval] template: outline_iou 0.661 (static 0.682), depth_err_mm_monocular 4.04 (static 5.07), track_err_px 10.13 (static 13.38), n_track_samples 1577 (static 1525), n_track_seeds 6 (static 6), track_err_px_frame0_seed 21.87 (static 34.31), n_track_samples_frame0_seed 426 (static 426)
+17:08:38 [eval] template_fit: outline_iou 0.67 (static 0.688), depth_err_mm_monocular 4.12 (static 5.22), track_err_px 10.29 (static 12.96), n_track_samples 1624 (static 1584), n_track_seeds 6 (static 6), track_err_px_frame0_seed 20.81 (static 34.27), n_track_samples_frame0_seed 426 (static 426)
+17:08:38 chole_6s eval: done in 34 s

@@ -1,0 +1,9 @@
+04:38:23 endonerf_pulling scene measured primitive ok 421 s
+04:38:27 endonerf_pulling organ measured primitive ok 4 s
+04:38:47 endonerf_pulling sim measured ok 20 s
+04:38:49 endonerf_pulling sim primitive ok 21 s
+04:38:52 endonerf_pulling eval measured ok 4 s
+04:38:54 endonerf_pulling eval primitive ok 5 s
+04:38:57 endonerf_pulling render measured ok 3 s
+04:38:57 endonerf_pulling render primitive ok 3 s
+04:39:01 endonerf_pulling compare measured primitive ok 4 s

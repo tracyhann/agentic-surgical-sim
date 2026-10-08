@@ -1,0 +1,17 @@
+{
+ "profile": "soft",
+ "instruments": [
+  {
+   "name": "grasper_left",
+   "shaft_d": 0.005
+  },
+  {
+   "name": "probe_right",
+   "shaft_d": 0.005
+  }
+ ],
+ "fps": 25,
+ "width": 640,
+ "height": 360,
+ "frames": 151
+}

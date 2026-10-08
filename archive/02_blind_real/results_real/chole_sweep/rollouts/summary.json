@@ -1,0 +1,154 @@
+{
+ "instance": "chole_sweep",
+ "n": 20,
+ "success_rate": 1.0,
+ "by_mm": {
+  "2": 1.0,
+  "4": 1.0,
+  "6": 1.0,
+  "8": 1.0,
+  "10": 1.0
+ },
+ "rows": [
+  {
+   "layout": "gb_body_right_2mm",
+   "direction": "right",
+   "mm": 2,
+   "success": true,
+   "tissue_max_disp_mm": 3.3
+  },
+  {
+   "layout": "gb_body_right_4mm",
+   "direction": "right",
+   "mm": 4,
+   "success": true,
+   "tissue_max_disp_mm": 5.0
+  },
+  {
+   "layout": "gb_body_right_6mm",
+   "direction": "right",
+   "mm": 6,
+   "success": true,
+   "tissue_max_disp_mm": 7.5
+  },
+  {
+   "layout": "gb_body_right_8mm",
+   "direction": "right",
+   "mm": 8,
+   "success": true,
+   "tissue_max_disp_mm": 9.8
+  },
+  {
+   "layout": "gb_body_right_10mm",
+   "direction": "right",
+   "mm": 10,
+   "success": true,
+   "tissue_max_disp_mm": 9.8
+  },
+  {
+   "layout": "gb_body_left_2mm",
+   "direction": "left",
+   "mm": 2,
+   "success": true,
+   "tissue_max_disp_mm": 3.6
+  },
+  {
+   "layout": "gb_body_left_4mm",
+   "direction": "left",
+   "mm": 4,
+   "success": true,
+   "tissue_max_disp_mm": 3.6
+  },
+  {
+   "layout": "gb_body_left_6mm",
+   "direction": "left",
+   "mm": 6,
+   "success": true,
+   "tissue_max_disp_mm": 3.8
+  },
+  {
+   "layout": "gb_body_left_8mm",
+   "direction": "left",
+   "mm": 8,
+   "success": true,
+   "tissue_max_disp_mm": 3.3
+  },
+  {
+   "layout": "gb_body_left_10mm",
+   "direction": "left",
+   "mm": 10,
+   "success": true,
+   "tissue_max_disp_mm": 2.6
+  },
+  {
+   "layout": "gb_body_far_2mm",
+   "direction": "far",
+   "mm": 2,
+   "success": true,
+   "tissue_max_disp_mm": 3.2
+  },
+  {
+   "layout": "gb_body_far_4mm",
+   "direction": "far",
+   "mm": 4,
+   "success": true,
+   "tissue_max_disp_mm": 3.6
+  },
+  {
+   "layout": "gb_body_far_6mm",
+   "direction": "far",
+   "mm": 6,
+   "success": true,
+   "tissue_max_disp_mm": 4.0
+  },
+  {
+   "layout": "gb_body_far_8mm",
+   "direction": "far",
+   "mm": 8,
+   "success": true,
+   "tissue_max_disp_mm": 4.2
+  },
+  {
+   "layout": "gb_body_far_10mm",
+   "direction": "far",
+   "mm": 10,
+   "success": true,
+   "tissue_max_disp_mm": 5.7
+  },
+  {
+   "layout": "gb_body_near_2mm",
+   "direction": "near",
+   "mm": 2,
+   "success": true,
+   "tissue_max_disp_mm": 4.0
+  },
+  {
+   "layout": "gb_body_near_4mm",
+   "direction": "near",
+   "mm": 4,
+   "success": true,
+   "tissue_max_disp_mm": 4.4
+  },
+  {
+   "layout": "gb_body_near_6mm",
+   "direction": "near",
+   "mm": 6,
+   "success": true,
+   "tissue_max_disp_mm": 4.9
+  },
+  {
+   "layout": "gb_body_near_8mm",
+   "direction": "near",
+   "mm": 8,
+   "success": true,
+   "tissue_max_disp_mm": 5.1
+  },
+  {
+   "layout": "gb_body_near_10mm",
+   "direction": "near",
+   "mm": 10,
+   "success": true,
+   "tissue_max_disp_mm": 4.8
+  }
+ ]
+}

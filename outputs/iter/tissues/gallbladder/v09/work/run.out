@@ -1,0 +1,18 @@
+[v09] config {"apex_px": 90, "rest_keys": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 10.0, "ffd_size": 2.0, "scale_prior": 0.02, "scale_bounds": [[1.0, 0.85, 0.85], [1.7, 1.7, 1.7]], "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.5, "hidden_mm": 8.0, "surf_faces": 800, "cells": 20, "start_frame": 120, "iters_first": 300, "iters": 100, "lr": 0.08, "w_arap": 30.0, "w_vol": 20.0, "w_temp": 0.3, "smooth_sigma": 1.0, "arap_uniform": true, "w_barrier": 0.5, "w_anchor": 0.02, "anchor_cos": 0.35, "early_weight": 0.3, "tet_snap": "project", "w_neck": 1.0, "w_neck4d": 0.3, "depth_erode": 3, "n_pts4d": 1500, "barrier_sum": true, "tetgen_q": [15, 1.6], "sliver_weight": 1e-09, "n_surf4d": 7000, "n_cov4d": 1800}
+[masks] body area per keyframe [38546, 26361, 31972, 28124, 35374, 33973, 35735, 26948, 27056, 35728, 38866, 45823, 40222, 52023, 49963, 55573, 51684, 53783, 51938, 53482, 57255, 55450, 53147, 52274, 53386, 50639] (2 s)
+[masks] body/duct junction found in 251 frames
+[rest] pose search: best losses [8.52, 8.662, 9.032, 9.127, 9.676] (23 s)
+[rest] pose+scale: loss 8.094 parts(out,cov,depth mm) [0.701 0.474 3.705] scale [0.99  1.156 1.715] (46 s)
+[rest] + lattice: loss 7.610 parts [0.683 0.308 3.55 ] max offset 5.8 mm (58 s)
+[rest] neck tip vs junction pixel: median 14 px over 26 keyframes
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/gallbladder.py", line 956, in <module>
+    build(sys.argv[1] if len(sys.argv) > 1 else 'v01')
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/gallbladder.py", line 911, in build
+    nodes, tets, faces = tetrahedralize(Xr, F0, c['surf_faces'], c['cells'], c['tet_snap'], c['tetgen_q'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/gallbladder.py", line 598, in tetrahedralize
+    raise RuntimeError('tetrahedralisation failed')
+RuntimeError: tetrahedralisation failed

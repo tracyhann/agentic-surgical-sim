@@ -1,0 +1,431 @@
+{
+ "title": "胆囊 · 镜头 A（23.5–33.5 s）",
+ "source": {
+  "type": "video",
+  "path": "data/videos/commons_chole/gallbladder_torsion_S1.mp4",
+  "frames": [
+   587,
+   837
+  ],
+  "crop_rows": [
+   59,
+   419
+  ],
+  "fix_borders": true
+ },
+ "size": [
+  640,
+  360
+ ],
+ "fps": 25,
+ "camera": {
+  "fovy": 47.0
+ },
+ "objects": {
+  "gallbladder": {
+   "role": "organ",
+   "template": "gallbladder",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       130,
+       280
+      ],
+      [
+       180,
+       330
+      ],
+      [
+       100,
+       220
+      ],
+      [
+       160,
+       200
+      ],
+      [
+       60,
+       320
+      ],
+      [
+       260,
+       185
+      ],
+      [
+       300,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       300
+      ],
+      [
+       40,
+       40
+      ],
+      [
+       260,
+       100
+      ],
+      [
+       420,
+       260
+      ]
+     ]
+    },
+    {
+     "frame": 36,
+     "pos": [
+      [
+       150,
+       300
+      ],
+      [
+       230,
+       330
+      ],
+      [
+       120,
+       260
+      ],
+      [
+       190,
+       200
+      ],
+      [
+       280,
+       215
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       300
+      ],
+      [
+       60,
+       80
+      ],
+      [
+       330,
+       330
+      ]
+     ]
+    },
+    {
+     "frame": 71,
+     "pos": [
+      [
+       245,
+       205
+      ],
+      [
+       180,
+       290
+      ],
+      [
+       330,
+       250
+      ],
+      [
+       260,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       300
+      ],
+      [
+       60,
+       80
+      ],
+      [
+       470,
+       220
+      ],
+      [
+       560,
+       100
+      ]
+     ]
+    },
+    {
+     "frame": 107,
+     "pos": [
+      [
+       180,
+       300
+      ],
+      [
+       260,
+       320
+      ],
+      [
+       130,
+       280
+      ],
+      [
+       220,
+       200
+      ],
+      [
+       320,
+       175
+      ],
+      [
+       390,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       300
+      ],
+      [
+       60,
+       80
+      ],
+      [
+       360,
+       330
+      ]
+     ]
+    },
+    {
+     "frame": 200,
+     "pos": [
+      [
+       200,
+       300
+      ],
+      [
+       280,
+       320
+      ],
+      [
+       160,
+       280
+      ],
+      [
+       240,
+       200
+      ],
+      [
+       390,
+       165
+      ],
+      [
+       450,
+       180
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       300
+      ],
+      [
+       60,
+       80
+      ],
+      [
+       380,
+       330
+      ]
+     ]
+    }
+   ]
+  },
+  "grasper": {
+   "role": "instrument",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       40,
+       20
+      ],
+      [
+       70,
+       60
+      ],
+      [
+       95,
+       95
+      ]
+     ],
+     "neg": [
+      [
+       160,
+       220
+      ],
+      [
+       200,
+       60
+      ]
+     ]
+    }
+   ]
+  },
+  "probe": {
+   "role": "instrument",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       400,
+       22
+      ],
+      [
+       300,
+       75
+      ],
+      [
+       220,
+       122
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       200
+      ],
+      [
+       200,
+       250
+      ]
+     ]
+    }
+   ]
+  },
+  "strand": {
+   "role": "strand",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       360,
+       220
+      ],
+      [
+       380,
+       255
+      ],
+      [
+       350,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       260
+      ],
+      [
+       300,
+       75
+      ],
+      [
+       480,
+       300
+      ],
+      [
+       270,
+       180
+      ],
+      [
+       300,
+       205
+      ]
+     ]
+    }
+   ]
+  },
+  "liver": {
+   "role": "static",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       540,
+       60
+      ],
+      [
+       600,
+       140
+      ],
+      [
+       480,
+       110
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       75
+      ]
+     ]
+    }
+   ]
+  },
+  "right organs": {
+   "role": "static",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       520,
+       300
+      ],
+      [
+       600,
+       240
+      ],
+      [
+       450,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       360,
+       220
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "instruments": [
+  {
+   "name": "grasper_left",
+   "mask": "grasper",
+   "holds": "gallbladder",
+   "shaft_d": 0.005,
+   "color": "dark"
+  },
+  {
+   "name": "probe_right",
+   "mask": "probe",
+   "shaft_d": 0.005,
+   "color": "bright"
+  }
+ ],
+ "note": "The scope moves fast in the first ~2.5 s (blur; no camera model aligns those frames well with frame 0). The 2D global-organ-motion estimate picks up the scope's parallax there and drifts, so it is off for this clip. \"multiview\": true switches cameras and depth to the joint keyframe solution (r2s/multiview.py); see outputs/experiments/multiview_2026-10-07. Segmentation (2026-10-07): the dark gallbladder neck / start of the cystic duct right of the probe tip belongs to the gallbladder (it was segmented as a strand before, which cut the organ in two); the strand is only the thin pink strands.",
+ "sim": {
+  "bed_motion": false
+ },
+ "multiview": false
+}

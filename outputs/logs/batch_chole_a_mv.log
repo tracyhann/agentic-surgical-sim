@@ -1,0 +1,15 @@
+09:24:04 chole_a scene measured primitive template template_fit ok 110 s
+09:24:21 chole_a organ measured primitive template template_fit ok 17 s
+09:28:38 chole_a sim template ok 257 s
+09:28:47 chole_a sim template_fit ok 266 s
+09:30:00 chole_a sim measured ok 340 s
+09:31:25 chole_a sim primitive ok 424 s
+09:31:39 chole_a eval template_fit ok 13 s
+09:31:39 chole_a eval measured ok 14 s
+09:31:40 chole_a eval primitive ok 15 s
+09:31:40 chole_a eval template ok 15 s
+09:32:03 chole_a render template_fit ok 23 s
+09:32:06 chole_a render template ok 26 s
+09:32:08 chole_a render primitive ok 28 s
+09:32:11 chole_a render measured ok 30 s
+09:33:12 chole_a compare measured primitive template template_fit ok 61 s

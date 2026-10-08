@@ -1,0 +1,16 @@
+{
+ "bead_cup": {
+  "n": 40,
+  "median_motion_err_mm": 3.03,
+  "median_final_err_mm": 4.25,
+  "median_duration_agent_s": 15.0,
+  "median_duration_ref_s": 14.2
+ },
+ "peg_transfer": {
+  "n": 20,
+  "median_motion_err_mm": 7.9,
+  "median_final_err_mm": 26.74,
+  "median_duration_agent_s": 16.4,
+  "median_duration_ref_s": 15.4
+ }
+}

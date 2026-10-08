@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real2Sim results</title>
+<style>
+  :root { --bg: #f6f6f4; --fg: #1d1d1f; --muted: #6b6b70; --card: #fff; --line: #e2e2de; --ok: #1f7a4d; --warn: #a15c07; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #151517; --fg: #ececee; --muted: #9a9aa0; --card: #1e1e21; --line: #2e2e33; --ok: #4cc38a; --warn: #e3a64a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 -apple-system, "PingFang SC", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 28px 16px 60px; }
+  h1 { font-size: 22px; margin: 0 0 4px; } h2 { font-size: 18px; margin: 34px 0 8px; }
+  p.lead { color: var(--muted); margin: 0 0 8px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 12px 0; }
+  .card h3 { font-size: 14px; margin: 0 0 8px; }
+  .note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 99px; border: 1px solid var(--ok); color: var(--ok); margin-left: 6px; }
+  .tag.warn { border-color: var(--warn); color: var(--warn); }
+  video { width: 100%; display: block; border-radius: 6px; background: #000; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  td, th { border-bottom: 1px solid var(--line); padding: 5px 6px; text-align: left; }
+  th { color: var(--muted); font-weight: 500; }
+  .legend b { font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Real2Sim：真实视频 → MuJoCo（Claude 盲测）</h1>
+  <p class="lead">两个独立的 Claude Code 会话（Opus 5.5），只看视频、brief 和器械模型。左边是真实画面，右边是 Claude 的场景跑它自己的动作。</p>
+  <p class="note legend">左图圆圈：<b style="color:#2e9e2e">绿</b> = 真实轨迹（GT），<b style="color:#d03030">红</b> = Claude 场景里对应物体或器械尖端投影到画面上的位置。</p>
+
+  <h2>★ 胆囊手术：照片级 real2sim <span class="tag">新</span></h2>
+  <div class="card">
+    <h3>左：真实视频 · 右：MuJoCo 仿真（软组织 flex + 两把器械 + 跟着动的内镜）</h3>
+    <video src="photoreal_compare.mp4" controls loop muted playsinline></video>
+    <table>
+      <tr><th>指标</th><th>这次重建</th><th>基线</th></tr>
+      <tr><td>整段画面 SSIM / PSNR</td><td>0.586 / 15.8 dB</td><td>只放第一帧 0.502 / 14.9 · 之前 agent 的卡通场景 0.466 / 9.8</td></tr>
+      <tr><td>组织特征点轨迹误差（308 个点）</td><td>5.6 px</td><td>都不动 13.7 px</td></tr>
+      <tr><td>胆囊 / 腹膜条带</td><td>23.1 / 13.1 px</td><td>31.4 / 18.3 px</td></tr>
+      <tr><td>直器械 / 抓钳尖端（中位数）</td><td>4.1 / 2.5 px</td><td>—</td></tr>
+    </table>
+    <p class="note">这一节不是盲测：这是我（本会话的 Claude）用完整的工具链和反复迭代做出来的。纹理来自真实画面投影；镜头运动（转动 + 变焦）从背景跟踪点反求；组织是带弹性的 flex 壳，参数用真实的组织跟踪点拟合。深度是先验，不是测量出来的。</p>
+  </div>
+  <div class="card">
+    <h3>同一个场景里做视频里没有发生过的操作</h3>
+    <video src="photoreal_variants.mp4" controls loop muted playsinline></video>
+    <p class="note">左：按视频重现 · 中：抓钳牵拉幅度翻倍 · 右：直器械按压胆囊体。这就是"real2sim 之后在 sim 里增强"。</p>
+  </div>
+
+  <h2>1 · ROSMA：dVRK 双臂交接套筒 <span class="tag">任务成功</span></h2>
+  <div class="card">
+    <h3>真实视频（叠加套筒轨迹）| Claude 重建</h3>
+    <video src="rosma_overlay.mp4" controls loop muted playsinline></video>
+    <table>
+      <tr><th>指标</th><th>Claude</th><th>基线</th></tr>
+      <tr><td>套筒画面轨迹误差（中位数，1024×768）</td><td>18 px</td><td>不动 270 px · 直线插值 180 px</td></tr>
+      <tr><td>器械尖端三维形状误差 vs 真实运动学（左 / 右）</td><td>10.6 / 9.5 mm</td><td>不动 14.4 / 17.6 · 直线 12.7 / 14.2 mm</td></tr>
+      <tr><td>器械路径长度 Claude / 真实（左 / 右）</td><td>1.28 / 1.10</td><td>—</td></tr>
+      <tr><td>用时 · 花费</td><td>14.5 分钟 · $2.82</td><td>—</td></tr>
+    </table>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>数据引擎：目标柱右移 10 mm <span class="tag">成功</span></h3>
+      <video src="rosma_rollout_right10.mp4" controls loop muted playsinline></video></div>
+    <div class="card"><h3>数据引擎：目标柱往远处移 10 mm <span class="tag">成功</span></h3>
+      <video src="rosma_rollout_far10.mp4" controls loop muted playsinline></video></div>
+  </div>
+  <p class="note">20 个扰动布局（4 个方向 × 2–10 mm）全部成功。</p>
+
+  <h2>2 · 腹腔镜胆囊手术：拨动组织 <span class="tag warn">定性</span></h2>
+  <div class="card">
+    <h3>真实视频（叠加器械尖端）| Claude 重建</h3>
+    <video src="chole_overlay.mp4" controls loop muted playsinline></video>
+    <table>
+      <tr><th>指标</th><th>Claude</th><th>基线</th></tr>
+      <tr><td>直器械尖端画面误差（中位数，640×360）</td><td>9 px</td><td>不动 69 px · 直线插值 28 px</td></tr>
+      <tr><td>抓钳尖端 vs 手工关键帧（4 帧平均，标注误差 ±20 px）</td><td>25 px</td><td>—</td></tr>
+      <tr><td>组织最大位移</td><td>3.2 mm</td><td>真实画面里明显更大</td></tr>
+      <tr><td>用时 · 花费</td><td>4.8 分钟 · $1.13</td><td>—</td></tr>
+    </table>
+    <p class="note">组织用刚体加弹簧关节搭成，没有用 flex。视场角是假设的 60°，所以器械在深度方向上没有约束，二维对得上不代表三维对。</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>数据引擎：胆囊右移 10 mm <span class="tag">稳定</span></h3>
+      <video src="chole_rollout_right10.mp4" controls loop muted playsinline></video></div>
+    <div class="card"><h3>数据引擎：胆囊往远处移 10 mm <span class="tag">稳定</span></h3>
+      <video src="chole_rollout_far10.mp4" controls loop muted playsinline></video></div>
+  </div>
+  <p class="note">20 个扰动布局都没有发散。这个片段没有任务成功的判据，所以这里只能说明仿真稳定。</p>
+
+  <h2>真实源视频</h2>
+  <div class="grid">
+    <div class="card"><h3>ROSMA X01 Post and Sleeve 01，8–25 秒（CC BY 4.0）</h3>
+      <video src="rosma_source.mp4" controls loop muted playsinline></video></div>
+    <div class="card"><h3>胆囊扭转病例视频，26–32 秒（CC BY 2.0）</h3>
+      <video src="chole_source.mp4" controls loop muted playsinline></video></div>
+  </div>
+</main>
+</body>
+</html>

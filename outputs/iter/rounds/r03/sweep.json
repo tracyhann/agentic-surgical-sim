@@ -1,0 +1,121 @@
+{
+ "gb_k_bed=0.05_mem_k=2": {
+  "gb_iou": 0.4799,
+  "gb_rigid_mm": 3.9801,
+  "gb_rot_sim": 7.7315,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.4073,
+  "gb_track_motion": 4.8,
+  "gb_push": [
+   6.53,
+   4.95
+  ],
+  "mem_iou": 0.3185,
+  "mem_rigid_mm": 7.9455,
+  "mem_nonrigid_mm": 3.1731,
+  "mem_stretch": 5.36,
+  "duct_iou": 0.3352
+ },
+ "gb_k_bed=0.05_mem_k=20": {
+  "gb_iou": 0.4694,
+  "gb_rigid_mm": 4.2158,
+  "gb_rot_sim": 8.0848,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.4919,
+  "gb_track_motion": -7.3,
+  "gb_push": [
+   6.69,
+   4.95
+  ],
+  "mem_iou": 0.2908,
+  "mem_rigid_mm": 8.1149,
+  "mem_nonrigid_mm": 3.039,
+  "mem_stretch": 3.05,
+  "duct_iou": 0.3499
+ },
+ "gb_k_bed=0.2_mem_k=2": {
+  "gb_iou": 0.5055,
+  "gb_rigid_mm": 3.6198,
+  "gb_rot_sim": 5.6023,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.5085,
+  "gb_track_motion": -17.9,
+  "gb_push": [
+   5.52,
+   4.95
+  ],
+  "mem_iou": 0.3425,
+  "mem_rigid_mm": 7.9406,
+  "mem_nonrigid_mm": 3.0527,
+  "mem_stretch": 5.43,
+  "duct_iou": 0.3928
+ },
+ "gb_k_bed=0.2_mem_k=20": {
+  "gb_iou": 0.4975,
+  "gb_rigid_mm": 3.701,
+  "gb_rot_sim": 5.5004,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.6417,
+  "gb_track_motion": -10.0,
+  "gb_push": [
+   5.47,
+   4.95
+  ],
+  "mem_iou": 0.3279,
+  "mem_rigid_mm": 8.0377,
+  "mem_nonrigid_mm": 2.8608,
+  "mem_stretch": 2.44,
+  "duct_iou": 0.408
+ },
+ "gb_k_bed=0.5_mem_k=2": {
+  "gb_iou": 0.4995,
+  "gb_rigid_mm": 3.6024,
+  "gb_rot_sim": 5.5405,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.6518,
+  "gb_track_motion": -28.1,
+  "gb_push": [
+   5.32,
+   4.95
+  ],
+  "mem_iou": 0.3447,
+  "mem_rigid_mm": 8.0624,
+  "mem_nonrigid_mm": 3.1464,
+  "mem_stretch": 5.35,
+  "duct_iou": 0.46
+ },
+ "gb_k_bed=0.5_mem_k=20": {
+  "gb_iou": 0.4921,
+  "gb_rigid_mm": 3.6813,
+  "gb_rot_sim": 5.4951,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.735,
+  "gb_track_motion": -29.9,
+  "gb_push": [
+   5.44,
+   4.95
+  ],
+  "mem_iou": 0.3163,
+  "mem_rigid_mm": 7.9201,
+  "mem_nonrigid_mm": 2.9236,
+  "mem_stretch": 2.99,
+  "duct_iou": 0.4496
+ },
+ "gb_k_bed=0.2_mem_k=20_start=recon": {
+  "gb_iou": 0.4964,
+  "gb_rigid_mm": 3.8173,
+  "gb_rot_sim": 6.0977,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 2.6996,
+  "gb_track_motion": 0.8,
+  "gb_push": [
+   5.57,
+   4.95
+  ],
+  "mem_iou": 0.328,
+  "mem_rigid_mm": 8.1967,
+  "mem_nonrigid_mm": 2.8846,
+  "mem_stretch": 2.46,
+  "duct_iou": 0.3761
+ }
+}

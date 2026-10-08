@@ -1,0 +1,9 @@
+18:58:28 chole_a: 251 frames 640x360
+WARNING: Nan, Inf or huge value in QACC at DOF 27. The simulation is unstable. Time = 0.0019.
+
+18:58:31 [sim] chole_a/template_mvd: unstable at control step 1; retrying with time step 0.0625 ms
+WARNING: Nan, Inf or huge value in QACC at DOF 27. The simulation is unstable. Time = 0.0013.
+
+18:58:35 [sim] chole_a/template_mvd: unstable at control step 1; retrying with time step 0.0312 ms
+19:04:04 [sim] chole_a/template_mvd: 1261 organ vertices, max displacement 15.3 mm, grasp {'grasper_left': {'n': 41, 'gap_mm': 3.12, 'step': 0}}
+19:04:04 chole_a sim: done in 336 s

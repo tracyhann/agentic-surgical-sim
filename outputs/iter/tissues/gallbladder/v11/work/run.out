@@ -1,0 +1,27 @@
+[v11] config {"apex_px": 90, "rest_keys": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 10.0, "ffd_size": 2.0, "scale_prior": 0.02, "scale_bounds": [[1.0, 0.85, 0.85], [1.7, 1.7, 1.7]], "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.5, "hidden_mm": 8.0, "surf_faces": 500, "cells": 16, "start_frame": 120, "iters_first": 300, "iters": 100, "lr": 0.08, "w_arap": 30.0, "w_vol": 20.0, "w_temp": 0.3, "smooth_sigma": 1.0, "arap_uniform": true, "w_barrier": 0.5, "w_anchor": 0.02, "anchor_cos": 0.35, "early_weight": 0.3, "tet_snap": "project", "w_neck": 1.0, "w_neck4d": 0.3, "depth_erode": 3, "n_pts4d": 1500, "barrier_sum": true, "tetgen_q": [15, 1.6], "sliver_weight": 1e-09, "n_surf4d": 7000, "n_cov4d": 1800, "tet_mode": "v06", "rest_from": "v10", "cams": "outputs/iter/tissues/backdrop/v08/cams_refined.npz", "membrane": "outputs/iter/tissues/membrane/v06/model.npz", "w_sheet": 3.0, "sheet_margin": 0.3}
+[masks] body area per keyframe [38546, 26361, 31972, 28124, 35374, 33973, 35735, 26948, 27056, 35728, 38866, 45823, 40222, 52023, 49963, 55573, 51684, 53783, 51938, 53482, 57255, 55450, 53147, 52274, 53386, 50639] (2 s)
+[masks] body/duct junction found in 251 frames
+[rest] rest shape and tets from v10
+[tets] quality vol/maxedge^3: median 0.039, < 0.01: 2.3 %, min 0.00147
+[tets] 1332 nodes, 5302 tets, 1720 surface faces, degenerate False
+[rest] {'neck_tip': [0.0019099999917671084, 0.049240000545978546, 0.051589999347925186], 'scale': [0.9950000047683716, 1.1619999408721924, 1.7070000171661377], 'rotvec': [1.0008000135421753, -0.6704999804496765, 0.6355999708175659], 't_mm': [-26.139999389648438, 55.68000030517578, 29.309999465942383], 'lattice_max_offset_mm': 4.65, 'fit_parts_mm': {'outside': 0.697, 'coverage': 0.297, 'depth': 3.56}, 'template_extent_cm': [6.08, 3.41, 2.07], 'rest_extent_cm': [5.98, 4.88, 3.77], 'template_volume_ml': 15.39, 'rest_volume_ml': 32.18, 'rest_vs_scaled_template_mm': {'mean': 1.77, 'max': 6.88}, 'rest_from': 'v10'}
+[sheet] membrane depth rasterised in 5 s
+[4d] frame 125: out 0.052 cov 0.049 depth 0.657 arap 0.0276 vol 0.0052 sheet viol frac 0.000 max 0.00 mm (21 s)
+[4d] frame 150: out 0.018 cov 0.097 depth 0.700 arap 0.0279 vol 0.0041 sheet viol frac 0.001 max 0.19 mm (82 s)
+[4d] frame 175: out 0.016 cov 0.085 depth 0.594 arap 0.0252 vol 0.0063 sheet viol frac 0.006 max 0.57 mm (143 s)
+[4d] frame 200: out 0.020 cov 0.100 depth 1.232 arap 0.0318 vol 0.0052 sheet viol frac 0.001 max 0.15 mm (206 s)
+[4d] frame 225: out 0.032 cov 0.054 depth 0.664 arap 0.0274 vol 0.0049 sheet viol frac 0.000 max 0.00 mm (266 s)
+[4d] frame 250: out 0.023 cov 0.046 depth 0.628 arap 0.0229 vol 0.0036 sheet viol frac 0.000 max 0.00 mm (323 s)
+[4d] frame 100: out 0.053 cov 0.044 depth 0.818 arap 0.0547 vol 0.0135 sheet viol frac 0.004 max 0.70 mm (371 s)
+[4d] frame 75: out 0.429 cov 0.007 depth 0.425 arap 0.0508 vol 0.0146 sheet viol frac 0.000 max 0.00 mm (449 s)
+[4d] frame 50: out 0.163 cov 0.009 depth 0.560 arap 0.0379 vol 0.0093 sheet viol frac 0.001 max 0.03 mm (531 s)
+[4d] frame 25: out 0.030 cov 0.008 depth 0.765 arap 0.0374 vol 0.0070 sheet viol frac 0.000 max 0.00 mm (594 s)
+[4d] frame 0: out 0.005 cov 0.039 depth 0.930 arap 0.0428 vol 0.0073 sheet viol frac 0.000 max 0.00 mm (653 s)
+[quality] shared_mask: IoU 0.7904 BF 0.3327 depth 1.1279 mm
+[quality] body_neck_mask: IoU 0.8546 BF 0.3827 depth 1.0148 mm
+[quality] temporal {'max_vertex_speed_mm_per_frame': 3.185, 'p99_vertex_speed_mm_per_frame': 1.139, 'mean_vertex_speed_mm_per_frame': 0.24, 'max_vertex_accel_mm_per_frame2': 3.281, 'centroid_path_mm': 35.37, 'centroid_range_mm': [3.4800000190734863, 5.389999866485596, 4.519999980926514]}  volume {'rest_ml': 32.18, 'ratio_min': 0.9078, 'ratio_max': 1.058}  deformation {'min_tet_det': 0.2378, 'inverted_tet_frames': 0, 'max_inverted_tets': 0, 'sampled_frames': 51, 'max_inverted_wellshaped_tets': 0, 'slivers_rest': 123, 'max_principal_stretch': 2.8797, 'edge_stretch_max': 1.9167, 'edge_stretch_p95_max': 1.1489}
+[bands] clip cams, v10: 0-61: IoU 0.751/0.833 BF 0.297/0.335 depth 1.48 mm sheet-front 0.000 | 62-129: IoU 0.791/0.840 BF 0.314/0.362 depth 1.07 mm sheet-front 0.000 | 130-250: IoU 0.799/0.864 BF 0.317/0.370 depth 1.13 mm sheet-front 0.000
+[bands] clip cams, v11: 0-61: IoU 0.743/0.825 BF 0.287/0.316 depth 1.47 mm sheet-front 0.001 | 62-129: IoU 0.792/0.841 BF 0.314/0.361 depth 1.10 mm sheet-front 0.002 | 130-250: IoU 0.800/0.864 BF 0.323/0.377 depth 1.09 mm sheet-front 0.000
+[bands] refined cams, v10: 0-61: IoU 0.744/0.820 BF 0.268/0.295 depth 1.52 mm sheet-front 0.000 | 62-129: IoU 0.787/0.833 BF 0.320/0.362 depth 1.16 mm sheet-front 0.000 | 130-250: IoU 0.797/0.862 BF 0.303/0.352 depth 1.15 mm sheet-front 0.000
+[bands] refined cams, v11: 0-61: IoU 0.750/0.831 BF 0.296/0.327 depth 1.43 mm sheet-front 0.001 | 62-129: IoU 0.794/0.841 BF 0.327/0.372 depth 1.06 mm sheet-front 0.002 | 130-250: IoU 0.801/0.865 BF 0.328/0.384 depth 1.11 mm sheet-front 0.000
+[v11] done in 889 s

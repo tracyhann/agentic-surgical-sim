@@ -1,0 +1,31 @@
+[v01] config {"apex_px": 60, "rest_keys": [60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 3.0, "ffd_size": 0.3, "scale_prior": 0.02, "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.0, "hidden_mm": 8.0, "surf_faces": 1000, "cells": 20, "start_frame": 120, "iters_first": 300, "iters": 80, "lr": 0.08, "w_arap": 20.0, "w_vol": 20.0, "w_temp": 0.1, "smooth_sigma": 1.0}
+[masks] body area per keyframe [39004, 26361, 34196, 30124, 37299, 36337, 38950, 29341, 29274, 37698, 40873, 48535, 42350, 54103, 51991, 57602, 53312, 55831, 53876, 55324, 58746, 57647, 55519, 54711, 55794, 52793] (1 s)
+[rest] pose search: best losses [4.15, 4.162, 4.162, 4.272, 4.523] (16 s)
+[rest] pose+scale: loss 4.920 parts(out,cov,depth mm) [0.513 0.442 3.009] scale [1.099 1.053 1.164] (33 s)
+[rest] + lattice: loss 4.482 parts [0.49  0.331 2.814] max offset 9.5 mm (42 s)
+[tets] 2074 nodes, 7953 tets, 2924 surface faces, degenerate False
+[rest] {'scale': [0.984000027179718, 1.2589999437332153, 1.4149999618530273], 'rotvec': [1.3229000568389893, -0.3100999891757965, 0.8532000184059143], 't_mm': [-26.209999084472656, 52.91999816894531, 27.889999389648438], 'lattice_max_offset_mm': 9.5, 'fit_parts_mm': {'outside': np.float64(0.49), 'coverage': np.float64(0.331), 'depth': np.float64(2.814)}, 'template_extent_cm': [6.08, 3.41, 2.07], 'rest_extent_cm': [6.04, 4.18, 2.89], 'template_volume_ml': 15.39, 'rest_volume_ml': 24.64, 'rest_vs_scaled_template_mm': {'mean': 1.87, 'max': 6.68}}
+[4d] frame 125: out 0.027 cov 0.069 depth 0.674 arap 0.0292 vol 0.0050 (9 s)
+[4d] frame 150: out 0.006 cov 0.122 depth 0.744 arap 0.0305 vol 0.0047 (33 s)
+[4d] frame 175: out 0.000 cov 0.068 depth 0.760 arap 0.0287 vol 0.0054 (58 s)
+[4d] frame 200: out 0.006 cov 0.102 depth 1.427 arap 0.0314 vol 0.0051 (83 s)
+[4d] frame 225: out 0.007 cov 0.048 depth 0.727 arap 0.0222 vol 0.0041 (110 s)
+[4d] frame 250: out 0.012 cov 0.035 depth 0.790 arap 0.0266 vol 0.0064 (134 s)
+[4d] frame 100: out 0.035 cov 0.085 depth 1.096 arap 0.0426 vol 0.0073 (158 s)
+[4d] frame 75: out 0.181 cov 0.008 depth 0.470 arap 0.0371 vol 0.0088 (182 s)
+[4d] frame 50: out 0.018 cov 0.013 depth 0.748 arap 0.0241 vol 0.0066 (207 s)
+[4d] frame 25: out 0.006 cov 0.028 depth 0.602 arap 0.0315 vol 0.0050 (231 s)
+[4d] frame 0: out 0.026 cov 0.044 depth 0.874 arap 0.0369 vol 0.0066 (254 s)
+[quality] shared_mask: IoU 0.8105 BF 0.3043 depth 1.2718 mm
+[quality] body_neck_mask: IoU 0.8604 BF 0.353 depth 1.1945 mm
+[quality] temporal {'max_vertex_speed_mm_per_frame': 3.833, 'p99_vertex_speed_mm_per_frame': 1.187, 'mean_vertex_speed_mm_per_frame': 0.401, 'max_vertex_accel_mm_per_frame2': 3.001, 'centroid_path_mm': 72.54, 'centroid_range_mm': [7.489999771118164, 9.289999961853027, 8.300000190734863]}  volume {'rest_ml': 24.64, 'ratio_min': 0.9527, 'ratio_max': 1.021}  deformation {'min_tet_det': -12.7374, 'inverted_tet_frames': 50, 'max_principal_stretch': 26.9825, 'edge_stretch_max': 29.7654, 'edge_stretch_p95_max': 1.2431}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/gallbladder.py", line 639, in <module>
+    build(sys.argv[1] if len(sys.argv) > 1 else 'v01')
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/gallbladder.py", line 633, in build
+    views3d(nodes, faces, d / 'views3d.jpg', attach)
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/gallbladder.py", line 508, in views3d
+    import matplotlib
+ModuleNotFoundError: No module named 'matplotlib'

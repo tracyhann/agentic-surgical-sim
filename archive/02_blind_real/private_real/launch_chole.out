@@ -1,0 +1,19 @@
+{
+ "instance": "chole_sweep",
+ "model": "claude-opus-5-5",
+ "minutes": 45,
+ "started": "2026-10-06 17:53:16",
+ "exit": 0,
+ "timeout": false,
+ "seconds": 286,
+ "results": [
+  {
+   "cost": 1.1347554,
+   "turns": 18,
+   "is_error": false,
+   "result": "The package is in `out/`, `validate` prints `OK`, and the physical replay runs through with the grasp holding for the whole episode. It is a qualitative match: instrument paths and timing follow the video, but the tissue response is weaker than in the real clip.\n\n**How I read the video**\n- `grasper_"
+  }
+ ],
+ "cost_usd": 1.1347554,
+ "leaks": []
+}

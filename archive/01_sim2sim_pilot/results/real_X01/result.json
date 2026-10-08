@@ -1,0 +1,96 @@
+{
+ "package": "/Users/grandpa/phai/medical-agentic-sim/runs/real_X01/out",
+ "build": true,
+ "validate_errors": [],
+ "lifted": true,
+ "handoff": true,
+ "placed": true,
+ "progress": 1.0,
+ "success": true,
+ "image_space": {
+  "sleeve_start_px": 10.3,
+  "sleeve_end_px": 8.0,
+  "sleeve_traj_px": 47.8,
+  "L_tip_start_px": 27.6,
+  "L_tip_traj_px": 78.8,
+  "R_tip_start_px": 18.8,
+  "R_tip_traj_px": 76.6
+ },
+ "clip_s": 21.0,
+ "rollout_s": 20.05,
+ "rollouts": {
+  "n": 8,
+  "placed_rate": 1.0,
+  "rows": [
+   {
+    "layout": "target_right_5mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_right_10mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_far_5mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_far_10mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_left_5mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_left_10mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_near_5mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   },
+   {
+    "layout": "target_near_10mm",
+    "lifted": true,
+    "handoff": true,
+    "placed": true
+   }
+  ]
+ },
+ "rollout_videos": {
+  "target_right_10mm": true,
+  "target_far_10mm": true
+ },
+ "agent": {
+  "trial": "X01",
+  "clip": [
+   5.0,
+   26.0
+  ],
+  "model": "claude-opus-5-5",
+  "minutes": 45,
+  "started": "2026-10-06 17:48:55",
+  "exit": 0,
+  "timeout": false,
+  "seconds": 700,
+  "cost_usd": 2.2662716,
+  "leaks": [
+   "private"
+  ]
+ }
+}

@@ -1,0 +1,3 @@
+18:58:08 endonerf_pulling: 63 frames 640x512
+18:58:13 [eval] primitive: outline_iou 0.515 (static 0.596), depth_err_mm_monocular 5.18 (static 5.14), depth_err_mm_stereo 19.26 (static 15.27), track_err_px 5.71 (static 5.93), n_track_samples 162 (static 175), n_track_seeds 3 (static 3), track_err_px_frame0_seed 2.55 (static 2.55), n_track_samples_frame0_seed 49 (static 49), track_by_seed [[0, 2.55, 2.55, 49], [50, 6.49, 19.38, 111]] (static [[0, 2.55, 2.55, 49], [25, 42.69, 42.69, 30], [50, 5.01, 5.01, 96]]), track_seeds_better_than_static 1 (static 0)
+18:58:13 endonerf_pulling eval: done in 6 s

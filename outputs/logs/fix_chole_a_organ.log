@@ -1,0 +1,5 @@
+18:07:31 chole_a: 251 frames 640x360
+18:07:31 [organ] measured: 766 vertices, 2013 tets, 364 anchored, 38 pinned
+18:07:35 [organ] template: {'kind': 'template', 'template': 'gallbladder', 'scale': [0.858, 1.962, 3.286], 'pose_fit_median_mm': 1.69}
+18:07:36 [organ] template: 956 vertices, 3529 tets, 605 anchored, 0 pinned
+18:07:36 chole_a organ: done in 5 s

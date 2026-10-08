@@ -1,0 +1,12 @@
+{
+ "probe_initial_backoff_mm": 7.0,
+ "k_gb": 0.5,
+ "k_fold": 8.0,
+ "young": 500.0,
+ "friction": 0.3,
+ "probe_retargeted_steps": 7,
+ "grasp_vertices": [],
+ "grasp_gap_mm": null,
+ "tissue_max_disp_mm": 0.0,
+ "tissue_p95_disp_mm": 0.0
+}

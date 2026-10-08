@@ -1,0 +1,34 @@
+18:30:17 chole_a+ba prep measured primitive template template_fit ok 29 s
+18:32:30 chole_a+ba scene measured primitive template template_fit ok 133 s
+18:32:49 chole_a+ba organ measured primitive template template_fit ok 19 s
+18:34:15 chole_a+ba sim primitive ok 86 s
+18:34:30 chole_a+ba sim template ok 101 s
+18:35:06 chole_a+ba sim template_fit ok 137 s
+18:35:56 chole_a+ba sim measured ok 187 s
+18:35:59 chole_a+ba eval template FAILED (1) 3 s
+18:36:11 chole_a+ba eval primitive ok 15 s
+18:36:17 chole_a+ba eval measured ok 21 s
+18:36:20 chole_a+ba eval template_fit ok 24 s
+18:36:27 chole_a+ba render primitive ok 7 s
+18:36:28 chole_a+ba render template ok 8 s
+18:36:28 chole_a+ba render template_fit ok 8 s
+18:36:30 chole_a+ba render measured ok 9 s
+18:36:46 chole_a+ba compare measured primitive template template_fit ok 16 s
+18:37:24 chole_a+sift prep measured primitive template template_fit ok 38 s
+18:39:15 chole_a+sift scene measured primitive template template_fit ok 111 s
+18:39:33 chole_a+sift organ measured primitive template template_fit ok 18 s
+18:40:57 chole_a+sift sim primitive ok 84 s
+18:42:09 chole_a+sift sim template_fit ok 157 s
+18:42:33 chole_a+sift sim measured ok 180 s
+18:45:41 chole_a+sift sim template FAILED (1) 369 s
+18:45:43 chole_a+sift eval template FAILED (1) 2 s
+18:45:55 chole_a+sift eval template_fit ok 14 s
+18:45:58 chole_a+sift eval primitive ok 16 s
+18:46:02 chole_a+sift eval measured ok 20 s
+18:46:04 chole_a+sift render template FAILED (1) 2 s
+18:46:09 chole_a+sift render template_fit ok 7 s
+18:46:09 chole_a+sift render primitive ok 7 s
+18:46:12 chole_a+sift render measured ok 10 s
+18:46:14 chole_a+sift compare measured primitive template template_fit FAILED (1) 2 s
+18:47:54 chole_a+vggt_tracks prep measured primitive template template_fit ok 100 s
+18:49:56 chole_a+vggt_tracks scene measured primitive template template_fit FAILED (1) 122 s

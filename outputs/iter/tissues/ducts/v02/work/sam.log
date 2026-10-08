@@ -1,0 +1,4 @@
+[transformers] `memory_attention_rope_theta` is deprecated and will be removed in v5.0. Use `rope_parameters['rope_theta']` instead.
+Loading weights:   0%|          | 0/469 [00:00<?, ?it/s]Loading weights: 100%|██████████| 469/469 [00:00<00:00, 12553.79it/s]
+SAM strands: 77 s
+{'duct': 847059, 'strands': 631294}

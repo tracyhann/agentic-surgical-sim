@@ -1,0 +1,130 @@
+{
+ "sim": {
+  "outline_iou": 0.262,
+  "iou_curve": [
+   0.407,
+   0.393,
+   0.306,
+   0.359,
+   0.249,
+   0.33,
+   0.254,
+   0.231,
+   0.167,
+   0.2,
+   0.242,
+   0.26,
+   0.27,
+   0.001
+  ],
+  "depth_err_mm_monocular": 12.57,
+  "depth_curve_monocular": [
+   1.91,
+   4.08,
+   2.37,
+   3.23,
+   7.62,
+   9.45,
+   16.91,
+   23.23,
+   23.53,
+   26.08,
+   22.62,
+   16.91,
+   7.79,
+   10.23
+  ],
+  "track_err_px": 16.58,
+  "track_err_px_static": 13.51,
+  "n_tracks": 173,
+  "n_track_samples": 892,
+  "n_track_seeds": 3,
+  "track_err_px_frame0_seed": 20.97,
+  "n_track_samples_frame0_seed": 403,
+  "track_by_seed": [
+   [
+    0,
+    20.97,
+    16.15,
+    403
+   ],
+   [
+    25,
+    11.83,
+    8.75,
+    392
+   ],
+   [
+    50,
+    17.06,
+    15.83,
+    97
+   ]
+  ],
+  "track_seeds_better_than_static": 0
+ },
+ "static": {
+  "outline_iou": 0.275,
+  "iou_curve": [
+   0.407,
+   0.383,
+   0.397,
+   0.398,
+   0.277,
+   0.33,
+   0.258,
+   0.234,
+   0.173,
+   0.207,
+   0.247,
+   0.262,
+   0.274,
+   0.001
+  ],
+  "depth_err_mm_monocular": 12.5,
+  "depth_curve_monocular": [
+   1.91,
+   2.13,
+   2.1,
+   2.36,
+   7.76,
+   9.56,
+   17.06,
+   23.29,
+   23.58,
+   26.65,
+   22.73,
+   16.98,
+   7.81,
+   11.06
+  ],
+  "track_err_px": 13.51,
+  "track_err_px_static": 13.51,
+  "n_tracks": 173,
+  "n_track_samples": 892,
+  "n_track_seeds": 3,
+  "track_err_px_frame0_seed": 16.15,
+  "n_track_samples_frame0_seed": 403,
+  "track_by_seed": [
+   [
+    0,
+    16.15,
+    16.15,
+    403
+   ],
+   [
+    25,
+    8.77,
+    8.77,
+    392
+   ],
+   [
+    50,
+    15.81,
+    15.81,
+    97
+   ]
+  ],
+  "track_seeds_better_than_static": 0
+ }
+}

@@ -1,0 +1,3 @@
+18:44:12 chole_6s: 151 frames 640x360
+18:45:05 [sim] chole_6s/primitive: 1166 organ vertices, max displacement 18.91 mm, grasp {'grasper_left': {'n': 18, 'gap_mm': 1.02, 'step': 0}}
+18:45:05 chole_6s sim: done in 54 s

@@ -1,0 +1,35 @@
+[v12] config {"apex_px": 90, "rest_keys": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 10.0, "ffd_size": 2.0, "scale_prior": 0.02, "scale_bounds": [[1.0, 0.85, 0.85], [1.7, 1.7, 1.7]], "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.5, "hidden_mm": 8.0, "surf_faces": 500, "cells": 16, "start_frame": 120, "iters_first": 300, "iters": 100, "lr": 0.08, "w_arap": 30.0, "w_vol": 20.0, "w_temp": 0.3, "smooth_sigma": 1.0, "arap_uniform": true, "w_barrier": 0.5, "w_anchor": 0.02, "anchor_cos": 0.35, "early_weight": 0.3, "tet_snap": "project", "w_neck": 1.0, "w_neck4d": 0.5, "depth_erode": 3, "n_pts4d": 1500, "barrier_sum": true, "tetgen_q": [15, 1.6], "sliver_weight": 1e-09, "n_surf4d": 7000, "n_cov4d": 1800, "tet_mode": "bcc", "rest_from": null, "cams": "outputs/iter/tissues/backdrop/v08/cams_refined.npz", "membrane": "outputs/iter/tissues/membrane/v07/model.npz", "w_sheet": 3.0, "sheet_margin": 0.3, "duct_masks": "outputs/iter/tissues/ducts/v10/masks.npz", "neck_target": "outputs/iter/tissues/ducts/v10/model.npz", "neck_cap_mm": 2.0, "neck_nodes_mm": 3.0, "bcc_nodes": 1330, "band_ref": "v11", "mujoco_check": true}
+[masks] body area per keyframe [38546, 26361, 31972, 28124, 35374, 33973, 35735, 26948, 27056, 35728, 38866, 45823, 40222, 52023, 49963, 55573, 51684, 53783, 51938, 53482, 57255, 55450, 53147, 52274, 53386, 50639] (2 s)
+[masks] body/duct junction found in 251 frames
+[rest] pose search: best losses [8.476, 8.558, 8.607, 8.883, 9.527] (25 s)
+[rest] pose+scale: loss 8.679 parts(out,cov,depth mm) [0.569 0.59  4.196] scale [0.98  1.097 1.703] (49 s)
+[rest] + lattice: loss 7.932 parts [0.68  0.379 3.818] max offset 8.1 mm (63 s)
+[rest] neck tip vs junction: median 2.3 (mm, 3D) over 26 keyframes
+[bcc] h 3.81 mm: {'n_nodes': 1383, 'n_tets': 6186, 'mean_ratio': {'min': 0.1018, 'p1': 0.5515, 'p5': 0.6804, 'median': 0.9198}, 'volume_over_median': {'min': 0.0869, 'p1': 0.3115, 'p5': 0.4861, 'median': 1.0}, 'min_dihedral_deg': {'min': 6.5108, 'p1': 30.5099, 'p5': 38.5884, 'median': 57.7791}}
+[tets] quality vol/maxedge^3: median 0.078, < 0.01: 0.0 %, min 0.00595
+[tets] 1383 nodes, 6186 tets, 1222 surface faces, degenerate False
+[rest] {'neck_tip': [0.002859999891370535, 0.057110000401735306, 0.0456399992108345], 'scale': [0.9909999966621399, 1.2070000171661377, 1.7009999752044678], 'rotvec': [1.360200047492981, -0.4603999853134155, 0.885200023651123], 't_mm': [-27.65999984741211, 54.560001373291016, 27.739999771118164], 'lattice_max_offset_mm': 8.06, 'fit_parts_mm': {'outside': np.float64(0.68), 'coverage': np.float64(0.379), 'depth': np.float64(3.818)}, 'template_extent_cm': [6.08, 3.41, 2.07], 'rest_extent_cm': [5.22, 4.07, 3.3], 'template_volume_ml': 15.39, 'rest_volume_ml': 28.58, 'rest_vs_scaled_template_mm': {'mean': 1.71, 'max': 6.71}}
+[sheet] membrane depth rasterised in 3 s
+[4d] frame 125: out 0.052 cov 0.081 depth 0.518 arap 0.0275 vol 0.0054 sheet viol frac 0.000 max 0.00 mm (17 s)
+[4d] frame 150: out 0.019 cov 0.147 depth 0.696 arap 0.0310 vol 0.0061 sheet viol frac 0.001 max 0.32 mm (66 s)
+[4d] frame 175: out 0.002 cov 0.120 depth 0.610 arap 0.0269 vol 0.0106 sheet viol frac 0.005 max 0.77 mm (117 s)
+[4d] frame 200: out 0.009 cov 0.147 depth 1.267 arap 0.0291 vol 0.0062 sheet viol frac 0.000 max 0.00 mm (167 s)
+[4d] frame 225: out 0.008 cov 0.053 depth 0.558 arap 0.0197 vol 0.0039 sheet viol frac 0.000 max 0.00 mm (217 s)
+[4d] frame 250: out 0.018 cov 0.039 depth 0.430 arap 0.0205 vol 0.0057 sheet viol frac 0.000 max 0.00 mm (265 s)
+[4d] frame 100: out 0.086 cov 0.077 depth 1.131 arap 0.0576 vol 0.0127 sheet viol frac 0.001 max 0.12 mm (310 s)
+[4d] frame 75: out 0.534 cov 0.003 depth 0.343 arap 0.0457 vol 0.0133 sheet viol frac 0.011 max 1.24 mm (356 s)
+[4d] frame 50: out 0.333 cov 0.018 depth 0.491 arap 0.0335 vol 0.0074 sheet viol frac 0.004 max 3.34 mm (400 s)
+[4d] frame 25: out 0.036 cov 0.020 depth 0.527 arap 0.0366 vol 0.0061 sheet viol frac 0.002 max 0.84 mm (439 s)
+[4d] frame 0: out 0.008 cov 0.057 depth 1.006 arap 0.0650 vol 0.0106 sheet viol frac 0.007 max 2.43 mm (476 s)
+[quality] shared_mask: IoU 0.7973 BF 0.2941 depth 0.978 mm
+[quality] body_neck_mask: IoU 0.8417 BF 0.3286 depth 0.8701 mm
+[quality] temporal {'max_vertex_speed_mm_per_frame': 3.815, 'p99_vertex_speed_mm_per_frame': 1.085, 'mean_vertex_speed_mm_per_frame': 0.296, 'max_vertex_accel_mm_per_frame2': 2.69, 'centroid_path_mm': 55.82, 'centroid_range_mm': [6.199999809265137, 8.390000343322754, 6.050000190734863]}  volume {'rest_ml': 28.58, 'ratio_min': 0.949, 'ratio_max': 1.0405}  deformation {'min_tet_det': 0.1955, 'inverted_tet_frames': 0, 'max_inverted_tets': 0, 'sampled_frames': 51, 'max_inverted_wellshaped_tets': 0, 'slivers_rest': 1, 'max_principal_stretch': 2.1776, 'edge_stretch_max': 2.9657, 'edge_stretch_p95_max': 1.195}
+[bands] clip cams, v11: 0-61: IoU 0.743/0.809 BF 0.287/0.307 depth 1.47 mm sheet-front 0.001 duct-covered 0.231 | 62-129: IoU 0.792/0.825 BF 0.314/0.351 depth 1.10 mm sheet-front 0.000 duct-covered 0.230 | 130-250: IoU 0.800/0.858 BF 0.323/0.372 depth 1.09 mm sheet-front 0.000 duct-covered 0.156
+[bands] clip cams, v12: 0-61: IoU 0.778/0.826 BF 0.278/0.297 depth 1.05 mm sheet-front 0.004 duct-covered 0.002 | 62-129: IoU 0.804/0.824 BF 0.319/0.324 depth 0.93 mm sheet-front 0.003 duct-covered 0.020 | 130-250: IoU 0.792/0.856 BF 0.255/0.303 depth 0.97 mm sheet-front 0.000 duct-covered 0.002
+[bands] refined cams, v11: 0-61: IoU 0.750/0.816 BF 0.296/0.319 depth 1.43 mm sheet-front 0.001 duct-covered 0.218 | 62-129: IoU 0.794/0.826 BF 0.327/0.363 depth 1.06 mm sheet-front 0.000 duct-covered 0.228 | 130-250: IoU 0.801/0.859 BF 0.328/0.378 depth 1.11 mm sheet-front 0.000 duct-covered 0.163
+[bands] refined cams, v12: 0-61: IoU 0.786/0.832 BF 0.283/0.304 depth 0.98 mm sheet-front 0.004 duct-covered 0.003 | 62-129: IoU 0.805/0.824 BF 0.315/0.312 depth 0.89 mm sheet-front 0.003 duct-covered 0.019 | 130-250: IoU 0.794/0.859 BF 0.261/0.312 depth 0.98 mm sheet-front 0.000 duct-covered 0.002
+[neck] v11: 0-61: tip-junction depth -12.6 mm, 3D 13.0 mm, 23 px | 62-129: tip-junction depth -9.4 mm, 3D 11.0 mm, 25 px | 130-250: tip-junction depth -5.1 mm, 3D 5.9 mm, 18 px
+[neck] v12: 0-61: tip-junction depth -1.1 mm, 3D 5.8 mm, 26 px | 62-129: tip-junction depth -2.4 mm, 3D 5.7 mm, 23 px | 130-250: tip-junction depth -1.2 mm, 3D 3.1 mm, 13 px
+[mujoco] v11: push_frame60: max 7 end 13, push_frame180: max 88 end 78, push_frame250: max 62 end 57, bed_to_frame0: max 1 end 1
+[mujoco] this: push_frame60: max 0 end 0, push_frame180: max 6 end 6, push_frame250: max 0 end 0, bed_to_frame0: max 3 end 2
+[v12] done in 713 s

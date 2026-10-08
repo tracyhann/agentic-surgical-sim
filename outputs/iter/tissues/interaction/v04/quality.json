@@ -1,0 +1,744 @@
+{
+ "version": "v04",
+ "cfg": {
+  "n_samples": 12,
+  "sig_tip": 1.0,
+  "sig_axis": 2.0,
+  "sig_w": 1.5,
+  "w_width": 1.0,
+  "sig_acc": 0.001,
+  "sig_dlogz": 0.03,
+  "tip_excl_w": 1.5,
+  "reach_min": 0.06,
+  "reach_max": 0.26,
+  "kappa0": 1.0,
+  "sig_kappa": 0.25,
+  "port_starts": [
+   0.12,
+   0.2
+  ],
+  "max_nfev": 60,
+  "sharp_ref": 52.80743,
+  "w_free": 0.0,
+  "free_margin": 0.0025,
+  "free_off": 8,
+  "w_tipz": 0.0,
+  "contact_tol_mm": 2.0,
+  "fit_kappa": true,
+  "w_dav2": 1.0,
+  "sig_dav2": 0.006,
+  "axis_decay": 120.0,
+  "tip_on_axis": true
+ },
+ "metrics_meaning": {
+  "tip_px": "distance (px) between the projected distal end and the far end of the instrument mask along its axis (frames with a mask whose far end is not on the image border)",
+  "ang_deg": "angle between the projected shaft and the mask axis (deg)",
+  "offset_px": "median distance of the mask centre-line samples from the projected shaft line (px)",
+  "iou": "IoU of the rendered cylinder (tip back to the port, both instruments z-buffered) with the instrument mask; diameter kappa * 5 mm (the shaft as it appears in the V.depth frame; kappa = 1 for the old tracks)",
+  "speed_mm": "3D speed of the distal end (mm / frame)",
+  "acc_mm": "3D acceleration (mm / frame^2)",
+  "port": "independent per-frame 3D shaft lines (from widths) -> spread around their common point, distance from the fitted port; plane_dist = distance of the port from each frame's back-projected axis plane (depth-free)",
+  "probe_indent_mm": "camera depth of the probe tip minus median V.depth of tissue 4-14 px around it (+ = tip deeper than the surrounding surface)",
+  "grasper_tissue_gap_mm": "same measure at the grasper jaw tip (the tented sheet / tissue around it)",
+  "shaft_tissue_gap_mm": "tissue depth beside the visible shaft minus the shaft depth there (negative = shaft behind the tissue it is seen in front of: inconsistent with V.depth)"
+ },
+ "old": {
+  "grasper_left": {
+   "tip_px": {
+    "mean": 23.1027,
+    "median": 15.4316,
+    "p10": 7.8951,
+    "min": 3.9231,
+    "max": 78.8042,
+    "n": 251
+   },
+   "ang_deg": {
+    "mean": 4.5775,
+    "median": 2.2194,
+    "p10": 0.7667,
+    "min": 0.0059,
+    "max": 13.7147,
+    "n": 251
+   },
+   "offset_px": {
+    "mean": 14.1265,
+    "median": 3.9268,
+    "p10": 1.5159,
+    "min": 0.3596,
+    "max": 43.0775,
+    "n": 251
+   },
+   "iou": {
+    "mean": 0.5101,
+    "median": 0.7279,
+    "p10": 0.0791,
+    "min": 0.0001,
+    "max": 0.8248,
+    "n": 251
+   },
+   "speed_mm": {
+    "mean": 0.4683,
+    "median": 0.4073,
+    "p10": 0.1546,
+    "min": 0.0255,
+    "max": 1.6441,
+    "n": 250
+   },
+   "acc_mm": {
+    "mean": 0.2291,
+    "median": 0.1686,
+    "p10": 0.0606,
+    "min": 0.0154,
+    "max": 1.1284,
+    "n": 249
+   },
+   "after_pan": {
+    "tip_px": {
+     "mean": 16.8683,
+     "median": 11.5387,
+     "p10": 7.3871,
+     "min": 3.9231,
+     "max": 37.0521,
+     "n": 188
+    },
+    "ang_deg": {
+     "mean": 5.1188,
+     "median": 2.356,
+     "p10": 0.852,
+     "min": 0.042,
+     "max": 13.7147,
+     "n": 188
+    },
+    "offset_px": {
+     "mean": 6.8476,
+     "median": 2.6483,
+     "p10": 1.4587,
+     "min": 0.3596,
+     "max": 27.4525,
+     "n": 188
+    },
+    "iou": {
+     "mean": 0.6439,
+     "median": 0.7611,
+     "p10": 0.1965,
+     "min": 0.1373,
+     "max": 0.8248,
+     "n": 188
+    },
+    "speed_mm": {
+     "mean": 0.4075,
+     "median": 0.371,
+     "p10": 0.1344,
+     "min": 0.0255,
+     "max": 1.2511,
+     "n": 187
+    },
+    "acc_mm": {
+     "mean": 0.2091,
+     "median": 0.1469,
+     "p10": 0.0505,
+     "min": 0.0154,
+     "max": 1.1042,
+     "n": 187
+    }
+   },
+   "port": {
+    "common_point": [
+     -0.02947,
+     0.05632,
+     0.06814
+    ],
+    "line_spread_mm": {
+     "mean": 2.942,
+     "median": 2.5179,
+     "p10": 1.257,
+     "min": 0.4449,
+     "max": 8.7484,
+     "n": 212
+    },
+    "lines_to_port_mm": {
+     "mean": 42.8916,
+     "median": 45.9882,
+     "p10": 23.3304,
+     "min": 3.0728,
+     "max": 70.3386,
+     "n": 212
+    },
+    "port_to_common_mm": 99.55412,
+    "plane_dist_mm": {
+     "mean": 6.8821,
+     "median": 3.1629,
+     "p10": 1.0824,
+     "min": 0.0043,
+     "max": 21.3202,
+     "n": 251
+    },
+    "n_lines": 212
+   },
+   "shaft_tissue_gap_mm": {
+    "distal_half": {
+     "mean": 6.9197,
+     "median": 7.6431,
+     "p10": 0.1513,
+     "min": -3.2117,
+     "max": 20.3001,
+     "n": 251
+    },
+    "frac_frames_negative": 0.09163
+   }
+  },
+  "probe_right": {
+   "tip_px": {
+    "mean": 31.3799,
+    "median": 29.5872,
+    "p10": 22.4562,
+    "min": 2.8429,
+    "max": 134.8481,
+    "n": 241
+   },
+   "ang_deg": {
+    "mean": 1.6883,
+    "median": 1.0163,
+    "p10": 0.1479,
+    "min": 0.0023,
+    "max": 13.7573,
+    "n": 241
+   },
+   "offset_px": {
+    "mean": 5.9597,
+    "median": 4.5313,
+    "p10": 1.6434,
+    "min": 0.2286,
+    "max": 29.2232,
+    "n": 238
+   },
+   "iou": {
+    "mean": 0.638,
+    "median": 0.6985,
+    "p10": 0.373,
+    "min": 0.0,
+    "max": 0.8547,
+    "n": 244
+   },
+   "speed_mm": {
+    "mean": 1.0322,
+    "median": 0.7087,
+    "p10": 0.2276,
+    "min": 0.061,
+    "max": 5.3442,
+    "n": 250
+   },
+   "acc_mm": {
+    "mean": 0.3239,
+    "median": 0.2233,
+    "p10": 0.0983,
+    "min": 0.0066,
+    "max": 3.8805,
+    "n": 249
+   },
+   "after_pan": {
+    "tip_px": {
+     "mean": 30.7443,
+     "median": 28.2804,
+     "p10": 21.9038,
+     "min": 2.8429,
+     "max": 134.8481,
+     "n": 178
+    },
+    "ang_deg": {
+     "mean": 1.7527,
+     "median": 1.0544,
+     "p10": 0.1391,
+     "min": 0.0023,
+     "max": 13.7573,
+     "n": 178
+    },
+    "offset_px": {
+     "mean": 5.1283,
+     "median": 3.7045,
+     "p10": 1.5426,
+     "min": 0.2286,
+     "max": 23.1919,
+     "n": 175
+    },
+    "iou": {
+     "mean": 0.6404,
+     "median": 0.6969,
+     "p10": 0.3734,
+     "min": 0.0,
+     "max": 0.8502,
+     "n": 181
+    },
+    "speed_mm": {
+     "mean": 1.1348,
+     "median": 0.7079,
+     "p10": 0.2028,
+     "min": 0.061,
+     "max": 5.3442,
+     "n": 187
+    },
+    "acc_mm": {
+     "mean": 0.3464,
+     "median": 0.2162,
+     "p10": 0.0876,
+     "min": 0.0066,
+     "max": 3.8805,
+     "n": 187
+    }
+   },
+   "port": {
+    "common_point": [
+     0.01008,
+     0.06717,
+     0.05535
+    ],
+    "line_spread_mm": {
+     "mean": 6.5508,
+     "median": 6.2028,
+     "p10": 3.2493,
+     "min": 1.4496,
+     "max": 15.3591,
+     "n": 232
+    },
+    "lines_to_port_mm": {
+     "mean": 18.8124,
+     "median": 17.4796,
+     "p10": 8.4799,
+     "min": 0.6179,
+     "max": 47.1609,
+     "n": 232
+    },
+    "port_to_common_mm": 47.60664,
+    "plane_dist_mm": {
+     "mean": 2.2095,
+     "median": 1.3956,
+     "p10": 0.2743,
+     "min": 0.0047,
+     "max": 12.4866,
+     "n": 241
+    },
+    "n_lines": 232
+   },
+   "shaft_tissue_gap_mm": {
+    "distal_half": {
+     "mean": 9.9845,
+     "median": 10.0135,
+     "p10": 5.3346,
+     "min": 1.1931,
+     "max": 17.8283,
+     "n": 235
+    },
+    "frac_frames_negative": 0.0
+   }
+  }
+ },
+ "new": {
+  "grasper_left": {
+   "tip_px": {
+    "mean": 2.5404,
+    "median": 1.9145,
+    "p10": 0.6045,
+    "min": 0.0423,
+    "max": 11.4098,
+    "n": 251
+   },
+   "ang_deg": {
+    "mean": 3.8024,
+    "median": 2.5646,
+    "p10": 0.5021,
+    "min": 0.0031,
+    "max": 18.1657,
+    "n": 251
+   },
+   "offset_px": {
+    "mean": 1.4764,
+    "median": 1.1511,
+    "p10": 0.648,
+    "min": 0.3471,
+    "max": 9.8091,
+    "n": 251
+   },
+   "iou": {
+    "mean": 0.8255,
+    "median": 0.8347,
+    "p10": 0.7654,
+    "min": 0.4346,
+    "max": 0.9294,
+    "n": 251
+   },
+   "speed_mm": {
+    "mean": 0.7209,
+    "median": 0.5771,
+    "p10": 0.2461,
+    "min": 0.0436,
+    "max": 2.716,
+    "n": 250
+   },
+   "acc_mm": {
+    "mean": 0.46,
+    "median": 0.4186,
+    "p10": 0.1815,
+    "min": 0.0543,
+    "max": 1.1778,
+    "n": 249
+   },
+   "after_pan": {
+    "tip_px": {
+     "mean": 2.6363,
+     "median": 2.1353,
+     "p10": 0.887,
+     "min": 0.0759,
+     "max": 6.8322,
+     "n": 188
+    },
+    "ang_deg": {
+     "mean": 4.1296,
+     "median": 2.9368,
+     "p10": 0.8002,
+     "min": 0.0031,
+     "max": 11.2968,
+     "n": 188
+    },
+    "offset_px": {
+     "mean": 1.0944,
+     "median": 1.0491,
+     "p10": 0.6081,
+     "min": 0.3471,
+     "max": 2.4412,
+     "n": 188
+    },
+    "iou": {
+     "mean": 0.8278,
+     "median": 0.8292,
+     "p10": 0.7733,
+     "min": 0.7199,
+     "max": 0.9294,
+     "n": 188
+    },
+    "speed_mm": {
+     "mean": 0.6088,
+     "median": 0.514,
+     "p10": 0.1985,
+     "min": 0.0436,
+     "max": 1.8368,
+     "n": 187
+    },
+    "acc_mm": {
+     "mean": 0.413,
+     "median": 0.3715,
+     "p10": 0.1732,
+     "min": 0.0708,
+     "max": 1.1226,
+     "n": 187
+    }
+   },
+   "port": {
+    "common_point": [
+     -0.02941,
+     0.05621,
+     0.0682
+    ],
+    "line_spread_mm": {
+     "mean": 2.9393,
+     "median": 2.5163,
+     "p10": 1.2588,
+     "min": 0.4504,
+     "max": 8.7235,
+     "n": 212
+    },
+    "lines_to_port_mm": {
+     "mean": 31.2309,
+     "median": 28.4499,
+     "p10": 7.3308,
+     "min": 2.0791,
+     "max": 133.6623,
+     "n": 212
+    },
+    "port_to_common_mm": 156.86686,
+    "plane_dist_mm": {
+     "mean": 6.3852,
+     "median": 4.2348,
+     "p10": 0.8294,
+     "min": 0.0099,
+     "max": 29.559,
+     "n": 251
+    },
+    "n_lines": 212
+   },
+   "fit": {
+    "rcm": [
+     -0.0147,
+     -0.0167,
+     0.2063
+    ],
+    "kappa": 0.99796,
+    "cost": 2599.74695,
+    "parts": {
+     "tip": 2408.07773,
+     "axis": 1988.27844,
+     "side": 0.61006,
+     "width": 1565.56451,
+     "dav2": 689.1997,
+     "smooth": 69.26672,
+     "smooth_z": 16.80544,
+     "outside": 0.0,
+     "port": 7e-05
+    },
+    "reach_mm": {
+     "mean": 177.2649,
+     "median": 176.1036,
+     "p10": 170.4658,
+     "min": 164.9802,
+     "max": 188.1773,
+     "n": 251
+    },
+    "joints_clamped": 0,
+    "joints_clamp_err_mm": 0.0
+   },
+   "shaft_tissue_gap_mm": {
+    "distal_half": {
+     "mean": 3.2011,
+     "median": 3.393,
+     "p10": -3.2761,
+     "min": -6.8025,
+     "max": 14.8726,
+     "n": 251
+    },
+    "frac_frames_negative": 0.25896
+   }
+  },
+  "probe_right": {
+   "tip_px": {
+    "mean": 0.649,
+    "median": 0.5521,
+    "p10": 0.1583,
+    "min": 0.0196,
+    "max": 2.593,
+    "n": 241
+   },
+   "ang_deg": {
+    "mean": 1.5073,
+    "median": 1.5073,
+    "p10": 0.2365,
+    "min": 0.0038,
+    "max": 6.5243,
+    "n": 241
+   },
+   "offset_px": {
+    "mean": 3.8801,
+    "median": 3.3518,
+    "p10": 0.651,
+    "min": 0.3228,
+    "max": 13.5499,
+    "n": 238
+   },
+   "iou": {
+    "mean": 0.7446,
+    "median": 0.7556,
+    "p10": 0.5157,
+    "min": 0.0,
+    "max": 0.9445,
+    "n": 245
+   },
+   "speed_mm": {
+    "mean": 1.3573,
+    "median": 1.0317,
+    "p10": 0.3236,
+    "min": 0.0444,
+    "max": 10.1836,
+    "n": 250
+   },
+   "acc_mm": {
+    "mean": 0.9339,
+    "median": 0.6827,
+    "p10": 0.2491,
+    "min": 0.1174,
+    "max": 7.0792,
+    "n": 249
+   },
+   "after_pan": {
+    "tip_px": {
+     "mean": 0.6107,
+     "median": 0.4012,
+     "p10": 0.1448,
+     "min": 0.0196,
+     "max": 2.593,
+     "n": 178
+    },
+    "ang_deg": {
+     "mean": 1.6088,
+     "median": 1.6168,
+     "p10": 0.4274,
+     "min": 0.0605,
+     "max": 6.5243,
+     "n": 178
+    },
+    "offset_px": {
+     "mean": 3.8569,
+     "median": 3.4522,
+     "p10": 0.9117,
+     "min": 0.3228,
+     "max": 12.881,
+     "n": 175
+    },
+    "iou": {
+     "mean": 0.7291,
+     "median": 0.7316,
+     "p10": 0.5265,
+     "min": 0.0,
+     "max": 0.9414,
+     "n": 182
+    },
+    "speed_mm": {
+     "mean": 1.4297,
+     "median": 1.0748,
+     "p10": 0.2947,
+     "min": 0.0444,
+     "max": 10.1836,
+     "n": 187
+    },
+    "acc_mm": {
+     "mean": 0.977,
+     "median": 0.6364,
+     "p10": 0.2308,
+     "min": 0.1174,
+     "max": 7.0792,
+     "n": 187
+    }
+   },
+   "port": {
+    "common_point": [
+     0.00831,
+     0.05878,
+     0.06054
+    ],
+    "line_spread_mm": {
+     "mean": 5.5534,
+     "median": 5.289,
+     "p10": 2.8934,
+     "min": 0.802,
+     "max": 12.8599,
+     "n": 232
+    },
+    "lines_to_port_mm": {
+     "mean": 10.8437,
+     "median": 7.5767,
+     "p10": 3.0106,
+     "min": 0.2007,
+     "max": 61.5733,
+     "n": 232
+    },
+    "port_to_common_mm": 71.38392,
+    "plane_dist_mm": {
+     "mean": 2.3916,
+     "median": 2.3749,
+     "p10": 0.3491,
+     "min": 0.005,
+     "max": 8.6509,
+     "n": 241
+    },
+    "n_lines": 232
+   },
+   "fit": {
+    "rcm": [
+     0.0696,
+     0.0679,
+     0.0959
+    ],
+    "kappa": 0.87721,
+    "cost": 3609.21478,
+    "parts": {
+     "tip": 131.10711,
+     "axis": 2910.62262,
+     "side": 4.44743,
+     "width": 3502.92895,
+     "dav2": 2333.89831,
+     "smooth": 399.4273,
+     "smooth_z": 27.10065,
+     "outside": 21.89942,
+     "port": 0.24125
+    },
+    "reach_mm": {
+     "mean": 102.8092,
+     "median": 104.4124,
+     "p10": 97.8245,
+     "min": 64.8258,
+     "max": 113.5015,
+     "n": 251
+    },
+    "joints_clamped": 0,
+    "joints_clamp_err_mm": 0.0
+   },
+   "shaft_tissue_gap_mm": {
+    "distal_half": {
+     "mean": 8.1039,
+     "median": 8.0719,
+     "p10": 2.2063,
+     "min": -0.8281,
+     "max": 21.3614,
+     "n": 235
+    },
+    "frac_frames_negative": 0.01594
+   }
+  }
+ },
+ "probe": {
+  "indent_mm": {
+   "mean": 4.9344,
+   "median": 5.2911,
+   "p10": 0.7598,
+   "min": -1.7382,
+   "max": 11.1634,
+   "n": 223
+  },
+  "indent_all": {
+   "mean": 3.6535,
+   "median": 4.4719,
+   "p10": -1.4792,
+   "min": -19.4944,
+   "max": 15.072,
+   "n": 241
+  },
+  "contact_intervals": [
+   [
+    0,
+    113
+   ],
+   [
+    142,
+    250
+   ]
+  ],
+  "contact_frames": 223,
+  "tissue_at_tip": {
+   "gallbladder": 208,
+   "other": 15
+  },
+  "gb_frac_at_tip_contact": {
+   "mean": 0.8885,
+   "median": 0.9888,
+   "p10": 0.6097,
+   "min": 0.0,
+   "max": 1.0,
+   "n": 223
+  }
+ },
+ "grasper": {
+  "jaw_ratio": {
+   "mean": 0.9418,
+   "median": 0.9426,
+   "p10": 0.869,
+   "min": 0.818,
+   "max": 1.1498,
+   "n": 251
+  },
+  "jaw_gap_mm": {
+   "mean": 7.3022,
+   "median": 6.8385,
+   "p10": 0.4155,
+   "min": -5.2494,
+   "max": 18.0941,
+   "n": 251
+  }
+ }
+}

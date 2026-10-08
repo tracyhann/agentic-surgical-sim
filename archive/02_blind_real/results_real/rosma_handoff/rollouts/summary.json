@@ -1,0 +1,214 @@
+{
+ "instance": "rosma_handoff",
+ "n": 20,
+ "success_rate": 1.0,
+ "by_mm": {
+  "2": 1.0,
+  "4": 1.0,
+  "6": 1.0,
+  "8": 1.0,
+  "10": 1.0
+ },
+ "rows": [
+  {
+   "layout": "post_L1_right_2mm",
+   "direction": "right",
+   "mm": 2,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.62
+   }
+  },
+  {
+   "layout": "post_L1_right_4mm",
+   "direction": "right",
+   "mm": 4,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.33
+   }
+  },
+  {
+   "layout": "post_L1_right_6mm",
+   "direction": "right",
+   "mm": 6,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.5
+   }
+  },
+  {
+   "layout": "post_L1_right_8mm",
+   "direction": "right",
+   "mm": 8,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 0.9
+   }
+  },
+  {
+   "layout": "post_L1_right_10mm",
+   "direction": "right",
+   "mm": 10,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.01
+   }
+  },
+  {
+   "layout": "post_L1_left_2mm",
+   "direction": "left",
+   "mm": 2,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.2
+   }
+  },
+  {
+   "layout": "post_L1_left_4mm",
+   "direction": "left",
+   "mm": 4,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.95
+   }
+  },
+  {
+   "layout": "post_L1_left_6mm",
+   "direction": "left",
+   "mm": 6,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 1.13
+   }
+  },
+  {
+   "layout": "post_L1_left_8mm",
+   "direction": "left",
+   "mm": 8,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 0.78
+   }
+  },
+  {
+   "layout": "post_L1_left_10mm",
+   "direction": "left",
+   "mm": 10,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.54
+   }
+  },
+  {
+   "layout": "post_L1_far_2mm",
+   "direction": "far",
+   "mm": 2,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 0.75
+   }
+  },
+  {
+   "layout": "post_L1_far_4mm",
+   "direction": "far",
+   "mm": 4,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.6
+   }
+  },
+  {
+   "layout": "post_L1_far_6mm",
+   "direction": "far",
+   "mm": 6,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.44
+   }
+  },
+  {
+   "layout": "post_L1_far_8mm",
+   "direction": "far",
+   "mm": 8,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.6
+   }
+  },
+  {
+   "layout": "post_L1_far_10mm",
+   "direction": "far",
+   "mm": 10,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 1.42
+   }
+  },
+  {
+   "layout": "post_L1_near_2mm",
+   "direction": "near",
+   "mm": 2,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.98,
+    "dist_to_post_axis_mm": 2.54
+   }
+  },
+  {
+   "layout": "post_L1_near_4mm",
+   "direction": "near",
+   "mm": 4,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.54
+   }
+  },
+  {
+   "layout": "post_L1_near_6mm",
+   "direction": "near",
+   "mm": 6,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.48
+   }
+  },
+  {
+   "layout": "post_L1_near_8mm",
+   "direction": "near",
+   "mm": 8,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.24
+   }
+  },
+  {
+   "layout": "post_L1_near_10mm",
+   "direction": "near",
+   "mm": 10,
+   "success": true,
+   "detail": {
+    "hole_radius_mm": 6.97,
+    "dist_to_post_axis_mm": 2.23
+   }
+  }
+ ]
+}

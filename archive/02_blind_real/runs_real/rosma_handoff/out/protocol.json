@@ -1,0 +1,60 @@
+{
+ "protocol_version": "surg-0.2",
+ "status": "success",
+ "task": {
+  "instruction": "psm_right grasps the yellow sleeve on the front-right post by its rim, lifts it off, carries it to the middle above the board, hands it to psm_left, which carries it to the front-left post and drops it over that post.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   0.0077,
+   -0.4025,
+   0.1542
+  ],
+  "lookat": [
+   -0.0017,
+   0.1359,
+   0.0
+  ],
+  "fovy_deg": 35.0,
+  "width": 1024,
+  "height": 768
+ },
+ "instruments": [
+  {
+   "name": "psm_left",
+   "rcm_pos": [
+    -0.17,
+    -0.0843,
+    0.2
+   ],
+   "heading": -1.570796
+  },
+  {
+   "name": "psm_right",
+   "rcm_pos": [
+    0.17,
+    -0.0673,
+    0.2
+   ],
+   "heading": 1.570796
+  }
+ ],
+ "roles": {
+  "object": [
+   "sleeve_yellow"
+  ],
+  "target": [
+   "post_L1"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "joint_targets"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

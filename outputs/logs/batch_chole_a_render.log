@@ -1,0 +1,5 @@
+04:32:39 chole_a render measured ok 13 s
+04:32:39 chole_a render primitive ok 13 s
+04:32:39 chole_a render template ok 14 s
+04:32:39 chole_a render template_fit ok 14 s
+04:32:55 chole_a compare measured primitive template template_fit ok 16 s

@@ -1,0 +1,42 @@
+{
+ "canvas_margin": 0,
+ "backdrop_patches": 7,
+ "camera_moves": true,
+ "organ_amodal_added_px": 560,
+ "organ_depth_cm": [
+  3.6,
+  4.4
+ ],
+ "organ_max_thickness_cm": 0.3,
+ "bed_motion_max_px": 0.0,
+ "bed_motion_max_mm": 0.0,
+ "camera": {
+  "max_translation_mm": 9.5,
+  "max_rot_deg": 12.98,
+  "zoom": [
+   1.0,
+   1.0
+  ],
+  "median_fit_px": 0.0
+ },
+ "instruments": {
+  "dissector": {
+   "rcm": [
+    0.0729,
+    0.0429,
+    0.1274
+   ],
+   "heading": 1.5801,
+   "axis_err_deg": 1.57,
+   "port_mode": "near_tips",
+   "width_ratio": 2.59,
+   "visible_frac": 1.0
+  }
+ },
+ "ribbons": [],
+ "n_frames": 197,
+ "actions_shape": [
+  157,
+  5
+ ]
+}

@@ -1,0 +1,7 @@
+gallbladder     39  27  36  32  39  39  41  31  30  40  43  51  44  56  55  61  56  60  59  60  63  63  61  60  61  58  (k px, every 10 frames)
+grasper          6   9   8   9   6   6   5   7   7   5   4   3   3   3   4   3   3   3   3   3   3   3   3   4   4   4  (k px, every 10 frames)
+probe           12  19  18  19  15  15  12  14  14  12  11   7   0   0   9   8   8  10  11  11  11  11  10  11  11  11  (k px, every 10 frames)
+strand           3   3   4   3   3   4   4   3   3   4   3   3   3   3   3   2   2   3   3   2   2   3   3   3   3   3  (k px, every 10 frames)
+liver           32  18  24  15  14  13  10  15  14  11  14  21  19  18  19  18  19  13   9   8   8  11  13  14  15   8  (k px, every 10 frames)
+right organs    80  63  71  62  64  57  59  58  59  61  69  75  77  71  71  77  65  56  53  52  52  54  55  54  58  49  (k px, every 10 frames)
+legend: {'gallbladder': [90, 200, 90], 'grasper': [0, 220, 255], 'probe': [255, 255, 255], 'strand': [200, 60, 220], 'liver': [255, 160, 60], 'right organs': [255, 60, 60]}

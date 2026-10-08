@@ -1,0 +1,17 @@
+{
+ "profile": "rigid",
+ "instruments": [
+  {
+   "name": "psm_left",
+   "shaft_d": 0.008
+  },
+  {
+   "name": "psm_right",
+   "shaft_d": 0.008
+  }
+ ],
+ "fps": 15,
+ "width": 1024,
+ "height": 768,
+ "frames": 256
+}

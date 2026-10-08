@@ -1,0 +1,14 @@
+19:12:00 chole_a+ba organ measured primitive template template_fit ok 22 s
+19:13:21 chole_a+ba sim primitive ok 80 s
+19:13:36 chole_a+ba sim template ok 96 s
+19:14:18 chole_a+ba sim template_fit ok 137 s
+19:15:15 chole_a+ba sim measured ok 194 s
+19:15:34 chole_a+ba eval primitive ok 20 s
+19:15:37 chole_a+ba eval template_fit ok 22 s
+19:15:39 chole_a+ba eval template ok 24 s
+19:15:41 chole_a+ba eval measured ok 27 s
+19:15:50 chole_a+ba render primitive ok 9 s
+19:15:50 chole_a+ba render template ok 9 s
+19:15:51 chole_a+ba render template_fit ok 10 s
+19:15:53 chole_a+ba render measured ok 12 s
+19:16:14 chole_a+ba compare measured primitive template template_fit ok 21 s

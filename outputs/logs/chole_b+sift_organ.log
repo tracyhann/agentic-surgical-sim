@@ -1,0 +1,5 @@
+19:07:32 chole_b+sift: 197 frames 640x360
+19:07:32 [organ] measured: 352 vertices, 783 tets, 173 anchored, 6 pinned
+19:07:37 [organ] primitive: {'kind': 'primitive', 'template': None, 'scale': [0.807, 0.907, 0.103], 'pose_fit_median_mm': 0.87}
+19:07:38 [organ] primitive: 1627 vertices, 5480 tets, 1454 anchored, 0 pinned
+19:07:38 chole_b+sift organ: done in 7 s

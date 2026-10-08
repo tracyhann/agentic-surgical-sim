@@ -1,0 +1,22 @@
+[v10] config {"apex_px": 90, "rest_keys": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 10.0, "ffd_size": 2.0, "scale_prior": 0.02, "scale_bounds": [[1.0, 0.85, 0.85], [1.7, 1.7, 1.7]], "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.5, "hidden_mm": 8.0, "surf_faces": 500, "cells": 16, "start_frame": 120, "iters_first": 300, "iters": 100, "lr": 0.08, "w_arap": 30.0, "w_vol": 20.0, "w_temp": 0.3, "smooth_sigma": 1.0, "arap_uniform": true, "w_barrier": 0.5, "w_anchor": 0.02, "anchor_cos": 0.35, "early_weight": 0.3, "tet_snap": "project", "w_neck": 1.0, "w_neck4d": 0.3, "depth_erode": 3, "n_pts4d": 1500, "barrier_sum": true, "tetgen_q": [15, 1.6], "sliver_weight": 1e-09, "n_surf4d": 7000, "n_cov4d": 1800, "tet_mode": "v06", "rest_from": "v06"}
+[masks] body area per keyframe [38546, 26361, 31972, 28124, 35374, 33973, 35735, 26948, 27056, 35728, 38866, 45823, 40222, 52023, 49963, 55573, 51684, 53783, 51938, 53482, 57255, 55450, 53147, 52274, 53386, 50639] (1 s)
+[masks] body/duct junction found in 251 frames
+[rest] rest shape and tets from v06
+[tets] quality vol/maxedge^3: median 0.039, < 0.01: 2.3 %, min 0.00147
+[tets] 1332 nodes, 5302 tets, 1720 surface faces, degenerate False
+[rest] {'neck_tip': [0.0019099999917671084, 0.049240000545978546, 0.051589999347925186], 'scale': [0.9950000047683716, 1.1619999408721924, 1.7070000171661377], 'rotvec': [1.0008000135421753, -0.6704999804496765, 0.6355999708175659], 't_mm': [-26.139999389648438, 55.68000030517578, 29.309999465942383], 'lattice_max_offset_mm': 4.65, 'fit_parts_mm': {'outside': 0.697, 'coverage': 0.297, 'depth': 3.56}, 'template_extent_cm': [6.08, 3.41, 2.07], 'rest_extent_cm': [5.98, 4.88, 3.77], 'template_volume_ml': 15.39, 'rest_volume_ml': 32.18, 'rest_vs_scaled_template_mm': {'mean': 1.77, 'max': 6.88}, 'rest_from': 'v06'}
+[4d] frame 125: out 0.064 cov 0.052 depth 0.655 arap 0.0265 vol 0.0045 (15 s)
+[4d] frame 150: out 0.019 cov 0.096 depth 0.707 arap 0.0281 vol 0.0042 (58 s)
+[4d] frame 175: out 0.016 cov 0.080 depth 0.625 arap 0.0255 vol 0.0066 (102 s)
+[4d] frame 200: out 0.011 cov 0.117 depth 1.387 arap 0.0259 vol 0.0051 (145 s)
+[4d] frame 225: out 0.035 cov 0.048 depth 0.692 arap 0.0275 vol 0.0055 (188 s)
+[4d] frame 250: out 0.029 cov 0.034 depth 0.610 arap 0.0249 vol 0.0059 (231 s)
+[4d] frame 100: out 0.068 cov 0.053 depth 0.805 arap 0.0540 vol 0.0128 (272 s)
+[4d] frame 75: out 0.421 cov 0.006 depth 0.443 arap 0.0508 vol 0.0146 (317 s)
+[4d] frame 50: out 0.182 cov 0.008 depth 0.591 arap 0.0383 vol 0.0085 (363 s)
+[4d] frame 25: out 0.021 cov 0.008 depth 0.773 arap 0.0382 vol 0.0071 (403 s)
+[4d] frame 0: out 0.015 cov 0.041 depth 0.899 arap 0.0431 vol 0.0077 (440 s)
+[quality] shared_mask: IoU 0.7885 BF 0.3203 depth 1.1309 mm
+[quality] body_neck_mask: IoU 0.8524 BF 0.3657 depth 1.0387 mm
+[quality] temporal {'max_vertex_speed_mm_per_frame': 3.14, 'p99_vertex_speed_mm_per_frame': 1.156, 'mean_vertex_speed_mm_per_frame': 0.242, 'max_vertex_accel_mm_per_frame2': 3.373, 'centroid_path_mm': 36.12, 'centroid_range_mm': [3.9100000858306885, 5.119999885559082, 4.639999866485596]}  volume {'rest_ml': 32.18, 'ratio_min': 0.9116, 'ratio_max': 1.0595}  deformation {'min_tet_det': 0.0733, 'inverted_tet_frames': 0, 'max_inverted_tets': 0, 'sampled_frames': 51, 'max_inverted_wellshaped_tets': 0, 'slivers_rest': 123, 'max_principal_stretch': 6.066, 'edge_stretch_max': 1.9375, 'edge_stretch_p95_max': 1.1514}
+[v10] done in 499 s

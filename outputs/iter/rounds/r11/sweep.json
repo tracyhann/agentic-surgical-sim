@@ -1,0 +1,118 @@
+{
+ "render=0_probe_depth_mm=0": {
+  "gb_iou": 0.6172,
+  "gb_rigid_mm": 1.2937,
+  "gb_rot_sim": 8.6801,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.711,
+  "gb_track_motion": -29.4,
+  "gb_free_mexp": 0.432,
+  "gb_free_err": 2.2347,
+  "gb_push": [
+   5.74,
+   4.95
+  ],
+  "gb_flow": [
+   11.7868,
+   12.9321,
+   12.9384
+  ],
+  "mem_flow": [
+   11.9958,
+   12.3557,
+   11.5176
+  ],
+  "mem_iou": 0.6526,
+  "mem_rigid_mm": 2.5257,
+  "mem_nonrigid_mm": 2.5648,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.3949
+ },
+ "render=0_probe_depth_mm=2": {
+  "gb_iou": 0.6212,
+  "gb_rigid_mm": 1.2421,
+  "gb_rot_sim": 8.7099,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6468,
+  "gb_track_motion": -25.5,
+  "gb_free_mexp": 0.45,
+  "gb_free_err": 2.1661,
+  "gb_push": [
+   5.12,
+   4.95
+  ],
+  "gb_flow": [
+   11.9072,
+   12.9771,
+   12.9384
+  ],
+  "mem_flow": [
+   11.9397,
+   12.3221,
+   11.5176
+  ],
+  "mem_iou": 0.6581,
+  "mem_rigid_mm": 2.5117,
+  "mem_nonrigid_mm": 2.5529,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.4051
+ },
+ "render=0_probe_depth_mm=4": {
+  "gb_iou": 0.6195,
+  "gb_rigid_mm": 1.1939,
+  "gb_rot_sim": 8.6192,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6299,
+  "gb_track_motion": -24.3,
+  "gb_free_mexp": 0.46,
+  "gb_free_err": 2.1261,
+  "gb_push": [
+   4.61,
+   4.95
+  ],
+  "gb_flow": [
+   12.1005,
+   12.9673,
+   12.9384
+  ],
+  "mem_flow": [
+   12.0627,
+   12.333,
+   11.5176
+  ],
+  "mem_iou": 0.6514,
+  "mem_rigid_mm": 2.4983,
+  "mem_nonrigid_mm": 2.5495,
+  "mem_stretch": 3.6,
+  "duct_iou": 0.3898
+ },
+ "render=0_probe_depth_mm=6": {
+  "gb_iou": 0.6166,
+  "gb_rigid_mm": 1.1734,
+  "gb_rot_sim": 8.5357,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6278,
+  "gb_track_motion": -18.9,
+  "gb_free_mexp": 0.467,
+  "gb_free_err": 2.099,
+  "gb_push": [
+   4.38,
+   4.95
+  ],
+  "gb_flow": [
+   12.4543,
+   12.9615,
+   12.9384
+  ],
+  "mem_flow": [
+   12.1243,
+   12.3276,
+   11.5176
+  ],
+  "mem_iou": 0.6558,
+  "mem_rigid_mm": 2.5124,
+  "mem_nonrigid_mm": 2.5586,
+  "mem_stretch": 3.6,
+  "duct_iou": 0.4
+ }
+}

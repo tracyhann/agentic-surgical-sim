@@ -1,0 +1,16 @@
+15:54:18 chole_a+vggt_tracks prep measured primitive template template_fit ok 2 s
+15:56:45 chole_a+vggt_tracks scene measured primitive template template_fit ok 147 s
+15:57:08 chole_a+vggt_tracks organ measured primitive template template_fit ok 23 s
+15:57:28 chole_a+vggt_tracks sim template FAILED (1) 20 s
+16:02:46 chole_a+vggt_tracks sim primitive ok 338 s
+16:03:27 chole_a+vggt_tracks sim template_fit ok 379 s
+16:05:22 chole_a+vggt_tracks sim measured ok 494 s
+16:05:25 chole_a+vggt_tracks eval template FAILED (1) 3 s
+16:05:36 chole_a+vggt_tracks eval template_fit ok 14 s
+16:05:39 chole_a+vggt_tracks eval measured ok 17 s
+16:05:41 chole_a+vggt_tracks eval primitive ok 19 s
+16:05:44 chole_a+vggt_tracks render template FAILED (1) 2 s
+16:06:08 chole_a+vggt_tracks render primitive ok 27 s
+16:06:10 chole_a+vggt_tracks render template_fit ok 29 s
+16:06:30 chole_a+vggt_tracks render measured ok 49 s
+16:07:26 chole_a+vggt_tracks compare measured primitive template template_fit ok 56 s

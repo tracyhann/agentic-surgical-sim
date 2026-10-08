@@ -1,0 +1,30 @@
+{
+ "instance": "rosma_handoff",
+ "source": "ROSMA X01_Post_and_Sleeve_01 (CC BY 4.0)",
+ "frames": [
+  120,
+  375
+ ],
+ "fps": 15,
+ "kin_shift_frames": 7,
+ "width": 1024,
+ "height": 768,
+ "sync_best_lag_frames": {
+  "PSM1": 0,
+  "PSM2": 0
+ },
+ "sync_peak_corr": {
+  "PSM1": 0.335,
+  "PSM2": 0.406
+ },
+ "sleeve_px_start": [
+  694.7,
+  499.8
+ ],
+ "sleeve_px_end": [
+  311.4,
+  521.0
+ ],
+ "psm1_path_len_m": 0.16297805926700643,
+ "psm2_path_len_m": 0.1420838509810653
+}

@@ -1,0 +1,8 @@
+19:05:13 chole_b+sift: 197 frames 640x360
+19:05:15 [scene] camera: max rotation 10.6 deg, zoom 1.000-1.000, median fit 0.0 px
+19:05:15 [scene] moving scope: frame-0 textures filled from later views (0.0 % never uncovered), keyframe background patches
+19:05:16 [scene] background: 6 keyframe patches (keyframes [0, 25, 50, 75, 100, 125, 150, 175, 196])
+19:07:30 [scene] dissector: port near_tips (width ratio 2.59), axis error 1.82 deg, visible 100 % of frames
+19:07:30 [scene] organ bed motion: max 0.0 px, 0.0 mm (3D)
+19:07:30 [scene] {'canvas_margin': 0, 'organ_amodal_added_px': 547, 'organ_depth_cm': [3.7, 4.6], 'bed_motion_max_px': 0.0}
+19:07:30 chole_b+sift scene: done in 138 s

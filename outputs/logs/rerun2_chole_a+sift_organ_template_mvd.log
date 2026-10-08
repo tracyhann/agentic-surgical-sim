@@ -1,0 +1,5 @@
+19:09:44 chole_a+sift: 251 frames 640x360
+19:09:45 [organ] template_mvd: keyframes [20, 110, 180, 190, 200, 240]
+19:09:54 [organ] template_mvd: {'kind': 'template_mvd', 'template': 'gallbladder', 'scale': [1.278, 1.567, 1.577], 'pose_fit_median_mm': 1.52, 'n_views': 6, 'frame0_scale': [1.112, 1.089, 1.336], 'shift_mm': 4.9}
+19:09:56 [organ] template_mvd: 435 vertices, 1485 tets, 260 anchored, 0 pinned
+19:09:56 chole_a+sift organ: done in 13 s

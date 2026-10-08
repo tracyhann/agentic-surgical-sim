@@ -1,0 +1,38 @@
+{
+ "instance": "chole_sweep",
+ "source": "Wikimedia Commons, gallbladder torsion case report video S1 (CC BY 2.0)",
+ "frames": [
+  650,
+  800
+ ],
+ "fps": 25,
+ "width": 640,
+ "height": 360,
+ "probe_tracked_frac": 0.8675496688741722,
+ "probe_px_start": [
+  274.7,
+  226.9
+ ],
+ "probe_px_end": [
+  319.8,
+  163.2
+ ],
+ "grasper_keys": {
+  "0": [
+   238,
+   150
+  ],
+  "50": [
+   215,
+   95
+  ],
+  "100": [
+   190,
+   80
+  ],
+  "150": [
+   215,
+   70
+  ]
+ }
+}

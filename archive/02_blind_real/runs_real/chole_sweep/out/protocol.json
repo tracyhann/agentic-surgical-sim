@@ -1,0 +1,67 @@
+{
+ "protocol_version": "surg-0.2",
+ "status": "success",
+ "task": {
+  "instruction": "Laparoscopic cholecystectomy: the left grasper holds the gallbladder neck and retracts it up/left while the closed straight instrument from the upper right pokes the gallbladder flank and sweeps the tissue beside the neck (Calot region) upward, withdraws, re-enters and sweeps again.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   0,
+   -0.09,
+   0.06
+  ],
+  "lookat": [
+   0,
+   0,
+   0
+  ],
+  "fovy_deg": 60.0,
+  "width": 640,
+  "height": 360
+ },
+ "instruments": [
+  {
+   "name": "grasper_left",
+   "rcm_pos": [
+    -0.02581,
+    -0.07236,
+    0.1126
+   ],
+   "heading": 0.0065
+  },
+  {
+   "name": "probe_right",
+   "rcm_pos": [
+    0.15975,
+    0.04114,
+    0.07643
+   ],
+   "heading": 1.88277
+  }
+ ],
+ "roles": {
+  "object": [
+   "gb_body",
+   "gb_neck1",
+   "gb_neck2",
+   "gb_neck3",
+   "strand0",
+   "strand1",
+   "strand2",
+   "strand3",
+   "strand4",
+   "strand5"
+  ],
+  "target": []
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "joint_targets"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

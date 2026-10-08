@@ -1,0 +1,39 @@
+cameras: /Users/grandpa/phai/medical-agentic-sim/outputs/iter/tissues/backdrop/v08/cams_refined.npz
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.75 L 22.3 mm reproj 14.10 px
+  rest duct it 599: loss 61.82 L 18.5 mm reproj 9.71 px
+  4d duct it 0: loss 63.68 L 18.5+-0.0 mm reproj 9.57 px
+  4d duct it 450: loss 24.90 L 18.5+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 22.04 L 18.4+-0.1 mm reproj 1.54 px
+  rest strands it 0: loss 84.98 L 14.8 mm reproj 7.26 px
+  rest strands it 599: loss 49.45 L 13.3 mm reproj 6.21 px
+  4d strands it 0: loss 69.71 L 13.3+-0.0 mm reproj 5.99 px
+  4d strands it 450: loss 34.16 L 13.4+-0.2 mm reproj 1.52 px
+  4d strands it 899: loss 33.36 L 13.4+-0.2 mm reproj 1.53 px
+anchor: gallbladder v10 vertex 290 (of 50 marked "ducts"), mean distance to the observed junction (frames >= 60) 4.8 mm
+gallbladder z-buffers: 72 s
+  rest duct it 0: loss 3155.24 L 16.5 mm reproj 11.31 px
+  rest duct it 599: loss 138.05 L 24.0 mm reproj 10.84 px
+  4d duct it 0: loss 196.12 L 23.7+-1.1 mm reproj 6.56 px L0 23.99 mm
+  4d duct it 450: loss 123.51 L 25.8+-0.3 mm reproj 2.78 px L0 25.81 mm
+  4d duct it 899: loss 117.07 L 27.8+-0.3 mm reproj 2.52 px L0 27.84 mm
+  rest duct it 0: loss 175.17 L 24.0 mm reproj 10.84 px
+  rest duct it 599: loss 123.48 L 28.1 mm reproj 10.77 px
+  duct: 4D common length 27.84 mm, rest length 28.12 mm
+  rest strands it 0: loss 673.29 L 17.4 mm reproj 8.05 px
+  rest strands it 599: loss 71.89 L 23.3 mm reproj 5.86 px
+  4d strands it 0: loss 240.72 L 23.6+-3.1 mm reproj 6.57 px L0 23.33 mm
+  4d strands it 450: loss 79.23 L 27.4+-0.4 mm reproj 2.98 px L0 27.39 mm
+  4d strands it 899: loss 78.83 L 27.0+-0.4 mm reproj 3.01 px L0 27.00 mm
+  rest strands it 0: loss 109.78 L 23.3 mm reproj 5.85 px
+  rest strands it 599: loss 74.43 L 26.8 mm reproj 5.55 px
+  strands: 4D common length 27.00 mm, rest length 26.83 mm
+duct: IoU 0.7937 BF 0.8107 depth 6.5293 mm static-rest IoU 0.5156 reproj 2.4528 px L 28.12 mm (std 0.33) r 1.86 mm
+strands: IoU 0.7468 BF 0.7541 depth 8.1191 mm static-rest IoU 0.6719 reproj 2.4968 px L 26.83 mm (std 0.38) r 1.65 mm
+overlap with gallbladder: duct hidden 0.0159 inside 0.1973 (max 0.4348); strands hidden 0.0254 inside 0.0709 (max 0.3158)
+proximal -> gallbladder surface |d| median/max (mm): before duct 1.5158/5.6816 rest 5.63; before strands 2.6338/5.7202 rest 5.56; after duct 0.1415/0.3392 rest 0.21; after strand_1 0.1415/0.3392 rest 0.21; after strand_2 0.1415/0.3392 rest 0.21; after strand_3 0.1415/0.3392 rest 0.21
+end-motion test (motion explained): duct lin 0.717 chord 0.64 prox-only 0.486 +drive [(7, 0.867), (3, 0.917), (9, 0.947)]; strand_1 lin 0.644 chord 0.486 prox-only 0.309 +drive [(5, 0.892), (3, 0.936), (8, 0.967)]; strand_2 lin 0.635 chord 0.481 prox-only 0.306 +drive [(5, 0.889), (3, 0.933), (8, 0.966)]; strand_3 lin 0.625 chord 0.478 prox-only 0.302 +drive [(5, 0.882), (3, 0.926), (8, 0.964)]
+length over time: duct 26.9-28.57 (rest 28.12, e2e [15.09, 21.17]); strand_1 26.15-28.05 (rest 26.71, e2e [13.29, 23.34]); strand_2 26.17-28.16 (rest 26.83, e2e [13.59, 23.37]); strand_3 26.26-28.75 (rest 27.17, e2e [13.84, 23.53])
+width scale {'mean': 0.9515, 'median': 0.9425, 'p10': 0.8116, 'min': 0.7911, 'max': 1.1037, 'n': 251} / {'mean': 0.9947, 'median': 0.9951, 'p10': 0.9128, 'min': 0.75, 'max': 1.1349, 'n': 251}; clearance {'duct_to_fibres': {'mean': 1.4137, 'median': 1.2987, 'p10': 0.2445, 'min': -0.1877, 'max': 3.7872, 'n': 153}, 'fibre_to_fibre': {'mean': 0.0012, 'median': -0.1552, 'p10': -0.2158, 'min': -0.3562, 'max': 0.5215, 'n': 153}}; GB check None mm
+union IoU 0.7968  envelope IoU 0.703 strand->duct proximal 0.0 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.414, 'degenerate_faces': 0, 'area_cm2': 2.93, 'volume_ml': 0.24, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 1  done in 203.4 s

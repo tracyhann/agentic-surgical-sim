@@ -1,0 +1,16 @@
+held-out ORB matches, median reprojection px: gap 1-2 / 3-9 / >=10 keyframes / with frame 0
+static       14.33 / 41.74 / 136.26 (1500) / 4.64
+rotation     5.15 / 9.3 / 9.57 (1500) / 3.17
+vggt_raw     5.05 / 7.62 / 15.4 (1500) / 7.3
+ba           2.17 / 4.07 / 8.25 (1500) / 1.94
+vggt_tracks  3.12 / 5.35 / 6.66 (1500) / 2.88
+vggt         3.15 / 5.59 / 7.63 (1500) / 2.74
+sift         2.11 / 3.33 / 4.5 (1500) / 1.76
+image NCC      10 fr   30 fr   f0->all  f0->last3rd  >=100 fr
+static        0.647   0.370    0.359        0.642  0.1391   (380 pairs overlap)
+rotation      0.809   0.641    0.531        0.612  0.4234   (380 pairs overlap)
+vggt_raw      0.780   0.592    0.498        0.582  0.3734   (380 pairs overlap)
+ba            0.877   0.694    0.427        0.468  0.3452   (380 pairs overlap)
+vggt_tracks   0.837   0.656    0.622        0.734  0.4312   (380 pairs overlap)
+vggt          0.841   0.662    0.610        0.729  0.4001   (380 pairs overlap)
+sift          0.876   0.698    0.582        0.675  0.4523   (380 pairs overlap)

@@ -1,0 +1,69 @@
+{
+ "rows": {
+  "gallbladder": {
+   "full": 27.85,
+   "frozen": 28.79,
+   "static": 31.73,
+   "n": 42
+  },
+  "fold": {
+   "full": 13.11,
+   "frozen": 13.11,
+   "static": 20.12,
+   "n": 7
+  },
+  "strand": {
+   "full": 8.64,
+   "frozen": 8.64,
+   "static": 14.2,
+   "n": 33
+  },
+  "static backdrop": {
+   "full": 4.87,
+   "frozen": 4.87,
+   "static": 13.26,
+   "n": 226
+  },
+  "all": {
+   "full": 5.6,
+   "frozen": 5.6,
+   "static": 13.67,
+   "n": 308
+  },
+  "image": {
+   "full": [
+    0.584,
+    15.81
+   ],
+   "frozen": [
+    0.577,
+    15.36
+   ],
+   "static": [
+    0.502,
+    14.86
+   ]
+  },
+  "strand_iou": {
+   "full": 0.495,
+   "frozen": 0.485,
+   "static": 0.42
+  }
+ },
+ "sim": {
+  "probe_initial_backoff_mm": 7.0,
+  "k_gb": 0.5,
+  "k_fold": 8.0,
+  "young": 500.0,
+  "friction": 0.3,
+  "probe_retargeted_steps": 2,
+  "grasp_vertices": [
+   22,
+   21,
+   7
+  ],
+  "grasp_gap_mm": 3.71,
+  "tissue_max_disp_mm": 59.16,
+  "tissue_p95_disp_mm": 7.49
+ }
+}

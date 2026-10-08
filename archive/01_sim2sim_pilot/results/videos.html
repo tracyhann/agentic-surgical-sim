@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surgical Video2World pilot</title>
+<style>
+  :root { --bg: #f6f6f4; --fg: #1d1d1f; --muted: #6b6b70; --card: #ffffff; --line: #e2e2de; --ok: #1f7a4d; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #151517; --fg: #ececee; --muted: #9a9aa0; --card: #1e1e21; --line: #2e2e33; --ok: #4cc38a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 28px 16px 60px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 36px 0 10px; }
+  p.lead { color: var(--muted); margin: 0 0 8px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 12px 0; }
+  .card h3 { font-size: 14px; margin: 0 0 8px; font-weight: 600; }
+  .card .note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  video { width: 100%; height: auto; display: block; border-radius: 6px; background: #000; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 99px; border: 1px solid var(--ok); color: var(--ok); margin-left: 6px; }
+  .split { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin: 0 0 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Surgical Video2World 试点：视频</h1>
+  <p class="lead">Claude（Opus 5.5）盲测：只看源视频，自己搭 MuJoCo 场景、写动作和 policy。所有视频 20 fps。</p>
+
+  <h2>1 · bead_cup：夹珠子放进杯子</h2>
+  <div class="card">
+    <h3>源视频 vs Claude 重建 <span class="tag">任务成功</span></h3>
+    <div class="split"><span>左：源视频（隐藏参考场景）</span><span>右：Claude 的场景跑它自己的动作</span></div>
+    <video src="bead_cup/eval_compare.mp4" controls loop muted playsinline></video>
+    <p class="note">物体位置误差 3.2 mm，轨迹误差 3.0 mm，综合分 89.4 / 100。</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>数据引擎：杯子右移 10 mm <span class="tag">成功</span></h3>
+      <video src="bead_cup/rollout_videos/target_right_10mm.mp4" controls loop muted playsinline></video>
+    </div>
+    <div class="card">
+      <h3>数据引擎：珠子往远处移 10 mm <span class="tag">成功</span></h3>
+      <video src="bead_cup/rollout_videos/object_far_10mm.mp4" controls loop muted playsinline></video>
+    </div>
+  </div>
+
+  <h2>2 · peg_transfer：FLS 套圈</h2>
+  <div class="card">
+    <h3>源视频 vs Claude 重建 <span class="tag">任务成功</span></h3>
+    <div class="split"><span>左：源视频（隐藏参考场景）</span><span>右：Claude 的场景跑它自己的动作</span></div>
+    <video src="peg_transfer/eval_compare.mp4" controls loop muted playsinline></video>
+    <p class="note">任务成功，但整个场景估大约 15%、放远约 20%：物体位置误差 24.6 mm，综合分 77.1 / 100。</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>数据引擎：目标柱右移 10 mm <span class="tag">成功</span></h3>
+      <video src="peg_transfer/rollout_videos/target_right_10mm.mp4" controls loop muted playsinline></video>
+    </div>
+    <div class="card">
+      <h3>数据引擎：目标柱往近处移 10 mm <span class="tag">成功</span></h3>
+      <video src="peg_transfer/rollout_videos/target_near_10mm.mp4" controls loop muted playsinline></video>
+    </div>
+  </div>
+  <p class="lead">数据引擎视频都是在 Claude 搭的世界里，用它写的 policy.py 读取新布局后重新规划的结果。</p>
+
+  <h2>3 · 真实视频（ROSMA，dVRK 双臂 post-and-sleeve）</h2>
+  <p class="lead">真实 da Vinci Research Kit 录像 X01，5–26 s：右臂从柱子上取下黄色袖套，空中交给左臂，左臂套到另一根柱子上。Claude 盲测重建（Opus 5.5，11.7 分钟，$2.27）。</p>
+  <div class="card">
+    <h3>真实视频 vs Claude 重建 <span class="tag">三个阶段全部完成</span></h3>
+    <div class="split"><span>左：真实画面 + 叠加（见下）</span><span>右：Claude 的场景跑它自己的双臂动作</span></div>
+    <video src="real_X01/eval_compare.mp4" controls loop muted playsinline></video>
+    <p class="note">左图圆圈：<b style="color:#2e9e2e">绿</b> = 真实袖套（颜色跟踪），<b style="color:#c03cc0">品红</b> = Claude 袖套投影；<b style="color:#3c8cdc">蓝</b> = 真实工具尖端（dVRK 运动学 + 标定投影），<b style="color:#e08a00">橙</b> = Claude 工具尖端投影。
+      袖套起点 / 终点误差 10 / 8 px，全程轨迹 48 px；工具尖端起点 19–28 px，全程约 77 px（两边节奏不同，时间按片段归一化）。未拟合视频的场景参照：70–210 px。</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>数据引擎：目标柱右移 10 mm <span class="tag">成功</span></h3>
+      <video src="real_X01/rollout_target_right_10mm.mp4" controls loop muted playsinline></video>
+    </div>
+    <div class="card">
+      <h3>数据引擎：目标柱往远处移 10 mm <span class="tag">成功</span></h3>
+      <video src="real_X01/rollout_target_far_10mm.mp4" controls loop muted playsinline></video>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>可行性检查（我手搭的场景 + 脚本，不是盲测）</h3>
+      <video src="real_X01/feasibility.mp4" controls loop muted playsinline></video>
+      <p class="note">用来确认双臂 PSM 模型在物理上能完成“抬起 → 交接 → 放下”。</p>
+    </div>
+  </div>
+</main>
+</body>
+</html>

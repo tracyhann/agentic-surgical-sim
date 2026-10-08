@@ -1,0 +1,8 @@
+15:55:33 chole_b+sift organ measured primitive ok 8 s
+15:56:05 chole_b+sift sim primitive FAILED (1) 32 s
+15:59:26 chole_b+sift sim measured FAILED (1) 233 s
+15:59:28 chole_b+sift eval measured FAILED (1) 3 s
+15:59:28 chole_b+sift eval primitive FAILED (1) 3 s
+15:59:31 chole_b+sift render measured FAILED (1) 3 s
+15:59:31 chole_b+sift render primitive FAILED (1) 3 s
+15:59:34 chole_b+sift compare measured primitive FAILED (1) 3 s

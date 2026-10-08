@@ -1,0 +1,141 @@
+{
+ "round": "r00",
+ "tissues": {
+  "gallbladder": "/Users/grandpa/phai/medical-agentic-sim/outputs/iter/rounds/r00/placeholder_gallbladder",
+  "membrane": null,
+  "ducts": null,
+  "backdrop": null
+ },
+ "tools": "old fit",
+ "params": {
+  "ts": 0.000125,
+  "dt": 0.05,
+  "settle": 0.3,
+  "vertex_mass": 6e-05,
+  "friction": 0.3,
+  "damping": 0.002,
+  "gb_young": 300.0,
+  "gb_poisson": 0.45,
+  "gb_k_bed": 0.5,
+  "mem_young": 600.0,
+  "mem_thick": 0.0006,
+  "duct_young": 900.0,
+  "duct_thick": 0.0015,
+  "k_attach": 20.0,
+  "grasp_ramp": 0.25,
+  "grasp_r": 0.004,
+  "grasp_n": 60,
+  "probe_tip_len": 0.02
+ },
+ "grasp": {
+  "holder": "grasper_left",
+  "n": 3,
+  "gap_mm": 2.43
+ },
+ "sim_seconds": 82.3,
+ "eval": {
+  "gallbladder": {
+   "version": "/Users/grandpa/phai/medical-agentic-sim/outputs/iter/rounds/r00/placeholder_gallbladder",
+   "sim_iou": {
+    "mean": 0.5406,
+    "median": 0.565,
+    "p10": 0.445,
+    "min": 0.3867,
+    "max": 0.6472,
+    "n": 26
+   },
+   "sim_boundary_f": {
+    "mean": 0.1018,
+    "median": 0.097,
+    "p10": 0.0634,
+    "min": 0.0307,
+    "max": 0.1941,
+    "n": 26
+   },
+   "sim_depth_mm": {
+    "mean": 6.0192,
+    "median": 5.4338,
+    "p10": 3.7252,
+    "min": 2.5649,
+    "max": 11.0668,
+    "n": 26
+   },
+   "recon_iou": {
+    "mean": 0.5379,
+    "median": 0.5796,
+    "p10": 0.417,
+    "min": 0.2994,
+    "max": 0.6642,
+    "n": 26
+   },
+   "static_iou": {
+    "mean": 0.5686,
+    "median": 0.6174,
+    "p10": 0.435,
+    "min": 0.3359,
+    "max": 0.6762,
+    "n": 26
+   },
+   "err_vs_recon_mm": {
+    "mean": 2.349,
+    "median": 2.4572,
+    "p10": 0.9453,
+    "min": 0.6504,
+    "max": 3.6461,
+    "n": 251
+   },
+   "err_static_vs_recon_mm": {
+    "mean": 3.3856,
+    "median": 3.5223,
+    "p10": 1.1133,
+    "min": 0.4847,
+    "max": 6.0043,
+    "n": 251
+   },
+   "motion_explained": 0.306,
+   "stretch_max": 2.29,
+   "stretch_p95_max": 1.26,
+   "track_px": 17.36,
+   "track_px_static": 11.41,
+   "track_motion": {
+    "sim_px": 27.41,
+    "static_px": 25.2,
+    "change_pct": 8.7,
+    "seeds": [
+     0,
+     50,
+     75
+    ]
+   },
+   "track_samples": 3737,
+   "probe_push": {
+    "frames": 87,
+    "sim_mm": 7.41,
+    "recon_mm": 9.57,
+    "abs_err_mm": 2.46
+   }
+  },
+  "instruments": {
+   "grasper_left": {
+    "tip_lag_mm": {
+     "mean": 0.4222,
+     "median": 0.3624,
+     "p10": 0.1088,
+     "min": 0.0219,
+     "max": 1.5015,
+     "n": 251
+    }
+   },
+   "probe_right": {
+    "tip_lag_mm": {
+     "mean": 0.9428,
+     "median": 0.692,
+     "p10": 0.1798,
+     "min": 0.0278,
+     "max": 7.047,
+     "n": 251
+    }
+   }
+  }
+ }
+}

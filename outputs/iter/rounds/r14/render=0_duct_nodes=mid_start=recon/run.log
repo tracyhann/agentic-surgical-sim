@@ -1,0 +1,183 @@
+WARNING: Nan, Inf or huge value in QACC at DOF 201. The simulation is unstable. Time = 0.0006.
+
+[scene4d] unstable at control step 1 (dof 201, body gallbladder_67); retrying with time step 0.0312 ms
+{
+ "gallbladder": {
+  "version": "v11",
+  "sim_iou": {
+   "mean": 0.6258,
+   "median": 0.6772,
+   "p10": 0.4514,
+   "min": 0.2575,
+   "max": 0.7466,
+   "n": 26
+  },
+  "sim_boundary_f": {
+   "mean": 0.2081,
+   "median": 0.2045,
+   "p10": 0.134,
+   "min": 0.1125,
+   "max": 0.3418,
+   "n": 26
+  },
+  "sim_depth_mm": {
+   "mean": 3.8412,
+   "median": 2.9728,
+   "p10": 2.1119,
+   "min": 1.8587,
+   "max": 8.1672,
+   "n": 26
+  },
+  "recon_iou": {
+   "mean": 0.7866,
+   "median": 0.7965,
+   "p10": 0.7084,
+   "min": 0.6874,
+   "max": 0.8572,
+   "n": 26
+  },
+  "static_iou": {
+   "mean": 0.5496,
+   "median": 0.6464,
+   "p10": 0.3,
+   "min": 0.1371,
+   "max": 0.7477,
+   "n": 26
+  },
+  "flow_epe_px": {
+   "mean": 11.4453,
+   "median": 8.6376,
+   "p10": 3.6858,
+   "min": 2.649,
+   "max": 38.1741,
+   "n": 50
+  },
+  "flow_epe_static_px": {
+   "mean": 12.1488,
+   "median": 9.7691,
+   "p10": 2.6676,
+   "min": 1.6508,
+   "max": 35.7516,
+   "n": 50
+  },
+  "flow_explained": 0.058,
+  "flow_epe_recon_px": {
+   "mean": 12.3245,
+   "median": 10.2528,
+   "p10": 5.3167,
+   "min": 2.7186,
+   "max": 32.0284,
+   "n": 50
+  },
+  "err_vs_recon_mm": {
+   "mean": 1.6786,
+   "median": 1.5721,
+   "p10": 1.1819,
+   "min": 1.0764,
+   "max": 3.0346,
+   "n": 251
+  },
+  "err_static_vs_recon_mm": {
+   "mean": 3.5733,
+   "median": 3.8729,
+   "p10": 2.0747,
+   "min": 1.599,
+   "max": 5.1005,
+   "n": 251
+  },
+  "motion_explained": 0.53,
+  "split": {
+   "rigid_err": {
+    "mean": 1.2227,
+    "median": 1.1365,
+    "p10": 0.4909,
+    "min": 0.314,
+    "max": 2.6417,
+    "n": 26
+   },
+   "rot_sim": {
+    "mean": 9.1007,
+    "median": 9.386,
+    "p10": 5.4593,
+    "min": 2.2171,
+    "max": 13.3183,
+    "n": 26
+   },
+   "rot_rec": {
+    "mean": 8.6548,
+    "median": 8.4562,
+    "p10": 3.7467,
+    "min": 2.1003,
+    "max": 13.4837,
+    "n": 26
+   },
+   "nonrigid_err": {
+    "mean": 1.6586,
+    "median": 1.6492,
+    "p10": 1.2264,
+    "min": 1.1672,
+    "max": 2.4051,
+    "n": 26
+   },
+   "deform_sim": {
+    "mean": 1.445,
+    "median": 1.3258,
+    "p10": 1.0201,
+    "min": 0.8726,
+    "max": 2.497,
+    "n": 26
+   },
+   "deform_rec": {
+    "mean": 2.0358,
+    "median": 2.0,
+    "p10": 1.4124,
+    "min": 1.2784,
+    "max": 2.9255,
+    "n": 26
+   }
+  },
+  "free_err_vs_recon_mm": {
+   "mean": 2.1461,
+   "median": 2.0168,
+   "p10": 1.5123,
+   "min": 1.3769,
+   "max": 3.8913,
+   "n": 251
+  },
+  "free_motion_explained": 0.467,
+  "inverted_tets_max": 471,
+  "stretch_max": 1.61,
+  "stretch_p95_max": 1.19,
+  "track_px": 11.23,
+  "track_px_static": 9.02,
+  "track_motion": {
+   "sim_px": 20.7,
+   "static_px": 27.66,
+   "change_pct": -25.1,
+   "seeds": [
+    0,
+    50
+   ]
+  },
+  "track_samples": 3726,
+  "probe_push": {
+   "frames": 228,
+   "sim_mm": 5.24,
+   "recon_mm": 5.07,
+   "abs_err_mm": 1.58
+  }
+ },
+ "membrane": {
+  "version": "v07",
+  "sim_iou": {
+   "mean": 0.6432,
+   "median": 0.704,
+   "p10": 0.4207,
+   "min": 0.2612,
+   "max": 0.787,
+   "n": 26
+  },
+  "sim_boundary_f": {
+   "mean": 0.3127,
+   "median"
+[scene4d] r14/render=0_duct_nodes=mid_start=recon done in 770 s

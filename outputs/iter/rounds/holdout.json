@@ -1,0 +1,476 @@
+{
+ "r13": {
+  "render=0_gb_poisson=0.45_gb_young=1200_solref=0.004": {
+   "gallbladder": {
+    "select": 0.5395,
+    "test": 0.7028
+   },
+   "membrane": {
+    "select": 0.5771,
+    "test": 0.7392
+   },
+   "ducts": {
+    "select": 0.4169,
+    "test": 0.3933
+   }
+  },
+  "render=0_gb_poisson=0.45_gb_young=1200_solref=0.01": {
+   "gallbladder": {
+    "select": 0.5459,
+    "test": 0.7145
+   },
+   "membrane": {
+    "select": 0.5614,
+    "test": 0.7348
+   },
+   "ducts": {
+    "select": 0.3943,
+    "test": 0.3935
+   }
+  },
+  "render=0_gb_poisson=0.45_gb_young=2400_solref=0.004": {
+   "gallbladder": {
+    "select": 0.5386,
+    "test": 0.695
+   },
+   "membrane": {
+    "select": 0.5592,
+    "test": 0.7387
+   },
+   "ducts": {
+    "select": 0.3717,
+    "test": 0.4174
+   }
+  },
+  "render=0_gb_poisson=0.49_gb_young=1200_solref=0.004": {
+   "gallbladder": {
+    "select": 0.5504,
+    "test": 0.7055
+   },
+   "membrane": {
+    "select": 0.5557,
+    "test": 0.7353
+   },
+   "ducts": {
+    "select": 0.3928,
+    "test": 0.414
+   }
+  },
+  "render=0_gb_poisson=0.49_gb_young=1200_solref=0.01": {
+   "gallbladder": {
+    "select": 0.5552,
+    "test": 0.7118
+   },
+   "membrane": {
+    "select": 0.55,
+    "test": 0.734
+   },
+   "ducts": {
+    "select": 0.4226,
+    "test": 0.4092
+   }
+  },
+  "render=0_gb_poisson=0.49_gb_young=2400_solref=0.004": {
+   "gallbladder": {
+    "select": 0.5456,
+    "test": 0.6347
+   },
+   "membrane": {
+    "select": 0.5579,
+    "test": 0.7462
+   },
+   "ducts": {
+    "select": 0.3897,
+    "test": 0.3793
+   }
+  },
+  "render=0_gb_poisson=0.49_gb_young=2400_solref=0.01": {
+   "gallbladder": {
+    "select": 0.5479,
+    "test": 0.7194
+   },
+   "membrane": {
+    "select": 0.5625,
+    "test": 0.736
+   },
+   "ducts": {
+    "select": 0.3763,
+    "test": 0.4314
+   }
+  }
+ },
+ "r14": {
+  "render=0_duct_nodes=end": {
+   "gallbladder": {
+    "select": 0.5426,
+    "test": 0.7122
+   },
+   "membrane": {
+    "select": 0.5751,
+    "test": 0.7191
+   },
+   "ducts": {
+    "select": 0.4806,
+    "test": 0.4029
+   }
+  },
+  "render=0_duct_nodes=ends": {
+   "gallbladder": {
+    "select": 0.5458,
+    "test": 0.7098
+   },
+   "membrane": {
+    "select": 0.5802,
+    "test": 0.7231
+   },
+   "ducts": {
+    "select": 0.4218,
+    "test": 0.4796
+   }
+  },
+  "render=0_duct_nodes=glue_mid": {
+   "gallbladder": {
+    "select": 0.5472,
+    "test": 0.7146
+   },
+   "membrane": {
+    "select": 0.5689,
+    "test": 0.7232
+   },
+   "ducts": {
+    "select": 0.626,
+    "test": 0.6291
+   }
+  },
+  "render=0_duct_nodes=mid": {
+   "gallbladder": {
+    "select": 0.5448,
+    "test": 0.7029
+   },
+   "membrane": {
+    "select": 0.5813,
+    "test": 0.7235
+   },
+   "ducts": {
+    "select": 0.6176,
+    "test": 0.7075
+   }
+  },
+  "render=0_duct_nodes=mid2": {
+   "gallbladder": {
+    "select": 0.5449,
+    "test": 0.6999
+   },
+   "membrane": {
+    "select": 0.5808,
+    "test": 0.7153
+   },
+   "ducts": {
+    "select": 0.677,
+    "test": 0.7609
+   }
+  },
+  "render=0_duct_nodes=mid_cams=clip": {
+   "gallbladder": {
+    "select": 0.5448,
+    "test": 0.7029
+   },
+   "membrane": {
+    "select": 0.5813,
+    "test": 0.7235
+   },
+   "ducts": {
+    "select": 0.6176,
+    "test": 0.7075
+   }
+  },
+  "render=0_duct_nodes=mid_solref=0.01": {
+   "gallbladder": {
+    "select": 0.5429,
+    "test": 0.712
+   },
+   "membrane": {
+    "select": 0.5723,
+    "test": 0.717
+   },
+   "ducts": {
+    "select": 0.6209,
+    "test": 0.6621
+   }
+  },
+  "render=0_duct_nodes=mid_start=recon": {
+   "gallbladder": {
+    "select": 0.5413,
+    "test": 0.7103
+   },
+   "membrane": {
+    "select": 0.5725,
+    "test": 0.7139
+   },
+   "ducts": {
+    "select": 0.638,
+    "test": 0.6814
+   }
+  }
+ },
+ "r15": {
+  "render=0_duct_nodes=mid_solref=0.01_grasp_target=recon": {
+   "gallbladder": {
+    "select": 0.5719,
+    "test": 0.7185
+   },
+   "membrane": {
+    "select": 0.5665,
+    "test": 0.7031
+   },
+   "ducts": {
+    "select": 0.6177,
+    "test": 0.7004
+   }
+  },
+  "render=0_duct_nodes=mid_solref=0.01_grasp_target=recon_mem_k=10": {
+   "gallbladder": {
+    "select": 0.5776,
+    "test": 0.7372
+   },
+   "membrane": {
+    "select": 0.5869,
+    "test": 0.7183
+   },
+   "ducts": {
+    "select": 0.6172,
+    "test": 0.6774
+   }
+  },
+  "render=0_duct_nodes=mid_solref=0.01_grasp_target=recon_mem_k=5": {
+   "gallbladder": {
+    "select": 0.5746,
+    "test": 0.7357
+   },
+   "membrane": {
+    "select": 0.579,
+    "test": 0.7283
+   },
+   "ducts": {
+    "select": 0.6179,
+    "test": 0.6845
+   }
+  },
+  "render=0_duct_nodes=mid_solref=0.01_grasp_target=recon_mem_k=5_mem_young=60": {
+   "gallbladder": {
+    "select": 0.5783,
+    "test": 0.7324
+   },
+   "membrane": {
+    "select": 0.5991,
+    "test": 0.7288
+   },
+   "ducts": {
+    "select": 0.6172,
+    "test": 0.7123
+   }
+  },
+  "render=0_duct_nodes=mid_solref=0.01_grasp_target=tcp_mem_k=5": {
+   "gallbladder": {
+    "select": 0.5768,
+    "test": 0.7336
+   },
+   "membrane": {
+    "select": 0.6078,
+    "test": 0.7518
+   },
+   "ducts": {
+    "select": 0.6174,
+    "test": 0.6883
+   }
+  }
+ },
+ "r16": {
+  "render=0_gallbladder=v11": {
+   "gallbladder": {
+    "select": 0.5427,
+    "test": 0.697
+   },
+   "membrane": {
+    "select": 0.5627,
+    "test": 0.7428
+   },
+   "ducts": {
+    "select": 0.6193,
+    "test": 0.691
+   }
+  },
+  "render=0_gallbladder=v12": {
+   "gallbladder": {
+    "select": 0.5768,
+    "test": 0.7336
+   },
+   "membrane": {
+    "select": 0.6078,
+    "test": 0.7518
+   },
+   "ducts": {
+    "select": 0.6174,
+    "test": 0.6883
+   }
+  },
+  "render=0_gallbladder=v12_mem_young=60": {
+   "gallbladder": {
+    "select": 0.5754,
+    "test": 0.7317
+   },
+   "membrane": {
+    "select": 0.5705,
+    "test": 0.747
+   },
+   "ducts": {
+    "select": 0.6174,
+    "test": 0.7108
+   }
+  },
+  "render=0_gallbladder=v12_ts=3.125e-5": {
+   "gallbladder": {
+    "select": 0.5762,
+    "test": 0.7341
+   },
+   "membrane": {
+    "select": 0.589,
+    "test": 0.7509
+   },
+   "ducts": {
+    "select": 0.6271,
+    "test": 0.6844
+   }
+  }
+ },
+ "r17": {
+  "render=0_gallbladder=v13": {
+   "gallbladder": {
+    "select": 0.5407,
+    "test": 0.7332
+   },
+   "membrane": {
+    "select": 0.5818,
+    "test": 0.7516
+   },
+   "ducts": {
+    "select": 0.6198,
+    "test": 0.6754
+   }
+  },
+  "render=0_gallbladder=v13_gb_young=2400": {
+   "gallbladder": {
+    "select": 0.5278,
+    "test": 0.7317
+   },
+   "membrane": {
+    "select": 0.5802,
+    "test": 0.7411
+   },
+   "ducts": {
+    "select": 0.6262,
+    "test": 0.6861
+   }
+  },
+  "render=0_gallbladder=v13_gb_young=600": {
+   "gallbladder": {
+    "select": 0.5251,
+    "test": 0.7343
+   },
+   "membrane": {
+    "select": 0.5883,
+    "test": 0.7478
+   },
+   "ducts": {
+    "select": 0.6173,
+    "test": 0.6886
+   }
+  },
+  "render=0_gallbladder=v13_mem_contact=0": {
+   "gallbladder": {
+    "select": 0.5176,
+    "test": 0.7077
+   },
+   "membrane": {
+    "select": 0.5456,
+    "test": 0.7354
+   },
+   "ducts": {
+    "select": 0.6179,
+    "test": 0.685
+   }
+  },
+  "render=0_gallbladder=v13_mem_young=60": {
+   "gallbladder": {
+    "select": 0.5411,
+    "test": 0.7315
+   },
+   "membrane": {
+    "select": 0.6042,
+    "test": 0.747
+   },
+   "ducts": {
+    "select": 0.6199,
+    "test": 0.6856
+   }
+  }
+ },
+ "r19": {
+  "render=0_membrane=v08": {
+   "gallbladder": {
+    "select": 0.5784,
+    "test": 0.7319
+   },
+   "membrane": {
+    "select": 0.6183,
+    "test": 0.7495
+   },
+   "ducts": {
+    "select": 0.6173,
+    "test": 0.7052
+   }
+  },
+  "render=0_membrane=v08_gallbladder=v13": {
+   "gallbladder": {
+    "select": 0.5346,
+    "test": 0.728
+   },
+   "membrane": {
+    "select": 0.5899,
+    "test": 0.743
+   },
+   "ducts": {
+    "select": 0.6192,
+    "test": 0.696
+   }
+  },
+  "render=0_membrane=v08_mem_k=10": {
+   "gallbladder": {
+    "select": 0.5723,
+    "test": 0.73
+   },
+   "membrane": {
+    "select": 0.6501,
+    "test": 0.7411
+   },
+   "ducts": {
+    "select": 0.6174,
+    "test": 0.6783
+   }
+  },
+  "render=0_membrane=v08_mem_young=60": {
+   "gallbladder": {
+    "select": 0.5694,
+    "test": 0.7337
+   },
+   "membrane": {
+    "select": 0.6342,
+    "test": 0.744
+   },
+   "ducts": {
+    "select": 0.6173,
+    "test": 0.7126
+   }
+  }
+ }
+}

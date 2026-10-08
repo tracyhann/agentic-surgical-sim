@@ -1,0 +1,140 @@
+{
+ "bead_cup": {
+  "agent": {
+   "instance": "bead_cup",
+   "model": "claude-opus-5-5",
+   "minutes": 45,
+   "started": "2026-10-06 12:42:25",
+   "exit": 0,
+   "timeout": false,
+   "seconds": 295,
+   "cost_usd": 1.2675416,
+   "num_turns": 25,
+   "leaks": [],
+   "tool_calls": 24,
+   "validate_calls": 4,
+   "replay_calls": 3
+  },
+  "score": {
+   "instance": "bead_cup",
+   "package": "/Users/grandpa/Library/Application Support/Claude/scratch-workspaces/cc30f31e-0ba5-4379-a8f3-4a4caa4b7961/1570049f-c945-4d03-a7de-099196ec2136/scratch-2026-10-06-7b28fd/surg_v2w/runs/bead_cup/out",
+   "build": true,
+   "validate_errors": [],
+   "success": true,
+   "progress": 1.0,
+   "lifted": true,
+   "near_target": true,
+   "geometry": {
+    "obj_pos_mm": 3.23,
+    "target_pos_mm": 4.08,
+    "rcm_pos_mm": 20.36,
+    "obj_size_mm": 0.17,
+    "fovy_err_deg": 0.45
+   },
+   "dynamics": {
+    "t_ape_mm": 3.04,
+    "terminal_disp_err_mm": 1.23,
+    "final_pos_err_mm": 4.25
+   },
+   "geometry_score": 0.73,
+   "dynamics_score": 0.738,
+   "v2w_score": 89.4,
+   "reference_success": true
+  },
+  "rollouts": {
+   "instance": "bead_cup",
+   "package": "/Users/grandpa/Library/Application Support/Claude/scratch-workspaces/cc30f31e-0ba5-4379-a8f3-4a4caa4b7961/1570049f-c945-4d03-a7de-099196ec2136/scratch-2026-10-06-7b28fd/surg_v2w/runs/bead_cup/out",
+   "n": 40,
+   "success_rate": 1.0,
+   "by_mm": {
+    "2": 1.0,
+    "4": 1.0,
+    "6": 1.0,
+    "8": 1.0,
+    "10": 1.0
+   }
+  },
+  "reference_rollouts": {
+   "instance": "bead_cup",
+   "package": "gt/bead_cup/package",
+   "n": 40,
+   "success_rate": 1.0,
+   "by_mm": {
+    "2": 1.0,
+    "4": 1.0,
+    "6": 1.0,
+    "8": 1.0,
+    "10": 1.0
+   }
+  }
+ },
+ "peg_transfer": {
+  "agent": {
+   "instance": "peg_transfer",
+   "model": "claude-opus-5-5",
+   "minutes": 45,
+   "started": "2026-10-06 12:42:25",
+   "exit": 1,
+   "timeout": false,
+   "seconds": 2257,
+   "cost_usd": 1.4181726000000001,
+   "num_turns": 1,
+   "leaks": [],
+   "tool_calls": 21,
+   "validate_calls": 0,
+   "replay_calls": 0
+  },
+  "score": {
+   "instance": "peg_transfer",
+   "package": "/Users/grandpa/Library/Application Support/Claude/scratch-workspaces/cc30f31e-0ba5-4379-a8f3-4a4caa4b7961/1570049f-c945-4d03-a7de-099196ec2136/scratch-2026-10-06-7b28fd/surg_v2w/runs/peg_transfer/out",
+   "build": true,
+   "validate_errors": [],
+   "success": true,
+   "progress": 1.0,
+   "lifted": true,
+   "near_target": true,
+   "geometry": {
+    "obj_pos_mm": 24.58,
+    "target_pos_mm": 28.37,
+    "rcm_pos_mm": 6.0,
+    "obj_size_mm": 2.67,
+    "fovy_err_deg": 2.09
+   },
+   "dynamics": {
+    "t_ape_mm": 8.34,
+    "terminal_disp_err_mm": 8.12,
+    "final_pos_err_mm": 28.12
+   },
+   "geometry_score": 0.421,
+   "dynamics_score": 0.434,
+   "v2w_score": 77.1,
+   "reference_success": true
+  },
+  "rollouts": {
+   "instance": "peg_transfer",
+   "package": "/Users/grandpa/Library/Application Support/Claude/scratch-workspaces/cc30f31e-0ba5-4379-a8f3-4a4caa4b7961/1570049f-c945-4d03-a7de-099196ec2136/scratch-2026-10-06-7b28fd/surg_v2w/runs/peg_transfer/out",
+   "n": 20,
+   "success_rate": 1.0,
+   "by_mm": {
+    "2": 1.0,
+    "4": 1.0,
+    "6": 1.0,
+    "8": 1.0,
+    "10": 1.0
+   }
+  },
+  "reference_rollouts": {
+   "instance": "peg_transfer",
+   "package": "gt/peg_transfer/package",
+   "n": 20,
+   "success_rate": 1.0,
+   "by_mm": {
+    "2": 1.0,
+    "4": 1.0,
+    "6": 1.0,
+    "8": 1.0,
+    "10": 1.0
+   }
+  }
+ }
+}

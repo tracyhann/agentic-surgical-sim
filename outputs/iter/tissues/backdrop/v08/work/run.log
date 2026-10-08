@@ -1,0 +1,36 @@
+22:02:08 static fraction 0.499
+22:02:08 canvas 834 492 offset -56.0 -88.0
+22:02:14 fused: known cells 61303 hidden 21364 7s
+22:02:16 gains [1.14 1.08 1.03 1.04 0.96 1.05 1.06 1.02 1.05 0.96 0.96 0.99 0.99]
+22:02:16 texture: seen 0.679 10s
+22:02:16 mesh 9179 verts 17930 faces 10s
+22:02:36 camera refinement iter 0: median shift 2.24 px, p90 5.45, max 13.8
+22:02:54 camera refinement iter 1: median shift 0.19 px, p90 0.67, max 2.0
+22:02:55 static fraction 0.499
+22:02:55 canvas 840 496 offset -62.0 -88.0
+22:03:01 fused: known cells 61955 hidden 21167 7s
+22:03:03 gains [1.14 1.07 1.04 1.03 0.95 1.05 1.06 1.02 1.05 0.96 0.96 0.99 0.98]
+22:03:03 texture: seen 0.677 10s
+22:03:03 mesh 9243 verts 18062 faces 10s
+22:03:03 round 0: correction median 0.281 deg, max 1.92
+22:03:21 camera refinement iter 0: median shift 0.16 px, p90 0.40, max 1.2
+22:03:37 camera refinement iter 1: median shift 0.01 px, p90 0.05, max 0.2
+22:03:38 static fraction 0.499
+22:03:38 canvas 842 496 offset -64.0 -88.0
+22:03:45 fused: known cells 62111 hidden 21206 8s
+22:03:47 gains [1.14 1.08 1.04 1.03 0.95 1.05 1.06 1.02 1.05 0.96 0.96 0.99 0.98]
+22:03:47 texture: seen 0.677 10s
+22:03:47 mesh 9269 verts 18110 faces 10s
+22:03:47 round 1: correction median 0.034 deg, max 0.15
+22:04:41 evaluated 251 frames 21s
+22:05:36 pictures 77s
+22:05:37 static fraction 0.447
+22:05:37 canvas 834 492 offset -56.0 -88.0
+22:05:43 fused: known cells 60239 hidden 22428 7s
+22:05:46 gains [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+22:05:46 texture: seen 0.663 9s
+22:05:46 mesh 9179 verts 17930 faces 9s
+22:05:49 HOLDOUT {'coverage': 1.0, 'depth_med_mm': 1.9394, 'depth_bias_mm': -0.0681, 'depth_p90_mm': 7.1558, 'front_violation': 0.0949, 'gb_violation': 0.0, 'gb_gap_mm': 8.0746, 'photo_l1': 8.5503, 'photo_ncc': 0.9627, 'photo_lncc': 0.7344, 'frame_iou': 0.9998, 'liver_iou': 0.7473, 'liver_bf': 0.2332}
+22:05:49 FULL    {'coverage': 1.0, 'depth_med_mm': 1.9013, 'depth_bias_mm': -0.0141, 'depth_p90_mm': 7.1466, 'front_violation': 0.0915, 'gb_violation': 0.0, 'gb_gap_mm': 7.9387, 'photo_l1': 8.3265, 'photo_ncc': 0.9649, 'photo_lncc': 0.7465, 'frame_iou': 0.9998, 'liver_iou': 0.7424, 'liver_bf': 0.2628}
+22:05:49 SUMMARY v08 {'coverage': 1.0, 'depth_med_mm': 2.5103, 'depth_bias_mm': 0.4925, 'depth_p90_mm': 7.4344, 'front_violation': 0.1013, 'gb_violation': 0.0, 'gb_gap_mm': 8.9797, 'photo_l1': 9.2713, 'photo_ncc': 0.9568, 'photo_lncc': 0.6797, 'frame_iou': 0.9998, 'liver_iou': 0.7492, 'liver_bf': 0.2705} spread {'median': 3.01, 'p90': 7.052, 'p99': 17.955} {'n_verts': 9269, 'n_faces': 18110, 'watertight': False, 'components': 1, 'min_edge_mm': 0.49, 'degenerate_faces': 0, 'area_cm2': 108.64}
+22:05:49 BASELINE {'coverage': 1.0, 'depth_med_mm': 5.8729, 'depth_bias_mm': 2.0708, 'depth_p90_mm': 15.2651, 'front_violation': 0.2167, 'gb_violation': 0.2081, 'gb_gap_mm': 6.0746, 'photo_l1': 25.899, 'photo_ncc': 0.6979, 'photo_lncc': 0.3223, 'frame_iou': 0.9991}

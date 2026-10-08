@@ -1,0 +1,80 @@
+{
+ "full model": {
+  "tissue_tracks": {
+   "gallbladder": {
+    "n_tracks": 43,
+    "sim_err_px": 23.07,
+    "static_baseline_px": 31.41,
+    "real_max_disp_px": 46.1,
+    "sim_max_disp_px": 34.7
+   },
+   "fold": {
+    "n_tracks": 24,
+    "sim_err_px": 13.06,
+    "static_baseline_px": 18.28,
+    "real_max_disp_px": 45.3,
+    "sim_max_disp_px": 28.7
+   },
+   "static backdrop": {
+    "n_tracks": 241,
+    "sim_err_px": 4.9,
+    "static_baseline_px": 13.31,
+    "real_max_disp_px": 35.2,
+    "sim_max_disp_px": 32.1
+   },
+   "all": {
+    "n_tracks": 308,
+    "sim_err_px": 5.6,
+    "static_baseline_px": 13.67
+   }
+  },
+  "image": {
+   "ssim_sim": 0.586,
+   "ssim_static_frame0": 0.502,
+   "psnr_sim": 15.79,
+   "psnr_static_frame0": 14.86,
+   "ssim_sim_first": 0.846,
+   "ssim_sim_last": 0.582,
+   "ssim_static_last": 0.453
+  }
+ },
+ "frozen tissue": {
+  "tissue_tracks": {
+   "gallbladder": {
+    "n_tracks": 43,
+    "sim_err_px": 28.46,
+    "static_baseline_px": 31.41,
+    "real_max_disp_px": 46.1,
+    "sim_max_disp_px": 22.9
+   },
+   "fold": {
+    "n_tracks": 24,
+    "sim_err_px": 13.07,
+    "static_baseline_px": 18.28,
+    "real_max_disp_px": 45.3,
+    "sim_max_disp_px": 28.7
+   },
+   "static backdrop": {
+    "n_tracks": 241,
+    "sim_err_px": 4.9,
+    "static_baseline_px": 13.31,
+    "real_max_disp_px": 35.2,
+    "sim_max_disp_px": 32.1
+   },
+   "all": {
+    "n_tracks": 308,
+    "sim_err_px": 5.6,
+    "static_baseline_px": 13.67
+   }
+  },
+  "image": {
+   "ssim_sim": 0.575,
+   "ssim_static_frame0": 0.502,
+   "psnr_sim": 15.2,
+   "psnr_static_frame0": 14.86,
+   "ssim_sim_first": 0.886,
+   "ssim_sim_last": 0.555,
+   "ssim_static_last": 0.453
+  }
+ }
+}

@@ -1,0 +1,4 @@
+18:29:49 chole_a+ba: 251 frames 640x360
+18:29:55 [multiview] chole_a+ba (ba): 26 keyframes, 25640 flow correspondences (5 s)
+18:30:17 [multiview] chole_a+ba: {'mode': 'ba', 'init': 'track', 'wide': None, 'keyframes': [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], 'before': {'reproj_px_median': 5.076991497951078, 'reproj_px_median_wide': None, 'reproj_px_median_10plus_keyframes': None, 'depth_rel_median': 0.07203735106786707, 'ruler_rel_median': 0.10376237502906216}, 'after': {'reproj_px_median': 2.004031556460208, 'reproj_px_median_wide': None, 'reproj_px_median_10plus_keyframes': None, 'depth_rel_median': 0.03122110110359099, 'ruler_rel_median': 0.0843800791761185}, 'n_flow': 25640, 'n_rulers': 1182, 'focal_px': 609.1, 'fovy_deg': 32.9, 'fovy_assumed_deg': 47.0, 'max_translation_mm': 17.2, 'a_range': [1.486, 1.5]}
+18:30:17 chole_a+ba prep: done in 28 s

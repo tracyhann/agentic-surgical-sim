@@ -1,0 +1,52 @@
+18:29:50 chole_a prep measured primitive template template_fit ok 1 s
+18:32:45 chole_a scene measured primitive template template_fit ok 175 s
+18:33:05 chole_a organ measured primitive template template_fit ok 21 s
+18:34:17 chole_a sim template_fit ok 72 s
+18:34:38 chole_a sim measured ok 93 s
+18:35:57 chole_a sim template ok 171 s
+18:42:01 chole_a sim primitive ok 535 s
+18:42:14 chole_a eval template ok 13 s
+18:42:17 chole_a eval template_fit ok 16 s
+18:42:18 chole_a eval primitive ok 17 s
+18:42:23 chole_a eval measured ok 22 s
+18:42:30 chole_a render template ok 7 s
+18:42:30 chole_a render template_fit ok 7 s
+18:42:30 chole_a render primitive ok 7 s
+18:42:30 chole_a render measured ok 7 s
+18:42:43 chole_a compare measured primitive template template_fit ok 13 s
+18:42:44 chole_6s prep measured primitive template template_fit ok 1 s
+18:43:56 chole_6s scene measured primitive template template_fit ok 72 s
+18:44:11 chole_6s organ measured primitive template template_fit ok 15 s
+18:45:05 chole_6s sim primitive ok 54 s
+18:45:12 chole_6s sim template_fit ok 61 s
+18:45:24 chole_6s sim template ok 72 s
+18:46:12 chole_6s sim measured ok 121 s
+18:46:20 chole_6s eval template ok 8 s
+18:46:23 chole_6s eval template_fit ok 11 s
+18:46:24 chole_6s eval primitive ok 12 s
+18:46:26 chole_6s eval measured ok 15 s
+18:46:31 chole_6s render template ok 4 s
+18:46:31 chole_6s render primitive ok 5 s
+18:46:32 chole_6s render template_fit ok 5 s
+18:46:33 chole_6s render measured ok 6 s
+18:46:44 chole_6s compare measured primitive template template_fit ok 11 s
+18:46:45 chole_b prep measured primitive ok 1 s
+18:48:57 chole_b scene measured primitive ok 132 s
+18:49:01 chole_b organ measured primitive ok 4 s
+18:49:59 chole_b sim primitive ok 58 s
+18:50:11 chole_b sim measured ok 70 s
+18:50:15 chole_b eval measured ok 3 s
+18:50:17 chole_b eval primitive ok 6 s
+18:50:22 chole_b render measured ok 5 s
+18:50:23 chole_b render primitive ok 6 s
+18:50:29 chole_b compare measured primitive ok 6 s
+18:50:30 endonerf_pulling prep measured primitive ok 1 s
+18:57:19 endonerf_pulling scene measured primitive ok 409 s
+18:57:23 endonerf_pulling organ measured primitive ok 4 s
+18:57:55 endonerf_pulling sim measured ok 32 s
+18:58:07 endonerf_pulling sim primitive ok 44 s
+18:58:11 endonerf_pulling eval measured ok 4 s
+18:58:13 endonerf_pulling eval primitive ok 6 s
+18:58:16 endonerf_pulling render measured ok 3 s
+18:58:16 endonerf_pulling render primitive ok 3 s
+18:58:20 endonerf_pulling compare measured primitive ok 4 s

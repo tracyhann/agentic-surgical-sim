@@ -1,0 +1,199 @@
+{
+ "note": "keyframes (every 10th frame) left out of depth + texture fusion, evaluated on them",
+ "heldout_keyframes": {
+  "coverage": {
+   "mean": 0.9975,
+   "median": 1.0,
+   "p10": 0.9993,
+   "min": 0.9394,
+   "max": 1.0,
+   "n": 26
+  },
+  "depth_med_mm": {
+   "mean": 2.4668,
+   "median": 1.9418,
+   "p10": 1.2279,
+   "min": 1.0419,
+   "max": 9.3375,
+   "n": 26
+  },
+  "depth_bias_mm": {
+   "mean": 0.1932,
+   "median": -0.0597,
+   "p10": -1.0768,
+   "min": -1.154,
+   "max": 4.8869,
+   "n": 26
+  },
+  "depth_p90_mm": {
+   "mean": 7.6132,
+   "median": 7.1492,
+   "p10": 2.87,
+   "min": 2.5255,
+   "max": 19.2293,
+   "n": 26
+  },
+  "front_violation": {
+   "mean": 0.0901,
+   "median": 0.1007,
+   "p10": 0.0009,
+   "min": 0.0,
+   "max": 0.2168,
+   "n": 26
+  },
+  "gb_violation": {
+   "mean": 0.0044,
+   "median": 0.0,
+   "p10": 0.0,
+   "min": 0.0,
+   "max": 0.0533,
+   "n": 26
+  },
+  "photo_l1": {
+   "mean": 10.4025,
+   "median": 8.3442,
+   "p10": 6.0864,
+   "min": 5.7125,
+   "max": 29.0701,
+   "n": 26
+  },
+  "photo_ncc": {
+   "mean": 0.9262,
+   "median": 0.9638,
+   "p10": 0.7727,
+   "min": 0.6008,
+   "max": 0.9858,
+   "n": 26
+  },
+  "photo_lncc": {
+   "mean": 0.7164,
+   "median": 0.7429,
+   "p10": 0.5336,
+   "min": 0.322,
+   "max": 0.8562,
+   "n": 26
+  },
+  "frame_iou": {
+   "mean": 0.9956,
+   "median": 0.9998,
+   "p10": 0.9928,
+   "min": 0.9391,
+   "max": 1.0,
+   "n": 26
+  },
+  "liver_iou": {
+   "mean": 0.7188,
+   "median": 0.7473,
+   "p10": 0.5799,
+   "min": 0.4081,
+   "max": 0.8913,
+   "n": 26
+  },
+  "liver_bf": {
+   "mean": 0.253,
+   "median": 0.2347,
+   "p10": 0.1612,
+   "min": 0.078,
+   "max": 0.431,
+   "n": 26
+  }
+ },
+ "same_frames_in_full_model": {
+  "coverage": {
+   "mean": 0.9976,
+   "median": 1.0,
+   "p10": 0.9992,
+   "min": 0.9402,
+   "max": 1.0,
+   "n": 26
+  },
+  "depth_med_mm": {
+   "mean": 2.43,
+   "median": 1.9203,
+   "p10": 1.1793,
+   "min": 0.9759,
+   "max": 9.127,
+   "n": 26
+  },
+  "depth_bias_mm": {
+   "mean": 0.2704,
+   "median": 0.0155,
+   "p10": -0.9438,
+   "min": -1.0705,
+   "max": 4.7876,
+   "n": 26
+  },
+  "depth_p90_mm": {
+   "mean": 7.543,
+   "median": 7.1246,
+   "p10": 2.7471,
+   "min": 2.4671,
+   "max": 17.9644,
+   "n": 26
+  },
+  "front_violation": {
+   "mean": 0.0878,
+   "median": 0.095,
+   "p10": 0.0007,
+   "min": 0.0,
+   "max": 0.2123,
+   "n": 26
+  },
+  "gb_violation": {
+   "mean": 0.0045,
+   "median": 0.0,
+   "p10": 0.0,
+   "min": 0.0,
+   "max": 0.0534,
+   "n": 26
+  },
+  "photo_l1": {
+   "mean": 10.2896,
+   "median": 8.2764,
+   "p10": 5.9667,
+   "min": 5.5665,
+   "max": 28.9835,
+   "n": 26
+  },
+  "photo_ncc": {
+   "mean": 0.9266,
+   "median": 0.9655,
+   "p10": 0.773,
+   "min": 0.5915,
+   "max": 0.9866,
+   "n": 26
+  },
+  "photo_lncc": {
+   "mean": 0.7258,
+   "median": 0.7595,
+   "p10": 0.5457,
+   "min": 0.3278,
+   "max": 0.8665,
+   "n": 26
+  },
+  "frame_iou": {
+   "mean": 0.9956,
+   "median": 0.9998,
+   "p10": 0.9928,
+   "min": 0.9397,
+   "max": 1.0,
+   "n": 26
+  },
+  "liver_iou": {
+   "mean": 0.7188,
+   "median": 0.7458,
+   "p10": 0.5814,
+   "min": 0.4148,
+   "max": 0.8934,
+   "n": 26
+  },
+  "liver_bf": {
+   "mean": 0.2656,
+   "median": 0.2585,
+   "p10": 0.169,
+   "min": 0.0908,
+   "max": 0.44,
+   "n": 26
+  }
+ }
+}

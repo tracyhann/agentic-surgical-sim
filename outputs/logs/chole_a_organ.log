@@ -1,0 +1,11 @@
+18:32:46 chole_a: 251 frames 640x360
+18:32:46 [organ] measured: 968 vertices, 2598 tets, 478 anchored, 12 pinned
+18:32:49 [organ] primitive: {'kind': 'primitive', 'template': 'gallbladder', 'scale': [2.85, 1.192, 0.917], 'pose_fit_median_mm': 4.04}
+18:32:50 [organ] primitive: 977 vertices, 3726 tets, 482 anchored, 0 pinned
+18:32:54 [organ] template: {'kind': 'template', 'template': 'gallbladder', 'scale': [2.114, 2.143, 1.862], 'pose_fit_median_mm': 4.4}
+18:32:55 [organ] template: 575 vertices, 1964 tets, 367 anchored, 0 pinned
+18:33:03 [organ] template_fit: {'kind': 'template_fit', 'template': 'gallbladder', 'scale': [2.114, 2.143, 1.862], 'pose_fit_median_mm': 4.4, 'ffd_fit_median_mm': 1.82, 'ffd_max_offset_mm': 36.3}
+/Users/grandpa/phai/medical-agentic-sim/r2s/organ.py:79: RuntimeWarning: invalid value encountered in add
+  mid = 0.5 * (near[v, u] + far[v, u])
+18:33:05 [organ] template_fit: 833 vertices, 2729 tets, 663 anchored, 0 pinned
+18:33:05 chole_a organ: done in 20 s

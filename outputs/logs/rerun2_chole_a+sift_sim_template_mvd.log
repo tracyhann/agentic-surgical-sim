@@ -1,0 +1,3 @@
+19:09:58 chole_a+sift: 251 frames 640x360
+19:10:44 [sim] chole_a+sift/template_mvd: 435 organ vertices, max displacement 24.96 mm, grasp {'grasper_left': {'n': 8, 'gap_mm': 3.43, 'step': 0}}
+19:10:44 chole_a+sift sim: done in 46 s

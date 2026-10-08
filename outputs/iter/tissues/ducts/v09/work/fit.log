@@ -1,0 +1,35 @@
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.31 L 22.3 mm reproj 14.00 px
+  rest duct it 599: loss 63.71 L 18.3 mm reproj 9.88 px
+  4d duct it 0: loss 65.52 L 18.3+-0.0 mm reproj 9.79 px
+  4d duct it 450: loss 25.58 L 18.3+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 24.14 L 18.3+-0.1 mm reproj 1.77 px
+  rest strands it 0: loss 85.25 L 14.8 mm reproj 7.14 px
+  rest strands it 599: loss 49.62 L 13.4 mm reproj 6.11 px
+  4d strands it 0: loss 71.63 L 13.4+-0.0 mm reproj 5.94 px
+  4d strands it 450: loss 35.17 L 13.5+-0.2 mm reproj 1.58 px
+  4d strands it 899: loss 34.38 L 13.5+-0.2 mm reproj 1.59 px
+anchor: gallbladder v10 vertex 290 (of 50 marked "ducts"), mean distance to the observed junction (frames >= 60) 4.5 mm
+  rest duct it 0: loss 70.86 L 16.4 mm reproj 11.50 px
+  rest duct it 599: loss 66.35 L 16.6 mm reproj 11.20 px
+  4d duct it 0: loss 77.65 L 16.7+-1.3 mm reproj 5.54 px L0 16.65 mm
+  4d duct it 450: loss 42.56 L 17.4+-0.5 mm reproj 3.00 px L0 17.42 mm
+  4d duct it 899: loss 39.81 L 17.5+-0.4 mm reproj 2.66 px L0 17.55 mm
+  rest duct it 0: loss 72.16 L 16.6 mm reproj 11.20 px
+  rest duct it 599: loss 65.78 L 17.5 mm reproj 10.96 px
+  duct: 4D common length 17.55 mm, rest length 17.52 mm
+  rest strands it 0: loss 56.98 L 17.5 mm reproj 8.40 px
+  rest strands it 599: loss 52.23 L 17.3 mm reproj 6.69 px
+  4d strands it 0: loss 149.07 L 17.8+-3.7 mm reproj 5.99 px L0 17.38 mm
+  4d strands it 450: loss 37.17 L 19.4+-0.4 mm reproj 3.24 px L0 19.41 mm
+  4d strands it 899: loss 36.61 L 19.5+-0.3 mm reproj 3.24 px L0 19.51 mm
+  rest strands it 0: loss 77.17 L 17.3 mm reproj 6.69 px
+  rest strands it 599: loss 52.74 L 19.5 mm reproj 6.34 px
+  strands: 4D common length 19.51 mm, rest length 19.46 mm
+duct: IoU 0.815 BF 0.8475 depth 3.17 mm static-rest IoU 0.5531 reproj 2.628 px L 17.52 mm (std 0.38) r 1.88 mm
+strands: IoU 0.7304 BF 0.7081 depth 1.883 mm static-rest IoU 0.6455 reproj 2.4251 px L 19.46 mm (std 0.33) r 1.65 mm
+proximal -> gallbladder surface |d| median/max (mm): before duct 1.3789/5.6049 rest 5.62; before strands 2.5756/5.6295 rest 5.54; after duct 0.1415/0.3392 rest 0.21; after strand_1 0.1415/0.3392 rest 0.21; after strand_2 0.1415/0.3392 rest 0.21; after strand_3 0.1415/0.3392 rest 0.21
+length over time: duct 17.02-19.7 (rest 17.52, e2e [13.76, 19.64]); strand_1 18.6-20.53 (rest 19.36, e2e [14.9, 20.31]); strand_2 18.65-20.95 (rest 19.46, e2e [15.3, 20.56]); strand_3 18.97-21.67 (rest 19.84, e2e [15.69, 20.91])
+width scale {'mean': 1.0009, 'median': 0.9891, 'p10': 0.8602, 'min': 0.8271, 'max': 1.1946, 'n': 251} / {'mean': 1.0673, 'median': 1.0697, 'p10': 0.9759, 'min': 0.75, 'max': 1.241, 'n': 251}; clearance {'duct_to_fibres': {'mean': 1.1208, 'median': 1.1457, 'p10': 0.2471, 'min': -0.2264, 'max': 2.6571, 'n': 153}, 'fibre_to_fibre': {'mean': 0.0662, 'median': -0.0862, 'p10': -0.1708, 'min': -0.3559, 'max': 0.651, 'n': 153}}; GB check None mm
+union IoU 0.7983  envelope IoU 0.7113 strand->duct proximal 0.0 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.414, 'degenerate_faces': 0, 'area_cm2': 1.96, 'volume_ml': 0.17, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 0  done in 48.7 s

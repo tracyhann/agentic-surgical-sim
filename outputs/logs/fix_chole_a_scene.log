@@ -1,0 +1,10 @@
+18:05:03 chole_a: 251 frames 640x360
+18:05:04 [scene] camera: max rotation 17.2 deg, zoom 0.944-1.021, median fit 2.2 px
+/Users/grandpa/phai/medical-agentic-sim/r2s/scene.py:119: RuntimeWarning: All-NaN slice encountered
+  d = np.nanmedian(zz, axis=0)
+18:05:47 [scene] canvas margin 354 px; never seen 71.5 % of canvas
+18:07:30 [scene] grasper_left: port near_scope (width ratio 1.41), axis error 4.14 deg, visible 100 % of frames
+18:07:30 [scene] probe_right: port near_scope (width ratio 1.22), axis error 1.85 deg, visible 96 % of frames
+18:07:30 [scene] organ bed motion: max 0.0 px, 0.0 mm (3D)
+18:07:30 [scene] {'canvas_margin': 354, 'organ_amodal_added_px': 3751, 'organ_depth_cm': [6.2, 9.0], 'bed_motion_max_px': 0.0}
+18:07:30 chole_a scene: done in 147 s

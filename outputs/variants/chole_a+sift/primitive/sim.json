@@ -1,0 +1,35 @@
+{
+ "cond": "primitive",
+ "params": {
+  "young": 300.0,
+  "poisson": 0.45,
+  "k_back": 0.5,
+  "k_drive": 20.0,
+  "friction": 0.3,
+  "ts": 0.000125,
+  "dt": 0.05,
+  "settle": 0.3,
+  "grasp_n": 80,
+  "grasp_r": 0.008,
+  "grasp_ramp": 0.25,
+  "press": 0.0015,
+  "ribbon_k": 8.0,
+  "ribbon_young": 800.0,
+  "vertex_mass": 6e-05
+ },
+ "n_organ_vertices": 1041,
+ "n_tets": 3852,
+ "grasp": {
+  "grasper_left": {
+   "n": 21,
+   "gap_mm": 0.93,
+   "step": 0
+  }
+ },
+ "initial_backoff_mm": {
+  "probe_right": 0.0
+ },
+ "retargeted_steps": 0,
+ "organ_max_disp_mm": 27.86,
+ "organ_p95_disp_mm": 22.45
+}

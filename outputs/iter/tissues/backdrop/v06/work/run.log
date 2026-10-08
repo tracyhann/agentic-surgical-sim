@@ -1,0 +1,18 @@
+21:36:06 static fraction 0.518
+21:36:06 canvas 834 492 offset -56.0 -88.0
+21:36:13 fused: known cells 62344 hidden 20323 7s
+21:36:15 gains [1.13 1.1  1.05 1.06 0.97 1.05 1.08 1.03 1.06 0.96 0.94 0.98 0.97]
+21:36:15 texture: seen 0.695 10s
+21:36:16 mesh 9179 verts 17930 faces 10s
+21:36:35 camera refinement iter 0: median shift 2.21 px, p90 5.43, max 13.9
+21:36:53 camera refinement iter 1: median shift 0.20 px, p90 0.64, max 2.0
+21:36:54 static fraction 0.518
+21:36:54 canvas 840 494 offset -62.0 -88.0
+21:37:00 fused: known cells 63023 hidden 20093 7s
+21:37:03 gains [1.15 1.09 1.04 1.04 0.97 1.04 1.06 1.03 1.05 0.97 0.93 0.98 0.97]
+21:37:03 texture: seen 0.695 9s
+21:37:03 mesh 9243 verts 18062 faces 9s
+21:37:03 round 0: correction median 0.276 deg, max 1.86
+21:37:25 evaluated 251 frames 21s
+21:37:57 pictures 53s
+21:37:57 SUMMARY v06 {'coverage': 1.0, 'depth_med_mm': 2.5461, 'depth_bias_mm': 0.4728, 'depth_p90_mm': 7.428, 'front_violation': 0.1025, 'gb_violation': 0.0, 'photo_l1': 9.1194, 'photo_ncc': 0.9588, 'photo_lncc': 0.6862, 'frame_iou': 0.9998, 'liver_iou': 0.7492, 'liver_bf': 0.2616} spread {'median': 3.017, 'p90': 6.966, 'p99': 17.937} {'n_verts': 9243, 'n_faces': 18062, 'watertight': False, 'components': 1, 'min_edge_mm': 0.43, 'degenerate_faces': 0, 'area_cm2': 113.23}

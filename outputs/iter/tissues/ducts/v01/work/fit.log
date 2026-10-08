@@ -1,0 +1,15 @@
+duct: observed in 250/251 frames, junction in 240
+strands: observed in 251/251 frames, junction in 192
+  rest duct it 0: loss 143.48 L 22.3 mm reproj 14.00 px
+  rest duct it 599: loss 66.77 L 18.3 mm reproj 9.88 px
+  4d duct it 0: loss 68.92 L 18.3+-0.0 mm reproj 9.78 px
+  4d duct it 450: loss 26.97 L 18.3+-0.1 mm reproj 1.87 px
+  4d duct it 899: loss 25.15 L 18.3+-0.1 mm reproj 1.83 px
+duct: IoU {'mean': 0.7991, 'median': 0.8005, 'p10': 0.6975, 'min': 0.6783, 'max': 0.8891, 'n': 26} BF 0.8152 depth 1.798 mm L {'rest': 18.32, 'min': 18.17, 'max': 18.58, 'std': 0.07, 'per_keyframe': [18.43, 18.28, 18.46, 18.35, 18.37, 18.32, 18.56, 18.23, 18.27, 18.48, 18.41, 18.27, 18.34, 18.32, 18.33, 18.33, 18.31, 18.24, 18.33, 18.32, 18.28, 18.33, 18.25, 18.29, 18.31, 18.33]} r 1.86 mm reproj {'mean': 2.4049, 'median': 1.9524, 'p10': 1.4665, 'min': 1.247, 'max': 7.7828, 'n': 250}
+  rest strands it 0: loss 71.01 L 14.8 mm reproj 7.13 px
+  rest strands it 599: loss 52.00 L 13.3 mm reproj 6.13 px
+  4d strands it 0: loss 54.52 L 13.3+-0.0 mm reproj 5.92 px
+  4d strands it 450: loss 26.78 L 13.3+-0.1 mm reproj 1.41 px
+  4d strands it 899: loss 26.00 L 13.3+-0.1 mm reproj 1.40 px
+strands: IoU {'mean': 0.7197, 'median': 0.758, 'p10': 0.5909, 'min': 0.4724, 'max': 0.8376, 'n': 26} BF 0.6848 depth 1.4448 mm L {'rest': 13.26, 'min': 13.16, 'max': 13.42, 'std': 0.05, 'per_keyframe': [13.26, 13.29, 13.33, 13.33, 13.36, 13.25, 13.34, 13.24, 13.22, 13.34, 13.31, 13.33, 13.26, 13.34, 13.32, 13.17, 13.28, 13.22, 13.28, 13.21, 13.28, 13.31, 13.35, 13.2, 13.31, 13.39]} r 1.65 mm reproj {'mean': 3.2919, 'median': 2.2307, 'p10': 1.5361, 'min': 1.1106, 'max': 16.9842, 'n': 251}
+union IoU {'mean': 0.7709, 'median': 0.7946, 'p10': 0.6552, 'min': 0.6115, 'max': 0.8621, 'n': 26}  done in 22.9 s

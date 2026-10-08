@@ -1,0 +1,28 @@
+{
+ "instance": "chole_sweep",
+ "package": "/Users/grandpa/phai/medical-agentic-sim/runs_real/chole_sweep/out",
+ "build": true,
+ "validate_errors": [],
+ "duration_s": {
+  "agent": 6.05,
+  "video": 6.04
+ },
+ "probe_tip_px": {
+  "median": 9.2,
+  "mean": 15.3,
+  "n": 131
+ },
+ "grasper_tip_px": {
+  "per_key": [
+   25.0,
+   17.3,
+   16.0,
+   41.6
+  ],
+  "mean": 25.0
+ },
+ "tissue": {
+  "kind": "body",
+  "max_disp_mm": 3.2
+ }
+}

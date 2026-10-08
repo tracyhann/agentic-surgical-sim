@@ -1,0 +1,368 @@
+{
+ "title": "前列腺切除 · 牵拉组织（EndoNeRF，达芬奇）",
+ "source": {
+  "type": "images",
+  "path": "data/videos/endonerf/pulling_soft_tissues/images",
+  "pattern": "frame-*.color.png"
+ },
+ "reference_depth": {
+  "name": "stereo",
+  "path": "data/videos/endonerf/pulling_soft_tissues/depth",
+  "pattern": "frame-*.depth.png",
+  "scale_m": 0.001
+ },
+ "size": [
+  640,
+  512
+ ],
+ "fps": 15,
+ "camera": {
+  "f": 569.4682,
+  "static": true
+ },
+ "objects": {
+  "tissue": {
+   "role": "organ",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       230,
+       120
+      ],
+      [
+       250,
+       200
+      ],
+      [
+       200,
+       80
+      ],
+      [
+       270,
+       240
+      ]
+     ],
+     "neg": [
+      [
+       360,
+       100
+      ],
+      [
+       100,
+       380
+      ],
+      [
+       480,
+       380
+      ],
+      [
+       90,
+       240
+      ]
+     ]
+    },
+    {
+     "frame": 36,
+     "pos": [
+      [
+       160,
+       110
+      ],
+      [
+       210,
+       160
+      ],
+      [
+       130,
+       70
+      ],
+      [
+       240,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       440,
+       90
+      ],
+      [
+       300,
+       420
+      ],
+      [
+       520,
+       420
+      ],
+      [
+       60,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 44,
+     "pos": [
+      [
+       160,
+       120
+      ],
+      [
+       220,
+       160
+      ],
+      [
+       120,
+       80
+      ],
+      [
+       260,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       440,
+       60
+      ],
+      [
+       500,
+       420
+      ],
+      [
+       100,
+       380
+      ],
+      [
+       350,
+       15
+      ]
+     ]
+    }
+   ]
+  },
+  "grasper": {
+   "role": "instrument",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       40,
+       235
+      ],
+      [
+       100,
+       240
+      ],
+      [
+       60,
+       290
+      ],
+      [
+       150,
+       295
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       200
+      ],
+      [
+       200,
+       400
+      ]
+     ]
+    },
+    {
+     "frame": 20,
+     "pos": [
+      [
+       60,
+       190
+      ],
+      [
+       180,
+       200
+      ],
+      [
+       240,
+       215
+      ],
+      [
+       290,
+       230
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       330
+      ],
+      [
+       400,
+       100
+      ]
+     ]
+    },
+    {
+     "frame": 56,
+     "pos": [
+      [
+       320,
+       15
+      ],
+      [
+       420,
+       25
+      ],
+      [
+       480,
+       35
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       150
+      ],
+      [
+       250,
+       60
+      ]
+     ]
+    },
+    {
+     "frame": 60,
+     "pos": [
+      [
+       100,
+       30
+      ],
+      [
+       200,
+       40
+      ],
+      [
+       300,
+       45
+      ],
+      [
+       380,
+       70
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       200
+      ],
+      [
+       250,
+       140
+      ]
+     ]
+    }
+   ]
+  },
+  "tool_right": {
+   "role": "instrument",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       560,
+       330
+      ],
+      [
+       460,
+       330
+      ],
+      [
+       380,
+       300
+      ],
+      [
+       600,
+       420
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       300
+      ],
+      [
+       450,
+       200
+      ]
+     ]
+    }
+   ]
+  },
+  "vesicle": {
+   "role": "static",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       360,
+       60
+      ],
+      [
+       380,
+       150
+      ],
+      [
+       340,
+       190
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       150
+      ],
+      [
+       480,
+       150
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "instruments": [
+  {
+   "name": "grasper_left",
+   "mask": "grasper",
+   "holds": "tissue",
+   "grasp_frame": 20,
+   "shaft_d": 0.008,
+   "color": "davinci",
+   "ruler": false
+  },
+  {
+   "name": "tool_right",
+   "mask": "tool_right",
+   "shaft_d": 0.008,
+   "color": "davinci"
+  }
+ ],
+ "conditions": [
+  "measured",
+  "primitive"
+ ],
+ "note": "Static da Vinci endoscope. Metric scale from the right instrument shaft (8 mm) only: the grasper shows mostly its wristed jaws. fps assumed 15 (not stated by the dataset). All tissue motion here is the grasper's pull (static camera): no global-motion drive; grasp radius 15 mm (coarse membrane mesh).",
+ "sim": {
+  "bed_motion": false,
+  "params": {
+   "grasp_r": 0.015
+  }
+ }
+}

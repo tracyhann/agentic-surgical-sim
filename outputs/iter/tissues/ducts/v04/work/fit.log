@@ -1,0 +1,16 @@
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.31 L 22.3 mm reproj 14.00 px
+  rest duct it 599: loss 63.71 L 18.3 mm reproj 9.88 px
+  4d duct it 0: loss 65.52 L 18.3+-0.0 mm reproj 9.79 px
+  4d duct it 450: loss 25.58 L 18.3+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 24.14 L 18.3+-0.1 mm reproj 1.77 px
+  rest strands it 0: loss 136.92 L 14.8 mm reproj 7.14 px
+  rest strands it 599: loss 49.66 L 13.3 mm reproj 6.11 px
+  4d strands it 0: loss 133.96 L 13.3+-0.0 mm reproj 5.95 px
+  4d strands it 450: loss 44.08 L 13.6+-0.2 mm reproj 2.79 px
+  4d strands it 899: loss 39.19 L 13.5+-0.2 mm reproj 3.56 px
+duct: IoU 0.8434 BF 0.8919 depth 1.7352 mm static-rest IoU 0.5752 reproj 2.3543 px L 18.28 mm (std 0.11) r 1.88 mm
+strands: IoU 0.6702 BF 0.6453 depth 1.735 mm static-rest IoU 0.5788 reproj 4.8415 px L 13.33 mm (std 0.18) r 1.58 mm
+width scale {'mean': 1.0516, 'median': 1.0377, 'p10': 0.8834, 'min': 0.8282, 'max': 1.2659, 'n': 251} / {'mean': 1.0895, 'median': 1.0687, 'p10': 0.9138, 'min': 0.75, 'max': 1.3689, 'n': 251}; clearance {'duct_to_fibres': {'mean': 1.396, 'median': 1.486, 'p10': 0.3083, 'min': -0.2388, 'max': 2.7596, 'n': 153}, 'fibre_to_fibre': {'mean': 0.0955, 'median': -0.0461, 'p10': -0.1186, 'min': -0.3333, 'max': 0.7131, 'n': 153}}; GB check 1.8718 mm
+union IoU 0.7852  envelope IoU 0.6477 strand->duct proximal 0.1101 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.414, 'degenerate_faces': 0, 'area_cm2': 2.0, 'volume_ml': 0.17, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 0  done in 36.8 s

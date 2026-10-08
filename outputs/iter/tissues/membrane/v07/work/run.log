@@ -1,0 +1,284 @@
+/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/membrane.py:890: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  a2 = np.cross(st[T[:, 1]] - st[T[:, 0]], st[T[:, 2]] - st[T[:, 0]])
+/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/membrane.py:898: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  a = np.cross(st[T[:, 1]] - st[T[:, 0]], st[T[:, 2]] - st[T[:, 0]])
+/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/membrane.py:934: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  a_new = np.cross(new[T[:, 1]] - new[T[:, 0]], new[T[:, 2]] - new[T[:, 0]])
+/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/membrane.py:955: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  o1 = np.cross(st[t1[1]] - st[t1[0]], st[t1[2]] - st[t1[0]])
+/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/membrane.py:956: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  o2 = np.cross(st[t2[1]] - st[t2[0]], st[t2[2]] - st[t2[0]])
+/Users/grandpa/phai/medical-agentic-sim/r2s/tissue/membrane.py:962: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  tot = abs(np.cross(st[T[f1, 1]] - st[T[f1, 0]], st[T[f1, 2]] - st[T[f1, 0]])) + abs(np.cross(st[T[f2, 1]] - st[T[f2, 0]], st[T[f2, 2]] - st[T[f2, 0]]))
+iou_all_frames                     mean 0.7831  min 0.4423
+iou_all_frames_pan_0_62            mean 0.7535  min 0.4423
+iou_all_frames_63_250              mean 0.7931  min 0.5392
+iou_per_frame_fit_unsmoothed       mean 0.8687  min 0.7252
+mask_self_iou_adjacent             mean 0.8534  min 0.4577
+silhouette_iou                     mean 0.7903  median 0.8056  min 0.6483  max 0.8924
+silhouette_iou_raw                 mean 0.7968  median 0.8089  min 0.6601  max 0.8998
+boundary_f_4px                     mean 0.4802  median 0.4863  min 0.2109  max 0.7296
+boundary_f_8px                     mean 0.7244  median 0.7606  min 0.4001  max 0.9986
+depth_residual_mm                  mean 1.8968  median 1.7079  min 0.6664  max 3.4611
+depth_residual_lower_mm            mean 1.802  median 1.5903  min 0.6093  max 3.4553
+depth_residual_upper_mm            mean 2.3796  median 2.3006  min 0.7458  max 4.6483
+video_minus_mesh_depth_upper_mm    mean -0.1314  median -0.5696  min -4.6483  max 4.4534
+base_on_gallbladder_mm             mean 1.8389  median 1.4725  min 0.7818  max 3.9447
+apex_to_image_jaw_px               mean 1.2539  median 1.0063  min 0.0901  max 7.2235
+grasper_tip_to_image_jaw_px        mean 17.0151  median 13.1534  min 4.7103  max 69.8527
+apex_to_grasper_tip_mm             mean 5.0103  median 4.5043  min 0.9102  max 18.1532
+area_cm2                           mean 4.6231  median 4.5829  min 1.8268  max 6.6587
+lift_mm                            mean 17.1967  median 16.3567  min 10.8413  max 24.8097
+stretch_max                        mean 4.5407  median 4.5256  min 1.0  max 10.1362
+stretch_p95                        mean 2.197  median 2.0385  min 1.0  max 3.2968
+stretch_p05                        mean 0.5288  median 0.4944  min 0.3416  max 1.0
+base_on_gallbladder_fraction       mean 0.9744  median 1.0  min 0.6154  max 1.0
+accel_mm_per_frame2                mean 0.2671  median 0.2446  min 0.0853  max 0.8266
+base_to_gallbladder_model_mm       {'mean': 0.5107, 'median': 0.5097, 'max': 0.7714}
+apex_height_above_gallbladder_model_mm {'mean': 6.7219, 'median': 5.7579, 'max': 11.9518}
+apex_to_interaction_tip_mm         {'mean': 1.5914, 'median': 1.1546, 'max': 3.9123}
+interaction_tip_to_image_jaw_px    {'mean': 10.1845, 'median': 6.9628, 'max': 30.3646}
+interaction_tip_minus_apex_depth_mm {'mean': 0.4417, 'median': 0.2832, 'max': 2.6789}
+mesh {'n_verts': 237, 'n_faces': 395, 'watertight': False, 'components': 1, 'min_edge_mm': 0.596, 'degenerate_faces': 0, 'area_cm2': 4.88} rest frame 162 min angle {'note': 'smallest triangle angle (MuJoCo shells dislike slivers)', 'rest': 19.61, 'p1_over_time': 4.07, 'min_over_time': 0.19, 'faces_below_15deg_rest': 0, 'faces_below_15deg_over_time_mean': 65.93, 'n_faces': 395, 'mesh': 'remeshed'}
+band note mean IoU / boundary F (4 px) vs our mask over every frame of each band
+band this_refined_cams {'0-61': {'iou': 0.756, 'bf4': 0.4198, 'iou_min': 0.4455, 'n': 62}, '62-129': {'iou': 0.7427, 'bf4': 0.4666, 'iou_min': 0.5493, 'n': 68}, '130-250': {'iou': 0.8208, 'bf4': 0.5149, 'iou_min': 0.5792, 'n': 121}, 'all': {'iou': 0.7836, 'bf4': 0.4783, 'n': 251}}
+band v06_refined_cams {'0-61': {'iou': 0.7228, 'bf4': 0.3672, 'iou_min': 0.4432, 'n': 62}, '62-129': {'iou': 0.7465, 'bf4': 0.4789, 'iou_min': 0.5521, 'n': 68}, '130-250': {'iou': 0.8233, 'bf4': 0.5087, 'iou_min': 0.5842, 'n': 121}, 'all': {'iou': 0.7776, 'bf4': 0.4657, 'n': 251}}
+band v06_clip_cams {'0-61': {'iou': 0.72, 'bf4': 0.3327, 'iou_min': 0.4117, 'n': 62}, '62-129': {'iou': 0.7419, 'bf4': 0.4596, 'iou_min': 0.5487, 'n': 68}, '130-250': {'iou': 0.8227, 'bf4': 0.5072, 'iou_min': 0.5671, 'n': 121}, 'all': {'iou': 0.7754, 'bf4': 0.4512, 'n': 251}}
+{
+"source": "gallbladder/v11",
+"grasp": "interaction/v05:ray_near_jaws",
+"compare": "v06",
+"margin_mm": 1.0,
+"base_offset_mm": 0.25,
+"vertices_behind_gb_frac_v06": {
+"note": "fraction of sheet vertices behind the GB surface along the ray, per frame",
+"frames_with_any": 150,
+"mean": 0.0058,
+"median": 0.0024,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.0424,
+"n": 251
+},
+"vertices_behind_gb_by_1mm_frac_v06": {
+"mean": 0.0005,
+"median": 0.0,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.0094,
+"n": 251
+},
+"non_base_vertices_behind_gb_frac_v06": {
+"note": "same, without the base row (which lies on the surface)",
+"mean": 0.0001,
+"median": 0.0,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.01,
+"n": 251
+},
+"vertices_behind_gb_frac_before_front_fix": {
+"note": "fraction of sheet vertices behind the GB surface along the ray, per frame",
+"frames_with_any": 239,
+"mean": 0.1777,
+"median": 0.1814,
+"p10": 0.0084,
+"min": 0.0,
+"max": 0.4515,
+"n": 251
+},
+"vertices_behind_gb_by_1mm_frac_before_front_fix": {
+"mean": 0.0724,
+"median": 0.0295,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.3207,
+"n": 251
+},
+"non_base_vertices_behind_gb_frac_before_front_fix": {
+"note": "same, without the base row (which lies on the surface)",
+"mean": 0.2025,
+"median": 0.2,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.5027,
+"n": 251
+},
+"vertices_behind_gb_frac_this": {
+"note": "fraction of sheet vertices behind the GB surface along the ray, per frame",
+"frames_with_any": 200,
+"mean": 0.0197,
+"median": 0.0084,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.1435,
+"n": 251
+},
+"vertices_behind_gb_by_1mm_frac_this": {
+"mean": 0.0015,
+"median": 0.0,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.0295,
+"n": 251
+},
+"non_base_vertices_behind_gb_frac_this": {
+"note": "same, without the base row (which lies on the surface)",
+"mean": 0.0,
+"median": 0.0,
+"p10": 0.0,
+"min": 0.0,
+"max": 0.0,
+"n": 251
+},
+"sheet_pixels_hidden_by_gb_v06": {
+"note": "keyframes, quality.render z-test",
+"per_keyframe": [
+0.009,
+0.008,
+0.0,
+0.001,
+0.0,
+0.001,
+0.001,
+0.0,
+0.009,
+0.006,
+0.012,
+0.007,
+0.005,
+0.003,
+0.008,
+0.006,
+0.0,
+0.01,
+0.0,
+0.001,
+0.004,
+0.003,
+0.003,
+0.0,
+0.0,
+0.0
+],
+"mean": 0.0037,
+"median": 0.003,
+"p10": 0.0001,
+"min": 0.0,
+"max": 0.0118,
+"n": 26
+},
+"visible_sheet_iou_v06": {
+"note": "IoU with our mask of the sheet part not hidden by the GB model",
+"mean": 0.7844,
+"median": 0.8035,
+"p10": 0.686,
+"min": 0.6323,
+"max": 0.8994,
+"n": 26
+},
+"sheet_pixels_hidden_by_gb_this": {
+"note": "keyframes, quality.render z-test",
+"per_keyframe": [
+0.007,
+0.007,
+0.0,
+0.0,
+0.0,
+0.003,
+0.002,
+0.0,
+0.008,
+0.003,
+0.003,
+0.001,
+0.008,
+0.001,
+0.007,
+0.0,
+0.0,
+0.01,
+0.0,
+0.005,
+0.005,
+0.002,
+0.007,
+0.004,
+0.001,
+0.002
+],
+"mean": 0.0034,
+"median": 0.0026,
+"p10": 0.0001,
+"min": 0.0,
+"max": 0.0105,
+"n": 26
+},
+"visible_sheet_iou_this": {
+"note": "IoU with our mask of the sheet part not hidden by the GB model",
+"mean": 0.7932,
+"median": 0.8074,
+"p10": 0.6981,
+"min": 0.6572,
+"max": 0.8984,
+"n": 26
+},
+"apex_jaw_u": {
+"note": "nearest jaw-segment point to the apex, 0 = grasp point (TCP), 1 = jaw tip (3 mm)",
+"mean": 0.8881,
+"median": 1.0,
+"p10": 0.6333,
+"min": 0.2,
+"max": 1.0,
+"n": 251
+},
+"apex_to_jaw_segment_mm_after": {
+"note": "jaw-row centre to the nearest point of the TCP -> tip segment",
+"mean": 1.4896,
+"median": 1.1245,
+"p10": 0.3055,
+"min": 0.0408,
+"max": 3.5547,
+"n": 251
+},
+"apex_to_jaw_segment_mm_before": {
+"mean": 1.4452,
+"median": 1.0506,
+"p10": 0.3569,
+"min": 0.066,
+"max": 3.586,
+"n": 251
+},
+"apex_to_grasp_point_mm_before": {
+"note": "v06 jaw-row centre to the grasp point, per frame",
+"mean": 3.3366,
+"median": 3.3033,
+"p10": 2.7875,
+"min": 2.1727,
+"max": 4.3822,
+"n": 251
+},
+"apex_to_grasp_point_mm_after": {
+"mean": 3.3348,
+"median": 3.3649,
+"p10": 2.5477,
+"min": 1.9552,
+"max": 4.924,
+"n": 251
+},
+"grasp_point_minus_image_apex_depth_mm": {
+"note": ">0: grasp point farther than our image-depth apex",
+"mean": 3.0334,
+"median": 2.4455,
+"p10": -2.8752,
+"min": -8.148,
+"max": 14.3033,
+"n": 251
+},
+"grasp_point_to_image_apex_px": {
+"mean": 16.5021,
+"median": 15.3124,
+"p10": 9.4797,
+"min": 6.7934,
+"max"
+IoU per keyframe [0.7244, 0.8796, 0.6483, 0.8453, 0.7862, 0.7208, 0.7961, 0.8641, 0.6546, 0.8346, 0.7032, 0.7136, 0.8121, 0.8924, 0.8767, 0.8189, 0.7312, 0.8255, 0.7454, 0.6988, 0.7006, 0.8417, 0.8859, 0.8893, 0.8602, 0.799]

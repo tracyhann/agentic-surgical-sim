@@ -1,0 +1,320 @@
+{
+ "measured": {
+  "sim": {
+   "outline_iou": 0.27,
+   "iou_curve": [
+    0.799,
+    0.285,
+    0.405,
+    0.248,
+    0.351,
+    0.216,
+    0.152,
+    0.126,
+    0.195,
+    0.264,
+    0.299,
+    0.234,
+    0.199,
+    0.001
+   ],
+   "depth_err_mm_monocular": 5.89,
+   "depth_curve_monocular": [
+    0.22,
+    1.5,
+    1.0,
+    1.53,
+    1.76,
+    3.82,
+    5.32,
+    7.03,
+    11.19,
+    7.71,
+    8.56,
+    9.6,
+    10.78,
+    12.5
+   ],
+   "track_err_px": 11.17,
+   "track_err_px_static": 9.67,
+   "n_tracks": 176,
+   "n_track_samples": 866,
+   "n_track_seeds": 3,
+   "track_err_px_frame0_seed": 10.95,
+   "n_track_samples_frame0_seed": 389,
+   "track_by_seed": [
+    [
+     0,
+     10.95,
+     7.61,
+     389
+    ],
+    [
+     25,
+     10.89,
+     8.03,
+     364
+    ],
+    [
+     50,
+     11.48,
+     12.07,
+     113
+    ]
+   ],
+   "track_seeds_better_than_static": 1
+  },
+  "static": {
+   "outline_iou": 0.397,
+   "iou_curve": [
+    0.799,
+    0.304,
+    0.771,
+    0.477,
+    0.655,
+    0.473,
+    0.288,
+    0.188,
+    0.314,
+    0.343,
+    0.34,
+    0.355,
+    0.253,
+    0.001
+   ],
+   "depth_err_mm_monocular": 5.67,
+   "depth_curve_monocular": [
+    0.22,
+    1.53,
+    0.96,
+    1.51,
+    1.92,
+    3.55,
+    5.05,
+    6.99,
+    9.59,
+    7.0,
+    8.49,
+    9.34,
+    10.57,
+    12.68
+   ],
+   "track_err_px": 9.73,
+   "track_err_px_static": 9.73,
+   "n_tracks": 187,
+   "n_track_samples": 954,
+   "n_track_seeds": 3,
+   "track_err_px_frame0_seed": 7.61,
+   "n_track_samples_frame0_seed": 389,
+   "track_by_seed": [
+    [
+     0,
+     7.61,
+     7.61,
+     389
+    ],
+    [
+     25,
+     8.94,
+     8.94,
+     455
+    ],
+    [
+     50,
+     12.03,
+     12.03,
+     110
+    ]
+   ],
+   "track_seeds_better_than_static": 0
+  },
+  "organ": {
+   "cond": "measured",
+   "params": {
+    "young": 300.0,
+    "poisson": 0.45,
+    "k_back": 0.5,
+    "k_drive": 20.0,
+    "friction": 0.3,
+    "ts": 3.125e-05,
+    "dt": 0.05,
+    "settle": 0.3,
+    "grasp_n": 80,
+    "grasp_r": 0.008,
+    "grasp_ramp": 0.25,
+    "press": 0.0015,
+    "ribbon_k": 8.0,
+    "ribbon_young": 800.0,
+    "vertex_mass": 6e-05
+   },
+   "n_organ_vertices": 352,
+   "n_tets": 783,
+   "grasp": {},
+   "initial_backoff_mm": {
+    "dissector": 6.0
+   },
+   "retargeted_steps": 3,
+   "organ_max_disp_mm": 21.26,
+   "organ_p95_disp_mm": 18.54
+  }
+ },
+ "primitive": {
+  "sim": {
+   "outline_iou": 0.11,
+   "iou_curve": [
+    0.182,
+    0.116,
+    0.09,
+    0.083,
+    0.124,
+    0.143,
+    0.087,
+    0.101,
+    0.082,
+    0.111,
+    0.129,
+    0.122,
+    0.161,
+    0.001
+   ],
+   "depth_err_mm_monocular": 3.97,
+   "depth_curve_monocular": [
+    3.07,
+    2.12,
+    2.91,
+    3.06,
+    2.76,
+    1.9,
+    2.33,
+    2.4,
+    7.37,
+    3.95,
+    5.32,
+    5.56,
+    6.74,
+    6.1
+   ],
+   "track_err_px": 26.37,
+   "track_err_px_static": 11.9,
+   "n_tracks": 181,
+   "n_track_samples": 895,
+   "n_track_seeds": 3,
+   "track_err_px_frame0_seed": 32.14,
+   "n_track_samples_frame0_seed": 393,
+   "track_by_seed": [
+    [
+     0,
+     32.14,
+     11.93,
+     393
+    ],
+    [
+     25,
+     20.03,
+     10.19,
+     385
+    ],
+    [
+     50,
+     16.21,
+     14.54,
+     117
+    ]
+   ],
+   "track_seeds_better_than_static": 0
+  },
+  "static": {
+   "outline_iou": 0.162,
+   "iou_curve": [
+    0.182,
+    0.15,
+    0.232,
+    0.276,
+    0.181,
+    0.185,
+    0.137,
+    0.111,
+    0.129,
+    0.152,
+    0.167,
+    0.179,
+    0.188,
+    0.001
+   ],
+   "depth_err_mm_monocular": 4.62,
+   "depth_curve_monocular": [
+    3.07,
+    3.29,
+    2.1,
+    2.19,
+    0.66,
+    2.18,
+    2.86,
+    4.11,
+    7.54,
+    5.21,
+    6.42,
+    6.8,
+    8.1,
+    10.13
+   ],
+   "track_err_px": 11.43,
+   "track_err_px_static": 11.43,
+   "n_tracks": 187,
+   "n_track_samples": 952,
+   "n_track_seeds": 3,
+   "track_err_px_frame0_seed": 11.93,
+   "n_track_samples_frame0_seed": 393,
+   "track_by_seed": [
+    [
+     0,
+     11.93,
+     11.93,
+     393
+    ],
+    [
+     25,
+     9.47,
+     9.47,
+     448
+    ],
+    [
+     50,
+     13.89,
+     13.89,
+     111
+    ]
+   ],
+   "track_seeds_better_than_static": 0
+  },
+  "organ": {
+   "cond": "primitive",
+   "params": {
+    "young": 300.0,
+    "poisson": 0.45,
+    "k_back": 0.5,
+    "k_drive": 20.0,
+    "friction": 0.3,
+    "ts": 6.25e-05,
+    "dt": 0.05,
+    "settle": 0.3,
+    "grasp_n": 80,
+    "grasp_r": 0.008,
+    "grasp_ramp": 0.25,
+    "press": 0.0015,
+    "ribbon_k": 8.0,
+    "ribbon_young": 800.0,
+    "vertex_mass": 6e-05
+   },
+   "n_organ_vertices": 803,
+   "n_tets": 2661,
+   "grasp": {},
+   "initial_backoff_mm": {
+    "dissector": 5.0
+   },
+   "retargeted_steps": 7,
+   "organ_max_disp_mm": 26.06,
+   "organ_p95_disp_mm": 22.59
+  }
+ }
+}

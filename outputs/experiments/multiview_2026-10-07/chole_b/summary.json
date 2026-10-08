@@ -1,0 +1,218 @@
+{
+ "measured": {
+  "sim": {
+   "outline_iou": 0.27,
+   "iou_curve": [
+    0.799,
+    0.285,
+    0.405,
+    0.248,
+    0.351,
+    0.216,
+    0.152,
+    0.126,
+    0.195,
+    0.264,
+    0.299,
+    0.234,
+    0.199,
+    0.001
+   ],
+   "depth_err_mm_monocular": 5.89,
+   "depth_curve_monocular": [
+    0.22,
+    1.5,
+    1.0,
+    1.53,
+    1.76,
+    3.82,
+    5.32,
+    7.03,
+    11.19,
+    7.71,
+    8.56,
+    9.6,
+    10.78,
+    12.5
+   ],
+   "track_err_px": 13.05,
+   "track_err_px_static": 9.13,
+   "n_tracks": 65
+  },
+  "static": {
+   "outline_iou": 0.397,
+   "iou_curve": [
+    0.799,
+    0.304,
+    0.771,
+    0.477,
+    0.655,
+    0.473,
+    0.288,
+    0.188,
+    0.314,
+    0.343,
+    0.34,
+    0.355,
+    0.253,
+    0.001
+   ],
+   "depth_err_mm_monocular": 5.67,
+   "depth_curve_monocular": [
+    0.22,
+    1.53,
+    0.96,
+    1.51,
+    1.92,
+    3.55,
+    5.05,
+    6.99,
+    9.59,
+    7.0,
+    8.49,
+    9.34,
+    10.57,
+    12.68
+   ],
+   "track_err_px": 9.13,
+   "track_err_px_static": 9.13,
+   "n_tracks": 65
+  },
+  "organ": {
+   "cond": "measured",
+   "params": {
+    "young": 300.0,
+    "poisson": 0.45,
+    "k_back": 0.5,
+    "k_drive": 20.0,
+    "friction": 0.3,
+    "ts": 3.125e-05,
+    "dt": 0.05,
+    "settle": 0.3,
+    "grasp_n": 80,
+    "grasp_r": 0.008,
+    "press": 0.0015,
+    "ribbon_k": 8.0,
+    "ribbon_young": 800.0,
+    "vertex_mass": 6e-05
+   },
+   "n_organ_vertices": 352,
+   "n_tets": 783,
+   "grasp": {},
+   "initial_backoff_mm": {
+    "dissector": 6.0
+   },
+   "retargeted_steps": 3,
+   "organ_max_disp_mm": 21.26,
+   "organ_p95_disp_mm": 18.54
+  }
+ },
+ "primitive": {
+  "sim": {
+   "outline_iou": 0.153,
+   "iou_curve": [
+    0.273,
+    0.21,
+    0.251,
+    0.235,
+    0.135,
+    0.114,
+    0.079,
+    0.11,
+    0.096,
+    0.154,
+    0.181,
+    0.127,
+    0.175,
+    0.001
+   ],
+   "depth_err_mm_monocular": 5.35,
+   "depth_curve_monocular": [
+    1.87,
+    2.59,
+    1.71,
+    2.18,
+    1.64,
+    1.66,
+    2.72,
+    3.7,
+    10.77,
+    10.39,
+    9.56,
+    8.48,
+    9.38,
+    8.27
+   ],
+   "track_err_px": 25.3,
+   "track_err_px_static": 9.73,
+   "n_tracks": 65
+  },
+  "static": {
+   "outline_iou": 0.237,
+   "iou_curve": [
+    0.273,
+    0.3,
+    0.281,
+    0.349,
+    0.312,
+    0.27,
+    0.206,
+    0.212,
+    0.174,
+    0.211,
+    0.231,
+    0.237,
+    0.26,
+    0.001
+   ],
+   "depth_err_mm_monocular": 4.57,
+   "depth_curve_monocular": [
+    1.87,
+    2.87,
+    2.11,
+    2.0,
+    1.41,
+    2.02,
+    2.91,
+    3.9,
+    6.34,
+    4.91,
+    6.86,
+    7.2,
+    9.98,
+    9.66
+   ],
+   "track_err_px": 9.73,
+   "track_err_px_static": 9.73,
+   "n_tracks": 65
+  },
+  "organ": {
+   "cond": "primitive",
+   "params": {
+    "young": 300.0,
+    "poisson": 0.45,
+    "k_back": 0.5,
+    "k_drive": 20.0,
+    "friction": 0.3,
+    "ts": 6.25e-05,
+    "dt": 0.05,
+    "settle": 0.3,
+    "grasp_n": 80,
+    "grasp_r": 0.008,
+    "press": 0.0015,
+    "ribbon_k": 8.0,
+    "ribbon_young": 800.0,
+    "vertex_mass": 6e-05
+   },
+   "n_organ_vertices": 805,
+   "n_tets": 2457,
+   "grasp": {},
+   "initial_backoff_mm": {
+    "dissector": 5.0
+   },
+   "retargeted_steps": 14,
+   "organ_max_disp_mm": 29.78,
+   "organ_p95_disp_mm": 26.62
+  }
+ }
+}

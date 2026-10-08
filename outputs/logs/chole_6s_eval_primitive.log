@@ -1,0 +1,3 @@
+18:46:13 chole_6s: 151 frames 640x360
+18:46:24 [eval] primitive: outline_iou 0.701 (static 0.707), depth_err_mm_monocular 5.01 (static 6.01), track_err_px 11.24 (static 12.24), n_track_samples 1758 (static 1761), n_track_seeds 6 (static 6), track_err_px_frame0_seed 14.88 (static 31.8), n_track_samples_frame0_seed 529 (static 529), track_by_seed [[0, 14.88, 31.8, 529], [25, 21.54, 22.34, 93], [50, 39.57, 13.43, 32], [75, 21.76, 9.28, 292], [100, 7.19, 7.29, 203], [125, 6.74, 5.46, 609]] (static [[0, 31.8, 31.8, 529], [25, 22.1, 22.1, 110], [50, 13.19, 13.19, 32], [75, 9.29, 9.29, 296], [100, 7.16, 7.16, 199], [125, 5.66, 5.66, 595]]), track_seeds_better_than_static 3 (static 0)
+18:46:24 chole_6s eval: done in 11 s

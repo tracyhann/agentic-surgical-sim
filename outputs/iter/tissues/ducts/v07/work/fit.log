@@ -1,0 +1,32 @@
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.31 L 22.3 mm reproj 14.00 px
+  rest duct it 599: loss 63.71 L 18.3 mm reproj 9.88 px
+  4d duct it 0: loss 65.52 L 18.3+-0.0 mm reproj 9.79 px
+  4d duct it 450: loss 25.58 L 18.3+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 24.14 L 18.3+-0.1 mm reproj 1.77 px
+  rest strands it 0: loss 85.25 L 14.8 mm reproj 7.14 px
+  rest strands it 599: loss 49.62 L 13.4 mm reproj 6.11 px
+  4d strands it 0: loss 71.63 L 13.4+-0.0 mm reproj 5.94 px
+  4d strands it 450: loss 35.17 L 13.5+-0.2 mm reproj 1.58 px
+  4d strands it 899: loss 34.38 L 13.5+-0.2 mm reproj 1.59 px
+  4d duct it 0: loss 65.52 L 18.3+-0.0 mm reproj 9.79 px
+  4d duct it 450: loss 23.85 L 18.2+-1.3 mm reproj 1.75 px
+  4d duct it 899: loss 22.50 L 17.5+-1.8 mm reproj 1.76 px
+diag no_length duct: L {'mean': 17.4863, 'median': 17.5754, 'p10': 14.9803, 'min': 14.1024, 'max': 21.6184, 'n': 251} depth shift [0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.3, 0.1, 0.1, 0.5, 0.5, 0.1, 0.0, -0.1, -0.1, -0.1, -0.1, -0.1, -0.2, -0.2, -0.3, -0.5, -0.5, -0.4, -0.3, -0.2]
+  4d strands it 0: loss 71.63 L 13.4+-0.0 mm reproj 5.94 px
+  4d strands it 450: loss 26.64 L 15.9+-2.6 mm reproj 2.16 px
+  4d strands it 899: loss 24.18 L 16.3+-3.5 mm reproj 2.91 px
+diag no_length strands: L {'mean': 16.3477, 'median': 14.7837, 'p10': 13.0071, 'min': 12.2471, 'max': 24.2401, 'n': 251} depth shift [0.0, 0.2, 0.8, 1.1, 1.1, 0.8, 0.7, 0.8, 0.8, 0.9, 1.7, 1.6, 1.1, 0.5, 0.6, 0.8, 0.6, 0.4, 0.2, 0.2, 0.3, 0.3, 0.1, 0.1, 0.2, 0.5]
+  4d duct it 0: loss 58.80 L 18.3+-0.0 mm reproj 9.79 px
+  4d duct it 450: loss 18.97 L 18.3+-0.1 mm reproj 1.82 px
+  4d duct it 899: loss 18.20 L 18.3+-0.1 mm reproj 1.75 px
+diag no_depth duct: L {'mean': 18.2936, 'median': 18.2898, 'p10': 18.1764, 'min': 17.9832, 'max': 18.5597, 'n': 251} depth shift [-1.2, -1.2, -1.4, -1.5, -1.5, -1.4, -1.3, -1.0, -0.9, -0.8, -1.1, -0.7, 0.7, 1.7, 2.0, 1.9, 1.6, 1.0, 0.8, 0.8, 0.8, 0.8, 0.6, 0.4, 0.2, 0.0]
+  4d strands it 0: loss 66.03 L 13.4+-0.0 mm reproj 5.94 px
+  4d strands it 450: loss 30.25 L 13.5+-0.2 mm reproj 1.59 px
+  4d strands it 899: loss 29.46 L 13.5+-0.2 mm reproj 1.61 px
+diag no_depth strands: L {'mean': 13.5004, 'median': 13.4549, 'p10': 13.2972, 'min': 13.1479, 'max': 13.8766, 'n': 251} depth shift [0.2, 0.5, -0.1, -0.8, -1.2, -1.1, -1.3, -1.6, -1.7, -1.2, -1.0, -0.8, -0.6, 0.2, 0.7, 0.9, 0.8, 1.3, 1.5, 1.2, 0.4, 0.2, 0.2, 0.3, -0.1, -0.4]
+duct: IoU 0.8141 BF 0.811 depth 1.7336 mm static-rest IoU 0.5661 reproj 2.3543 px L 18.28 mm (std 0.11) r 1.88 mm
+strands: IoU 0.6981 BF 0.6048 depth 1.8368 mm static-rest IoU 0.5542 reproj 2.8379 px L 13.36 mm (std 0.18) r 1.67 mm
+width scale {'mean': 1.0406, 'median': 1.0274, 'p10': 0.8725, 'min': 0.8142, 'max': 1.2588, 'n': 251} / {'mean': 1.0902, 'median': 1.0503, 'p10': 0.9702, 'min': 0.75, 'max': 1.3364, 'n': 251}; clearance {'duct_to_fibres': {'mean': 2.0204, 'median': 1.8181, 'p10': 0.9581, 'min': 0.3473, 'max': 4.3487, 'n': 153}, 'fibre_to_fibre': {'mean': -0.3387, 'median': -0.4658, 'p10': -0.5917, 'min': -0.7129, 'max': 0.3033, 'n': 153}}; GB check 8.6167 mm
+union IoU 0.7741  envelope IoU 0.7168 strand->duct proximal 0.3632 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.576, 'degenerate_faces': 0, 'area_cm2': 2.14, 'volume_ml': 0.18, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 0  done in 44.1 s

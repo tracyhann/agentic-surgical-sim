@@ -1,0 +1,4 @@
+17:10:26 chole_b+vggt_tracks: 197 frames 640x360
+17:10:29 [eval] measured: outline_iou 0.246 (static 0.304), depth_err_mm_monocular 1.43 (static 1.42), track_err_px 13.92 (static 13.84), n_track_samples 759 (static 811), n_track_seeds 3 (static 3), track_err_px_frame0_seed 18.01 (static 18.71), n_track_samples_frame0_seed 339 (static 339)
+17:10:35 [eval] primitive: outline_iou 0.227 (static 0.225), depth_err_mm_monocular 3.77 (static 3.1), track_err_px 20.39 (static 14.04), n_track_samples 927 (static 938), n_track_seeds 3 (static 3), track_err_px_frame0_seed 21.5 (static 18.25), n_track_samples_frame0_seed 381 (static 381)
+17:10:35 chole_b+vggt_tracks eval: done in 9 s

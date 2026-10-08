@@ -1,0 +1,47 @@
+{
+ "protocol_version": "surg-0.1",
+ "status": "success",
+ "task": {
+  "instruction": "FLS peg transfer: lift the orange ring off its peg and place it over the destination peg.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   0.01,
+   -0.09,
+   0.08
+  ],
+  "lookat": [
+   0.0,
+   0.016,
+   0.0
+  ],
+  "fovy_deg": 60.0,
+  "width": 640,
+  "height": 480
+ },
+ "instrument": {
+  "rcm_pos": [
+   -0.07,
+   -0.065,
+   0.085
+  ]
+ },
+ "roles": {
+  "object": [
+   "ring"
+  ],
+  "target": [
+   "peg4"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "joint_targets"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

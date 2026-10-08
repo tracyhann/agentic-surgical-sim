@@ -1,0 +1,3 @@
+17:28:33 chole_b+sift: 197 frames 640x360
+17:28:36 [eval] measured: outline_iou 0.298 (static 0.42), depth_err_mm_monocular 6.46 (static 6.04), track_err_px 12.03 (static 11.07), n_track_samples 934 (static 976), n_track_seeds 3 (static 3), track_err_px_frame0_seed 10.65 (static 8.25), n_track_samples_frame0_seed 411 (static 411), track_by_seed [[0, 10.65, 8.25, 411], [25, 11.25, 8.05, 406], [50, 14.0, 14.34, 117]] (static [[0, 8.25, 8.25, 411], [25, 9.03, 9.03, 455], [50, 14.18, 14.18, 110]]), track_seeds_better_than_static 1 (static 0)
+17:28:36 chole_b+sift eval: done in 3 s

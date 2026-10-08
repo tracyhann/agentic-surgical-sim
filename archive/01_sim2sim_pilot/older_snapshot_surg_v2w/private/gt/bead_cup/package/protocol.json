@@ -1,0 +1,47 @@
+{
+ "protocol_version": "surg-0.1",
+ "status": "success",
+ "task": {
+  "instruction": "Pick up the blue bead with the grasper and drop it into the white cup.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   -0.005,
+   -0.085,
+   0.075
+  ],
+  "lookat": [
+   0.003,
+   0.012,
+   0.0
+  ],
+  "fovy_deg": 65.0,
+  "width": 640,
+  "height": 480
+ },
+ "instrument": {
+  "rcm_pos": [
+   0.075,
+   -0.07,
+   0.085
+  ]
+ },
+ "roles": {
+  "object": [
+   "bead"
+  ],
+  "target": [
+   "cup"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "joint_targets"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

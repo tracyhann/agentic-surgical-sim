@@ -1,0 +1,530 @@
+<title>胆囊手术 Real2Sim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87,500;87,650&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #F3F5F5; --surface: #FFFFFF; --ink: #172022; --muted: #5B686B; --rule: #D6DDDE;
+    --accent: #A8394E; --steel: #2E6A6E; --good: #2F7A4F; --row: #EEF3F3;
+    --gb: #A0700E; --violet: #7A4FA0;
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1415; --surface: #161E20; --ink: #E4EBEB; --muted: #93A3A5; --rule: #2A3537;
+      --accent: #E06A80; --steel: #7DB7BA; --good: #8FCB9F; --row: #1B2527; --gb: #E2B55A; --violet: #BC9DDB;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1415; --surface: #161E20; --ink: #E4EBEB; --muted: #93A3A5; --rule: #2A3537;
+    --accent: #E06A80; --steel: #7DB7BA; --good: #8FCB9F; --row: #1B2527; --gb: #E2B55A; --violet: #BC9DDB;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 15.5px/1.65 var(--body); margin: 0; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 72px; display: grid; gap: 44px; }
+  header { display: grid; gap: 14px; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--steel); }
+  h1 { font: 650 clamp(30px, 5vw, 46px)/1.1 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+  h2 { font: 650 24px/1.25 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; }
+  h3 { font: 600 15px/1.4 var(--body); margin: 0; }
+  p { margin: 0; max-width: 70ch; }
+  .lead { font-size: 17px; }
+  .muted { color: var(--muted); }
+  section { display: grid; gap: 16px; }
+  .sec-head { display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 22px; }
+  .qnum { font: 500 12px/1 var(--mono); color: var(--accent); letter-spacing: .06em; }
+  figure { margin: 0; display: grid; gap: 8px; }
+  video, figure img { width: 100%; max-width: 100%; height: auto; display: block; background: #000; border-radius: 4px; }
+  figcaption { font-size: 13.5px; color: var(--muted); max-width: 84ch; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .stat { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+  .stat .k { font: 500 12px/1.3 var(--mono); color: var(--muted); letter-spacing: .03em; }
+  .stat .v { font: 500 22px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+  .stat .v small { font-size: 13px; color: var(--muted); }
+  .stat .d { font-size: 13px; color: var(--muted); }
+  .answers { display: grid; gap: 12px; }
+  .answer { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 18px; display: grid; gap: 6px; }
+  .answer h3 { display: flex; gap: 10px; align-items: baseline; }
+  .answer h3 span { font: 500 12px/1 var(--mono); color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 14.5px; }
+  .links a { color: var(--steel); font-weight: 500; }
+  ul.plain { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 74ch; }
+  ul.plain li::marker { color: var(--steel); }
+  .ledger { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font: 500 12px/1.3 var(--mono); color: var(--muted); letter-spacing: .03em; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  td.n, th.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+  td.b { color: var(--good); font-weight: 500; }
+  tr.base td { color: var(--muted); background: var(--row); }
+  th.grp { text-align: center; border-bottom: 1px solid var(--rule); color: var(--ink); }
+  .tcap { font-size: 13px; color: var(--muted); padding: 10px 14px 12px; border-top: 1px solid var(--rule); max-width: none; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  footer { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 4px; }
+  a { color: var(--steel); }
+  code { font: 13px/1 var(--mono); }
+  .chart-wrap { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 8px 4px; overflow-x: auto; }
+  svg.chart { display: block; width: 100%; min-width: 560px; height: auto; font-family: var(--mono); }
+  svg.chart .grid { stroke: var(--rule); stroke-width: 1; }
+  svg.chart .tick { fill: var(--muted); font-size: 11px; }
+  svg.chart .lab { font-size: 12px; font-weight: 500; }
+  svg.chart .lab.muted { fill: var(--muted); font-weight: 400; font-size: 11px; }
+  svg.chart .line { fill: none; stroke-width: 2.2; stroke-linejoin: round; }
+  svg.chart .ref { stroke-width: 1.2; stroke-dasharray: 5 4; opacity: .75; }
+  svg.chart .s-gb { stroke: var(--gb); fill: var(--gb); }
+  svg.chart .s-sheet { stroke: var(--steel); fill: var(--steel); }
+  svg.chart .s-duct { stroke: var(--violet); fill: var(--violet); }
+  svg.chart polyline.line { fill: none; }
+  svg.chart text.lab { stroke: none; }
+  .era { display: grid; gap: 8px; border-top: 3px double var(--rule); padding-top: 26px; }
+  :focus-visible { outline: 2px solid var(--steel); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">medical-agentic-sim · real2sim · 2026-10-08</div>
+    <h1>胆囊手术 Real2Sim</h1>
+    <p class="lead">把真实腹腔镜视频重建成可以重新仿真的 MuJoCo 场景。这一版按组织分开建模：胆囊、腹膜、胆管、背景、器械各由一个子 agent 负责，每个都是模板加多视角拟合；再把它们合成一个 4D 动力学场景，迭代检查、修正了 22 轮。上一版的长重建和器官模板对比放在后面。</p>
+    <div class="links">
+      <a href="https://claude.ai/artifact/B4V3kZTgvRuJdTsaSPLHD7" target="_blank" rel="noopener">三维查看器：两个镜头的重建，可切换器官体、旋转对比 →</a>
+    </div>
+  </header>
+
+  <section id="r4d">
+    <div class="answers">
+      <div class="answer">
+        <h3><span>01</span>动作对了：抓钳把腹膜提成帐篷，探针从腹膜下面顶进胆囊颈</h3>
+        <p>上一版仿真把两把器械的作用弄错了。现在抓钳夹住腹膜一端的一排顶点，把它提成帐篷；探针从腹膜下面伸进去，顶住胆囊颈。和撤掉探针的同一段仿真相比，探针附近的胆囊壁沿探针方向最多被压进 6.2 mm，接触的 185 帧里中位 2.3 mm；探针再深 5 mm，最大压入 7.8 mm。</p>
+      </div>
+      <div class="answer">
+        <h3><span>02</span>仿真和视频更吻合了：胆囊 IoU 0.50 → 0.65，腹膜 0.34 → 0.68，胆管 0.46 → 0.67</h3>
+        <p>器械按视频里的轨迹运动。肝床、腹膜底边、每根胆管的 3 个节点按 4D 重建的轨迹驱动，其余部分全部由物理算出。直接回放 4D 重建得到 0.79 / 0.79 / 0.76，仿真达到它的 82–88%。胆囊整体摆动的误差从 3.6 mm 降到 0.8 mm。</p>
+      </div>
+      <div class="answer">
+        <h3><span>03</span>有用的是模型修正，调参已经到头</h3>
+        <p>提升几乎都来自结构性修正：肝床按重建驱动，腹膜和胆囊的重建互相一致，胆管三点驱动，胆囊换均匀四面体网格。用前 130 帧选、后 120 帧检验：这些结构性选择在后半段仍然最好。材料参数选出来的值到后半段不再最好，但差距小于 0.01 IoU，和同一配置重复运行的波动相当。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="qnum">本版 · 按组织建模</div>
+      <h2>每个组织一个模型：模板 + 多视角拟合</h2>
+    </div>
+    <p>五个子 agent 各负责一个组织：胆囊、腹膜、胆管和细纤维、背景（含肝脏）、器械。每个都从一个模板出发，用镜头 A 全部 26 个关键帧（每 10 帧一个，各用自己的相机）联合拟合出静止形状，再逐帧拟合出 4D 形变。做完之后各自用多种指标检查，并在三个时段分别报告：摆镜 0–61 帧、提起 62–129 帧、探入 130–250 帧。</p>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>组织</th><th>模板</th><th>拟合</th><th>自身检查（摆镜 / 提起 / 探入）</th><th>仿真里的表示</th></tr></thead>
+        <tbody>
+          <tr><td>胆囊 v12</td><td>BodyParts3D 胆囊（15.4 ml）</td><td>位姿 + 三轴缩放（0.99 / 1.21 / 1.70）+ 自由形变网格；静止形状离缩放后模板平均 1.7 mm。每帧 4D：ARAP、体积、时间平滑。胆囊颈尖固定在胆管起点</td><td>IoU 0.79 / 0.81 / 0.79，深度残差 0.9–1.0 mm，任何一帧都没有翻转的四面体</td><td>1383 节点、6186 个四面体，E = 1.2 kPa，ν = 0.45；肝床 214 个节点按重建驱动</td></tr>
+          <tr><td>腹膜 v08</td><td>直纹壳"帐篷"：钳口夹住的一排 → 胆囊表面上的底边</td><td>SAM 2.1 分割；底边贴在胆囊表面（中位 0.40 mm）；被夹的一排放在抓钳的工具中心点（≤ 0.8 mm）；任何一帧都不穿进胆囊</td><td>IoU 0.76 / 0.74 / 0.82，边界 F 0.41 / 0.45 / 0.52</td><td>237 顶点的弯曲壳 + 边弹簧 10 N/m；底边按重建驱动；和胆囊接触</td></tr>
+          <tr><td>胆管、细纤维 v10</td><td>广义圆柱：中心线 + 半径分布</td><td>关键帧联合拟合中心线和深度；起点放在视频里胆管离开胆囊颈的位置；细纤维带拆成 3 根</td><td>胆管 IoU 0.83 / 0.81 / 0.85，细纤维 0.64 / 0.67 / 0.77</td><td>4 根 13 节点缆绳（拉伸 + 隔点弯曲弹簧），首、中、尾节点按重建驱动</td></tr>
+          <tr><td>背景 v08</td><td>试过肝脏模板：留出关键帧上床沿误差 2.96 mm，平滑填充只有 0.77 mm，没有采用</td><td>251 帧的静止像素融合成一张带纹理的表面，并给出逐帧细化的相机转动</td><td>深度残差 2.3 mm，局部 NCC 0.73（旧流程 5.9 mm / 0.32）</td><td>静态网格，只渲染</td></tr>
+          <tr><td>器械 v06</td><td>抓钳、探针的杆和钳口</td><td>每帧的尖端、穿刺点、朝向</td><td>尖端误差 0.3–2.8 px</td><td>按尖端轨迹反求关节角，位置控制</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">IoU 按各组织 agent 自己的分割掩码计算，器械挡住的像素不计。翻转四面体指四面体的有向体积变号，网格里不应出现。</p>
+    </div>
+    <figure>
+      <img src="media/r4d_tissues.jpg" alt="胆囊、腹膜、胆管三个模型在第 0、80、160、240 帧投影到视频上" loading="lazy">
+      <figcaption>三行分别是胆囊（绿）、腹膜（青）、胆管和细纤维（品红 / 青）的 4D 模型，投影到第 0、80、160、240 帧的视频上。胆囊颈止于胆管起点，腹膜从钳口一直盖到胆囊上。</figcaption>
+    </figure>
+    <div class="two">
+      <figure>
+        <img src="media/r4d_gallbladder_3d.jpg" alt="胆囊 v12 静止形状的三个视角，标出附着点" loading="lazy">
+        <figcaption>胆囊 v12 的静止形状：内镜视角、侧面、顶面。蓝点是肝床（按重建驱动），橙点挨着腹膜底边，红点是胆管起点。</figcaption>
+      </figure>
+      <figure>
+        <img src="media/r4d_membrane_3d.jpg" alt="腹膜 v08 静止形状的三个视角" loading="lazy">
+        <figcaption>腹膜 v08：从钳口拉到胆囊表面的帐篷状薄壳。</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="qnum">本版 · 4D 动力学</div>
+      <h2>合成一个场景，用同样的器械动作仿真</h2>
+    </div>
+    <p>五个模型放进同一个 MuJoCo 场景：胆囊是四面体体单元，腹膜是壳，胆管是缆绳，器械按视频反求的轨迹做位置控制。仿真步长 0.0625 ms，10 秒视频约 6 分钟算完。</p>
+    <figure>
+      <video src="media/r4d_compare.mp4" poster="media/r4d_compare_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>左：视频（镜头 A，10 秒）。右：仿真在同一内镜视角下的带纹理渲染。纹理来自视频，几何和运动来自仿真。</figcaption>
+    </figure>
+    <div class="ledger">
+      <table>
+        <thead>
+          <tr><th></th><th class="n">胆囊 IoU</th><th class="n">腹膜 IoU</th><th class="n">胆管 IoU</th><th class="n">胆囊刚体 / 形变误差</th><th class="n">翻转四面体</th><th class="n">胆囊体积</th></tr>
+        </thead>
+        <tbody>
+          <tr class="base"><td>回放 4D 重建（上限）</td><td class="n">0.788</td><td class="n">0.788</td><td class="n">0.761</td><td class="n">—</td><td class="n">0</td><td class="n">27.3–29.6 ml</td></tr>
+          <tr><td>第 1 轮仿真</td><td class="n">0.500</td><td class="n">0.345</td><td class="n">0.460</td><td class="n">3.6 mm / —</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td>第 22 轮仿真</td><td class="n b">0.650</td><td class="n b">0.682</td><td class="n b">0.669</td><td class="n b">0.80 / 0.90 mm</td><td class="n">97 / 6186</td><td class="n">27.2–28.3 ml</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">IoU：每 10 帧一次，扣掉器械和比视频深度更靠后 6 mm 以上的像素。去掉深度这一刀，仿真是 0.70 / 0.75，回放是 0.77 / 0.79。刚体 / 形变误差：对 4D 重建做 Procrustes 分解，分成整体移动和形变两部分。第 1 轮的翻转四面体数和形变误差那时还没有测，记作"—"。</p>
+    </div>
+    <figure>
+      <div class="chart-wrap">
+<svg class="chart" viewBox="0 0 760 300" role="img" aria-label="各里程碑轮次仿真轮廓 IoU：胆囊、腹膜、胆管，以及 4D 回放上限">
+<line class="grid" x1="48" x2="610" y1="252.0" y2="252.0"/><text class="tick" x="40" y="256.0" text-anchor="end">0.3</text>
+<line class="grid" x1="48" x2="610" y1="205.6" y2="205.6"/><text class="tick" x="40" y="209.6" text-anchor="end">0.4</text>
+<line class="grid" x1="48" x2="610" y1="159.2" y2="159.2"/><text class="tick" x="40" y="163.2" text-anchor="end">0.5</text>
+<line class="grid" x1="48" x2="610" y1="112.8" y2="112.8"/><text class="tick" x="40" y="116.8" text-anchor="end">0.6</text>
+<line class="grid" x1="48" x2="610" y1="66.4" y2="66.4"/><text class="tick" x="40" y="70.4" text-anchor="end">0.7</text>
+<line class="grid" x1="48" x2="610" y1="20.0" y2="20.0"/><text class="tick" x="40" y="24.0" text-anchor="end">0.8</text>
+<text class="tick" x="48.0" y="272" text-anchor="middle">r01</text>
+<text class="tick" x="104.2" y="272" text-anchor="middle">r04</text>
+<text class="tick" x="160.4" y="272" text-anchor="middle">r05</text>
+<text class="tick" x="216.6" y="272" text-anchor="middle">r06</text>
+<text class="tick" x="272.8" y="272" text-anchor="middle">r07</text>
+<text class="tick" x="329.0" y="272" text-anchor="middle">r11</text>
+<text class="tick" x="385.2" y="272" text-anchor="middle">r13</text>
+<text class="tick" x="441.4" y="272" text-anchor="middle">r14</text>
+<text class="tick" x="497.6" y="272" text-anchor="middle">r16</text>
+<text class="tick" x="553.8" y="272" text-anchor="middle">r19</text>
+<text class="tick" x="610.0" y="272" text-anchor="middle">r22</text>
+<line class="ref s-gb" x1="48" x2="610" y1="25.6" y2="25.6"/>
+<polyline class="line s-gb" points="48.0,159.2 104.2,113.3 160.4,108.6 216.6,104.4 272.8,104.9 329.0,103.1 385.2,98.9 441.4,100.3 497.6,87.3 553.8,89.1 610.0,89.6"/>
+<circle class="dot s-gb" cx="48.0" cy="159.2" r="2.6"/>
+<circle class="dot s-gb" cx="104.2" cy="113.3" r="2.6"/>
+<circle class="dot s-gb" cx="160.4" cy="108.6" r="2.6"/>
+<circle class="dot s-gb" cx="216.6" cy="104.4" r="2.6"/>
+<circle class="dot s-gb" cx="272.8" cy="104.9" r="2.6"/>
+<circle class="dot s-gb" cx="329.0" cy="103.1" r="2.6"/>
+<circle class="dot s-gb" cx="385.2" cy="98.9" r="2.6"/>
+<circle class="dot s-gb" cx="441.4" cy="100.3" r="2.6"/>
+<circle class="dot s-gb" cx="497.6" cy="87.3" r="2.6"/>
+<circle class="dot s-gb" cx="553.8" cy="89.1" r="2.6"/>
+<circle class="dot s-gb" cx="610.0" cy="89.6" r="4.2"/>
+<line class="ref s-sheet" x1="48" x2="610" y1="26.0" y2="26.0"/>
+<polyline class="line s-sheet" points="48.0,231.1 104.2,225.1 160.4,208.8 216.6,90.1 272.8,88.2 329.0,85.9 385.2,90.5 441.4,91.9 497.6,75.7 553.8,68.3 610.0,74.8"/>
+<circle class="dot s-sheet" cx="48.0" cy="231.1" r="2.6"/>
+<circle class="dot s-sheet" cx="104.2" cy="225.1" r="2.6"/>
+<circle class="dot s-sheet" cx="160.4" cy="208.8" r="2.6"/>
+<circle class="dot s-sheet" cx="216.6" cy="90.1" r="2.6"/>
+<circle class="dot s-sheet" cx="272.8" cy="88.2" r="2.6"/>
+<circle class="dot s-sheet" cx="329.0" cy="85.9" r="2.6"/>
+<circle class="dot s-sheet" cx="385.2" cy="90.5" r="2.6"/>
+<circle class="dot s-sheet" cx="441.4" cy="91.9" r="2.6"/>
+<circle class="dot s-sheet" cx="497.6" cy="75.7" r="2.6"/>
+<circle class="dot s-sheet" cx="553.8" cy="68.3" r="2.6"/>
+<circle class="dot s-sheet" cx="610.0" cy="74.8" r="4.2"/>
+<line class="ref s-duct" x1="48" x2="610" y1="38.1" y2="38.1"/>
+<polyline class="line s-duct" points="48.0,177.8 104.2,229.3 160.4,213.5 216.6,230.2 272.8,207.9 329.0,203.3 385.2,208.4 441.4,93.3 497.6,88.2 553.8,90.5 610.0,80.8"/>
+<circle class="dot s-duct" cx="48.0" cy="177.8" r="2.6"/>
+<circle class="dot s-duct" cx="104.2" cy="229.3" r="2.6"/>
+<circle class="dot s-duct" cx="160.4" cy="213.5" r="2.6"/>
+<circle class="dot s-duct" cx="216.6" cy="230.2" r="2.6"/>
+<circle class="dot s-duct" cx="272.8" cy="207.9" r="2.6"/>
+<circle class="dot s-duct" cx="329.0" cy="203.3" r="2.6"/>
+<circle class="dot s-duct" cx="385.2" cy="208.4" r="2.6"/>
+<circle class="dot s-duct" cx="441.4" cy="93.3" r="2.6"/>
+<circle class="dot s-duct" cx="497.6" cy="88.2" r="2.6"/>
+<circle class="dot s-duct" cx="553.8" cy="90.5" r="2.6"/>
+<circle class="dot s-duct" cx="610.0" cy="80.8" r="4.2"/>
+<text class="lab s-sheet" x="622" y="78.8">腹膜 0.68</text>
+<text class="lab s-duct" x="622" y="93.8">胆管 0.67</text>
+<text class="lab s-gb" x="622" y="108.8">胆囊 0.65</text>
+<text class="lab muted" x="622" y="19.6">回放 0.79</text>
+<text class="lab muted" x="622" y="51.1">胆管回放 0.76</text>
+</svg>
+
+      </div>
+      <figcaption>每个里程碑轮次的仿真轮廓 IoU（实线），虚线是回放 4D 重建的上限。腹膜在第 6 轮跳升：腹膜和胆囊的重建改成互相一致，并加上接触。胆管在第 14 轮跳升：首、中、尾三个节点按重建驱动。胆囊在第 16 轮提升：换成均匀四面体网格，胆囊颈不再盖住胆管。每轮比较的是当时各组织版本自己的掩码；第 16 轮在统一掩码下复核过（胆囊 v11 → v12：0.602 → 0.647）。</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="qnum">本版 · 迭代记录</div>
+      <h2>22 轮：改了什么，结果怎样</h2>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>轮</th><th>改动</th><th>结果</th><th>决定</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>五个模型首次合成</td><td>胆囊 0.50、腹膜 0.34、胆管 0.46；帐篷和探针下压第一次出现</td><td>基线</td></tr>
+          <tr><td class="n">2</td><td>从重建的第 0 帧状态开始</td><td>没有改善，组织松弛回静止形状</td><td>不采纳</td></tr>
+          <tr><td class="n">3</td><td>7 组参数并行扫描</td><td>重建里胆囊整体摆动 3–11°，任何参数都复现不了（刚体误差 3.6–4.2 mm）</td><td>摆动来自模型之外</td></tr>
+          <tr><td class="n">4</td><td>肝床按 4D 重建驱动</td><td>胆囊 0.49 → 0.60，刚体误差 3.7 → 1.5 mm</td><td>采纳</td></tr>
+          <tr><td class="n">5</td><td>胆囊刚度 150–2400 Pa</td><td>1.2 kPa 最好；发现腹膜和胆囊的重建互相穿插</td><td>采纳，退回腹膜组修</td></tr>
+          <tr><td class="n">6</td><td>腹膜 v06、接触、底边驱动</td><td>腹膜 0.39 → 0.65；修好细长三角形引起的数值爆炸</td><td>采纳</td></tr>
+          <tr><td class="n">7</td><td>胆管 v09</td><td>胆管 0.35 → 0.39，几乎还是不动</td><td>采纳，暂放</td></tr>
+          <tr><td class="n">8</td><td>纹理渲染，加光流、光度两类指标</td><td>仿真光度比静止略差（NCC 0.36 vs 0.38）</td><td>新指标</td></tr>
+          <tr><td class="n">9</td><td>腹膜刚度</td><td>边软轮廓更好，但边被拉长到 5 倍</td><td>不变</td></tr>
+          <tr><td class="n">10</td><td>腹膜底边另外软连到胆囊</td><td>无改善；发现探针把腹膜下的胆囊壁压低约 3 mm</td><td>不采纳</td></tr>
+          <tr><td class="n">11</td><td>探针深度 0–6 mm</td><td>朝镜头移 2 mm 时下压量和重建一致</td><td>采纳</td></tr>
+          <tr><td class="n">12</td><td>反事实动作、网格健康指标</td><td>五种动作都稳定、方向对；胆囊有 9% 的四面体翻转</td><td>新指标</td></tr>
+          <tr><td class="n">13</td><td>材料和接触扫描</td><td>材料几乎不影响翻转；翻转的是小四面体，属于网格问题</td><td>接触调软，退回胆囊组</td></tr>
+          <tr><td class="n">14</td><td>新版组织，胆管按节点驱动</td><td>胆管 0.44 → 0.66；仿真自己决定的节点，运动解释率 −0.4 → 0.7</td><td>采纳首、中、尾三点驱动</td></tr>
+          <tr><td class="n">15</td><td>抓取点放在重建的顶点 vs 钳尖</td><td>重建顶点更差（−0.026）</td><td>保持钳尖</td></tr>
+          <tr><td class="n">16</td><td>胆囊 v12：均匀网格，胆囊颈不盖胆管</td><td>胆囊 0.62 → 0.655，刚体误差 1.23 → 0.81 mm，翻转 490 → 130；步长减半，变化 ≤ 0.01</td><td>采纳</td></tr>
+          <tr><td class="n">17</td><td>胆囊 v13：重建更贴视频</td><td>仿真反而更差（0.637）</td><td>保持 v12</td></tr>
+          <tr><td class="n">18</td><td>带纹理渲染，仿真 vs 回放</td><td>不切深度时达到回放的 91–93%</td><td>—</td></tr>
+          <tr><td class="n">19</td><td>腹膜 v08：被夹住的一排放在钳尖</td><td>腹膜 0.68 → 0.70</td><td>采纳</td></tr>
+          <tr><td class="n">20</td><td>缆绳刚度和阻尼</td><td>胆管 0.65 → 0.67，最大拉伸 25% → 5%</td><td>采纳</td></tr>
+          <tr><td class="n">21</td><td>胆囊 v14（体积守恒的重建），器械轨迹加噪声</td><td>v14 更差；轨迹加 1 mm 噪声，胆囊 IoU 变化 ≤ 0.001</td><td>保持 v12</td></tr>
+          <tr><td class="n">22</td><td>最终渲染和反事实动作</td><td>见下</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">完整记录（每轮的配置、所有指标和诊断）在 outputs/iter/LOG.md；每轮的输出在 outputs/iter/rounds/rNN/。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="qnum">本版 · 用途</div>
+      <h2>换一套动作：反事实仿真</h2>
+    </div>
+    <p>重建出来的场景可以换器械动作重新仿真，生成视频里没有出现过的情况，给医学世界模型做训练数据。下面五种都稳定，组织的响应方向也合理。</p>
+    <figure>
+      <video src="media/r4d_counterfactual.mp4" poster="media/r4d_counterfactual_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>上排：视频；用视频里的动作仿真；回放 4D 重建。下排：抓钳抬高 10 mm；探针再深 5 mm；撤掉探针。</figcaption>
+    </figure>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>动作</th><th class="n">探针压入（最大 / 中位）</th><th class="n">抓取力中位</th><th class="n">胆囊体积</th><th class="n">翻转四面体</th></tr></thead>
+        <tbody>
+          <tr><td>视频里的动作</td><td class="n">6.2 / 2.3 mm</td><td class="n">12 mN</td><td class="n">27.2–28.3 ml</td><td class="n">97</td></tr>
+          <tr><td>抓钳抬高 10 mm</td><td class="n">—</td><td class="n">67 mN</td><td class="n">27.2–28.3 ml</td><td class="n">97</td></tr>
+          <tr><td>探针再深 5 mm</td><td class="n">7.8 / 3.6 mm</td><td class="n">12 mN</td><td class="n">25.5–28.0 ml</td><td class="n">288</td></tr>
+          <tr><td>撤掉探针</td><td class="n">0</td><td class="n">12 mN</td><td class="n">27.7–28.3 ml</td><td class="n">55</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">探针压入 = 和撤掉探针的仿真相比，探针尖 8 mm 以内的胆囊顶点沿探针方向多移动的距离。抓钳抬高那一行没有单独测压入。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="qnum">本版 · 检查</div>
+      <h2>结果可信吗</h2>
+    </div>
+    <ul class="plain">
+      <li><b>数值收敛：</b>步长减半，所有指标变化 ≤ 0.01 IoU / 0.03 mm。</li>
+      <li><b>留出检验：</b>用前 130 帧选配置、后 120 帧检验。结构性选择（胆管驱动方式、抓取点、胆囊 v12）在后半段仍然最好；材料参数不再最好，但差距只有 0.002–0.009 IoU。</li>
+      <li><b>噪声水平：</b>一个组织的设置不变，只因探针碰到胆管被轻微推偏，它的 IoU 也会变 0.01 左右。单次运行里小于 0.01 的差别不算数。</li>
+      <li><b>对输入误差的敏感度：</b>器械轨迹加 1 mm 平滑噪声，胆囊 IoU 变化 ≤ 0.001；加 2 mm 变化 ≤ 0.008。腹膜挂在抓钳上，最敏感，1 mm 噪声变化最多 0.02。</li>
+      <li><b>物理合理性：</b>胆囊充满液体，体积应基本不变。仿真里是 27.2–28.3 ml，而 4D 重建在 27.3–29.6 ml 之间起伏 ±4%，这是逐帧深度的噪声，物理仿真把它去掉了。</li>
+      <li><b>力的大小定不了：</b>抓取力约 12 mN，探针力约 19 mN，比文献里约 1 N 的量级小。重力已经补偿，所以把所有刚度和质量乘同一个倍数，运动完全一样，力跟着同倍放大。这段视频只能定出相对刚度，力的绝对大小定不了。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="qnum">本版 · 局限和下一步</div>
+      <h2>还差在哪</h2>
+    </div>
+    <ul class="plain">
+      <li>仿真离回放还差：胆囊 0.14、腹膜 0.11、胆管 0.09 IoU。摆镜段（0–61 帧）最差，仿真的胆囊表面比视频深度靠后 0.5–3 mm。</li>
+      <li>肝床、腹膜底边、胆管的 3 个节点是按重建驱动的边界条件，不是物理预测出来的。换一套动作时，这些部分仍按原视频运动。</li>
+      <li>胆囊仍有约 100 个翻转四面体（1.6%），大多在探针接触处；撤掉探针后降到 55 个。</li>
+      <li>只做了镜头 A 这 10 秒。胆管在仿真里比视频里粗、更竖直，细纤维带只用 3 根缆绳近似。</li>
+      <li>下一步：把边界条件换成可以预测的附着模型（肝床用弹性层，胆管远端连到脂肪），让反事实动作也能带动它们；在镜头 B 上复用同一套组织模型，检验能不能推广。</li>
+    </ul>
+  </section>
+
+  <div class="era">
+    <div class="eyebrow">上一版 · 2026-10-07</div>
+    <p class="muted">下面是上一版的内容：长重建、器官模板对比、多视角联合求解。那时的仿真把每个器官当成一个整体，器械和组织的连接是手工设的。</p>
+  </div>
+
+
+  <section>
+    <div class="answers">
+      <div class="answer">
+        <h3><span>01</span>能做长：两个镜头共 17.9 秒都重建出来了；组织运动只在 6 秒窗口里复现</h3>
+        <p>胆囊视频 23.5–41.4 秒（448 帧，中间有一次镜头切换），两个镜头里场景、镜头和器械都对得上，胆囊（含胆囊颈）、条带和器械的连接也对了。组织被拉动的时段里，6 秒窗口的仿真把跟踪误差降了约三分之一（17.9 vs 27.1 px）；但整个 10 秒的镜头 A 里，没有哪种器官体好过静止基线（−3% 到 +7%）。镜头 B（分离胆囊管）里被拉开的胆囊管也没有复现。</p>
+      </div>
+      <div class="answer">
+        <h3><span>02</span>器官模板：深度明显更好，组织运动没有更好</h3>
+        <p>10 秒的镜头 A 里，用模板或椭球补出完整体积的器官体，深度误差约 9.5 mm，直接测量是 13.9 mm；轮廓上椭球最好（IoU 0.61）。但牵拉时段的跟踪，四种器官体和静止基线都差不多，6 秒窗口里也都降了约三分之一，彼此拉不开。上一版"模板在长片段里最好、跟踪降 20%"的结论不成立：它建立在把胆囊颈错分成条带、胆囊被断成两块的重建上（见下面的"这一版的修正"）。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>上一版的修正</h2>
+      <p class="muted">四处错误，修正后重新跑了所有片段和多视角版本，本页的数字全部是修正后的。</p>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>问题</th><th>原因</th><th>修正</th></tr></thead>
+        <tbody>
+          <tr><td>胆囊在胆囊颈处断成两块</td><td>胆囊颈（探针尖右边那段深紫色、连向胆囊管的部分）被分割成了"条带"，于是胆囊体是一个三维器官，胆囊颈却是一片和它不相连的薄片。</td><td>胆囊颈归入胆囊（镜头 A 和 6 秒窗口重新分割），条带只保留细的粉白色索带。</td></tr>
+          <tr><td>条带只靠一个顶点挂在胆囊上，被拉出尖刺</td><td>"离器官 12 像素以内"的条带顶点只有 1 个；胆囊一动，这个顶点被单独拽出来，形成针状的尖刺，多视角版本里条带被撕碎。</td><td>条带靠靠近器官的一整条边系在器官上（至少 8 个顶点；镜头 A 实际 35 个，6 秒窗口 58 个）。</td></tr>
+          <tr><td>抓钳隔空"抓着"胆囊</td><td>抓取时把附近顶点按当时的相对位置固定在钳口上，重建留下的 2–11 mm 间隙一直存在；椭球只挂在 1 个顶点上。</td><td>抓取最近点周围 8 mm 的一片组织，在 0.25 秒内把它拉进钳口。</td></tr>
+          <tr><td>跟踪误差的样本太少</td><td>上一版只在第 0 帧取一次特征点；镜头 A 开头的模糊摆镜让它们 5 帧内就丢了，10 秒只剩 35 个样本。</td><td>每 25 帧重新取点、每批跟 2 秒，按起点统计；主要看组织被明显拉动的时段。</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">分开检验过：只改抓取和条带系法（保留旧分割），镜头 A 的结果和上一版接近（牵拉时段直接测量 −12%、模板 −19%）；改了分割之后，在同一批旧特征点上量，新仿真也不再好过静止基线（+12% / +6%）。所以变化来自正确的胆囊形状本身，不是评估方式。去掉条带的系结也不改变结果。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="qnum">问题 01</span>
+      <h2>更长的重建：23.5–41.4 秒，两个镜头</h2>
+      <p class="muted">镜头 A 包含之前那 6 秒，前后各延长了 2.5 秒和 1.5 秒；镜头 B 是视频后面的部分，换了一把弯分离钳，镜头先摆向胆囊管再移向胆囊床。</p>
+    </div>
+    <figure>
+      <video src="media/long.mp4" poster="media/long_poster.jpg" autoplay muted loop playsinline controls></video>
+      <figcaption>两个镜头依次播放，中间的标题卡是视频里的镜头切换。每个镜头：左上真实视频，右上仿真（内镜视角），下排同一仿真从 35° 和 70° 看。这里的器官体是直接测量的那一种；四种器官体的对比在下一节和三维查看器里。</figcaption>
+    </figure>
+    <div class="stats">
+      <div class="stat"><span class="k">重建长度</span><span class="v">17.9 <small>s</small></span><span class="d">448 帧，两个镜头（10.0 s + 7.9 s）；之前是 6 s</span></div>
+      <div class="stat"><span class="k">牵拉时段组织跟踪误差</span><span class="v">−34 <small>%</small></span><span class="d">6 秒窗口，直接测量，比静止基线；整个镜头 A 为 +1%（没有改善）</span></div>
+      <div class="stat"><span class="k">器械穿刺点拟合</span><span class="v">3.7° / 1.9°</span><span class="d">镜头 A 抓钳 / 探针，三维器械轴投影与分割出的轴的平均夹角；镜头 B 分离钳 2.5°</span></div>
+      <div class="stat"><span class="k">镜头运动</span><span class="v">17° / 24°</span><span class="d">镜头 A / 镜头 B 的最大转动；镜头 B 估计另有约 1.5 cm 平移</span></div>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>为了做长加的处理</th><th>做法</th></tr></thead>
+        <tbody>
+          <tr><td>背景纹理</td><td>拼成一张比画面大的全景：每个位置取最早看到它、且没被器械挡住的那几帧。镜头摆动和器械移开后露出的是真实组织，不再是镜像或模糊的填补；从没看到过的地方不建网格。</td></tr>
+          <tr><td>器械</td><td>尖端、入口方向、穿刺点都自动求：穿刺点分"贴近镜头"和"与尖端同深度"两种拟合，取和视频更吻合的一种，并要求穿刺点在画面外、离镜头至少 4 cm（否则会退化到镜头中心）。器械看不见时沿自身的杆退向穿刺点。</td></tr>
+          <tr><td>分割</td><td>SAM 2 在丢目标的帧补点：镜头 A 的胆囊体和胆囊颈、重新入画的探针；镜头 B 改为跟踪被分离的胆囊管。器械永远在前，器官掩膜里被器械盖住的像素一律剔除（湿润的胆囊颈常被算进抓钳）。</td></tr>
+          <tr><td>镜头 B 的组织</td><td>分离钳操作的是胆囊管，胆囊一直在画面边上没被碰，所以镜头 B 的可形变器官是胆囊管，没有对应的器官模板。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">镜头 A 开头约 2.5 秒和镜头 B 中间的摆动都是快速、模糊的镜头运动，没有哪种相机模型能把这些帧和第 0 帧对齐好。镜头 B 估计还有约 1.5 cm 的平移，我们试了 6 自由度相机（单目深度 + 逐帧 PnP），它和第 0 帧的全局对齐反而更差（第 150 帧的图像梯度相关 0.45，只转动 + 变焦的模型 0.58），所以两个镜头都保留只转动 + 变焦的相机。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="qnum">问题 02</span>
+      <h2>器官模板有没有用</h2>
+      <p class="muted">编程生成三维，本质上是用基本几何体拼。把基本几何体换成器官部件（这里是 BodyParts3D 的胆囊），再用观测去拟合，结果会不会更好？四种器官体用同样的观测拟合（可见表面的测得深度、器官轮廓、被前景遮挡的关系），场景里其他东西完全相同。</p>
+    </div>
+    <figure>
+      <img src="media/chole_a_organs_rest.jpg" alt="镜头 A 第 0 帧四种器官体：内镜视角和去掉纹理的两个侧视角" width="960" height="720" loading="lazy">
+      <figcaption>镜头 A 第 0 帧，四种器官体静止时的样子（从上到下：直接测量、椭球、器官模板、模板加拟合）。左列是内镜视角（带纹理）；中、右列去掉纹理、从 60° 和 120° 看，黄色是胆囊，紫色是条带。直接测量是沿可见表面（胆囊体和胆囊颈）挤出的一层壳；椭球是一个大团；模板有胆囊体和颈，还补上了画面下方看不见的胆囊底。</figcaption>
+    </figure>
+    <figure>
+      <video src="media/chole_a_conditions.mp4" poster="media/chole_a_conditions_poster.jpg" muted loop playsinline controls></video>
+      <figcaption>镜头 A 的四种器官体在同一套器械动作下的仿真。第一列是真实视频（下方是测得的深度）；其后每列一种器官体，上面是内镜视角，下面是从 60° 看。</figcaption>
+    </figure>
+    <div class="ledger">
+      <table>
+        <thead>
+          <tr><th rowspan="2">器官体</th><th class="grp" colspan="3">6 秒窗口（26–32 s）</th><th class="grp" colspan="3">镜头 A（23.5–33.5 s）</th></tr>
+          <tr><th class="n">轮廓 IoU ↑</th><th class="n">深度误差 ↓</th><th class="n">牵拉时段跟踪 ↓</th><th class="n">轮廓 IoU ↑</th><th class="n">深度误差 ↓</th><th class="n">牵拉时段跟踪 ↓</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>直接测量</td><td class="n b">0.763</td><td class="n">5.6 mm</td><td class="n">17.9 px</td><td class="n">0.531</td><td class="n">13.9 mm</td><td class="n">27.1 px</td></tr>
+          <tr><td>椭球</td><td class="n">0.701</td><td class="n b">5.0 mm</td><td class="n">18.2 px</td><td class="n b">0.613</td><td class="n b">9.4 mm</td><td class="n">26.4 px</td></tr>
+          <tr><td>器官模板</td><td class="n">0.713</td><td class="n">5.5 mm</td><td class="n">18.7 px</td><td class="n">0.548</td><td class="n">9.7 mm</td><td class="n">27.5 px</td></tr>
+          <tr><td>模板 + 拟合</td><td class="n">0.733</td><td class="n">5.4 mm</td><td class="n b">17.8 px</td><td class="n">0.509</td><td class="n">9.8 mm</td><td class="n b">26.0 px</td></tr>
+          <tr class="base"><td>静止基线</td><td class="n">0.775</td><td class="n">6.0 mm</td><td class="n">27.1 px</td><td class="n">0.523</td><td class="n">14.1 mm</td><td class="n">26.8 px</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">每 5 帧比较一次。轮廓 IoU：仿真器官投影与 SAM 器官掩膜的重合，只算没被器械和条带挡住的像素。深度误差：对单目测得深度的中位误差（场景本身就是用它建的，不是独立检验）。跟踪误差：每 25 帧在真实器官纹理上重新取特征点，每批跟 2 秒，量它们与仿真表面上对应点的距离（不依赖深度）；表里是牵拉时段的平均，即静止基线误差 ≥ 15 px 的起点（6 秒窗口 2 个、镜头 A 3 个），这个筛选只看静止基线，不偏向任何器官体。静止基线：器官停着不动，只有镜头在动（直接测量那一行的值，其他器官体的基线相近）。绿色是每列最好的值。</p>
+    </div>
+    <p>6 秒窗口里，四种器官体都把牵拉时段的误差降了约三分之一（17.8–18.7 vs 27.1 px），彼此相差不到 1 px。10 秒的镜头 A 里，牵拉时段四种器官体都和静止基线差不多（26.0–27.5 vs 26.8 px）：仿真里的胆囊被拉动了，但方向和幅度对不上视频。补出完整体积的器官体（椭球和模板）深度误差明显更小（9.4–9.8 vs 13.9 mm），因为直接测量只是可见表面挤出的一层壳；轮廓上椭球最好。上一版里模板在跟踪上的优势，在胆囊颈被正确归入胆囊之后消失了。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="qnum">追加实验</span>
+      <h2>多个视角联合求解：光流、VGGT、SIFT</h2>
+      <p class="muted">上面的重建几何和纹理主要来自第 0 帧一个视角。腹腔镜在动，片段里其实有多个真实视角。把关键帧（每 10 帧一个）当成多个相机，联合求每帧位姿、一个共享焦距、每帧单目深度的尺度和平滑修正。第一步只用光流对应点，它只能连起相隔几个关键帧的帧；第二步加入能跨大视角直接匹配的对应点，分别来自多视角网络 VGGT-1B 和传统的 SIFT 特征匹配。</p>
+    </div>
+    <figure>
+      <video src="media/multiview_shot_a.mp4" poster="media/multiview_shot_a_poster.jpg" muted loop playsinline controls></video>
+      <figcaption>镜头 A，直接测量的器官体，同一段仿真在三种相机几何下的内镜视角：左上真实视频；右上单视角（正文结果）；左下联合求解加 SIFT；右下联合求解加 VGGT 轨迹。多视角版本的背景边缘能看到贴片接缝：背景由几个关键帧的局部贴片拼成，接缝还没处理。</figcaption>
+    </figure>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>相机几何</th><th class="n">远距离误差 A</th><th class="n">远距离误差 B</th><th class="n">视场角 A / B</th></tr></thead>
+        <tbody>
+          <tr><td>单视角：转动 + 变焦（正文）</td><td class="n">5.8 px</td><td class="n">9.6 px</td><td class="n">47°（假设）</td></tr>
+          <tr><td>VGGT 直接给出的相机和深度</td><td class="n">10.2 px</td><td class="n">15.4 px</td><td class="n">20° / 21°</td></tr>
+          <tr><td>联合求解，光流（第一步）</td><td class="n">4.7 px</td><td class="n">8.3 px</td><td class="n">33° / 34°</td></tr>
+          <tr><td>联合求解，光流 + VGGT 轨迹</td><td class="n">4.1 px</td><td class="n">6.7 px</td><td class="n">31° / 22°</td></tr>
+          <tr><td>联合求解，光流 + SIFT</td><td class="n b">3.4 px</td><td class="n b">4.5 px</td><td class="n">37° / 34°</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">远距离误差：相隔 10 个关键帧（100 帧，4 秒）以上的两帧之间，用一组留出的特征匹配（ORB，任何方法都没用过）检验，把一帧上的点用该方法的位姿和深度投到另一帧，与真实匹配位置的中位距离。两个镜头是同一个内镜，视场角应该一致。</p>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>牵拉时段跟踪误差，比静止基线</th><th class="n">A 直接测量</th><th class="n">A 器官模板</th><th class="n">B 直接测量</th></tr></thead>
+        <tbody>
+          <tr><td>单视角（正文）</td><td class="n">+1%</td><td class="n b">+7%</td><td class="n">+3%</td></tr>
+          <tr><td>联合求解，光流</td><td class="n">+6%</td><td class="n">+29%</td><td class="n">无牵拉时段</td></tr>
+          <tr><td>联合求解，光流 + SIFT</td><td class="n">+3%</td><td class="n">+15%</td><td class="n">无牵拉时段</td></tr>
+          <tr><td>联合求解，光流 + VGGT 轨迹</td><td class="n b">−2%</td><td class="n">+34%</td><td class="n b">−2%</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">与问题 02 相同的跟踪误差，每种几何和它自己的静止基线比（负数是更好）。"无牵拉时段"：这种几何下镜头 B 没有静止基线误差 ≥ 15 px 的起点；全程看，镜头 B 的各个版本都没有好过静止基线。完整结果在 outputs/experiments/multiview_2026-10-07 和 wide_baseline_2026-10-07。</p>
+    </div>
+    <p><b>VGGT 在这段腹腔镜视频上不能直接用。</b>它的轨迹可见度和置信度几乎全部低于常用阈值，轨迹比真实运动慢 5–10 像素，并把镜头的摆动解释成平移加 20° 的窄视场（光流联合求解得到的是 13–17° 转动、约 33° 视场）。直接用它的相机，远距离误差比单视角还大；拿它做初值，同一个内镜在两个镜头里被求出 1109 和 1310 像素两个不同的焦距。数值精度不是原因，bfloat16 和 float32 的结果一样。它是在自然场景上训练的，内镜的反光、湿润组织和形变不在它见过的数据里。</p>
+    <p><b>跨大视角的约束本身是有用的。</b>把经过几何校验的 SIFT 匹配加进联合求解，远距离误差在镜头 A 降了 28%（4.7 → 3.4 px），镜头 B 降了 45%（8.3 → 4.5 px），近距离不变差，两个镜头的视场角也一致。VGGT 的轨迹作为约束也有一点帮助，但它的系统偏差让近距离变差、焦距被拉偏。</p>
+    <p><b>仿真上，几何更准没有带来更好的组织运动。</b>镜头 A 牵拉时段，直接测量在各种几何下都和静止基线差不多（−2% 到 +6%），器官模板在多视角几何下更差（+15% 到 +34%）；镜头 B 在哪种几何下都没有复现。第 0 帧仍是弱点：它处在一次快速、模糊的摆镜里，匹配很少，而所有相机都以它为基准。正文结果保持单视角版本。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="qnum">追加实验</span>
+      <h2>器官模板用多个关键帧来拟合</h2>
+      <p class="muted">正文里的模板只用第 0 帧拟合。镜头在动，后面的帧能看到胆囊的其他角度，于是把后面关键帧里的胆囊轮廓和深度也加进拟合，器械挡住的像素算"未知"。难点是胆囊从一开始就被拉着，不同时刻的形状本身在变，所以试了两种：刚性版只用胆囊还和第 0 帧轮廓对得上的关键帧；扣除运动版用正文模板仿真在每个关键帧的形变，把候选模板先变形，再和那一帧比。</p>
+    </div>
+    <figure>
+      <img src="media/template_keyframes_rest.jpg" alt="镜头 A 三种模板拟合静止时的样子" width="960" height="540" loading="lazy">
+      <figcaption>镜头 A 第 0 帧，三种模板拟合（从上到下：只用第 0 帧、多关键帧刚性、多关键帧扣除运动）。黄色是胆囊，紫色是条带。三者差别不大。</figcaption>
+    </figure>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>镜头 A，器官模板</th><th class="n">关键帧</th><th class="n">轮廓 IoU</th><th class="n">深度误差</th><th class="n">牵拉时段跟踪</th><th class="n">同左，SIFT 几何</th></tr></thead>
+        <tbody>
+          <tr><td>只用第 0 帧（正文）</td><td class="n">1</td><td class="n b">0.548</td><td class="n">9.7 mm</td><td class="n">+7%</td><td class="n">+15%</td></tr>
+          <tr><td>多关键帧，刚性</td><td class="n">2</td><td class="n">0.528</td><td class="n b">8.6 mm</td><td class="n b">+1%</td><td class="n">+16%</td></tr>
+          <tr><td>多关键帧，扣除运动</td><td class="n">5</td><td class="n">0.535</td><td class="n">8.9 mm</td><td class="n">+4%</td><td class="n">+34%</td></tr>
+          <tr class="base"><td>直接测量（对照）</td><td class="n">1</td><td class="n">0.531</td><td class="n">13.9 mm</td><td class="n">+1%</td><td class="n">+3%</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">关键帧数含第 0 帧（单视角几何；SIFT 几何下分别是 2 和 7 个）。牵拉时段跟踪：和自己的静止基线比，负数是更好；镜头 A 只有 3 个牵拉起点，差别是方向性的。完整结果在 outputs/experiments/template_keyframes_2026-10-07。</p>
+    </div>
+    <p>胆囊颈归入胆囊之后，整个胆囊的轮廓更早就和第 0 帧对不上，刚性版只找到 1 个可用的关键帧（第 5 帧），扣除运动版用了 4 个。两种都只让结果小幅变化：深度误差从 9.7 降到 8.6–8.9 mm，牵拉时段从 +7% 到 +1% / +4%，都没有好过静止基线；在多视角（SIFT）几何里更差。扣除运动版扣掉的是仿真自己算出的形变，而仿真的形变本身就对不上视频，所以帮不上忙。要让模板真正用上整段视频，形变也得放进拟合：用整段观测去拟合"模板加它在仿真里的形变"，而不是先拟合、再仿真。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>局限</h2></div>
+    <ul class="plain">
+      <li>深度来自单目网络，只用器械杆宽度做尺度标定；胆囊视频没有深度真值，误差大小未知。</li>
+      <li>正文用的只转动 + 变焦的相机模型处理不了大幅平移；快速、模糊的镜头运动（镜头 A 开头、镜头 B 中段）对不齐。多视角联合求解改善了几何，但还没有作为默认（见追加实验）。</li>
+      <li>组织运动只在 6 秒窗口里复现；整个 10 秒的镜头 A 和镜头 B 的牵拉时段，仿真都没有好过静止基线。</li>
+      <li>器官模板只有一个人的 BodyParts3D 解剖，没有形状变化范围；脂肪、筋膜、条带等没有模板。</li>
+      <li>材料参数（杨氏模量 300 Pa、附着弹簧 0.5 N/m）没有逐段拟合，四种器官体用的是同一组。</li>
+      <li>深度误差指标对单目深度打分，不是独立检验；跟踪误差不依赖深度，是独立的，但牵拉时段每段只有 2–4 个起点，器官体之间的差别是方向性的。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>下一步</h2></div>
+    <ul class="plain">
+      <li>把仿真参数（组织刚度、附着弹簧、抓取位置）对着视频拟合，先在 6 秒窗口验证，再推到整个镜头 A：现在这些参数都是猜的，镜头 A 的牵拉没有复现。</li>
+      <li>深度换成双目，或用器官模板的解剖尺寸给单目深度定尺度。</li>
+      <li>相机：联合求解加 SIFT 远距离匹配在几何上已经更好（追加实验）；处理好背景贴片接缝、换一个清晰的帧做基准之后，再考虑作为默认。</li>
+      <li>薄膜、条带用壳单元建模，附着边界从视频里估计，再试镜头 B 里胆囊管的分离。</li>
+      <li>用 MedShapeNet / TotalSegmentator 的多个胆囊形状做形状先验，替代单一模板。</li>
+      <li>把这套流程作为工具交给盲测 agent，比较"基本几何体 / 器官部件 / 加测量工具"三种配置下的重建质量。</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>代码：medical-agentic-sim/r2s（每段视频一个配置文件，<code>python -m r2s.batch &lt;clip&gt;</code> 跑完整流程）。结果在 outputs/&lt;clip&gt;/，本页由 site/report/build.py 收集。</span>
+    <span>数据：胆囊视频 Wikimedia Commons（CC BY 2.0，Boer 等）；器官模板 BodyParts3D（CC BY-SA 2.1 JP，DBCLS）；多视角网络 VGGT-1B（Meta，权重 CC BY-NC 4.0，仅限非商业）。</span>
+    <span>之前的结果（盲测 agent、2.5D 和第一版 3D 重建）保存在 archive/。</span>
+  </footer>
+</div>

@@ -1,0 +1,25 @@
+{
+ "probe_initial_backoff_mm": 2.0,
+ "k_gb": 0.5,
+ "k_fold": 8.0,
+ "young": 1500.0,
+ "friction": 0.3,
+ "probe_retargeted_steps": 0,
+ "grasp_vertices": [
+  "fb11",
+  "fb12",
+  "fb8",
+  "fb9",
+  "fb13",
+  "fb15",
+  "fb422",
+  "fb10",
+  "fb423",
+  "fv18",
+  "fb16",
+  "fb421"
+ ],
+ "grasp_gap_mm": 2.64,
+ "tissue_max_disp_mm": 2.76,
+ "tissue_p95_disp_mm": 1.71
+}

@@ -1,0 +1,6 @@
+19:17:13 chole_b+ba: 197 frames 640x360
+WARNING: Nan, Inf or huge value in QACC at DOF 486. The simulation is unstable. Time = 4.0919.
+
+19:19:26 [sim] chole_b+ba/primitive: unstable at control step 76; retrying with time step 0.0625 ms
+19:24:03 [sim] chole_b+ba/primitive: 803 organ vertices, max displacement 26.06 mm, grasp {}
+19:24:03 chole_b+ba sim: done in 411 s

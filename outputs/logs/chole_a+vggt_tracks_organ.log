@@ -1,0 +1,9 @@
+19:07:33 chole_a+vggt_tracks: 251 frames 640x360
+19:07:34 [organ] measured: 970 vertices, 2610 tets, 480 anchored, 10 pinned
+19:07:37 [organ] primitive: {'kind': 'primitive', 'template': 'gallbladder', 'scale': [1.168, 0.613, 0.66], 'pose_fit_median_mm': 2.07}
+19:07:38 [organ] primitive: 1041 vertices, 4006 tets, 521 anchored, 0 pinned
+19:07:42 [organ] template: {'kind': 'template', 'template': 'gallbladder', 'scale': [1.186, 1.046, 1.453], 'pose_fit_median_mm': 1.94}
+19:07:43 [organ] template: 1332 vertices, 4928 tets, 803 anchored, 0 pinned
+19:07:52 [organ] template_fit: {'kind': 'template_fit', 'template': 'gallbladder', 'scale': [1.186, 1.046, 1.453], 'pose_fit_median_mm': 1.94, 'ffd_fit_median_mm': 1.15, 'ffd_max_offset_mm': 14.0}
+19:07:54 [organ] template_fit: 626 vertices, 2108 tets, 401 anchored, 0 pinned
+19:07:54 chole_a+vggt_tracks organ: done in 21 s

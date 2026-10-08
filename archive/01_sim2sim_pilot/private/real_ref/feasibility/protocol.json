@@ -1,0 +1,55 @@
+{
+ "protocol_version": "surg-0.2",
+ "status": "success",
+ "task": {
+  "instruction": "feasibility",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   0.0,
+   -0.17,
+   0.1
+  ],
+  "lookat": [
+   0.0,
+   0.0,
+   0.012
+  ],
+  "fovy_deg": 50.0,
+  "width": 1024,
+  "height": 768
+ },
+ "instrument": {
+  "L_rcm_pos": [
+   -0.2,
+   0.06,
+   0.09
+  ],
+  "R_rcm_pos": [
+   0.2,
+   0.06,
+   0.09
+  ]
+ },
+ "roles": {
+  "object": [
+   "sleeve"
+  ],
+  "source": [
+   "post_src"
+  ],
+  "target": [
+   "post_dst"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "tcp_pose_2arm"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

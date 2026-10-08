@@ -1,0 +1,5 @@
+17:09:30 chole_a+vggt_tracks: 251 frames 640x360
+17:09:48 [eval] measured: outline_iou 0.595 (static 0.586), depth_err_mm_monocular 3.14 (static 4.05), track_err_px 11.88 (static 12.12), n_track_samples 2662 (static 2675), n_track_seeds 10 (static 10), track_err_px_frame0_seed 20.15 (static 20.81), n_track_samples_frame0_seed 24 (static 24)
+17:10:08 [eval] primitive: outline_iou 0.485 (static 0.515), depth_err_mm_monocular 2.44 (static 3.4), track_err_px 12.86 (static 12.4), n_track_samples 2741 (static 2867), n_track_seeds 10 (static 10), track_err_px_frame0_seed 22.7 (static 21.51), n_track_samples_frame0_seed 24 (static 24)
+17:10:21 [eval] template_fit: outline_iou 0.611 (static 0.635), depth_err_mm_monocular 3.15 (static 4.09), track_err_px 12.94 (static 12.38), n_track_samples 2950 (static 3126), n_track_seeds 10 (static 10), track_err_px_frame0_seed 24.33 (static 21.12), n_track_samples_frame0_seed 24 (static 24)
+17:10:21 chole_a+vggt_tracks eval: done in 51 s

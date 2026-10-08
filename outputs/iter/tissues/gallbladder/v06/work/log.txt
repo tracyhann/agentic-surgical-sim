@@ -1,0 +1,25 @@
+[v06] config {"apex_px": 60, "rest_keys": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 10.0, "ffd_size": 2.0, "scale_prior": 0.02, "scale_bounds": [[1.0, 0.85, 0.85], [1.7, 1.7, 1.7]], "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.5, "hidden_mm": 8.0, "surf_faces": 500, "cells": 16, "start_frame": 120, "iters_first": 300, "iters": 100, "lr": 0.08, "w_arap": 30.0, "w_vol": 20.0, "w_temp": 0.3, "smooth_sigma": 1.5, "arap_uniform": true, "w_barrier": 0.5, "w_anchor": 0.02, "anchor_cos": 0.35, "early_weight": 0.3, "tet_snap": "project", "w_neck": 1.0, "w_neck4d": 0.3, "depth_erode": 3, "n_pts4d": 1500, "barrier_sum": true, "tetgen_q": [15, 1.6], "sliver_weight": true}
+[masks] body area per keyframe [39004, 26361, 34196, 30124, 37299, 36337, 38950, 29341, 29274, 37698, 40873, 48535, 42350, 54103, 51991, 57602, 53312, 55831, 53876, 55324, 58746, 57647, 55519, 54711, 55794, 52793] (2 s)
+[masks] body/duct junction found in 250 frames
+[rest] pose search: best losses [8.536, 8.61, 8.848, 8.962, 9.214] (25 s)
+[rest] pose+scale: loss 8.090 parts(out,cov,depth mm) [0.724 0.431 3.755] scale [0.989 1.15  1.713] (50 s)
+[rest] + lattice: loss 7.645 parts [0.697 0.297 3.56 ] max offset 4.6 mm (64 s)
+[rest] neck tip vs junction pixel: median 14 px over 26 keyframes
+[tets] quality vol/maxedge^3: median 0.039, < 0.01: 2.3 %, min 0.00147
+[tets] 1332 nodes, 5302 tets, 1720 surface faces, degenerate False
+[rest] {'neck_tip': [0.0019099999917671084, 0.049240000545978546, 0.051589999347925186], 'scale': [0.9950000047683716, 1.1619999408721924, 1.7070000171661377], 'rotvec': [1.0008000135421753, -0.6704999804496765, 0.6355999708175659], 't_mm': [-26.139999389648438, 55.68000030517578, 29.309999465942383], 'lattice_max_offset_mm': 4.65, 'fit_parts_mm': {'outside': np.float64(0.697), 'coverage': np.float64(0.297), 'depth': np.float64(3.56)}, 'template_extent_cm': [6.08, 3.41, 2.07], 'rest_extent_cm': [5.98, 4.88, 3.77], 'template_volume_ml': 15.39, 'rest_volume_ml': 32.18, 'rest_vs_scaled_template_mm': {'mean': 1.77, 'max': 6.88}}
+[4d] frame 125: out 0.064 cov 0.057 depth 0.782 arap 0.0282 vol 0.0044 (10 s)
+[4d] frame 150: out 0.016 cov 0.129 depth 0.842 arap 0.0283 vol 0.0045 (41 s)
+[4d] frame 175: out 0.016 cov 0.080 depth 0.778 arap 0.0253 vol 0.0065 (70 s)
+[4d] frame 200: out 0.011 cov 0.136 depth 1.498 arap 0.0284 vol 0.0050 (100 s)
+[4d] frame 225: out 0.022 cov 0.062 depth 0.818 arap 0.0280 vol 0.0057 (131 s)
+[4d] frame 250: out 0.023 cov 0.045 depth 0.808 arap 0.0209 vol 0.0039 (162 s)
+[4d] frame 100: out 0.081 cov 0.053 depth 0.948 arap 0.0555 vol 0.0128 (190 s)
+[4d] frame 75: out 0.434 cov 0.014 depth 0.584 arap 0.0514 vol 0.0140 (220 s)
+[4d] frame 50: out 0.163 cov 0.017 depth 0.698 arap 0.0358 vol 0.0084 (250 s)
+[4d] frame 25: out 0.025 cov 0.034 depth 0.995 arap 0.0496 vol 0.0099 (279 s)
+[4d] frame 0: out 0.012 cov 0.056 depth 1.003 arap 0.0437 vol 0.0075 (304 s)
+[quality] shared_mask: IoU 0.7913 BF 0.3142 depth 1.332 mm
+[quality] body_neck_mask: IoU 0.8468 BF 0.3552 depth 1.3005 mm
+[quality] temporal {'max_vertex_speed_mm_per_frame': 3.12, 'p99_vertex_speed_mm_per_frame': 0.905, 'mean_vertex_speed_mm_per_frame': 0.206, 'max_vertex_accel_mm_per_frame2': 1.408, 'centroid_path_mm': 31.93, 'centroid_range_mm': [3.940000057220459, 5.489999771118164, 4.650000095367432]}  volume {'rest_ml': 32.18, 'ratio_min': 0.9221, 'ratio_max': 1.0576}  deformation {'min_tet_det': 0.2727, 'inverted_tet_frames': 0, 'max_inverted_tets': 0, 'sampled_frames': 51, 'max_inverted_wellshaped_tets': 0, 'slivers_rest': 124, 'max_principal_stretch': 2.3957, 'edge_stretch_max': 2.6475, 'edge_stretch_p95_max': 1.146}
+[v06] done in 429 s

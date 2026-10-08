@@ -1,0 +1,39 @@
+cameras: /Users/grandpa/phai/medical-agentic-sim/outputs/iter/tissues/backdrop/v08/cams_refined.npz
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.75 L 22.3 mm reproj 14.10 px
+  rest duct it 599: loss 61.82 L 18.5 mm reproj 9.71 px
+  4d duct it 0: loss 63.68 L 18.5+-0.0 mm reproj 9.57 px
+  4d duct it 450: loss 24.90 L 18.5+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 22.04 L 18.4+-0.1 mm reproj 1.54 px
+  rest strands it 0: loss 84.98 L 14.8 mm reproj 7.26 px
+  rest strands it 599: loss 49.45 L 13.3 mm reproj 6.21 px
+  4d strands it 0: loss 69.71 L 13.3+-0.0 mm reproj 5.99 px
+  4d strands it 450: loss 34.16 L 13.4+-0.2 mm reproj 1.52 px
+  4d strands it 899: loss 33.36 L 13.4+-0.2 mm reproj 1.53 px
+anchor: gallbladder v12 vertex 1381 (of 10 marked "ducts"), mean distance to the observed junction (frames >= 60) 3.5 mm
+patch mode: 18 gallbladder v12 faces, gap observed junction -> patch point {'mean': 2.8157, 'median': 2.3992, 'p10': 1.3066, 'min': 0.5166, 'max': 9.6345, 'n': 251} mm, bridge over the first 20%
+  rest duct it 0: loss 81.75 L 16.7 mm reproj 13.55 px
+  rest duct it 599: loss 69.03 L 17.4 mm reproj 10.69 px
+  4d duct it 0: loss 101.29 L 18.8+-1.2 mm reproj 7.53 px L0 17.49 mm
+  4d duct it 450: loss 50.06 L 19.0+-0.6 mm reproj 4.42 px L0 19.03 mm
+  4d duct it 899: loss 45.72 L 19.2+-0.6 mm reproj 3.74 px L0 19.22 mm
+  rest duct it 0: loss 86.25 L 17.4 mm reproj 10.69 px
+  rest duct it 599: loss 69.89 L 19.1 mm reproj 11.22 px
+  duct: 4D common length 19.22 mm, rest length 19.13 mm
+  rest strands it 0: loss 61.74 L 17.2 mm reproj 9.88 px
+  rest strands it 599: loss 56.61 L 17.6 mm reproj 8.55 px
+  4d strands it 0: loss 119.71 L 18.5+-2.7 mm reproj 7.67 px L0 17.64 mm
+  4d strands it 450: loss 41.65 L 20.0+-0.4 mm reproj 5.12 px L0 20.03 mm
+  4d strands it 899: loss 41.08 L 20.5+-0.4 mm reproj 5.11 px L0 20.52 mm
+  rest strands it 0: loss 97.40 L 17.6 mm reproj 8.55 px
+  rest strands it 599: loss 58.65 L 20.4 mm reproj 8.08 px
+  strands: 4D common length 20.52 mm, rest length 20.40 mm
+duct: IoU 0.7578 BF 0.7567 depth 2.0267 mm static-rest IoU 0.5515 reproj 3.3625 px L 19.13 mm (std 0.57) r 1.86 mm
+strands: IoU 0.6509 BF 0.6324 depth 1.6493 mm static-rest IoU 0.5916 reproj 2.5936 px L 20.4 mm (std 0.39) r 1.65 mm
+overlap with gallbladder: duct hidden 0.029 inside 0.0502 (max 0.5217); strands hidden 0.0126 inside 0.0061 (max 0.1579)
+proximal -> gallbladder surface |d| median/max (mm): before duct 2.3651/9.3476 rest 4.67; before strands 3.7518/9.353 rest 4.69; after duct 0.1219/0.3581 rest 0.11; after strand_1 0.1219/0.3581 rest 0.11; after strand_2 0.1219/0.3581 rest 0.11; after strand_3 0.1219/0.3581 rest 0.11
+end-motion test (motion explained): duct lin 0.249 chord 0.073 prox-only 0.393 +drive [(6, 0.779), (9, 0.872), (3, 0.936)]; strand_1 lin 0.567 chord 0.51 prox-only 0.446 +drive [(6, 0.875), (3, 0.924), (9, 0.966)]; strand_2 lin 0.566 chord 0.501 prox-only 0.448 +drive [(5, 0.876), (8, 0.938), (3, 0.969)]; strand_3 lin 0.561 chord 0.487 prox-only 0.447 +drive [(5, 0.88), (8, 0.936), (3, 0.969)]
+length over time: duct 18.46-22.15 (rest 19.13, e2e [14.89, 21.47]); strand_1 19.83-22.42 (rest 21.0, e2e [16.5, 21.66]); strand_2 19.69-21.66 (rest 20.4, e2e [16.59, 21.43]); strand_3 19.64-21.75 (rest 20.09, e2e [16.79, 21.53])
+width scale {'mean': 1.0481, 'median': 1.0439, 'p10': 0.8712, 'min': 0.8324, 'max': 1.2772, 'n': 251} / {'mean': 1.079, 'median': 1.0543, 'p10': 0.9534, 'min': 0.75, 'max': 1.3577, 'n': 251}; clearance {'duct_to_fibres': {'mean': 0.627, 'median': 0.5828, 'p10': 0.0087, 'min': -0.3811, 'max': 1.7668, 'n': 153}, 'fibre_to_fibre': {'mean': 0.0629, 'median': -0.0606, 'p10': -0.1973, 'min': -0.3562, 'max': 0.7677, 'n': 153}}; GB check None mm
+union IoU 0.747  envelope IoU 0.6344 strand->duct proximal 0.0 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.414, 'degenerate_faces': 0, 'area_cm2': 2.12, 'volume_ml': 0.18, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 0  done in 70.4 s

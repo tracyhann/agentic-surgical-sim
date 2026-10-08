@@ -1,0 +1,23 @@
+cameras: /Users/grandpa/phai/medical-agentic-sim/outputs/iter/tissues/backdrop/v08/cams_refined.npz
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.75 L 22.3 mm reproj 14.10 px
+  rest duct it 599: loss 61.82 L 18.5 mm reproj 9.71 px
+  4d duct it 0: loss 63.68 L 18.5+-0.0 mm reproj 9.57 px
+  4d duct it 450: loss 24.90 L 18.5+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 22.04 L 18.4+-0.1 mm reproj 1.54 px
+  rest strands it 0: loss 84.98 L 14.8 mm reproj 7.26 px
+  rest strands it 599: loss 49.45 L 13.3 mm reproj 6.21 px
+  4d strands it 0: loss 69.71 L 13.3+-0.0 mm reproj 5.99 px
+  4d strands it 450: loss 34.16 L 13.4+-0.2 mm reproj 1.52 px
+  4d strands it 899: loss 33.36 L 13.4+-0.2 mm reproj 1.53 px
+anchor: gallbladder v12 vertex 1381 (of 10 marked "ducts"), mean distance to the observed junction (frames >= 60) 3.5 mm
+patch mode: 18 gallbladder v12 faces, gap observed junction -> patch point {'mean': 2.8157, 'median': 2.3992, 'p10': 1.3066, 'min': 0.5166, 'max': 9.6345, 'n': 251} mm, bridge over the first 30%
+duct: IoU 0.791 BF 0.8298 depth 1.688 mm static-rest IoU 0.5563 reproj 3.284 px L 18.4 mm (std 1.46) r 1.86 mm
+strands: IoU 0.6142 BF 0.6129 depth 1.5513 mm static-rest IoU 0.5334 reproj 3.0947 px L 17.59 mm (std 2.74) r 1.65 mm
+overlap with gallbladder: duct hidden 0.0341 inside 0.0401 (max 0.5652); strands hidden 0.0137 inside 0.004 (max 0.0526)
+proximal -> gallbladder surface |d| median/max (mm): before duct 2.3651/9.3476 rest 4.67; before strands 3.7518/9.353 rest 4.69; after duct 0.1219/0.3581 rest 0.11; after strand_1 0.1219/0.3581 rest 0.11; after strand_2 0.1219/0.3581 rest 0.11; after strand_3 0.1219/0.3581 rest 0.11
+end-motion test (motion explained): duct lin 0.585 chord 0.399 prox-only 0.41 +drive [(4, 0.824), (8, 0.924), (3, 0.957)]; strand_1 lin 0.76 chord 0.466 prox-only 0.445 +drive [(5, 0.937), (9, 0.963), (6, 0.976)]; strand_2 lin 0.751 chord 0.458 prox-only 0.435 +drive [(5, 0.939), (9, 0.968), (3, 0.977)]; strand_3 lin 0.745 chord 0.455 prox-only 0.419 +drive [(5, 0.938), (9, 0.97), (3, 0.979)]
+length over time: duct 17.81-26.48 (rest 18.4, e2e [15.49, 23.86]); strand_1 13.65-22.94 (rest 18.11, e2e [13.1, 22.8]); strand_2 13.64-23.01 (rest 17.59, e2e [13.29, 22.96]); strand_3 13.74-23.3 (rest 17.38, e2e [13.32, 23.16])
+width scale {'mean': 1.0577, 'median': 1.0468, 'p10': 0.8918, 'min': 0.8502, 'max': 1.2681, 'n': 251} / {'mean': 1.1116, 'median': 1.0805, 'p10': 0.9991, 'min': 0.75, 'max': 1.3638, 'n': 251}; clearance {'duct_to_fibres': {'mean': 0.5383, 'median': 0.5887, 'p10': -0.5089, 'min': -1.027, 'max': 1.8825, 'n': 153}, 'fibre_to_fibre': {'mean': 0.0869, 'median': -0.0463, 'p10': -0.1721, 'min': -0.3562, 'max': 0.7807, 'n': 153}}; GB check None mm
+union IoU 0.7538  envelope IoU 0.617 strand->duct proximal 0.0 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.414, 'degenerate_faces': 0, 'area_cm2': 2.06, 'volume_ml': 0.18, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 0  done in 59.0 s

@@ -1,0 +1,34 @@
+{
+ "instance": "peg_transfer",
+ "camera": {
+  "pos": [
+   0.01,
+   -0.09,
+   0.08
+  ],
+  "lookat": [
+   0.0,
+   0.016,
+   0.0
+  ],
+  "fovy_deg": 60.0,
+  "width": 640,
+  "height": 480
+ },
+ "rcm": [
+  -0.07,
+  -0.065,
+  0.085
+ ],
+ "dims": {
+  "ring_rin": 0.008,
+  "ring_t": 0.002,
+  "ring_h": 0.005,
+  "peg_r": 0.0018,
+  "peg_h": 0.018
+ },
+ "target": "peg4",
+ "object": "ring",
+ "frames": 309,
+ "validate_errors": []
+}

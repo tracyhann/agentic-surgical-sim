@@ -1,0 +1,150 @@
+{
+ "render=0_ducts=v11_membrane=v09_duct_snap=0_duct_nodes=glue_mid2": {
+  "gb_iou": 0.6544,
+  "gb_rigid_mm": 0.8332,
+  "gb_rot_sim": 10.634,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.9062,
+  "gb_track_motion": -35.8,
+  "gb_free_mexp": 0.728,
+  "gb_free_err": 1.2551,
+  "gb_inverted": 95,
+  "photo": null,
+  "gb_push": [
+   5.93,
+   6.47
+  ],
+  "gb_flow": [
+   10.6716,
+   12.2267,
+   11.9841
+  ],
+  "mem_flow": [
+   12.1478,
+   11.7735,
+   11.0559
+  ],
+  "mem_iou": 0.6753,
+  "mem_rigid_mm": 2.2422,
+  "mem_nonrigid_mm": 2.3336,
+  "mem_stretch": 2.88,
+  "duct_iou": 0.6812,
+  "duct_free_mexp": {
+   "ducts_duct": 0.733,
+   "ducts_strand_1": 0.688,
+   "ducts_strand_2": 0.682,
+   "ducts_strand_3": 0.655
+  }
+ },
+ "render=0_ducts=v11_membrane=v09_duct_snap=0_duct_nodes=glue_mid": {
+  "gb_iou": 0.6505,
+  "gb_rigid_mm": 0.7873,
+  "gb_rot_sim": 10.6303,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.9037,
+  "gb_track_motion": -35.8,
+  "gb_free_mexp": 0.733,
+  "gb_free_err": 1.2303,
+  "gb_inverted": 106,
+  "photo": null,
+  "gb_push": [
+   5.91,
+   6.47
+  ],
+  "gb_flow": [
+   10.7812,
+   12.2249,
+   11.9841
+  ],
+  "mem_flow": [
+   11.7132,
+   11.7988,
+   11.0559
+  ],
+  "mem_iou": 0.6759,
+  "mem_rigid_mm": 2.3125,
+  "mem_nonrigid_mm": 2.3935,
+  "mem_stretch": 2.89,
+  "duct_iou": 0.6421,
+  "duct_free_mexp": {
+   "ducts_duct": 0.6,
+   "ducts_strand_1": 0.663,
+   "ducts_strand_2": 0.651,
+   "ducts_strand_3": 0.59
+  }
+ },
+ "render=0_ducts=v11_membrane=v09_duct_snap=0_duct_nodes=mid": {
+  "gb_iou": 0.6378,
+  "gb_rigid_mm": 0.7668,
+  "gb_rot_sim": 10.7367,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.9524,
+  "gb_track_motion": -37.2,
+  "gb_free_mexp": 0.725,
+  "gb_free_err": 1.267,
+  "gb_inverted": 149,
+  "photo": null,
+  "gb_push": [
+   5.97,
+   6.47
+  ],
+  "gb_flow": [
+   10.8974,
+   12.3655,
+   11.9841
+  ],
+  "mem_flow": [
+   11.7933,
+   11.8035,
+   11.0559
+  ],
+  "mem_iou": 0.6674,
+  "mem_rigid_mm": 2.3004,
+  "mem_nonrigid_mm": 2.3923,
+  "mem_stretch": 2.89,
+  "duct_iou": 0.6261,
+  "duct_free_mexp": {
+   "ducts_duct": 0.752,
+   "ducts_strand_1": 0.801,
+   "ducts_strand_2": 0.8,
+   "ducts_strand_3": 0.718
+  }
+ },
+ "render=0_membrane=v09": {
+  "gb_iou": 0.6527,
+  "gb_rigid_mm": 0.7921,
+  "gb_rot_sim": 10.5089,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.9064,
+  "gb_track_motion": -34.9,
+  "gb_free_mexp": 0.733,
+  "gb_free_err": 1.2335,
+  "gb_inverted": 121,
+  "photo": null,
+  "gb_push": [
+   5.93,
+   6.47
+  ],
+  "gb_flow": [
+   10.7576,
+   12.2421,
+   11.9841
+  ],
+  "mem_flow": [
+   11.4973,
+   11.7745,
+   11.0559
+  ],
+  "mem_iou": 0.6735,
+  "mem_rigid_mm": 2.33,
+  "mem_nonrigid_mm": 2.3952,
+  "mem_stretch": 2.89,
+  "duct_iou": 0.6782,
+  "duct_free_mexp": {
+   "ducts_duct": 0.526,
+   "ducts_strand_1": 0.595,
+   "ducts_strand_2": 0.605,
+   "ducts_strand_3": 0.574
+  }
+ }
+}

@@ -1,0 +1,12 @@
+21:23:25 static fraction 0.518
+21:23:25 canvas 834 492 offset -56.0 -88.0
+21:24:43 liver template fits [(1.47, 2.85, 0.03, 1.31, 77), (1.47, 2.85, 0.03, 1.31, 77), (1.48, 2.84, 0.031, 1.31, 77), (1.48, 2.84, 0.03, 1.31, 77), (1.44, 2.99, 0.043, 1.22, 73), (2.58, 2.83, 0.38, 1.25, 59)]
+21:24:45 hold-out test {'holdout_cells': 19658, 'smooth_mm': 1.1860119774252178, 'template_mm': 2.9640337113283897, 'template_coverage': 0.8520195340319463, 'smooth+template_mm': 2.259463116019274, 'template_fit_holdout': {'liver_dist_mm': 1.4678793430929205, 'gb_dist_mm': 2.846690034509493, 'freespace_violation': 0.029611582251792157, 'scale': 1.312980802890139, 'rot_from_prior_deg': 76.66874113945742}}
+21:25:50 liver template fits [(2.16, 3.66, 0.086, 1.36, 59), (2.19, 3.63, 0.087, 1.34, 60), (2.19, 3.62, 0.087, 1.34, 60), (2.2, 3.61, 0.087, 1.34, 60), (2.16, 3.65, 0.087, 1.36, 59), (2.16, 3.66, 0.088, 1.36, 59)]
+21:25:53 fused: known cells 62344 hidden 20323 149s
+21:25:55 gains [1.15 1.09 1.04 1.06 0.97 1.05 1.08 1.03 1.06 0.96 0.94 0.98 0.97]
+21:25:55 texture: seen 0.753 151s
+21:25:55 mesh 9179 verts 17930 faces 151s
+21:26:17 evaluated 251 frames 21s
+21:26:20 pictures 24s
+21:26:20 SUMMARY v04 {'coverage': 1.0, 'depth_med_mm': 2.5504, 'depth_bias_mm': 0.4871, 'depth_p90_mm': 7.4502, 'front_violation': 0.1033, 'gb_violation': 0.0, 'photo_l1': 8.9918, 'photo_ncc': 0.9588, 'photo_lncc': 0.6977, 'frame_iou': 0.9997, 'liver_iou': 0.7479, 'liver_bf': 0.2493} spread {'median': 3.066, 'p90': 7.005, 'p99': 17.465} {'n_verts': 9179, 'n_faces': 17930, 'watertight': False, 'components': 1, 'min_edge_mm': 0.515, 'degenerate_faces': 0, 'area_cm2': 104.91}

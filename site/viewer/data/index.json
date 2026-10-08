@@ -1,0 +1,63 @@
+[
+ {
+  "name": "chole_a_4d",
+  "title": "胆囊 · 镜头 A · 按组织建模的 4D 仿真",
+  "conditions": [
+   "sim4d",
+   "recon4d",
+   "cf_lift",
+   "cf_deeper",
+   "cf_noprobe"
+  ],
+  "steps": 201,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "chole_a",
+  "title": "胆囊 · 镜头 A（23.5–33.5 s）",
+  "conditions": [
+   "measured",
+   "primitive",
+   "template",
+   "template_fit",
+   "template_mv"
+  ],
+  "steps": 201,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "chole_a_sift",
+  "title": "胆囊 · 镜头 A（23.5–33.5 s） · 多视角·SIFT",
+  "conditions": [
+   "measured",
+   "primitive",
+   "template",
+   "template_fit",
+   "template_mv"
+  ],
+  "steps": 201,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "chole_b",
+  "title": "胆囊 · 镜头 B（33.5–41.4 s，分离胆囊管）",
+  "conditions": [
+   "measured",
+   "primitive"
+  ],
+  "steps": 157,
+  "size": [
+   640,
+   360
+  ]
+ }
+]

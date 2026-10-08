@@ -1,0 +1,27 @@
+cameras: /Users/grandpa/phai/medical-agentic-sim/outputs/iter/tissues/backdrop/v08/cams_refined.npz
+duct: observed in 250/251 frames, junction in 204
+strands: observed in 251/251 frames, junction in 173
+  rest duct it 0: loss 141.75 L 22.3 mm reproj 14.10 px
+  rest duct it 599: loss 61.82 L 18.5 mm reproj 9.71 px
+  4d duct it 0: loss 63.68 L 18.5+-0.0 mm reproj 9.57 px
+  4d duct it 450: loss 24.90 L 18.5+-0.1 mm reproj 1.93 px
+  4d duct it 899: loss 22.04 L 18.4+-0.1 mm reproj 1.54 px
+  rest strands it 0: loss 84.98 L 14.8 mm reproj 7.26 px
+  rest strands it 599: loss 49.45 L 13.3 mm reproj 6.21 px
+  4d strands it 0: loss 69.71 L 13.3+-0.0 mm reproj 5.99 px
+  4d strands it 450: loss 34.16 L 13.4+-0.2 mm reproj 1.52 px
+  4d strands it 899: loss 33.36 L 13.4+-0.2 mm reproj 1.53 px
+anchor: gallbladder v12 vertex 1381 (of 10 marked "ducts"), mean distance to the observed junction (frames >= 60) 3.5 mm
+patch mode: 18 gallbladder v12 faces, gap observed junction -> patch point {'mean': 2.8157, 'median': 2.3992, 'p10': 1.3066, 'min': 0.5166, 'max': 9.6345, 'n': 251} mm, bridge over the first 20%
+  duct: rest = frame 248 shape (length 18.82 mm) moved onto the rest patch point
+  strands: rest = frame 159 shape (length 15.60 mm) moved onto the rest patch point
+duct: IoU 0.7977 BF 0.8325 depth 1.6947 mm static-rest IoU 0.2988 reproj 2.9502 px L 18.82 mm (std 1.51) r 1.86 mm
+strands: IoU 0.6693 BF 0.6359 depth 1.5951 mm static-rest IoU 0.2242 reproj 2.8601 px L 15.6 mm (std 2.76) r 1.65 mm
+overlap with gallbladder: duct hidden 0.0317 inside 0.0401 (max 0.5217); strands hidden 0.0112 inside 0.002 (max 0.0526)
+proximal -> gallbladder surface |d| median/max (mm): before duct 2.3651/9.3476 rest 4.67; before strands 3.7518/9.353 rest 4.69; after duct 0.1219/0.3581 rest 0.11; after strand_1 0.1219/0.3581 rest 0.11; after strand_2 0.1219/0.3581 rest 0.11; after strand_3 0.1219/0.3581 rest 0.11
+cable test duct: {'ends': {'motion_explained': 0.534, 'err_mm': 1.731, 'static_err_mm': 3.715, 'length_ratio': [1.0, 1.269], 'driven': [0, 12]}, 'ends_mid': {'motion_explained': 0.839, 'err_mm': 0.597, 'static_err_mm': 3.715, 'length_ratio': [1.001, 1.395], 'driven': [0, 4, 12]}}
+cable test strand_2: {'ends': {'motion_explained': 0.743, 'err_mm': 0.9, 'static_err_mm': 3.497, 'length_ratio': [1.0, 1.473], 'driven': [0, 12]}, 'ends_mid': {'motion_explained': 0.872, 'err_mm': 0.447, 'static_err_mm': 3.497, 'length_ratio': [1.001, 1.474], 'driven': [0, 5, 12]}}
+end-motion test (motion explained): duct lin 0.738 chord 0.701 prox-only 0.305 +drive [(4, 0.921), (8, 0.956), (2, 0.975)]; strand_1 lin 0.85 chord 0.605 prox-only 0.418 +drive [(5, 0.942), (9, 0.964), (3, 0.983)]; strand_2 lin 0.853 chord 0.599 prox-only 0.422 +drive [(5, 0.941), (9, 0.966), (3, 0.984)]; strand_3 lin 0.85 chord 0.59 prox-only 0.422 +drive [(5, 0.937), (9, 0.961), (3, 0.984)]
+length over time: duct 18.01-26.95 (rest 18.82, e2e [15.49, 23.86]); strand_1 13.42-23.01 (rest 15.59, e2e [13.1, 22.8]); strand_2 13.68-23.04 (rest 15.6, e2e [13.29, 22.96]); strand_3 14.14-23.35 (rest 16.1, e2e [13.32, 23.16])
+width scale {'mean': 1.0567, 'median': 1.0454, 'p10': 0.8892, 'min': 0.8447, 'max': 1.2714, 'n': 251} / {'mean': 1.1065, 'median': 1.076, 'p10': 0.989, 'min': 0.75, 'max': 1.3612, 'n': 251}; clearance {'duct_to_fibres': {'mean': 0.349, 'median': 0.5014, 'p10': -0.803, 'min': -1.7275, 'max': 1.4986, 'n': 153}, 'fibre_to_fibre': {'mean': -0.7998, 'median': -0.8014, 'p10': -0.803, 'min': -0.8047, 'max': -0.7914, 'n': 153}}; GB check None mm
+union IoU 0.7662  envelope IoU 0.6184 strand->duct proximal 0.0 mm  tets {'n_verts': 312, 'n_faces': 576, 'watertight': True, 'components': 1, 'min_edge_mm': 0.414, 'degenerate_faces': 0, 'area_cm2': 2.1, 'volume_ml': 0.18, 'n_tets': 828, 'degenerate_tets': 0, 'inverted_tets': 0} inverted 4d 1  done in 251.6 s

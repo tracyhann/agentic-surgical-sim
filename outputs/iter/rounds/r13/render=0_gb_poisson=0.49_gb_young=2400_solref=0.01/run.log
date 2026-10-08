@@ -1,0 +1,189 @@
+WARNING: Nan, Inf or huge value in QACC at DOF 12. The simulation is unstable. Time = 0.0004.
+
+WARNING: Nan, Inf or huge value in QACC at DOF 21. The simulation is unstable. Time = 0.0003.
+
+WARNING: Nan, Inf or huge value in QACC at DOF 138. The simulation is unstable. Time = 0.0003.
+
+[scene4d] unstable at control step 1 (dof 12, body gallbladder_4); retrying with time step 0.0312 ms
+[scene4d] unstable at control step 1 (dof 2035, body gallbladder_678); retrying with time step 0.0156 ms
+[scene4d] unstable at control step 1 (dof 138, body gallbladder_46); retrying with time step 0.0078 ms
+{
+ "gallbladder": {
+  "version": "v10",
+  "sim_iou": {
+   "mean": 0.6336,
+   "median": 0.6832,
+   "p10": 0.4649,
+   "min": 0.2467,
+   "max": 0.7898,
+   "n": 26
+  },
+  "sim_boundary_f": {
+   "mean": 0.2208,
+   "median": 0.2233,
+   "p10": 0.1444,
+   "min": 0.121,
+   "max": 0.3208,
+   "n": 26
+  },
+  "sim_depth_mm": {
+   "mean": 3.9658,
+   "median": 3.0814,
+   "p10": 2.4471,
+   "min": 2.2164,
+   "max": 7.8026,
+   "n": 26
+  },
+  "recon_iou": {
+   "mean": 0.7843,
+   "median": 0.7991,
+   "p10": 0.7088,
+   "min": 0.6901,
+   "max": 0.8619,
+   "n": 26
+  },
+  "static_iou": {
+   "mean": 0.5496,
+   "median": 0.6464,
+   "p10": 0.3,
+   "min": 0.1371,
+   "max": 0.7477,
+   "n": 26
+  },
+  "flow_epe_px": {
+   "mean": 11.4982,
+   "median": 9.4241,
+   "p10": 4.8492,
+   "min": 2.4755,
+   "max": 29.7647,
+   "n": 50
+  },
+  "flow_epe_static_px": {
+   "mean": 12.9347,
+   "median": 9.8003,
+   "p10": 3.6426,
+   "min": 1.6298,
+   "max": 38.3595,
+   "n": 50
+  },
+  "flow_explained": 0.111,
+  "flow_epe_recon_px": {
+   "mean": 12.9384,
+   "median": 11.6795,
+   "p10": 5.3412,
+   "min": 3.0768,
+   "max": 31.4939,
+   "n": 50
+  },
+  "err_vs_recon_mm": {
+   "mean": 1.6261,
+   "median": 1.5066,
+   "p10": 1.1859,
+   "min": 0.944,
+   "max": 2.7836,
+   "n": 251
+  },
+  "err_static_vs_recon_mm": {
+   "mean": 3.4944,
+   "median": 3.7004,
+   "p10": 1.9908,
+   "min": 1.5046,
+   "max": 5.1163,
+   "n": 251
+  },
+  "motion_explained": 0.535,
+  "split": {
+   "rigid_err": {
+    "mean": 1.1863,
+    "median": 1.0019,
+    "p10": 0.6416,
+    "min": 0.549,
+    "max": 2.3059,
+    "n": 26
+   },
+   "rot_sim": {
+    "mean": 8.1979,
+    "median": 8.2685,
+    "p10": 4.7454,
+    "min": 2.3139,
+    "max": 12.4422,
+    "n": 26
+   },
+   "rot_rec": {
+    "mean": 8.4459,
+    "median": 8.438,
+    "p10": 3.6233,
+    "min": 2.0123,
+    "max": 11.665,
+    "n": 26
+   },
+   "nonrigid_err": {
+    "mean": 1.569,
+    "median": 1.5284,
+    "p10": 1.2216,
+    "min": 1.1173,
+    "max": 2.5033,
+    "n": 26
+   },
+   "deform_sim": {
+    "mean": 1.258,
+    "median": 1.1988,
+    "p10": 0.8435,
+    "min": 0.7621,
+    "max": 2.0971,
+    "n": 26
+   },
+   "deform_rec": {
+    "mean": 1.9964,
+    "median": 1.9157,
+    "p10": 1.4183,
+    "min": 1.2975,
+    "max": 3.0082,
+    "n": 26
+   }
+  },
+  "free_err_vs_recon_mm": {
+   "mean": 2.0639,
+   "median": 1.9155,
+   "p10": 1.5029,
+   "min": 1.1945,
+   "max": 3.554,
+   "n": 251
+  },
+  "free_motion_explained": 0.476,
+  "inverted_tets_max": 324,
+  "stretch_max": 1.53,
+  "stretch_p95_max": 1.19,
+  "track_px": 10.65,
+  "track_px_static": 11.13,
+  "track_motion": {
+   "sim_px": 23.91,
+   "static_px": 27.02,
+   "change_pct": -11.5,
+   "seeds": [
+    0,
+    50
+   ]
+  },
+  "track_samples": 3752,
+  "probe_push": {
+   "frames": 228,
+   "sim_mm": 5.25,
+   "recon_mm": 4.95,
+   "abs_err_mm": 1.76
+  }
+ },
+ "membrane": {
+  "version": "v06",
+  "sim_iou": {
+   "mean": 0.6492,
+   "median": 0.6701,
+   "p10": 0.4305,
+   "min": 0.3118,
+   "max": 0.8284,
+   "n": 26
+  },
+  "sim_boundary_f": {
+   "mean": 0.3188,
+   "
+[scene4d] r13/render=0_gb_poisson=0.49_gb_young=2400_solref=0.01 done in 4588 s

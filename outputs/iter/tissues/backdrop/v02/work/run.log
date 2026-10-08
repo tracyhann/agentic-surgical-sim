@@ -1,0 +1,9 @@
+21:17:35 static fraction 0.544
+21:17:35 canvas 834 492 offset -56.0 -88.0
+21:17:38 fused: known cells 63092 hidden 14676 4s
+21:17:41 gains [1.18 1.09 1.01 1.06 0.96 1.05 1.04 1.02 1.05 0.97 0.94 0.99 0.97]
+21:17:41 texture: seen 0.825 7s
+21:17:41 mesh 8651 verts 16890 faces 7s
+21:18:00 evaluated 251 frames 19s
+21:18:03 pictures 22s
+21:18:03 SUMMARY v02 {'coverage': 1.0, 'depth_med_mm': 2.4263, 'depth_bias_mm': 0.2338, 'depth_p90_mm': 6.8049, 'front_violation': 0.104, 'gb_violation': 0.0137, 'photo_l1': 8.9478, 'photo_ncc': 0.9599, 'photo_lncc': 0.7025, 'frame_iou': 0.999, 'liver_iou': 0.7449, 'liver_bf': 0.2825} spread {'median': 3.059, 'p90': 6.729, 'p99': 17.928} {'n_verts': 8651, 'n_faces': 16890, 'watertight': False, 'components': 1, 'min_edge_mm': 0.509, 'degenerate_faces': 0, 'area_cm2': 120.28}

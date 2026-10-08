@@ -1,0 +1,77 @@
+{
+ "fovy": 47.0,
+ "cam_pos": [
+  0.0,
+  0.0,
+  0.1
+ ],
+ "cam_lookat": [
+  0.0,
+  0.766044443118978,
+  -0.5427876096865393
+ ],
+ "depth_scale": 1.568,
+ "camera_motion": {
+  "max_rot_deg": 3.27,
+  "zoom_range": [
+   0.972,
+   1.033
+  ],
+  "fit_err_px_median": 4.53
+ },
+ "visibility_push_p95_mm": 0.2,
+ "n_flex_vertices": 616,
+ "n_flex_triangles": 1132,
+ "instruments": {
+  "probe_right": {
+   "rcm": [
+    0.065,
+    0.0491,
+    0.1118
+   ],
+   "heading": 0.9222,
+   "axis_fit_err_deg": 0.66,
+   "rcm_cam": [
+    0.065,
+    -0.041,
+    0.03
+   ],
+   "n_lines": 44,
+   "tip_depth_m": [
+    0.122,
+    0.15
+   ],
+   "rcm_to_tip_m": 0.121,
+   "cap_moved_mm": 12.0,
+   "withdrawn_frames": 20,
+   "depth_shift": 1.0
+  },
+  "grasper_left": {
+   "rcm": [
+    -0.0206,
+    0.0379,
+    0.0985
+   ],
+   "heading": 0.2071,
+   "axis_fit_err_deg": 1.97,
+   "rcm_cam": [
+    -0.021,
+    -0.023,
+    0.03
+   ],
+   "n_lines": 39,
+   "tip_depth_m": [
+    0.098,
+    0.105
+   ],
+   "rcm_to_tip_m": 0.086,
+   "cap_moved_mm": 0.0,
+   "withdrawn_frames": 0,
+   "depth_shift": 1.12
+  }
+ },
+ "actions_shape": [
+  121,
+  10
+ ]
+}

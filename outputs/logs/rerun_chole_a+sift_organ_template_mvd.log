@@ -1,0 +1,17 @@
+18:58:21 chole_a+sift: 251 frames 640x360
+18:58:22 [organ] template_mvd: keyframes [210, 220, 230, 240]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/__main__.py", line 174, in <module>
+    main(sys.argv[1:])
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/__main__.py", line 117, in main
+    views = keyframe_views(clip, c, masks, Z) if c in MULTI_KEYFRAME else None
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/__main__.py", line 87, in keyframe_views
+    return ORG.keyframe_views(clip, cams, masks, Z, keep, [1.0 / max(len(keep), 1)] * len(keep), sim=sim,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/grandpa/phai/medical-agentic-sim/r2s/organ.py", line 325, in keyframe_views
+    X, D = X0, flex[ks, :len(X0)] - X0
+               ~~~~~~~~~~~~~~~~~~~^~~~
+ValueError: operands could not be broadcast together with shapes (1021,3) (1987,3) 

@@ -1,0 +1,5 @@
+18:57:20 endonerf_pulling: 63 frames 640x512
+18:57:20 [organ] measured: 460 vertices, 1110 tets, 230 anchored, 0 pinned
+18:57:22 [organ] primitive: {'kind': 'primitive', 'template': None, 'scale': [1.213, 0.276, 0.738], 'pose_fit_median_mm': 1.46}
+18:57:23 [organ] primitive: 987 vertices, 3635 tets, 556 anchored, 0 pinned
+18:57:23 endonerf_pulling organ: done in 4 s

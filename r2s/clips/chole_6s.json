@@ -1,0 +1,332 @@
+{
+ "title": "胆囊 · 原 6 秒片段（回归检查）",
+ "source": {
+  "type": "video",
+  "path": "data/videos/commons_chole/gallbladder_torsion_S1.mp4",
+  "frames": [
+   650,
+   800
+  ],
+  "crop_rows": [
+   59,
+   419
+  ],
+  "fix_borders": true
+ },
+ "size": [
+  640,
+  360
+ ],
+ "fps": 25,
+ "camera": {
+  "fovy": 47.0
+ },
+ "objects": {
+  "gallbladder": {
+   "role": "organ",
+   "template": "gallbladder",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       200,
+       290
+      ],
+      [
+       170,
+       240
+      ],
+      [
+       230,
+       190
+      ],
+      [
+       245,
+       150
+      ],
+      [
+       330,
+       240
+      ],
+      [
+       380,
+       225
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       150
+      ],
+      [
+       330,
+       90
+      ],
+      [
+       420,
+       190
+      ]
+     ]
+    },
+    {
+     "frame": 44,
+     "pos": [
+      [
+       180,
+       300
+      ],
+      [
+       260,
+       320
+      ],
+      [
+       130,
+       280
+      ],
+      [
+       220,
+       200
+      ],
+      [
+       320,
+       175
+      ],
+      [
+       390,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       300
+      ],
+      [
+       60,
+       80
+      ],
+      [
+       360,
+       330
+      ]
+     ]
+    }
+   ]
+  },
+  "grasper": {
+   "role": "instrument",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       165,
+       25
+      ],
+      [
+       195,
+       70
+      ],
+      [
+       212,
+       95
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       150
+      ]
+     ]
+    }
+   ]
+  },
+  "probe": {
+   "role": "instrument",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       480,
+       90
+      ],
+      [
+       560,
+       40
+      ],
+      [
+       380,
+       150
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       190
+      ]
+     ]
+    },
+    {
+     "frame": 75,
+     "pos": [
+      [
+       440,
+       30
+      ],
+      [
+       380,
+       60
+      ],
+      [
+       345,
+       82
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       150
+      ],
+      [
+       250,
+       100
+      ]
+     ]
+    }
+   ]
+  },
+  "strand": {
+   "role": "strand",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       440,
+       210
+      ],
+      [
+       470,
+       240
+      ],
+      [
+       490,
+       265
+      ]
+     ],
+     "neg": [
+      [
+       480,
+       90
+      ],
+      [
+       250,
+       280
+      ],
+      [
+       340,
+       230
+      ],
+      [
+       380,
+       225
+      ]
+     ]
+    },
+    {
+     "frame": 44,
+     "pos": [
+      [
+       450,
+       190
+      ]
+     ],
+     "neg": [
+      [
+       320,
+       175
+      ],
+      [
+       390,
+       205
+      ]
+     ]
+    }
+   ]
+  },
+  "liver": {
+   "role": "static",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       60,
+       100
+      ],
+      [
+       60,
+       250
+      ],
+      [
+       120,
+       60
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       290
+      ]
+     ]
+    }
+   ]
+  },
+  "right organs": {
+   "role": "static",
+   "prompts": [
+    {
+     "frame": 0,
+     "pos": [
+      [
+       560,
+       230
+      ],
+      [
+       600,
+       300
+      ],
+      [
+       430,
+       315
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       190
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "instruments": [
+  {
+   "name": "grasper_left",
+   "mask": "grasper",
+   "holds": "gallbladder",
+   "shaft_d": 0.005,
+   "color": "dark"
+  },
+  {
+   "name": "probe_right",
+   "mask": "probe",
+   "shaft_d": 0.005,
+   "color": "bright"
+  }
+ ],
+ "note": "Segmentation (2026-10-07): the dark gallbladder neck belongs to the gallbladder, the strand is only the thin pink strands (as in chole_a)."
+}

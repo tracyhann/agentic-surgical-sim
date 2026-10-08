@@ -1,0 +1,3 @@
+18:57:24 endonerf_pulling: 63 frames 640x512
+18:58:07 [sim] endonerf_pulling/primitive: 987 organ vertices, max displacement 29.07 mm, grasp {'grasper_left': {'n': 80, 'gap_mm': 13.77, 'step': 27}}
+18:58:07 endonerf_pulling sim: done in 43 s

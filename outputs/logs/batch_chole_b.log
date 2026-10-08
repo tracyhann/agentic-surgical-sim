@@ -1,0 +1,9 @@
+09:40:53 chole_b scene measured primitive ok 104 s
+09:40:57 chole_b organ measured primitive ok 4 s
+09:41:51 chole_b sim primitive ok 55 s
+09:42:03 chole_b sim measured ok 66 s
+09:42:06 chole_b eval measured ok 3 s
+09:42:08 chole_b eval primitive ok 5 s
+09:42:12 chole_b render measured ok 5 s
+09:42:13 chole_b render primitive ok 6 s
+09:42:20 chole_b compare measured primitive ok 6 s

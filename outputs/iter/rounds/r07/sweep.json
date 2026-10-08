@@ -1,0 +1,59 @@
+{
+ "ducts=v09_duct_end=recon": {
+  "gb_iou": 0.6172,
+  "gb_rigid_mm": 1.2937,
+  "gb_rot_sim": 8.6801,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.711,
+  "gb_track_motion": -29.4,
+  "gb_free_mexp": 0.432,
+  "gb_free_err": 2.2347,
+  "gb_push": [
+   5.74,
+   4.95
+  ],
+  "mem_iou": 0.6526,
+  "mem_rigid_mm": 2.5257,
+  "mem_nonrigid_mm": 2.5648,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.3949
+ },
+ "ducts=v09_duct_end=recon_fibre_skip=0": {
+  "gb_iou": 0.6184,
+  "gb_rigid_mm": 1.2792,
+  "gb_rot_sim": 8.6658,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6923,
+  "gb_track_motion": -30.6,
+  "gb_free_mexp": 0.435,
+  "gb_free_err": 2.2229,
+  "gb_push": [
+   5.7,
+   4.95
+  ],
+  "mem_iou": 0.6494,
+  "mem_rigid_mm": 2.5078,
+  "mem_nonrigid_mm": 2.5626,
+  "mem_stretch": 3.6,
+  "duct_iou": 0.3724
+ },
+ "ducts=v09_duct_end=recon_fibre_skip=0_cable_k=0.5": {
+  "gb_iou": 0.6175,
+  "gb_rigid_mm": 1.2841,
+  "gb_rot_sim": 8.6868,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.7128,
+  "gb_track_motion": -31.1,
+  "gb_free_mexp": 0.432,
+  "gb_free_err": 2.2351,
+  "gb_push": [
+   5.72,
+   4.95
+  ],
+  "mem_iou": 0.6502,
+  "mem_rigid_mm": 2.5274,
+  "mem_nonrigid_mm": 2.5813,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.3707
+ }
+}

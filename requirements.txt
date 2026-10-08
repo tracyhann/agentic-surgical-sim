@@ -1,0 +1,18 @@
+mujoco==3.15.0
+numpy
+scipy
+opencv-python-headless
+imageio
+imageio-ffmpeg
+pillow
+# perception (SAM 2.1, Depth Anything V2; weights in models/)
+torch
+transformers>=5
+einops            # VGGT (third_party/vggt), multi-view experiment
+# organ templates: remeshing and tetrahedralisation
+trimesh
+tetgen
+fast-simplification
+scikit-image
+# data download (Google Drive folders)
+gdown

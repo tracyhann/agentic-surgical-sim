@@ -1,0 +1,5 @@
+18:58:21 chole_a: 251 frames 640x360
+18:58:21 [organ] template_mv: keyframes [5]
+18:58:25 [organ] template_mv: {'kind': 'template_mv', 'template': 'gallbladder', 'scale': [2.058, 2.191, 2.066], 'pose_fit_median_mm': 3.7, 'n_views': 1, 'frame0_scale': [2.114, 2.143, 1.862], 'shift_mm': 2.4}
+18:58:26 [organ] template_mv: 939 vertices, 3403 tets, 647 anchored, 0 pinned
+18:58:26 chole_a organ: done in 5 s

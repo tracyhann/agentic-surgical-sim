@@ -1,0 +1,150 @@
+{
+ "render=0_probe_solref=0.01": {
+  "gb_iou": 0.6496,
+  "gb_rigid_mm": 0.7857,
+  "gb_rot_sim": 10.6769,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.902,
+  "gb_track_motion": -34.4,
+  "gb_free_mexp": 0.733,
+  "gb_free_err": 1.234,
+  "gb_inverted": 105,
+  "photo": null,
+  "gb_push": [
+   5.93,
+   6.47
+  ],
+  "gb_flow": [
+   10.8587,
+   12.25,
+   11.9841
+  ],
+  "mem_flow": [
+   11.5074,
+   11.7704,
+   11.0478
+  ],
+  "mem_iou": 0.6834,
+  "mem_rigid_mm": 2.1564,
+  "mem_nonrigid_mm": 2.3684,
+  "mem_stretch": 3.71,
+  "duct_iou": 0.6773,
+  "duct_free_mexp": {
+   "ducts_duct": 0.688,
+   "ducts_strand_1": 0.799,
+   "ducts_strand_2": 0.808,
+   "ducts_strand_3": 0.778
+  }
+ },
+ "render=0_probe_solref=0.02": {
+  "gb_iou": 0.6499,
+  "gb_rigid_mm": 0.7901,
+  "gb_rot_sim": 10.7279,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.8995,
+  "gb_track_motion": -34.3,
+  "gb_free_mexp": 0.732,
+  "gb_free_err": 1.238,
+  "gb_inverted": 99,
+  "photo": null,
+  "gb_push": [
+   5.94,
+   6.47
+  ],
+  "gb_flow": [
+   10.9106,
+   12.2522,
+   11.9841
+  ],
+  "mem_flow": [
+   11.4986,
+   11.7831,
+   11.0478
+  ],
+  "mem_iou": 0.6781,
+  "mem_rigid_mm": 2.1409,
+  "mem_nonrigid_mm": 2.358,
+  "mem_stretch": 3.71,
+  "duct_iou": 0.6813,
+  "duct_free_mexp": {
+   "ducts_duct": 0.701,
+   "ducts_strand_1": 0.799,
+   "ducts_strand_2": 0.808,
+   "ducts_strand_3": 0.778
+  }
+ },
+ "render=0_gb_radius=0.001": {
+  "gb_iou": 0.6292,
+  "gb_rigid_mm": 0.9001,
+  "gb_rot_sim": 10.9647,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 1.0252,
+  "gb_track_motion": -34.2,
+  "gb_free_mexp": 0.704,
+  "gb_free_err": 1.3655,
+  "gb_inverted": 204,
+  "photo": null,
+  "gb_push": [
+   6.18,
+   6.47
+  ],
+  "gb_flow": [
+   10.7253,
+   12.303,
+   11.9841
+  ],
+  "mem_flow": [
+   11.642,
+   11.7618,
+   11.0478
+  ],
+  "mem_iou": 0.6938,
+  "mem_rigid_mm": 2.1372,
+  "mem_nonrigid_mm": 2.3375,
+  "mem_stretch": 3.71,
+  "duct_iou": 0.6755,
+  "duct_free_mexp": {
+   "ducts_duct": 0.694,
+   "ducts_strand_1": 0.799,
+   "ducts_strand_2": 0.808,
+   "ducts_strand_3": 0.778
+  }
+ },
+ "render=0_probe_solref=0.01_gb_radius=0.001": {
+  "gb_iou": 0.6292,
+  "gb_rigid_mm": 0.8969,
+  "gb_rot_sim": 10.973,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 1.0231,
+  "gb_track_motion": -33.8,
+  "gb_free_mexp": 0.705,
+  "gb_free_err": 1.3636,
+  "gb_inverted": 198,
+  "photo": null,
+  "gb_push": [
+   6.18,
+   6.47
+  ],
+  "gb_flow": [
+   10.7367,
+   12.3077,
+   11.9841
+  ],
+  "mem_flow": [
+   11.4759,
+   11.7585,
+   11.0478
+  ],
+  "mem_iou": 0.6907,
+  "mem_rigid_mm": 2.1323,
+  "mem_nonrigid_mm": 2.3348,
+  "mem_stretch": 3.71,
+  "duct_iou": 0.6795,
+  "duct_free_mexp": {
+   "ducts_duct": 0.687,
+   "ducts_strand_1": 0.799,
+   "ducts_strand_2": 0.808,
+   "ducts_strand_3": 0.778
+  }
+ }
+}

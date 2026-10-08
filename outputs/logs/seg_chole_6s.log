@@ -1,0 +1,3 @@
+[transformers] `memory_attention_rope_theta` is deprecated and will be removed in v5.0. Use `rope_parameters['rope_theta']` instead.
+Loading weights:   0%|          | 0/469 [00:00<?, ?it/s]Loading weights: 100%|██████████| 469/469 [00:00<00:00, 28611.53it/s]
+[segment] 151 frames in 168 s; mean area: {'gallbladder': 45718, 'grasper': 4249, 'probe': 10121, 'strand': 6616, 'liver': 60167, 'right organs': 46078}

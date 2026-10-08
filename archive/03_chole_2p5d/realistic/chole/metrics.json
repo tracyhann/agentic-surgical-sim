@@ -1,0 +1,48 @@
+{
+ "tissue_tracks": {
+  "gallbladder": {
+   "n_tracks": 42,
+   "sim_err_px": 27.85,
+   "static_baseline_px": 31.73,
+   "real_max_disp_px": 46.2,
+   "sim_max_disp_px": 25.7
+  },
+  "fold": {
+   "n_tracks": 7,
+   "sim_err_px": 13.11,
+   "static_baseline_px": 20.12,
+   "real_max_disp_px": 51.9,
+   "sim_max_disp_px": 28.3
+  },
+  "strand": {
+   "n_tracks": 33,
+   "sim_err_px": 8.64,
+   "static_baseline_px": 14.2,
+   "real_max_disp_px": 40.7,
+   "sim_max_disp_px": 30.4
+  },
+  "static backdrop": {
+   "n_tracks": 226,
+   "sim_err_px": 4.87,
+   "static_baseline_px": 13.26,
+   "real_max_disp_px": 34.7,
+   "sim_max_disp_px": 31.8
+  },
+  "all": {
+   "n_tracks": 308,
+   "sim_err_px": 5.6,
+   "static_baseline_px": 13.67
+  }
+ },
+ "image": {
+  "strand_iou_sim": 0.495,
+  "strand_iou_static_frame0": 0.42,
+  "ssim_sim": 0.584,
+  "ssim_static_frame0": 0.502,
+  "psnr_sim": 15.81,
+  "psnr_static_frame0": 14.86,
+  "ssim_sim_first": 0.876,
+  "ssim_sim_last": 0.587,
+  "ssim_static_last": 0.453
+ }
+}

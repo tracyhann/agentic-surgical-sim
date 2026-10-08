@@ -1,0 +1,41 @@
+{
+ "instance": "rosma_handoff",
+ "package": "/Users/grandpa/phai/medical-agentic-sim/runs_real/rosma_handoff/out",
+ "build": true,
+ "validate_errors": [],
+ "duration_s": {
+  "agent": 17.1,
+  "video": 17.07
+ },
+ "success": true,
+ "success_detail": {
+  "hole_radius_mm": 6.98,
+  "dist_to_post_axis_mm": 2.56
+ },
+ "sleeve_px": {
+  "median": 18.2,
+  "mean": 39.1,
+  "start": 4.4,
+  "end": 22.1
+ },
+ "tool_tips_vs_kinematics": {
+  "psm_left": {
+   "shape_rmse_mm": 10.6,
+   "rigid_rmse_mm": 20.4,
+   "scale_to_real": 0.358,
+   "path_len_mm": {
+    "agent": 181.2,
+    "real": 142.1
+   }
+  },
+  "psm_right": {
+   "shape_rmse_mm": 9.5,
+   "rigid_rmse_mm": 19.6,
+   "scale_to_real": 0.465,
+   "path_len_mm": {
+    "agent": 179.1,
+    "real": 163.0
+   }
+  }
+ }
+}

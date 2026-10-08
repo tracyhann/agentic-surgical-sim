@@ -1,0 +1,19 @@
+{
+ "base_to_v12_surface_mm_all": {
+  "median": 0.187,
+  "p90": 0.356,
+  "p99": 0.556,
+  "max": 1.437,
+  "frac_over_1mm": 0.00023
+ },
+ "v08_base_to_v12_surface_mm_all": {
+  "median": 0.416,
+  "p99": 1.285,
+  "max": 2.792
+ },
+ "held_row_to_v06_tcp_mm": {
+  "median": 0.0,
+  "max": 0.935
+ },
+ "note": "closest-point distance to the v12 4D surface (250k surface samples, ~0.15 mm resolution), every base vertex in every frame; includes the 0.25 mm in-front offset"
+}

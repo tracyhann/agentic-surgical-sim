@@ -1,0 +1,263 @@
+{
+ "render=0_mem_k=5_mem_young=60": {
+  "gb_iou": 0.5904,
+  "gb_rigid_mm": 1.1806,
+  "gb_rot_sim": 8.1088,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6626,
+  "gb_track_motion": -29.3,
+  "gb_free_mexp": 0.47,
+  "gb_free_err": 2.0867,
+  "gb_push": [
+   5.71,
+   4.95
+  ],
+  "gb_flow": [
+   12.1502,
+   12.8987,
+   12.9384
+  ],
+  "mem_flow": [
+   12.5009,
+   12.4073,
+   11.5176
+  ],
+  "mem_iou": 0.6895,
+  "mem_rigid_mm": 2.5676,
+  "mem_nonrigid_mm": 2.5617,
+  "mem_stretch": 5.14,
+  "duct_iou": 0.4125
+ },
+ "render=0_mem_k=5_mem_young=600": {
+  "gb_iou": 0.612,
+  "gb_rigid_mm": 1.152,
+  "gb_rot_sim": 8.2065,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6113,
+  "gb_track_motion": -29.4,
+  "gb_free_mexp": 0.481,
+  "gb_free_err": 2.0424,
+  "gb_push": [
+   5.7,
+   4.95
+  ],
+  "gb_flow": [
+   12.25,
+   12.9598,
+   12.9384
+  ],
+  "mem_flow": [
+   12.7002,
+   12.4247,
+   11.5176
+  ],
+  "mem_iou": 0.6863,
+  "mem_rigid_mm": 2.5581,
+  "mem_nonrigid_mm": 2.5425,
+  "mem_stretch": 5.13,
+  "duct_iou": 0.3887
+ },
+ "render=0_mem_k=5_mem_young=3000": {
+  "gb_iou": 0.6104,
+  "gb_rigid_mm": 1.1446,
+  "gb_rot_sim": 8.19,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6201,
+  "gb_track_motion": -29.3,
+  "gb_free_mexp": 0.478,
+  "gb_free_err": 2.0559,
+  "gb_push": [
+   5.68,
+   4.95
+  ],
+  "gb_flow": [
+   12.0734,
+   12.972,
+   12.9384
+  ],
+  "mem_flow": [
+   12.879,
+   12.3964,
+   11.5176
+  ],
+  "mem_iou": 0.6833,
+  "mem_rigid_mm": 2.5728,
+  "mem_nonrigid_mm": 2.5655,
+  "mem_stretch": 5.12,
+  "duct_iou": 0.4258
+ },
+ "render=0_mem_k=20_mem_young=60": {
+  "gb_iou": 0.6177,
+  "gb_rigid_mm": 1.2938,
+  "gb_rot_sim": 8.6609,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.7129,
+  "gb_track_motion": -29.0,
+  "gb_free_mexp": 0.432,
+  "gb_free_err": 2.2375,
+  "gb_push": [
+   5.74,
+   4.95
+  ],
+  "gb_flow": [
+   11.8052,
+   12.9276,
+   12.9384
+  ],
+  "mem_flow": [
+   12.1292,
+   12.3766,
+   11.5176
+  ],
+  "mem_iou": 0.6465,
+  "mem_rigid_mm": 2.5417,
+  "mem_nonrigid_mm": 2.5599,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.3515
+ },
+ "render=0_mem_k=20_mem_young=600": {
+  "gb_iou": 0.6172,
+  "gb_rigid_mm": 1.2937,
+  "gb_rot_sim": 8.6801,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.711,
+  "gb_track_motion": -29.4,
+  "gb_free_mexp": 0.432,
+  "gb_free_err": 2.2347,
+  "gb_push": [
+   5.74,
+   4.95
+  ],
+  "gb_flow": [
+   11.7868,
+   12.9321,
+   12.9384
+  ],
+  "mem_flow": [
+   11.9958,
+   12.3557,
+   11.5176
+  ],
+  "mem_iou": 0.6526,
+  "mem_rigid_mm": 2.5257,
+  "mem_nonrigid_mm": 2.5648,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.3949
+ },
+ "render=0_mem_k=20_mem_young=3000": {
+  "gb_iou": 0.6175,
+  "gb_rigid_mm": 1.2895,
+  "gb_rot_sim": 8.6881,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.7083,
+  "gb_track_motion": -29.3,
+  "gb_free_mexp": 0.431,
+  "gb_free_err": 2.2398,
+  "gb_push": [
+   5.72,
+   4.95
+  ],
+  "gb_flow": [
+   11.7622,
+   12.9317,
+   12.9384
+  ],
+  "mem_flow": [
+   12.08,
+   12.3915,
+   11.5176
+  ],
+  "mem_iou": 0.6446,
+  "mem_rigid_mm": 2.5243,
+  "mem_nonrigid_mm": 2.5868,
+  "mem_stretch": 3.6,
+  "duct_iou": 0.3956
+ },
+ "render=0_mem_k=60_mem_young=60": {
+  "gb_iou": 0.618,
+  "gb_rigid_mm": 1.2606,
+  "gb_rot_sim": 8.5585,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6912,
+  "gb_track_motion": -27.9,
+  "gb_free_mexp": 0.439,
+  "gb_free_err": 2.2073,
+  "gb_push": [
+   5.68,
+   4.95
+  ],
+  "gb_flow": [
+   11.6123,
+   12.9261,
+   12.9384
+  ],
+  "mem_flow": [
+   12.102,
+   12.4378,
+   11.5176
+  ],
+  "mem_iou": 0.6225,
+  "mem_rigid_mm": 2.5332,
+  "mem_nonrigid_mm": 2.6377,
+  "mem_stretch": 2.4,
+  "duct_iou": 0.3833
+ },
+ "render=0_mem_k=60_mem_young=600": {
+  "gb_iou": 0.6163,
+  "gb_rigid_mm": 1.2657,
+  "gb_rot_sim": 8.5543,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6893,
+  "gb_track_motion": -29.4,
+  "gb_free_mexp": 0.436,
+  "gb_free_err": 2.2201,
+  "gb_push": [
+   5.67,
+   4.95
+  ],
+  "gb_flow": [
+   11.6756,
+   12.9334,
+   12.9384
+  ],
+  "mem_flow": [
+   11.9374,
+   12.4458,
+   11.5176
+  ],
+  "mem_iou": 0.6219,
+  "mem_rigid_mm": 2.5373,
+  "mem_nonrigid_mm": 2.6494,
+  "mem_stretch": 2.4,
+  "duct_iou": 0.3721
+ },
+ "render=0_mem_k=60_mem_young=3000": {
+  "gb_iou": 0.6177,
+  "gb_rigid_mm": 1.2623,
+  "gb_rot_sim": 8.5689,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6964,
+  "gb_track_motion": -26.2,
+  "gb_free_mexp": 0.439,
+  "gb_free_err": 2.2087,
+  "gb_push": [
+   5.68,
+   4.95
+  ],
+  "gb_flow": [
+   11.5257,
+   12.929,
+   12.9384
+  ],
+  "mem_flow": [
+   11.6617,
+   12.4438,
+   11.5176
+  ],
+  "mem_iou": 0.62,
+  "mem_rigid_mm": 2.5707,
+  "mem_nonrigid_mm": 2.6564,
+  "mem_stretch": 2.39,
+  "duct_iou": 0.4357
+ }
+}

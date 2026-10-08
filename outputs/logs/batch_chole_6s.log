@@ -1,0 +1,13 @@
+03:36:20 chole_6s sim template ok 47 s
+03:36:33 chole_6s sim template_fit ok 61 s
+03:36:42 chole_6s sim primitive ok 70 s
+03:37:44 chole_6s sim measured ok 132 s
+03:38:01 chole_6s eval template ok 17 s
+03:38:03 chole_6s eval primitive ok 19 s
+03:38:04 chole_6s eval template_fit ok 19 s
+03:38:09 chole_6s eval measured ok 25 s
+03:38:28 chole_6s render template ok 19 s
+03:38:29 chole_6s render primitive ok 19 s
+03:38:29 chole_6s render template_fit ok 19 s
+03:38:31 chole_6s render measured ok 21 s
+03:38:54 chole_6s compare measured primitive template template_fit ok 23 s

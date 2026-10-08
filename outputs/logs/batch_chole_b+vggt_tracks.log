@@ -1,0 +1,10 @@
+16:07:28 chole_b+vggt_tracks prep measured primitive ok 2 s
+16:08:53 chole_b+vggt_tracks scene measured primitive ok 85 s
+16:09:01 chole_b+vggt_tracks organ measured primitive ok 8 s
+16:10:14 chole_b+vggt_tracks sim measured ok 73 s
+16:20:40 chole_b+vggt_tracks sim primitive ok 699 s
+16:20:43 chole_b+vggt_tracks eval measured ok 3 s
+16:20:46 chole_b+vggt_tracks eval primitive ok 6 s
+16:20:53 chole_b+vggt_tracks render primitive ok 7 s
+16:20:53 chole_b+vggt_tracks render measured ok 7 s
+16:21:02 chole_b+vggt_tracks compare measured primitive ok 9 s

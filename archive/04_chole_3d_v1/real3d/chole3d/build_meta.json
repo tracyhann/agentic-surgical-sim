@@ -1,0 +1,58 @@
+{
+ "source": "Depth Anything V2 Small + SAM 2.1 tiny",
+ "metric_slope": 3.301586918315721,
+ "fovy": 47.0,
+ "camera_motion": {
+  "max_rot_deg": 3.27,
+  "fit_err_px_median": 4.22
+ },
+ "gallbladder": {
+  "depth_cm": [
+   5.6,
+   7.2
+  ],
+  "max_thickness_cm": 2.4
+ },
+ "gb_amodal_added_px": 5715,
+ "bed_max_disp_mm": 9.2,
+ "n_flex_vertices": 500,
+ "n_flex_triangles": 901,
+ "pinned": 2,
+ "ribbon": {
+  "vertices": 238,
+  "pinned": 24,
+  "tied": 46
+ },
+ "instruments": {
+  "grasper_left": {
+   "rcm": [
+    -0.1279,
+    0.1294,
+    0.2422
+   ],
+   "heading": -2.1022,
+   "axis_fit_err_deg": 1.04,
+   "tip_depth_cm": [
+    6.8,
+    8.2
+   ]
+  },
+  "probe_right": {
+   "rcm": [
+    0.0663,
+    0.0669,
+    0.0967
+   ],
+   "heading": 1.7148,
+   "axis_fit_err_deg": 1.1,
+   "tip_depth_cm": [
+    5.8,
+    8.9
+   ]
+  }
+ },
+ "actions_shape": [
+  121,
+  10
+ ]
+}

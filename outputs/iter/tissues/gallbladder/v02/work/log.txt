@@ -1,0 +1,22 @@
+[v02] config {"apex_px": 60, "rest_keys": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250], "rest_iters": 120, "rest_ffd_iters": 200, "ffd_smooth": 3.0, "ffd_size": 2.0, "scale_prior": 0.02, "scale_bounds": [0.85, 1.7], "w_sil": 2.0, "w_cov": 1.0, "w_depth": 1.0, "hidden_mm": 8.0, "surf_faces": 650, "cells": 18, "start_frame": 120, "iters_first": 300, "iters": 80, "lr": 0.08, "w_arap": 50.0, "w_vol": 20.0, "w_temp": 0.1, "smooth_sigma": 1.0, "arap_uniform": true, "w_barrier": 100.0, "w_anchor": 0.05, "anchor_cos": 0.35, "early_weight": 0.3, "tet_snap": "project"}
+[masks] body area per keyframe [39004, 26361, 34196, 30124, 37299, 36337, 38950, 29341, 29274, 37698, 40873, 48535, 42350, 54103, 51991, 57602, 53312, 55831, 53876, 55324, 58746, 57647, 55519, 54711, 55794, 52793] (2 s)
+[rest] pose search: best losses [3.502, 3.531, 3.555, 3.558, 3.632] (21 s)
+[rest] pose+scale: loss 3.434 parts(out,cov,depth mm) [0.566 0.335 3.476] scale [1.205 1.189 1.705] (44 s)
+[rest] + lattice: loss 3.417 parts [0.561 0.308 3.452] max offset 6.7 mm (57 s)
+[tets] 1495 nodes, 5530 tets, 2204 surface faces, degenerate False
+[rest] {'scale': [1.2020000219345093, 1.2209999561309814, 1.7009999752044678], 'rotvec': [0.7669000029563904, -1.1971999406814575, -2.856300115585327], 't_mm': [-29.09000015258789, 57.150001525878906, 27.979999542236328], 'lattice_max_offset_mm': 6.72, 'fit_parts_mm': {'outside': np.float64(0.561), 'coverage': np.float64(0.308), 'depth': np.float64(3.452)}, 'template_extent_cm': [6.08, 3.41, 2.07], 'rest_extent_cm': [7.18, 4.29, 4.11], 'template_volume_ml': 15.39, 'rest_volume_ml': 39.61, 'rest_vs_scaled_template_mm': {'mean': 1.61, 'max': 7.46}}
+[4d] frame 125: out 0.049 cov 0.118 depth 1.204 arap 0.0137 vol 0.0034 (7 s)
+[4d] frame 150: out 0.014 cov 0.229 depth 1.443 arap 0.0127 vol 0.0028 (29 s)
+[4d] frame 175: out 0.005 cov 0.145 depth 1.170 arap 0.0091 vol 0.0034 (51 s)
+[4d] frame 200: out 0.010 cov 0.210 depth 2.262 arap 0.0154 vol 0.0039 (73 s)
+[4d] frame 225: out 0.010 cov 0.141 depth 1.321 arap 0.0086 vol 0.0033 (97 s)
+[4d] frame 250: out 0.028 cov 0.089 depth 1.289 arap 0.0107 vol 0.0022 (119 s)
+[4d] frame 100: out 0.158 cov 0.058 depth 1.172 arap 0.0237 vol 0.0072 (139 s)
+[4d] frame 75: out 0.633 cov 0.032 depth 0.770 arap 0.0340 vol 0.0086 (163 s)
+[4d] frame 50: out 0.364 cov 0.034 depth 0.908 arap 0.0221 vol 0.0043 (188 s)
+[4d] frame 25: out 0.050 cov 0.085 depth 1.171 arap 0.0222 vol 0.0049 (209 s)
+[4d] frame 0: out 0.056 cov 0.089 depth 1.343 arap 0.0254 vol 0.0047 (231 s)
+[quality] shared_mask: IoU 0.7599 BF 0.2541 depth 1.5422 mm
+[quality] body_neck_mask: IoU 0.7934 BF 0.2817 depth 1.5294 mm
+[quality] temporal {'max_vertex_speed_mm_per_frame': 2.876, 'p99_vertex_speed_mm_per_frame': 0.884, 'mean_vertex_speed_mm_per_frame': 0.152, 'max_vertex_accel_mm_per_frame2': 2.311, 'centroid_path_mm': 23.25, 'centroid_range_mm': [2.940000057220459, 3.6500000953674316, 3.609999895095825]}  volume {'rest_ml': 39.61, 'ratio_min': 0.9198, 'ratio_max': 1.082}  deformation {'min_tet_det': 0.2438, 'inverted_tet_frames': 0, 'max_inverted_tets': 0, 'sampled_frames': 51, 'max_principal_stretch': 1.1223, 'edge_stretch_max': 1.7769, 'edge_stretch_p95_max': 1.1361}
+[v02] done in 364 s

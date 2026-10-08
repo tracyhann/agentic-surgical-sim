@@ -1,0 +1,55 @@
+{
+ "protocol_version": "surg-0.2",
+ "status": "success",
+ "task": {
+  "instruction": "The right instrument grasps the wall of the yellow sleeve on the front-right post, lifts it off, carries it to mid-air above the front of the board and hands it to the left instrument, which carries it to the front-left post and lowers it over that post.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   -0.01545,
+   -0.2275,
+   0.08474
+  ],
+  "lookat": [
+   0.02664,
+   0.20479,
+   0.0
+  ],
+  "fovy_deg": 62.87,
+  "width": 1024,
+  "height": 768
+ },
+ "instrument": {
+  "L_rcm_pos": [
+   -0.15589,
+   -0.08909,
+   0.09438
+  ],
+  "R_rcm_pos": [
+   0.23685,
+   -0.01268,
+   0.13094
+  ]
+ },
+ "roles": {
+  "object": [
+   "sleeve"
+  ],
+  "source": [
+   "post_source"
+  ],
+  "target": [
+   "post_target"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "tcp_pose_2arm"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

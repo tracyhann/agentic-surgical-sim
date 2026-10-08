@@ -1,0 +1,47 @@
+{
+ "protocol_version": "surg-0.1",
+ "status": "success",
+ "task": {
+  "instruction": "Grasp the orange octagonal ring lying around the front-left peg by its wall, lift it off that peg, carry it to the back-right peg, lower it over that peg and release it, then retract the grasper.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   0.0,
+   0.0,
+   0.093
+  ],
+  "lookat": [
+   0.0,
+   0.0814,
+   0.03491
+  ],
+  "fovy_deg": 57.91,
+  "width": 640,
+  "height": 480
+ },
+ "instrument": {
+  "rcm_pos": [
+   -0.08239,
+   0.03541,
+   0.09831
+  ]
+ },
+ "roles": {
+  "object": [
+   "ring"
+  ],
+  "target": [
+   "target_peg"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "joint_targets"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

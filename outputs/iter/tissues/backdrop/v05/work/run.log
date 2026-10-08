@@ -1,0 +1,17 @@
+21:31:04 static fraction 0.518
+21:31:04 canvas 834 492 offset -56.0 -88.0
+21:31:10 fused: known cells 62344 hidden 20323 7s
+21:31:12 gains [1.13 1.1  1.05 1.06 0.97 1.05 1.08 1.03 1.06 0.96 0.94 0.98 0.97]
+21:31:12 texture: seen 0.695 9s
+21:31:12 mesh 9179 verts 17930 faces 9s
+21:31:32 evaluated 251 frames 20s
+21:31:41 pictures 28s
+21:31:41 static fraction 0.464
+21:31:41 canvas 834 492 offset -56.0 -88.0
+21:31:47 fused: known cells 61279 hidden 21388 6s
+21:31:49 gains [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+21:31:49 texture: seen 0.681 9s
+21:31:49 mesh 9179 verts 17930 faces 9s
+21:31:52 HOLDOUT {'coverage': 1.0, 'depth_med_mm': 1.9418, 'depth_bias_mm': -0.0597, 'depth_p90_mm': 7.1492, 'front_violation': 0.1007, 'gb_violation': 0.0, 'photo_l1': 8.3442, 'photo_ncc': 0.9638, 'photo_lncc': 0.7429, 'frame_iou': 0.9998, 'liver_iou': 0.7473, 'liver_bf': 0.2347}
+21:31:52 FULL    {'coverage': 1.0, 'depth_med_mm': 1.9203, 'depth_bias_mm': 0.0155, 'depth_p90_mm': 7.1246, 'front_violation': 0.095, 'gb_violation': 0.0, 'photo_l1': 8.2764, 'photo_ncc': 0.9655, 'photo_lncc': 0.7595, 'frame_iou': 0.9998, 'liver_iou': 0.7458, 'liver_bf': 0.2585}
+21:31:52 SUMMARY v05 {'coverage': 1.0, 'depth_med_mm': 2.5555, 'depth_bias_mm': 0.4794, 'depth_p90_mm': 7.4797, 'front_violation': 0.1033, 'gb_violation': 0.0, 'photo_l1': 8.9932, 'photo_ncc': 0.9591, 'photo_lncc': 0.6982, 'frame_iou': 0.9995, 'liver_iou': 0.7483, 'liver_bf': 0.2526} spread {'median': 3.066, 'p90': 7.005, 'p99': 17.465} {'n_verts': 9179, 'n_faces': 17930, 'watertight': False, 'components': 1, 'min_edge_mm': 0.466, 'degenerate_faces': 0, 'area_cm2': 111.86}

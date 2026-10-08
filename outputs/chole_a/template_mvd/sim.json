@@ -1,0 +1,35 @@
+{
+ "cond": "template_mvd",
+ "params": {
+  "young": 300.0,
+  "poisson": 0.45,
+  "k_back": 0.5,
+  "k_drive": 20.0,
+  "friction": 0.3,
+  "ts": 3.125e-05,
+  "dt": 0.05,
+  "settle": 0.3,
+  "grasp_n": 80,
+  "grasp_r": 0.008,
+  "grasp_ramp": 0.25,
+  "press": 0.0015,
+  "ribbon_k": 8.0,
+  "ribbon_young": 800.0,
+  "vertex_mass": 6e-05
+ },
+ "n_organ_vertices": 1261,
+ "n_tets": 4676,
+ "grasp": {
+  "grasper_left": {
+   "n": 41,
+   "gap_mm": 3.12,
+   "step": 0
+  }
+ },
+ "initial_backoff_mm": {
+  "probe_right": 0.0
+ },
+ "retargeted_steps": 0,
+ "organ_max_disp_mm": 15.3,
+ "organ_p95_disp_mm": 13.87
+}

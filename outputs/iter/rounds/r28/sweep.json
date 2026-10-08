@@ -1,0 +1,113 @@
+{
+ "render=0_mode=recon": {
+  "gb_iou": 0.7881,
+  "gb_rigid_mm": 0.0,
+  "gb_rot_sim": 10.4671,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.0005,
+  "gb_track_motion": -28.1,
+  "gb_free_mexp": 0.987,
+  "gb_free_err": 0.0599,
+  "gb_inverted": 0,
+  "photo": null,
+  "gb_push": [
+   6.47,
+   6.47
+  ],
+  "gb_flow": [
+   11.9842,
+   12.1107,
+   11.9841
+  ],
+  "mem_flow": [
+   11.0482,
+   11.4051,
+   11.0478
+  ],
+  "mem_iou": 0.7882,
+  "mem_rigid_mm": 0.0001,
+  "mem_nonrigid_mm": 0.0005,
+  "mem_stretch": 4.71,
+  "duct_iou": 0.7377,
+  "duct_free_mexp": {
+   "ducts_duct": 0.979,
+   "ducts_strand_1": 0.981,
+   "ducts_strand_2": 0.982,
+   "ducts_strand_3": 0.981
+  }
+ },
+ "render=0_cf_lift_mm=10": {
+  "gb_iou": 0.6508,
+  "gb_rigid_mm": 0.769,
+  "gb_rot_sim": 10.6427,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 0.8831,
+  "gb_track_motion": -34.3,
+  "gb_free_mexp": 0.739,
+  "gb_free_err": 1.2042,
+  "gb_inverted": 92,
+  "photo": null,
+  "gb_push": [
+   5.91,
+   6.47
+  ],
+  "gb_flow": [
+   10.9512,
+   12.2193,
+   11.9841
+  ],
+  "mem_flow": [
+   11.1679,
+   11.6341,
+   11.0478
+  ],
+  "mem_iou": 0.6993,
+  "mem_rigid_mm": 2.259,
+  "mem_nonrigid_mm": 2.821,
+  "mem_stretch": 3.62,
+  "duct_iou": 0.6867,
+  "duct_free_mexp": {
+   "ducts_duct": 0.51,
+   "ducts_strand_1": 0.596,
+   "ducts_strand_2": 0.604,
+   "ducts_strand_3": 0.58
+  }
+ },
+ "render=0_cf_probe_mm=5": {
+  "gb_iou": 0.6268,
+  "gb_rigid_mm": 0.8768,
+  "gb_rot_sim": 10.6594,
+  "gb_rot_rec": 10.4671,
+  "gb_nonrigid_mm": 1.0063,
+  "gb_track_motion": -36.6,
+  "gb_free_mexp": 0.707,
+  "gb_free_err": 1.3513,
+  "gb_inverted": 280,
+  "photo": null,
+  "gb_push": [
+   6.26,
+   6.47
+  ],
+  "gb_flow": [
+   10.5553,
+   12.1591,
+   11.9841
+  ],
+  "mem_flow": [
+   10.9211,
+   11.7792,
+   11.0478
+  ],
+  "mem_iou": 0.6892,
+  "mem_rigid_mm": 2.204,
+  "mem_nonrigid_mm": 2.3996,
+  "mem_stretch": 3.71,
+  "duct_iou": 0.672,
+  "duct_free_mexp": {
+   "ducts_duct": 0.52,
+   "ducts_strand_1": 0.592,
+   "ducts_strand_2": 0.611,
+   "ducts_strand_3": 0.562
+  }
+ }
+}

@@ -1,0 +1,5 @@
+19:20:51 chole_b+vggt_tracks: 197 frames 640x360
+19:20:52 [organ] measured: 356 vertices, 789 tets, 175 anchored, 6 pinned
+19:20:57 [organ] primitive: {'kind': 'primitive', 'template': None, 'scale': [0.814, 0.1, 0.643], 'pose_fit_median_mm': 0.77}
+19:20:59 [organ] primitive: 1133 vertices, 3555 tets, 747 anchored, 0 pinned
+19:20:59 chole_b+vggt_tracks organ: done in 7 s

@@ -1,0 +1,47 @@
+{
+ "protocol_version": "surg-0.1",
+ "status": "success",
+ "task": {
+  "instruction": "The laparoscopic grasper reaches to the blue cylindrical bead on the table, grasps it between its jaws, lifts it, carries it over the cream ring-shaped cup and drops it inside, then retracts; the green bead is a distractor and is not touched.",
+  "source_video": "source/video.mp4"
+ },
+ "model_path": "scene.xml",
+ "camera": {
+  "pos": [
+   0.0,
+   0.0,
+   0.0732
+  ],
+  "lookat": [
+   0.09353,
+   -0.00788,
+   0.0
+  ],
+  "fovy_deg": 65.45,
+  "width": 640,
+  "height": 480
+ },
+ "instrument": {
+  "rcm_pos": [
+   0.0252,
+   -0.066,
+   0.0725
+  ]
+ },
+ "roles": {
+  "object": [
+   "bead"
+  ],
+  "target": [
+   "cup"
+  ]
+ },
+ "actions": {
+  "path": "actions.npy",
+  "dt": 0.05,
+  "format": "joint_targets"
+ },
+ "policy": {
+  "path": "policy.py"
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "mem_contact=0_mem_base=glue": {
+  "gb_iou": 0.6003,
+  "gb_rigid_mm": 1.3335,
+  "gb_rot_sim": 8.0977,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.9022,
+  "gb_track_motion": -33.9,
+  "gb_free_mexp": 0.394,
+  "gb_free_err": 2.384,
+  "gb_push": [
+   5.88,
+   4.95
+  ],
+  "mem_iou": 0.4302,
+  "mem_rigid_mm": 5.9371,
+  "mem_nonrigid_mm": 3.3935,
+  "mem_stretch": 2.06,
+  "duct_iou": 0.3418
+ },
+ "mem_contact=1_mem_base=glue": {
+  "gb_iou": 0.623,
+  "gb_rigid_mm": 1.0644,
+  "gb_rot_sim": 7.8355,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.6426,
+  "gb_track_motion": -27.7,
+  "gb_free_mexp": 0.475,
+  "gb_free_err": 2.0685,
+  "gb_push": [
+   5.28,
+   4.95
+  ],
+  "mem_iou": 0.4418,
+  "mem_rigid_mm": 5.4204,
+  "mem_nonrigid_mm": 3.4018,
+  "mem_stretch": 1.74,
+  "duct_iou": 0.3485
+ },
+ "mem_contact=0_mem_base=recon": {
+  "gb_iou": 0.6026,
+  "gb_rigid_mm": 1.3716,
+  "gb_rot_sim": 8.3562,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.7873,
+  "gb_track_motion": -26.0,
+  "gb_free_mexp": 0.423,
+  "gb_free_err": 2.272,
+  "gb_push": [
+   6.64,
+   4.95
+  ],
+  "mem_iou": 0.6395,
+  "mem_rigid_mm": 2.5954,
+  "mem_nonrigid_mm": 2.5684,
+  "mem_stretch": 3.59,
+  "duct_iou": 0.3645
+ },
+ "mem_contact=1_mem_base=recon": {
+  "gb_iou": 0.618,
+  "gb_rigid_mm": 1.287,
+  "gb_rot_sim": 8.639,
+  "gb_rot_rec": 8.4459,
+  "gb_nonrigid_mm": 1.7125,
+  "gb_track_motion": -30.1,
+  "gb_free_mexp": 0.434,
+  "gb_free_err": 2.228,
+  "gb_push": [
+   5.72,
+   4.95
+  ],
+  "mem_iou": 0.649,
+  "mem_rigid_mm": 2.5323,
+  "mem_nonrigid_mm": 2.5565,
+  "mem_stretch": 3.61,
+  "duct_iou": 0.3471
+ }
+}

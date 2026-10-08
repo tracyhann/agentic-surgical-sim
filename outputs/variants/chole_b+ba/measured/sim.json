@@ -1,0 +1,29 @@
+{
+ "cond": "measured",
+ "params": {
+  "young": 300.0,
+  "poisson": 0.45,
+  "k_back": 0.5,
+  "k_drive": 20.0,
+  "friction": 0.3,
+  "ts": 3.125e-05,
+  "dt": 0.05,
+  "settle": 0.3,
+  "grasp_n": 80,
+  "grasp_r": 0.008,
+  "grasp_ramp": 0.25,
+  "press": 0.0015,
+  "ribbon_k": 8.0,
+  "ribbon_young": 800.0,
+  "vertex_mass": 6e-05
+ },
+ "n_organ_vertices": 352,
+ "n_tets": 783,
+ "grasp": {},
+ "initial_backoff_mm": {
+  "dissector": 6.0
+ },
+ "retargeted_steps": 3,
+ "organ_max_disp_mm": 21.26,
+ "organ_p95_disp_mm": 18.54
+}

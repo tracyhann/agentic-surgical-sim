@@ -1,0 +1,37 @@
+# environment, weights and third-party code (see README / third_party/README.md for how to get them)
+.venv/
+models/
+third_party/vggt/
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+MUJOCO_LOG.TXT
+_skipped.*
+
+# source datasets with their own licences: only the SOURCE.md notes are kept (the Commons video is CC BY 2.0)
+data/videos/endonerf/*
+!data/videos/endonerf/SOURCE.md
+data/videos/rosma/*
+!data/videos/rosma/SOURCE.md
+data/videos/commons_chole/*.ogv
+
+# large, regenerable artefacts of runs (code + configs regenerate them)
+outputs/**/*.npz
+outputs/**/*.npy
+outputs/**/*.mp4
+outputs/**/*.png
+outputs/**/*.xml
+outputs/**/*.obj
+outputs/**/*.stl
+outputs/**/*.mtl
+outputs/**/textures/
+outputs/endonerf_pulling/
+archive/**/*.npz
+archive/**/*.npy
+archive/**/*.mp4
+archive/**/*.png
+archive/**/*.xml
+archive/**/*.obj
+archive/**/*.stl
+archive/**/*.mtl

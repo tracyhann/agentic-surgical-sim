@@ -1,0 +1,175 @@
+{
+ "instance": "peg_transfer",
+ "package": "/Users/grandpa/Library/Application Support/Claude/scratch-workspaces/cc30f31e-0ba5-4379-a8f3-4a4caa4b7961/1570049f-c945-4d03-a7de-099196ec2136/scratch-2026-10-06-7b28fd/surg_v2w/runs/peg_transfer/out",
+ "n": 20,
+ "success_rate": 1.0,
+ "by_mm": {
+  "2": 1.0,
+  "4": 1.0,
+  "6": 1.0,
+  "8": 1.0,
+  "10": 1.0
+ },
+ "rows": [
+  {
+   "layout": "target_right_2mm",
+   "mover": "target",
+   "direction": "right",
+   "mm": 2,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_right_4mm",
+   "mover": "target",
+   "direction": "right",
+   "mm": 4,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_right_6mm",
+   "mover": "target",
+   "direction": "right",
+   "mm": 6,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_right_8mm",
+   "mover": "target",
+   "direction": "right",
+   "mm": 8,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_right_10mm",
+   "mover": "target",
+   "direction": "right",
+   "mm": 10,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_left_2mm",
+   "mover": "target",
+   "direction": "left",
+   "mm": 2,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_left_4mm",
+   "mover": "target",
+   "direction": "left",
+   "mm": 4,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_left_6mm",
+   "mover": "target",
+   "direction": "left",
+   "mm": 6,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_left_8mm",
+   "mover": "target",
+   "direction": "left",
+   "mm": 8,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_left_10mm",
+   "mover": "target",
+   "direction": "left",
+   "mm": 10,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_far_2mm",
+   "mover": "target",
+   "direction": "far",
+   "mm": 2,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_far_4mm",
+   "mover": "target",
+   "direction": "far",
+   "mm": 4,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_far_6mm",
+   "mover": "target",
+   "direction": "far",
+   "mm": 6,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_far_8mm",
+   "mover": "target",
+   "direction": "far",
+   "mm": 8,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_far_10mm",
+   "mover": "target",
+   "direction": "far",
+   "mm": 10,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_near_2mm",
+   "mover": "target",
+   "direction": "near",
+   "mm": 2,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_near_4mm",
+   "mover": "target",
+   "direction": "near",
+   "mm": 4,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_near_6mm",
+   "mover": "target",
+   "direction": "near",
+   "mm": 6,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_near_8mm",
+   "mover": "target",
+   "direction": "near",
+   "mm": 8,
+   "success": true,
+   "error": null
+  },
+  {
+   "layout": "target_near_10mm",
+   "mover": "target",
+   "direction": "near",
+   "mm": 10,
+   "success": true,
+   "error": null
+  }
+ ]
+}

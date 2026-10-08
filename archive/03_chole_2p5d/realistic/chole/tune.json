@@ -1,0 +1,123 @@
+[
+ {
+  "k_gb": 0.003,
+  "k_fold": 8.0,
+  "young": 1500.0,
+  "friction": 0.5,
+  "score": 19.59,
+  "gb": 23.24,
+  "fold": 13.06,
+  "gb_disp": 55.3,
+  "max_mm": 40.81
+ },
+ {
+  "k_gb": 0.01,
+  "k_fold": 4.0,
+  "young": 1500.0,
+  "friction": 0.5,
+  "score": 20.0,
+  "gb": 23.88,
+  "fold": 13.06,
+  "gb_disp": 58.2,
+  "max_mm": 44.18
+ },
+ {
+  "k_gb": 0.01,
+  "k_fold": 8.0,
+  "young": 1500.0,
+  "friction": 0.5,
+  "score": 20.02,
+  "gb": 23.9,
+  "fold": 13.06,
+  "gb_disp": 55.1,
+  "max_mm": 40.48
+ },
+ {
+  "k_gb": 0.01,
+  "k_fold": 4.0,
+  "young": 800.0,
+  "friction": 0.5,
+  "score": 20.18,
+  "gb": 24.16,
+  "fold": 13.06,
+  "gb_disp": 59.5,
+  "max_mm": 45.98
+ },
+ {
+  "k_gb": 0.01,
+  "k_fold": 8.0,
+  "young": 800.0,
+  "friction": 0.5,
+  "score": 20.2,
+  "gb": 24.18,
+  "fold": 13.06,
+  "gb_disp": 56.9,
+  "max_mm": 42.39
+ },
+ {
+  "k_gb": 0.04,
+  "k_fold": 4.0,
+  "young": 800.0,
+  "friction": 0.5,
+  "score": 20.34,
+  "gb": 24.4,
+  "fold": 13.06,
+  "gb_disp": 56.6,
+  "max_mm": 45.62
+ },
+ {
+  "k_gb": 0.003,
+  "k_fold": 4.0,
+  "young": 800.0,
+  "friction": 0.5,
+  "score": 20.36,
+  "gb": 24.43,
+  "fold": 13.06,
+  "gb_disp": 60.3,
+  "max_mm": 46.17
+ },
+ {
+  "k_gb": 0.003,
+  "k_fold": 8.0,
+  "young": 800.0,
+  "friction": 0.5,
+  "score": 20.37,
+  "gb": 24.45,
+  "fold": 13.06,
+  "gb_disp": 56.9,
+  "max_mm": 42.59
+ },
+ {
+  "k_gb": 0.04,
+  "k_fold": 4.0,
+  "young": 1500.0,
+  "friction": 0.5,
+  "score": 20.4,
+  "gb": 24.5,
+  "fold": 13.06,
+  "gb_disp": 55.0,
+  "max_mm": 43.33
+ },
+ {
+  "k_gb": 0.04,
+  "k_fold": 8.0,
+  "young": 800.0,
+  "friction": 0.5,
+  "score": 20.4,
+  "gb": 24.5,
+  "fold": 13.06,
+  "gb_disp": 53.3,
+  "max_mm": 41.97
+ },
+ {
+  "k_gb": 0.04,
+  "k_fold": 8.0,
+  "young": 1500.0,
+  "friction": 0.5,
+  "score": 20.42,
+  "gb": 24.53,
+  "fold": 13.06,
+  "gb_disp": 54.1,
+  "max_mm": 39.96
+ }
+]

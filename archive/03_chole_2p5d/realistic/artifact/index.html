@@ -1,0 +1,247 @@
+<title>胆囊手术 Real2Sim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87,500;87,650&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #F3F5F5; --surface: #FFFFFF; --ink: #172022; --muted: #5B686B; --rule: #D6DDDE;
+    --accent: #A8394E; --steel: #2E6A6E; --c-static: #9AA8AA; --c-frozen: #4F8E92; --c-full: #A8394E;
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1415; --surface: #161E20; --ink: #E4EBEB; --muted: #93A3A5; --rule: #2A3537;
+      --accent: #E06A80; --steel: #7DB7BA; --c-static: #5B6B6F; --c-frozen: #6FA9AC; --c-full: #E06A80;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1415; --surface: #161E20; --ink: #E4EBEB; --muted: #93A3A5; --rule: #2A3537;
+    --accent: #E06A80; --steel: #7DB7BA; --c-static: #5B6B6F; --c-frozen: #6FA9AC; --c-full: #E06A80;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 15.5px/1.65 var(--body); margin: 0; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 72px; display: grid; gap: 44px; }
+  header { display: grid; gap: 14px; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--steel); }
+  h1 { font: 650 clamp(30px, 5vw, 46px)/1.1 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+  h2 { font: 650 24px/1.25 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; }
+  h3 { font: 600 15px/1.4 var(--body); margin: 0; }
+  p { margin: 0; max-width: 68ch; }
+  .lead { font-size: 17px; color: var(--ink); }
+  .muted { color: var(--muted); }
+  section { display: grid; gap: 16px; }
+  .sec-head { display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 22px; }
+  figure { margin: 0; display: grid; gap: 8px; }
+  video, figure img { width: 100%; max-width: 100%; display: block; background: #000; border-radius: 4px; }
+  figcaption { font-size: 13.5px; color: var(--muted); max-width: 80ch; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .stat { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+  .stat .k { font: 500 12px/1.3 var(--mono); color: var(--muted); letter-spacing: .03em; }
+  .stat .v { font: 500 22px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+  .stat .v small { font-size: 13px; color: var(--muted); }
+  .stat .d { font-size: 13px; color: var(--muted); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  ul.plain { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 72ch; }
+  ul.plain li::marker { color: var(--steel); }
+  .tag { display: inline-block; font: 500 11.5px/1 var(--mono); padding: 4px 7px; border-radius: 3px; border: 1px solid var(--rule); color: var(--muted); vertical-align: 2px; white-space: nowrap; }
+  .tag.sim { border-color: var(--steel); color: var(--steel); }
+  .tag.vid { border-color: var(--accent); color: var(--accent); }
+  .tag.meas { border-color: var(--ink); color: var(--ink); }
+  .ledger { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font: 500 12px/1.3 var(--mono); color: var(--muted); letter-spacing: .03em; }
+  tr:last-child td { border-bottom: 0; }
+  .chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 16px 10px; overflow-x: auto; display: grid; gap: 4px; }
+  .chart h3 { font: 500 12.5px/1.3 var(--mono); color: var(--muted); letter-spacing: .03em; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); }
+  .legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: 3px; }
+  svg text { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .verdict { background: var(--surface); border-left: 3px solid var(--accent); padding: 14px 18px; border-radius: 0 6px 6px 0; display: grid; gap: 6px; }
+  footer { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 4px; }
+  a { color: var(--steel); }
+  :focus-visible { outline: 2px solid var(--steel); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">medical-agentic-sim · real2sim · 2026-10-07</div>
+    <h1>胆囊手术 Real2Sim</h1>
+    <p class="lead">一段 6 秒的真实腹腔镜胆囊切除视频，重建成可以换角度看的 MuJoCo 三维物理场景。深度逐帧测量，用器械杆的已知直径换算成毫米；器官和器械逐帧分割。胆囊是有厚度的四面体体积，抓钳的钳口夹在胆囊颈里，拉动时颈部被拉成锥形。</p>
+    <p class="muted">源视频：胆囊扭转病例报告附带视频 26–32 秒（Wikimedia Commons，CC BY 2.0，Boer, Boerma, de Vries Reilingh），640×360，25 fps。</p>
+  </header>
+
+  <section>
+    <figure>
+      <video src="views3d.mp4" autoplay muted loop playsinline controls></video>
+      <figcaption>左上：真实视频。右上：仿真，从同一个内镜视角看。下排：同一个仿真，绕胆囊转 35° 和 70° 看。上一版在这两个角度会露出纸片一样的浮雕，这一版是一个连贯的三维场景。</figcaption>
+    </figure>
+    <div class="stats">
+      <div class="stat"><span class="k">胆囊表面深度误差</span><span class="v">4.4 <small>mm</small></span><span class="d">组织冻住 5.2 · 只放第 0 帧 5.1（逐帧，与测得深度比）</span></div>
+      <div class="stat"><span class="k">胆囊轮廓 IoU（可见部分）</span><span class="v">0.760</span><span class="d">组织冻住 0.760 · 只放第 0 帧 0.754</span></div>
+      <div class="stat"><span class="k">器械穿刺点拟合</span><span class="v">1.0° / 1.1°</span><span class="d">三维器械轴投影回画面，与分割出的器械轴的平均夹角（抓钳 / 直器械）</span></div>
+      <div class="stat"><span class="k">深度尺度自检</span><span class="v">4.4 <small>mm</small></span><span class="d">只用抓钳标定尺度时，量出直器械直径 4.4 mm（名义 5 mm）</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>上一版和这一版</h2>
+      <p class="muted">同一时刻（t = 3 s），同样的三个视角。上一版的深度是手工设计的起伏，换个角度就散架；这一版的几何来自测量。</p>
+    </div>
+    <figure>
+      <img src="versions.jpg" alt="上一版与这一版在内镜视角、绕转 35° 和 70° 下的对比" width="1920" height="720">
+      <figcaption>上排：上一版（手工深度先验，2.5D）。下排：这一版（逐帧测量深度 + SAM 2 分割）。上一版从侧面看，条带是悬空的大片，组织边缘拉成长条；这一版胆囊、颈部和抓钳的前后关系一致，直器械从条带下面伸进去。</figcaption>
+    </figure>
+    <ul class="plain">
+      <li><b>深度</b>：Depth Anything V2 Small 逐帧估相对深度，再用两把器械杆的宽度（直径 5 mm）换算成米。全片共用一个斜率，每帧一个平滑偏移。</li>
+      <li><b>分割</b>：SAM 2.1 tiny，在第 0 帧给胆囊、抓钳、直器械、紫色条带、肝脏、右侧器官各点一下，然后传播到全部 151 帧。</li>
+      <li><b>胆囊</b>：从分割轮廓估计厚度，挤出成四面体体积。第 0 帧被直器械和条带挡住的部分（+15%）也建进去，形状取自后面露出来的帧。</li>
+      <li><b>抓钳</b>：钳口埋在组织里看不见，所以让它跟随它夹住的胆囊颈顶点（测得的深度再往里 4 mm），颈部用抓取约束连在钳口上。</li>
+      <li><b>直器械</b>：穿刺点用分割出的器械轴拟合，并要求杆大致平行于画面（画面里杆宽几乎不变）。</li>
+      <li><b>胆囊整体位移</b>：真实视频里整个胆囊（包括画面外的部分）相对肝脏移动了最多约 8 mm，推动它的力在视野外。这部分像镜头运动一样从视频里测出来（光流，去掉镜头转动，避开抓钳附近），驱动胆囊背面的附着点；颈部的牵拉形变仍由物理算出。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>哪些是仿真出来的，哪些取自视频</h2>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>部分</th><th>来源</th><th>做法</th></tr></thead>
+        <tbody>
+          <tr><td>组织外观</td><td><span class="tag vid">视频</span></td><td>第 0 帧投影成纹理；被器械或条带挡住的地方，用它最早露出来的几帧填补</td></tr>
+          <tr><td>镜头运动</td><td><span class="tag vid">视频</span></td><td>每帧的转动 + 变焦，用肝脏和右侧器官上的跟踪点拟合；肝脏上的残差 1–5 px</td></tr>
+          <tr><td>几何与深度</td><td><span class="tag meas">测量</span></td><td>单目深度网络 + 器械杆宽度标定；背景网格在器械和胆囊后面插值补齐</td></tr>
+          <tr><td>器械运动</td><td><span class="tag vid">视频</span></td><td>分割掩膜的主轴和末端 + 末端深度 → 三维尖端，拟合穿刺点后用逆运动学驱动</td></tr>
+          <tr><td>胆囊整体位移</td><td><span class="tag vid">视频</span></td><td>每帧一个平移（最大约 9 mm），驱动胆囊背面的附着点</td></tr>
+          <tr><td>胆囊形变</td><td><span class="tag sim">仿真</span></td><td>500 个表面点挤出成 2703 个四面体，杨氏模量 300 Pa；颈部被抓钳拉动、被直器械顶开的形变由仿真算出</td></tr>
+          <tr><td>紫色条带</td><td><span class="tag sim">仿真</span></td><td>按分割掩膜做的带纹理薄片，放在它自己测得的深度；远端固定，近端连在胆囊上</td></tr>
+          <tr><td>肝脏等背景器官</td><td><span class="tag">静态</span></td><td>测得深度的贴图网格，不参与形变</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>三维误差随时间</h2>
+      <p class="muted">每 5 帧比较一次：仿真里的胆囊表面用那一帧的内镜相机投影，和测得的深度、SAM 的胆囊掩膜比较。被器械和条带挡住的像素不计。</p>
+    </div>
+    <div class="chart">
+      <h3>胆囊表面深度误差（mm，越低越好）</h3>
+      <div class="legend">
+        <span><i style="background: var(--c-static)"></i>只放第 0 帧</span>
+        <span><i style="background: var(--c-frozen)"></i>仿真，组织冻住</span>
+        <span><i style="background: var(--c-full)"></i>仿真，完整</span>
+      </div>
+      <svg id="depth" viewBox="0 0 720 260" width="100%" role="img" aria-label="胆囊深度误差随时间变化"></svg>
+    </div>
+    <div class="chart">
+      <h3>胆囊轮廓 IoU（越高越好）</h3>
+      <svg id="iou" viewBox="0 0 720 260" width="100%" role="img" aria-label="胆囊轮廓 IoU 随时间变化"></svg>
+    </div>
+    <div class="verdict">
+      <h3>结论</h3>
+      <p>完整仿真把胆囊表面的深度误差从 5.2 mm（组织冻住）降到 4.4 mm，1–2 秒和 3–6 秒都更低。轮廓 IoU 和冻住的版本持平（都是 0.760）：前 1 秒更好，1.2–2 秒更差。两个指标在同一段时间里此消彼长，说明测出来的整体位移只有平移、不含深度变化，和真实运动只对上了一部分。最后 0.3 秒三条曲线一起升到 13–16 mm，三种情况都一样，问题出在这几帧的测量深度，不在仿真。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>在视频里没发生过的操作</h2>
+      <p class="muted">重建的用途：同一个场景、同一个镜头，换一种操作也能渲染出来，可以当作训练数据。</p>
+    </div>
+    <figure>
+      <video src="variants3d.mp4" poster="variants3d_poster.jpg" muted loop playsinline controls></video>
+      <figcaption>左：按视频重现。中：抓钳牵拉幅度加倍。右：直器械离开原路线，压胆囊体约 6 mm 再抬起。按压处的胆囊表面比重现版多下陷约 7 mm（中位数）；加倍牵拉时，颈部多移动约 8 mm。两种操作都直接在三维场景里算，镜头运动沿用原视频。</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>之前的盲测</h2>
+      <p class="muted">在做这版重建之前，先让独立的 Claude Code 会话（Opus 5.5）只看视频、自己写代码搭场景。</p>
+    </div>
+    <div class="two">
+      <figure>
+        <video src="sim2sim_peg.mp4" poster="sim2sim_peg_poster.jpg" muted loop playsinline controls></video>
+        <figcaption><b>Sim2sim 套圈</b>：源视频由我们自己的仿真渲染。两个任务都成功，扰动布局 60/60 成功；但套圈场景整体估大了约 15%，任务成功不代表几何准确。</figcaption>
+      </figure>
+      <figure>
+        <video src="rosma_overlay.mp4" poster="rosma_overlay_poster.jpg" muted loop playsinline controls></video>
+        <figcaption><b>ROSMA 真机交接</b>（dVRK，CC BY 4.0）：任务成功，套筒轨迹误差 18 px（静止 270 px）；器械尖端三维形状误差 10.6 / 9.5 mm，静止基线 14.4 / 17.6 mm。</figcaption>
+      </figure>
+    </div>
+    <p class="muted">同一段胆囊视频交给盲测 agent，它 4.8 分钟就交卷：器械轨迹贴合（9 px），但组织是一个球加几根管子。这一版是在同一会话里反复迭代做出来的，不是盲测。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>局限</h2></div>
+    <ul class="plain">
+      <li>深度来自单目网络，只用器械杆宽度做了两参数标定，没有真值。最后 0.3 秒误差升到 11–15 mm，完整仿真和冻住的版本都一样，更像是那几帧的深度标定偏了。</li>
+      <li>胆囊整体位移取自视频。早期一段位移里混有直器械推压的效果，仿真里直器械还会再推一次，有少量重复计算。</li>
+      <li>真实视频里抓钳把颈部拉成细长条贴着抓钳杆，仿真只复现了一部分；颈部网格分辨率（10 px）不够细。</li>
+      <li>材料参数（杨氏模量 300 Pa、附着弹簧 0.5 N/m）是按轮廓和深度误差在几组设置里挑的；1500 Pa 更硬的组织反而略差（深度误差 4.3 mm）。没有组织力学上的校验。</li>
+      <li>镜头转动时，画面边缘外露出的是镜像填充的纹理，底边能看到一条倒影似的条带；胆囊移开后露出的组织床是插值补的，偏模糊。</li>
+      <li>肝脏和其他器官不形变；只有一段 6 秒视频。显式积分步长 0.125 ms，一次 6 秒仿真约 2 分钟。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>下一步</h2></div>
+    <ul class="plain">
+      <li>用立体内镜或带深度真值的数据集（如 SCARED）检验深度标定，替换单目估计。</li>
+      <li>颈部局部加密网格，并把抓钳附近的分割泄漏（SAM 把抓钳杆算进胆囊）清理掉，再拟合颈部被拉长的程度。</li>
+      <li>用这套场景批量生成扰动后的视频，训练一个小的动作条件 world model，和只用真实视频训练的版本比较。</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>代码在 medical-agentic-sim/real3d：segment.py（SAM 2 分割）、metric_depth.py（深度标定）、recon3d.py（建图）、eval3d.py（三维评测）、views.py（多视角渲染）；仿真在 realistic/chole_sim.py。</span>
+    <span>"组织冻住"：同样的镜头和器械，所有组织顶点固定。"只放第 0 帧"：整段都用第 0 帧的组织形状。</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var T = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0];
+  var series = {
+    depth: { full: [0.22, 2.04, 1.03, 5.69, 4.56, 1.17, 1.76, 2.21, 2.46, 6.04, 6.07, 3.16, 2.11, 4.71, 1.83, 5.31, 2.37, 2.25, 4.05, 3.73, 2.72, 3.62, 3.29, 2.82, 6.34, 5.24, 6.92, 6.78, 7.63, 11.61, 15.47], frozen: [0.15, 2.41, 3.06, 2.98, 2.75, 3.2, 3.26, 4.52, 4.67, 7.2, 6.6, 3.02, 2.1, 3.98, 1.89, 4.33, 4.81, 3.09, 6.86, 1.94, 1.2, 3.77, 4.67, 4.95, 7.78, 7.43, 8.07, 8.82, 9.63, 14.35, 16.71], stat: [0.22, 2.21, 2.99, 2.99, 2.8, 3.08, 3.2, 4.48, 4.62, 7.1, 6.45, 2.93, 2.34, 4.24, 2.06, 4.53, 4.69, 2.8, 6.55, 1.75, 1.04, 3.68, 4.49, 4.77, 7.6, 7.29, 7.88, 8.63, 9.46, 14.07, 16.75], max: 16, ticks: [0, 4, 8, 12, 16], unit: ' mm' },
+    iou: { full: [0.919, 0.817, 0.77, 0.784, 0.795, 0.874, 0.83, 0.796, 0.776, 0.733, 0.694, 0.741, 0.776, 0.77, 0.753, 0.766, 0.746, 0.716, 0.695, 0.727, 0.779, 0.702, 0.733, 0.738, 0.758, 0.753, 0.762, 0.736, 0.729, 0.659, 0.741], frozen: [0.916, 0.728, 0.661, 0.7, 0.702, 0.829, 0.854, 0.869, 0.837, 0.819, 0.774, 0.778, 0.769, 0.746, 0.744, 0.744, 0.724, 0.705, 0.707, 0.718, 0.772, 0.729, 0.759, 0.77, 0.714, 0.77, 0.789, 0.696, 0.765, 0.673, 0.786], stat: [0.919, 0.738, 0.67, 0.708, 0.713, 0.836, 0.856, 0.871, 0.837, 0.813, 0.763, 0.769, 0.759, 0.735, 0.733, 0.733, 0.712, 0.693, 0.701, 0.718, 0.764, 0.723, 0.748, 0.76, 0.704, 0.758, 0.777, 0.686, 0.754, 0.663, 0.773], max: 1, min: 0.5, ticks: [0.5, 0.6, 0.7, 0.8, 0.9, 1.0], unit: '' }
+  };
+  var ns = 'http://www.w3.org/2000/svg';
+  function draw(id) {
+    var s = series[id], svg = document.getElementById(id);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var css = getComputedStyle(document.documentElement);
+    var col = function (v) { return css.getPropertyValue(v).trim(); };
+    var x0 = 52, x1 = 706, y0 = 14, y1 = 222, lo = s.min || 0, tmax = 6;
+    var sx = function (t) { return x0 + (x1 - x0) * t / tmax; };
+    var sy = function (v) { return y1 - (y1 - y0) * (Math.min(Math.max(v, lo), s.max) - lo) / (s.max - lo); };
+    function el(tag, a, text) { var e = document.createElementNS(ns, tag); for (var k in a) e.setAttribute(k, a[k]); if (text != null) e.textContent = text; svg.appendChild(e); return e; }
+    s.ticks.forEach(function (v) {
+      el('line', { x1: x0, x2: x1, y1: sy(v), y2: sy(v), stroke: col('--rule'), 'stroke-width': 1 });
+      el('text', { x: x0 - 8, y: sy(v) + 4, 'text-anchor': 'end', 'font-size': 11, fill: col('--muted') }, (id === 'iou' ? v.toFixed(1) : v));
+    });
+    [0, 1, 2, 3, 4, 5, 6].forEach(function (t) {
+      el('text', { x: sx(t), y: y1 + 18, 'text-anchor': 'middle', 'font-size': 11, fill: col('--muted') }, t + ' s');
+    });
+    [['stat', '--c-static', 1.6], ['frozen', '--c-frozen', 1.8], ['full', '--c-full', 2.4]].forEach(function (p) {
+      var d = '';
+      s[p[0]].forEach(function (v, i) { if (v == null) return; d += (d ? ' L' : 'M') + sx(T[i]).toFixed(1) + ' ' + sy(v).toFixed(1); });
+      el('path', { d: d, fill: 'none', stroke: col(p[1]), 'stroke-width': p[2], 'stroke-linejoin': 'round' });
+    });
+  }
+  function all() { draw('depth'); draw('iou'); }
+  all();
+  if (window.matchMedia) { var mq = window.matchMedia('(prefers-color-scheme: dark)'); if (mq.addEventListener) mq.addEventListener('change', all); }
+  new MutationObserver(all).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>

@@ -1,0 +1,10 @@
+18:50:31 endonerf_pulling: 63 frames 640x512
+18:50:31 [scene] camera: max rotation 0.0 deg, zoom 1.000-1.000, median fit 0.0 px
+/Users/grandpa/phai/medical-agentic-sim/r2s/scene.py:119: RuntimeWarning: All-NaN slice encountered
+  d = np.nanmedian(zz, axis=0)
+18:50:41 [scene] canvas margin 96 px; never seen 46.4 % of canvas
+18:57:19 [scene] grasper_left: port near_tips (width ratio 1.40), axis error 10.17 deg, visible 97 % of frames
+18:57:19 [scene] tool_right: port near_scope (width ratio 1.47), axis error 1.43 deg, visible 100 % of frames
+18:57:19 [scene] organ bed motion: max 0.0 px, 0.0 mm (3D)
+18:57:19 [scene] {'canvas_margin': 96, 'organ_amodal_added_px': 302, 'organ_depth_cm': [7.8, 9.1], 'bed_motion_max_px': 0.0}
+18:57:19 endonerf_pulling scene: done in 409 s

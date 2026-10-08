@@ -1,0 +1,180 @@
+{
+ "gallbladder": {
+  "version": "v10",
+  "sim_iou": {
+   "mean": 0.6195,
+   "median": 0.6631,
+   "p10": 0.4559,
+   "min": 0.2895,
+   "max": 0.7476,
+   "n": 26
+  },
+  "sim_boundary_f": {
+   "mean": 0.1992,
+   "median": 0.2025,
+   "p10": 0.14,
+   "min": 0.1219,
+   "max": 0.2946,
+   "n": 26
+  },
+  "sim_depth_mm": {
+   "mean": 3.98,
+   "median": 3.4851,
+   "p10": 2.2246,
+   "min": 1.8584,
+   "max": 7.8317,
+   "n": 26
+  },
+  "recon_iou": {
+   "mean": 0.7843,
+   "median": 0.7991,
+   "p10": 0.7088,
+   "min": 0.6901,
+   "max": 0.8619,
+   "n": 26
+  },
+  "static_iou": {
+   "mean": 0.5496,
+   "median": 0.6464,
+   "p10": 0.3,
+   "min": 0.1371,
+   "max": 0.7477,
+   "n": 26
+  },
+  "flow_epe_px": {
+   "mean": 12.1005,
+   "median": 9.5057,
+   "p10": 4.5601,
+   "min": 2.8614,
+   "max": 36.7741,
+   "n": 50
+  },
+  "flow_epe_static_px": {
+   "mean": 12.9673,
+   "median": 9.6092,
+   "p10": 3.6834,
+   "min": 1.8115,
+   "max": 38.7205,
+   "n": 50
+  },
+  "flow_explained": 0.067,
+  "flow_epe_recon_px": {
+   "mean": 12.9384,
+   "median": 11.6795,
+   "p10": 5.3412,
+   "min": 3.0768,
+   "max": 31.4939,
+   "n": 50
+  },
+  "err_vs_recon_mm": {
+   "mean": 1.663,
+   "median": 1.5433,
+   "p10": 1.1897,
+   "min": 0.942,
+   "max": 2.7573,
+   "n": 251
+  },
+  "err_static_vs_recon_mm": {
+   "mean": 3.4944,
+   "median": 3.7004,
+   "p10": 1.9908,
+   "min": 1.5046,
+   "max": 5.1163,
+   "n": 251
+  },
+  "motion_explained": 0.524,
+  "split": {
+   "rigid_err": {
+    "mean": 1.1939,
+    "median": 1.0501,
+    "p10": 0.5328,
+    "min": 0.4074,
+    "max": 2.3309,
+    "n": 26
+   },
+   "rot_sim": {
+    "mean": 8.6192,
+    "median": 8.9186,
+    "p10": 5.8814,
+    "min": 3.0471,
+    "max": 11.7531,
+    "n": 26
+   },
+   "rot_rec": {
+    "mean": 8.4459,
+    "median": 8.438,
+    "p10": 3.6233,
+    "min": 2.0123,
+    "max": 11.665,
+    "n": 26
+   },
+   "nonrigid_err": {
+    "mean": 1.6299,
+    "median": 1.6668,
+    "p10": 1.2624,
+    "min": 0.9937,
+    "max": 2.3695,
+    "n": 26
+   },
+   "deform_sim": {
+    "mean": 1.3311,
+    "median": 1.2498,
+    "p10": 1.0072,
+    "min": 0.882,
+    "max": 2.1178,
+    "n": 26
+   },
+   "deform_rec": {
+    "mean": 1.9964,
+    "median": 1.9157,
+    "p10": 1.4183,
+    "min": 1.2975,
+    "max": 3.0082,
+    "n": 26
+   }
+  },
+  "free_err_vs_recon_mm": {
+   "mean": 2.1261,
+   "median": 1.9757,
+   "p10": 1.521,
+   "min": 1.2046,
+   "max": 3.5313,
+   "n": 251
+  },
+  "free_motion_explained": 0.46,
+  "stretch_max": 1.6,
+  "stretch_p95_max": 1.19,
+  "track_px": 10.06,
+  "track_px_static": 11.16,
+  "track_motion": {
+   "sim_px": 20.66,
+   "static_px": 27.3,
+   "change_pct": -24.3,
+   "seeds": [
+    0,
+    50
+   ]
+  },
+  "track_samples": 3740,
+  "probe_push": {
+   "frames": 228,
+   "sim_mm": 4.61,
+   "recon_mm": 4.95,
+   "abs_err_mm": 1.39
+  }
+ },
+ "membrane": {
+  "version": "v06",
+  "sim_iou": {
+   "mean": 0.6514,
+   "median": 0.6795,
+   "p10": 0.4592,
+   "min": 0.2688,
+   "max": 0.8137,
+   "n": 26
+  },
+  "sim_boundary_f": {
+   "mean": 0.3303,
+   "median": 0.2944,
+   "p10": 0.2039
+[scene4d] r11/render=0_probe_depth_mm=4 done in 382 s
