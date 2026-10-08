@@ -1,0 +1,585 @@
+{
+ "clip": "chole_a",
+ "objects": {
+  "gallbladder": {
+   "confidence": "high",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       120,
+       290
+      ],
+      [
+       200,
+       215
+      ],
+      [
+       270,
+       310
+      ]
+     ],
+     "neg": [
+      [
+       50,
+       200
+      ],
+      [
+       300,
+       172
+      ],
+      [
+       400,
+       290
+      ]
+     ]
+    },
+    {
+     "frame": 83,
+     "pos": [
+      [
+       150,
+       260
+      ],
+      [
+       280,
+       315
+      ],
+      [
+       210,
+       225
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       200
+      ],
+      [
+       330,
+       255
+      ],
+      [
+       410,
+       285
+      ]
+     ]
+    },
+    {
+     "frame": 125,
+     "pos": [
+      [
+       160,
+       290
+      ],
+      [
+       320,
+       260
+      ],
+      [
+       230,
+       210
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       200
+      ],
+      [
+       340,
+       160
+      ],
+      [
+       430,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 166,
+     "pos": [
+      [
+       150,
+       270
+      ],
+      [
+       300,
+       250
+      ],
+      [
+       250,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       200
+      ],
+      [
+       390,
+       165
+      ],
+      [
+       420,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 208,
+     "pos": [
+      [
+       190,
+       290
+      ],
+      [
+       290,
+       200
+      ],
+      [
+       305,
+       295
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       200
+      ],
+      [
+       400,
+       178
+      ],
+      [
+       440,
+       260
+      ]
+     ]
+    }
+   ],
+   "notes": "Olive-brown, wrinkled, partly deflated sac hanging from the top-left grasper, visible in all keyframes. Its upper part is a translucent tented wall running up to the grasper jaws (e.g. k41 (150-260, 120-240)), which is included (positive at k41 (200,215), k83 (210,225), k125 (230,210), k166 (250,205)). A fine dark net of lines (fibrin/vessels) covers the surface. Negatives separate it from the liver (left), the dark purple neck_pedicle (upper right, behind the needle) and an unidentified red-brown smooth oval organ to its lower right (about (340-460, 230-330)). The gallbladder/neck boundary is not visible: the neck_pedicle may be the gallbladder neck, and the masks can be merged if wanted."
+  },
+  "neck_pedicle": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       300,
+       172
+      ],
+      [
+       335,
+       235
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       250
+      ],
+      [
+       400,
+       290
+      ],
+      [
+       460,
+       190
+      ]
+     ]
+    },
+    {
+     "frame": 83,
+     "pos": [
+      [
+       300,
+       200
+      ],
+      [
+       330,
+       255
+      ],
+      [
+       410,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       300
+      ],
+      [
+       410,
+       290
+      ],
+      [
+       480,
+       160
+      ]
+     ]
+    },
+    {
+     "frame": 125,
+     "pos": [
+      [
+       340,
+       160
+      ],
+      [
+       390,
+       180
+      ],
+      [
+       475,
+       235
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       250
+      ],
+      [
+       430,
+       250
+      ],
+      [
+       500,
+       145
+      ]
+     ]
+    },
+    {
+     "frame": 166,
+     "pos": [
+      [
+       390,
+       165
+      ],
+      [
+       460,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       250
+      ],
+      [
+       420,
+       250
+      ],
+      [
+       480,
+       135
+      ]
+     ]
+    },
+    {
+     "frame": 208,
+     "pos": [
+      [
+       400,
+       178
+      ],
+      [
+       425,
+       150
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       250
+      ],
+      [
+       440,
+       260
+      ],
+      [
+       520,
+       150
+      ]
+     ]
+    }
+   ],
+   "notes": "ADDED (not a spec name). Dark purple, glossy structure leaving the gallbladder at its upper right, next to the grasper. It runs diagonally to the right behind the needle (k125 (250-440, 100-210)) and continues as a thinner, lighter purple glossy tube curving down into the bleeding hilar tissue (k125 (440-500, 170-270); k83 (400-470, 200-270)). Bulbous at the start of the clip (f0 about 140x100 px), it becomes thinner/elongated later. This is the same structure as the purple lobe at the end of chole_derot. Probably gallbladder neck + cystic duct (+ artery) in one; the neck/duct boundary and the duct/artery split are not visible, so one object. The thin distal tube is the best candidate for the cystic duct proper (positives k83 (410,250), k125 (475,235), k166 (460,205)). In k208 only the part behind the needle is prompted; its glossy upper edge near (270-360, 80-120) is covered in speculars."
+  },
+  "red strand band": {
+   "confidence": "low",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       460,
+       190
+      ]
+     ],
+     "neg": [
+      [
+       335,
+       235
+      ],
+      [
+       400,
+       290
+      ]
+     ]
+    },
+    {
+     "frame": 83,
+     "pos": [
+      [
+       480,
+       160
+      ]
+     ],
+     "neg": [
+      [
+       410,
+       250
+      ],
+      [
+       540,
+       150
+      ]
+     ]
+    },
+    {
+     "frame": 125,
+     "pos": [
+      [
+       500,
+       145
+      ]
+     ],
+     "neg": [
+      [
+       390,
+       180
+      ],
+      [
+       560,
+       200
+      ]
+     ]
+    }
+   ],
+   "notes": "ADDED (not a spec name). A band of parallel pink-red/white glossy strands running from the distal neck_pedicle to the right (k41 (380-480, 160-200), k125 (440-530, 130-160), k166/k208 (440-560, 120-170)). It looks like a twisted peritoneal fold / mesentery or adhesion band and could also contain small vessels. It tethers the pedicle, which matters for the 3D model. Low: thin, wet, specular, and its exact identity is unknown. It is NOT named cystic artery, because it cannot be told apart from peritoneal strands."
+  },
+  "blood": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       420,
+       348
+      ],
+      [
+       455,
+       290
+      ]
+     ],
+     "neg": [
+      [
+       400,
+       280
+      ]
+     ]
+    },
+    {
+     "frame": 83,
+     "pos": [
+      [
+       430,
+       320
+      ],
+      [
+       480,
+       335
+      ]
+     ],
+     "neg": [
+      [
+       410,
+       285
+      ]
+     ]
+    },
+    {
+     "frame": 125,
+     "pos": [
+      [
+       450,
+       310
+      ],
+      [
+       495,
+       312
+      ]
+     ],
+     "neg": [
+      [
+       430,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 166,
+     "pos": [
+      [
+       445,
+       315
+      ],
+      [
+       490,
+       325
+      ]
+     ],
+     "neg": [
+      [
+       420,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 208,
+     "pos": [
+      [
+       430,
+       345
+      ],
+      [
+       500,
+       335
+      ]
+     ],
+     "neg": [
+      [
+       440,
+       260
+      ]
+     ]
+    }
+   ],
+   "notes": "Dark crimson pooled/clotted blood at the bottom centre below the hilum (about (400-520, 290-360)), present through the whole clip, with whitish lumps (fat or clot) in it. Positives avoid the white lumps. In k41 it is smaller and less certain."
+  },
+  "liver": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       40,
+       220
+      ],
+      [
+       100,
+       190
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       300
+      ],
+      [
+       125,
+       45
+      ]
+     ]
+    },
+    {
+     "frame": 125,
+     "pos": [
+      [
+       60,
+       200
+      ],
+      [
+       60,
+       280
+      ]
+     ],
+     "neg": [
+      [
+       170,
+       280
+      ],
+      [
+       175,
+       50
+      ]
+     ]
+    },
+    {
+     "frame": 208,
+     "pos": [
+      [
+       50,
+       200
+      ],
+      [
+       60,
+       290
+      ]
+     ],
+     "neg": [
+      [
+       290,
+       200
+      ]
+     ]
+    }
+   ],
+   "notes": "Context organ: the same pink-brown mottled glossy surface as in chole_derot, on the left (0-150, 0-360), with purple bruise-like spots (avoided). Medium for the same reason as in chole_derot (texture fits liver; blurry). The smooth grey-brown surface across the top (180-640, 0-150), the red-brown smooth oval below the pedicle (340-460, 230-330) and the pink elongated rounded structure on the right with a groove (480-600, 90-280) are not identified (liver underside / duodenum / bowel are all possible) and are not prompted."
+  }
+ },
+ "not_visible": [
+  "cystic duct",
+  "cystic artery",
+  "gallbladder contents (spilled/aspirated fluid)",
+  "peri-gallbladder fat",
+  "free fluid",
+  "gauze"
+ ],
+ "added_objects": [
+  "neck_pedicle: dark purple gangrenous structure from the gallbladder's upper right to the hilum (neck + cystic duct/artery, not separable). It is the pedicle that suspends the free-floating gallbladder, so it is needed as the anchor in 3D; it also visibly thins during this clip.",
+  "red strand band: twisted pink-red peritoneal/adhesion strands beside the distal pedicle. A tether attached near the pedicle, the kind of membrane/strand structure the spec does not contain."
+ ],
+ "instruments_seen": {
+  "41": [
+   "grasper from the top-left, dark grey-green shaft with silver jaws, holding the top of the gallbladder at about (150-180, 90-140)",
+   "thin straight all-silver rod from the top-right (decompression needle / suction cannula), tip at about (258,240) on the upper right of the gallbladder"
+  ],
+  "83": [
+   "grasper from the top-left, dark shaft, jaws at about (200-220, 130-150) holding the gallbladder",
+   "thin straight silver rod from the top-right, tip at about (262,268) on the gallbladder"
+  ],
+  "125": [
+   "grasper from the top-left, dark shaft, jaws at about (195-210, 90-110)",
+   "thin silver rod mostly withdrawn: only a bright spot at the top edge, about (450-470, 0-10)"
+  ],
+  "166": [
+   "grasper from the top, dark shaft, jaws at about (180-200, 60-80)",
+   "thin straight silver rod from the top-right, tip at about (290,172) at the gallbladder/neck junction"
+  ],
+  "208": [
+   "grasper from the top, dark shaft, jaws at about (190-210, 40-80)",
+   "thin straight silver rod from the top-right, tip at about (320,160) at the gallbladder/neck junction"
+  ]
+ },
+ "notes": "Cystic duct / cystic artery: not separately identifiable. The visible pedicle is the added object neck_pedicle (its thin distal tube is the most duct-like part). Gallbladder contents: no spill or jet is visible; the sac just looks wrinkled/deflated and wet. Peri-gallbladder fat: only small whitish lumps inside the blood/hilar tissue, which cannot be told apart from clot/fibrin, so not prompted. Free fluid, gauze: not seen. The thin rod's tip has small dark dots (side holes?) at about f145, so it may be a suction/irrigation cannula rather than a needle; it is withdrawn around f120-140 (k125). Coordinates were checked on 2x overlays of the plain keyframes."
+}

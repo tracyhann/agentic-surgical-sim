@@ -1,0 +1,462 @@
+{
+ "clip": "chole_derot",
+ "objects": {
+  "gallbladder": {
+   "confidence": "high",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       120,
+       140
+      ],
+      [
+       130,
+       250
+      ],
+      [
+       250,
+       215
+      ],
+      [
+       250,
+       285
+      ]
+     ],
+     "neg": [
+      [
+       40,
+       150
+      ],
+      [
+       200,
+       346
+      ],
+      [
+       262,
+       50
+      ]
+     ]
+    },
+    {
+     "frame": 82,
+     "pos": [
+      [
+       110,
+       258
+      ],
+      [
+       260,
+       140
+      ],
+      [
+       430,
+       110
+      ],
+      [
+       360,
+       280
+      ]
+     ],
+     "neg": [
+      [
+       240,
+       322
+      ],
+      [
+       540,
+       140
+      ],
+      [
+       445,
+       262
+      ]
+     ]
+    },
+    {
+     "frame": 123,
+     "pos": [
+      [
+       210,
+       60
+      ],
+      [
+       195,
+       195
+      ],
+      [
+       225,
+       140
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       100
+      ],
+      [
+       200,
+       335
+      ],
+      [
+       320,
+       40
+      ]
+     ]
+    },
+    {
+     "frame": 164,
+     "pos": [
+      [
+       215,
+       230
+      ],
+      [
+       310,
+       110
+      ],
+      [
+       390,
+       95
+      ],
+      [
+       200,
+       310
+      ]
+     ],
+     "neg": [
+      [
+       80,
+       150
+      ],
+      [
+       200,
+       45
+      ],
+      [
+       560,
+       100
+      ]
+     ]
+    },
+    {
+     "frame": 205,
+     "pos": [
+      [
+       130,
+       250
+      ],
+      [
+       320,
+       70
+      ],
+      [
+       310,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       60,
+       120
+      ],
+      [
+       190,
+       70
+      ],
+      [
+       465,
+       145
+      ]
+     ]
+    }
+   ],
+   "notes": "Large dark brown/olive glossy sac (necrotic wall), visible in all 5 keyframes and rotating strongly. Positives only on the brown body, kept off the specular streaks. Not prompted (left to the tracker): k41 brown area right of the top grasper shaft (300-440, 0-130), which is probably the far side of the gallbladder but could be shaded liver underside; k123 glossy black band along the bottom of the sac (110-420, 220-310), which is either the black necrotic underside or dark fluid/shadow; k164 lower-right quadrant (380-520, 230-360), where the dark neck lobe (see neck_pedicle) sits partly hidden under the right instrument. Orange-yellow flaps (fat tags / fibrin, possibly a mesentery remnant) stick to the right side of the sac in frames ~110-166 (k164 around (390-460, 120-200)); no points there. The negatives at k82 (445,262) and k205 (465,145) deliberately separate the dark neck lobe (neck_pedicle) from the body; merge the two masks if a single gallbladder including its neck is wanted."
+  },
+  "neck_pedicle": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 82,
+     "pos": [
+      [
+       445,
+       265
+      ]
+     ],
+     "neg": [
+      [
+       360,
+       280
+      ],
+      [
+       520,
+       240
+      ]
+     ]
+    },
+    {
+     "frame": 205,
+     "pos": [
+      [
+       485,
+       225
+      ],
+      [
+       465,
+       145
+      ]
+     ],
+     "neg": [
+      [
+       320,
+       250
+      ],
+      [
+       580,
+       190
+      ],
+      [
+       510,
+       295
+      ]
+     ]
+    }
+   ],
+   "notes": "ADDED (not a spec name). A dark purple-black, glossy, bulbous structure at the hilar end of the gallbladder: k205 (380-520, 110-280), clearly purple and 140 px wide, too big for a duct; k82 the black glossy 'eye' (400-500, 220-290) set in whitish tissue, which I read as the same structure seen end-on (lower certainty than k205). In the clip it is visible about f55-110 (black), f140-162 (purple, under the body, bottom right), and f200-246 (purple, top right). Most likely the gangrenous gallbladder neck / Hartmann pouch running into the twisted cystic duct and artery. There is no visible boundary between neck, duct and artery, so they are kept as one object instead of guessing a split."
+  },
+  "liver": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       35,
+       110
+      ],
+      [
+       50,
+       220
+      ]
+     ],
+     "neg": [
+      [
+       140,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 82,
+     "pos": [
+      [
+       60,
+       90
+      ],
+      [
+       220,
+       40
+      ],
+      [
+       40,
+       200
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       245
+      ],
+      [
+       330,
+       130
+      ]
+     ]
+    },
+    {
+     "frame": 123,
+     "pos": [
+      [
+       50,
+       60
+      ],
+      [
+       110,
+       100
+      ],
+      [
+       45,
+       215
+      ]
+     ],
+     "neg": [
+      [
+       225,
+       140
+      ],
+      [
+       200,
+       335
+      ]
+     ]
+    },
+    {
+     "frame": 164,
+     "pos": [
+      [
+       50,
+       60
+      ],
+      [
+       100,
+       120
+      ],
+      [
+       80,
+       220
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       180
+      ],
+      [
+       200,
+       45
+      ]
+     ]
+    },
+    {
+     "frame": 205,
+     "pos": [
+      [
+       50,
+       60
+      ],
+      [
+       60,
+       180
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       280
+      ],
+      [
+       190,
+       70
+      ]
+     ]
+    }
+   ],
+   "notes": "Context organ. A large pink-brown, finely mottled (lobular-looking), glossy surface on the left/top in every keyframe, with a free lower edge at about y=240-290 on the left (k41, k123, k164). Texture and edge fit the liver, but the view is blurry and an abdominal-wall/diaphragm surface cannot be fully excluded, hence medium. Its orange-tinted rim next to the gallbladder (k164 (120-200, 100-260)) is not prompted. Pink tissue at the bottom-right (e.g. k82 (400-640, 290-360), k123 (340-640, 260-360)) and the pink rounded masses on the right (k123 (460-640, 60-280)) are not identified (bowel/omentum/another liver part?) and are not prompted for any object."
+  },
+  "peri-gallbladder fat": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 41,
+     "pos": [
+      [
+       200,
+       345
+      ],
+      [
+       290,
+       342
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 82,
+     "pos": [
+      [
+       240,
+       322
+      ],
+      [
+       330,
+       330
+      ],
+      [
+       120,
+       340
+      ]
+     ],
+     "neg": [
+      [
+       110,
+       258
+      ]
+     ]
+    },
+    {
+     "frame": 123,
+     "pos": [
+      [
+       100,
+       330
+      ],
+      [
+       250,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       200,
+       190
+      ],
+      [
+       60,
+       150
+      ]
+     ]
+    }
+   ],
+   "notes": "Yellow-white lumpy fat with small red vessels, lying directly under the gallbladder along the bottom of the frame (strongest in k82 (80-400, 265-360)). It is probably omental fat rather than fat in the gallbladder wall, but it is the fat touching the gallbladder. Yellow fat also sits near the neck at k41 (440-490, 230-300), together with red, inflamed-looking tissue around the pedicle; it is not prompted because it cannot be separated from the pedicle tissue."
+  }
+ },
+ "not_visible": [
+  "cystic duct",
+  "cystic artery",
+  "common hepatic duct",
+  "free fluid",
+  "blood",
+  "gauze"
+ ],
+ "added_objects": [
+  "neck_pedicle: dark purple/black bulbous gangrenous structure at the hilar end of the gallbladder (probably the neck/Hartmann pouch continuing into the twisted duct+artery). It is the rotation axis region and the anchor of the free-floating organ, so the 3D model needs it; neck/duct/artery cannot be split in the images."
+ ],
+ "instruments_seen": {
+  "41": [
+   "grasper from the top, dark grey-green shaft, jaws at about (300,165) near the gallbladder hilar side",
+   "curved all-metal (silver) instrument from the right, tip at about (375,225) at the neck region (curved dissector/grasper)"
+  ],
+  "82": [
+   "grasper from the right, dark grey-green shaft with silver jaw section, jaws at about (200-300, 225-250) on the gallbladder"
+  ],
+  "123": [
+   "grasper from the top, dark shaft, tip at about (350,120) on the gallbladder"
+  ],
+  "164": [
+   "grasper from the top-left, dark shaft, tip at about (240,120)",
+   "instrument from the right, dark shaft with long silver distal part, curved tip at about (345,230) on the gallbladder"
+  ],
+  "205": [
+   "grasper from the top-left, dark grey-green shaft, tip at about (235,155) on the gallbladder",
+   "instrument from the top-right, dark shaft with silver jaws, tip at about (425,110) on the dark neck lobe"
+  ]
+ },
+ "notes": "Cystic duct / cystic artery: NOT separately identifiable in any keyframe. The pedicle region (right/hilar end of the gallbladder; k41 (380-560, 140-300), k82 (400-600, 170-300), k205 (480-560, 250-330)) is a mass of red, inflamed-looking tissue, whitish fibrin/fat and the dark neck lobe. No tube can be followed as a duct or artery, so instead of guessing, the visible part is the added object neck_pedicle. Common hepatic duct: not seen. Blood: small red smears on the tissue right of the neck (k82 (500-600, 170-200), k205 (425-465, 300-330)); they cannot be told apart from hyperaemic/haemorrhagic tissue, so they are not prompted. Free fluid: a black glossy pool-like area under the sac in frames ~118-126 (k123 bottom) could be fluid, the necrotic underside or shadow; not prompted. Gauze: none. Strong motion blur around f164-170 and the start of the clip; k164 prompts sit on large, unambiguous regions only. Coordinates were checked on 2x overlays of the plain keyframes."
+}

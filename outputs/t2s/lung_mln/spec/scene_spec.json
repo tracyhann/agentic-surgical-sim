@@ -1,0 +1,220 @@
+{
+  "clip": "lung_mln",
+  "procedure": "single-incision thoracoscopic (VATS) right upper lobectomy with systematic mediastinal lymph node dissection",
+  "phase": "mediastinal lymph node dissection after the lobectomy; the station shown in this shot is not stated - most likely the upper mediastinal (right paratracheal) en bloc dissection (low confidence; alternatives: subcarinal or hilar)",
+  "phase_time_s": [31.0, 62.0],
+  "legend_phase_time_s": null,
+  "source_video": "data/videos/commons_lung/vats_lobectomy_S2.mp4",
+  "sources": [
+    "video 2 legend (Commons description = Additional file 2 legend of Jeon et al., J Cardiothorac Surg 2014, 9:66)",
+    "article full text PMC4022387: Surgical technique, Discussion, Figure 1-2 legends"
+  ],
+  "notes": "Station inference: the legend lists lower mediastinal, subcarinal, hilar and upper mediastinal nodes in that order, and the article describes them in the same order; data prep found cuts at 10.9, 12.1, 13.2 and 31.3 s, so 31.3-62.1 s is the last and longest shot, which fits the last-listed and most extensive step (upper mediastinal en bloc resection). This ordering argument is weak; organs specific to one station have expected_visibility 'unknown'. The cut at 31.3 s means 31.0-31.3 s belongs to the previous shot. Lobectomy instruments (endostapler, right-angle clamp with silastic drain) belong to video 1 and are not expected here. Extra keys: instruments[].id, organs[].sam_prompt_alt, background[].source.",
+  "patient": {
+    "age": 70,
+    "sex": "male",
+    "condition": "right upper lobe adenocarcinoma (CT: 1.8 cm spiculated nodule, clinical T1aN0M0; pathology 2.4 x 1.4 cm, T1bN0M0, 38 nodes, all negative); right upper lobe already removed in this operation; coronary stent, diabetes, hypertension"
+  },
+  "organs": [
+    {
+      "name": "mediastinal lymph nodes and fat",
+      "sam_prompt": "lymph node",
+      "sam_prompt_alt": ["fat", "fatty tissue", "yellow tissue"],
+      "role": "primary",
+      "expected_visibility": "most",
+      "pathology": "none (nodes negative on pathology); removed for staging",
+      "consistency": "fatty",
+      "expected_motion": "grasped, lifted and pulled away from its bed; progressively detached by ultrasonic dissection and removed en bloc (large deformation, then separation from the scene)",
+      "notes": "Upper mediastinal hypothesis: fat block with nodes bounded by the RUL bronchus stump, subclavian artery, SVC and trachea. Subcarinal hypothesis: nodes between right and left main bronchi near the esophagus."
+    },
+    {
+      "name": "mediastinal pleura",
+      "sam_prompt": "pleura",
+      "sam_prompt_alt": ["membrane", "thin film"],
+      "role": "secondary",
+      "expected_visibility": "partial",
+      "pathology": null,
+      "consistency": "thin membrane",
+      "expected_motion": "incised; cut edges retract and move with the fat underneath",
+      "notes": "Article: pleura incised above the azygos vein for the upper mediastinal step. Transparent membrane: its video depth is the depth of what lies behind it."
+    },
+    {
+      "name": "azygos vein",
+      "sam_prompt": "azygos vein",
+      "sam_prompt_alt": ["vein", "blue vessel"],
+      "role": "secondary",
+      "expected_visibility": "partial",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "elevated (lifted) by an instrument to open the paratracheal space (upper mediastinal step); otherwise static with transmitted cardiac pulsation",
+      "notes": "Named in all candidate stations (subcarinal Figure 1b, hilar nodes below it, upper mediastinal step lifts it), hence 'partial'."
+    },
+    {
+      "name": "superior vena cava",
+      "sam_prompt": "vena cava",
+      "sam_prompt_alt": ["large vein", "blue vessel"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static boundary; cardiac pulsation possible",
+      "notes": "Boundary of the upper mediastinal block (article, Figure 2a)."
+    },
+    {
+      "name": "trachea",
+      "sam_prompt": "trachea",
+      "sam_prompt_alt": ["airway", "windpipe"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static; small ventilation-related motion possible",
+      "notes": "Boundary of the upper mediastinal block (article, Figure 2a). Cartilage-ringed, stiff."
+    },
+    {
+      "name": "right upper lobe bronchus stump",
+      "sam_prompt": "bronchus",
+      "sam_prompt_alt": ["staple line", "stump"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": "divided and closed with an endostapler during the lobectomy",
+      "consistency": "tubular",
+      "expected_motion": "static; may be pushed anteriorly by an instrument or the suction tip (described for the subcarinal step)",
+      "notes": "Lower boundary of the upper mediastinal block (Figure 2a); retracted for subcarinal access."
+    },
+    {
+      "name": "right subclavian artery",
+      "sam_prompt": "artery",
+      "sam_prompt_alt": ["blood vessel"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static; arterial pulsation possible",
+      "notes": "Upper boundary of the upper mediastinal block (article)."
+    },
+    {
+      "name": "right lung (middle and lower lobes)",
+      "sam_prompt": "lung",
+      "sam_prompt_alt": ["pink tissue"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": "deflated (one-lung ventilation of the left lung); upper lobe removed; inferior pulmonary ligament divided",
+      "consistency": "spongy/air-filled",
+      "expected_motion": "collapsed and passive; may be pushed out of the field; no ventilation motion",
+      "notes": "Hangs from the hilum only (inferior pulmonary ligament divided earlier)."
+    },
+    {
+      "name": "right main bronchus",
+      "sam_prompt": "bronchus",
+      "sam_prompt_alt": ["airway"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static",
+      "notes": "Only if the shot is the subcarinal station (Figure 1b boundary)."
+    },
+    {
+      "name": "esophagus",
+      "sam_prompt": "esophagus",
+      "sam_prompt_alt": ["tube"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static",
+      "notes": "Only if the shot is the subcarinal station (Figure 1b)."
+    }
+  ],
+  "connections": [
+    {"a": "mediastinal lymph nodes and fat", "b": "trachea", "type": "attached", "evidence": "Article (Surgical technique): the fat block with nodes was separated from the trachea and SVC, i.e. attached before dissection.", "confidence": "high"},
+    {"a": "mediastinal lymph nodes and fat", "b": "superior vena cava", "type": "attached", "evidence": "Same sentence (article, Surgical technique).", "confidence": "high"},
+    {"a": "mediastinal lymph nodes and fat", "b": "right upper lobe bronchus stump", "type": "adjacent", "evidence": "En bloc block bounded by RUL bronchus, subclavian artery, SVC and trachea (article; Figure 2a legend).", "confidence": "high"},
+    {"a": "mediastinal lymph nodes and fat", "b": "right subclavian artery", "type": "adjacent", "evidence": "Same boundary description (article).", "confidence": "high"},
+    {"a": "mediastinal lymph nodes and fat", "b": "azygos vein", "type": "adjacent", "evidence": "Pleura opened above the azygos for the upper nodes; hilar nodes taken below it (article).", "confidence": "high"},
+    {"a": "mediastinal pleura", "b": "mediastinal lymph nodes and fat", "type": "attached", "evidence": "The pleura covers the fat block and is incised above the azygos vein to reach it (article; Discussion: square pleural window in conventional VATS).", "confidence": "medium"},
+    {"a": "mediastinal pleura", "b": "body wall (parietal pleura / chest wall)", "type": "attached", "evidence": "Anatomy: mediastinal pleura is continuous with the parietal pleura. Not in text.", "confidence": "high"},
+    {"a": "azygos vein", "b": "superior vena cava", "type": "attached", "evidence": "Anatomy: the azygos arches over the right hilum and drains into the SVC. Not in text.", "confidence": "high"},
+    {"a": "azygos vein", "b": "body wall (posterior chest wall / spine)", "type": "attached", "evidence": "Anatomy: runs up along the vertebral column before arching forward; so it can be lifted only a little. Not in text.", "confidence": "high"},
+    {"a": "right upper lobe bronchus stump", "b": "right main bronchus", "type": "stapled", "evidence": "RUL bronchus divided with an endostapler (article); stapled bronchus labelled in Figure 2a.", "confidence": "high"},
+    {"a": "right lung (middle and lower lobes)", "b": "right main bronchus (hilum)", "type": "suspended by", "evidence": "Anatomy (lobes hang from their bronchi and vessels); article: inferior pulmonary ligament divided, so no lower tether remains.", "confidence": "high"},
+    {"a": "superior vena cava", "b": "heart (right atrium)", "type": "attached", "evidence": "Anatomy; source of transmitted cardiac motion. Not in text.", "confidence": "high"},
+    {"a": "mediastinal lymph nodes and fat", "b": "esophagus", "type": "adjacent", "evidence": "Subcarinal nodes lie between the right and left main bronchi near the esophagus and azygos (Figure 1b legend). Applies only under the subcarinal hypothesis.", "confidence": "low"}
+  ],
+  "instruments": [
+    {
+      "id": "ultrasonic_scalpel",
+      "type": "ultrasonic scalpel",
+      "sam_prompt": "ultrasonic scalpel",
+      "sam_prompt_alt": ["harmonic scalpel", "surgical instrument"],
+      "shaft_diameter_mm": 5,
+      "count": 1,
+      "evidence": "Article: Harmonic scalpel used for dissection and to remove the nodes (through the anterior part of the incision for the subcarinal step). Presence in this shot inferred; 5 mm shaft is a default (diameter not stated).",
+      "confidence": "medium"
+    },
+    {
+      "id": "grasper",
+      "type": "grasper",
+      "sam_prompt": "grasper",
+      "sam_prompt_alt": ["forceps", "surgical instrument"],
+      "shaft_diameter_mm": 5,
+      "count": null,
+      "evidence": "Article: nodes grasped with an endo-instrument through the posterior part of the incision; endo-graspers listed. 5 mm default (not stated).",
+      "confidence": "medium"
+    },
+    {
+      "id": "suction",
+      "type": "suction/irrigation",
+      "sam_prompt": "suction tube",
+      "sam_prompt_alt": ["metal tube", "surgical instrument"],
+      "shaft_diameter_mm": null,
+      "count": null,
+      "evidence": "Article: the suction tip was one option for pushing the divided bronchus forward (subcarinal step). Use in this shot not stated.",
+      "confidence": "low"
+    }
+  ],
+  "actions": [
+    {"time_s": null, "instrument": null, "verb": "elevate / lift", "target": "azygos vein", "evidence": "Article (upper mediastinal step): azygos vein was elevated. Instrument not named.", "confidence": "low (depends on the station hypothesis)"},
+    {"time_s": null, "instrument": null, "verb": "incise", "target": "mediastinal pleura (above the azygos vein)", "evidence": "Article (upper mediastinal step). Instrument not named (ultrasonic scalpel plausible).", "confidence": "low"},
+    {"time_s": null, "instrument": "grasper", "verb": "grasp and retract", "target": "mediastinal lymph nodes and fat", "evidence": "Article: nodes grasped with an endo-instrument (described for the subcarinal step).", "confidence": "medium"},
+    {"time_s": null, "instrument": "ultrasonic_scalpel", "verb": "dissect / separate", "target": "mediastinal lymph nodes and fat (off trachea and SVC)", "evidence": "Article: fat with nodes separated from trachea and SVC; nodes removed with the Harmonic scalpel (subcarinal). The device for the upper step is not named.", "confidence": "low"},
+    {"time_s": null, "instrument": "ultrasonic_scalpel", "verb": "resect en bloc", "target": "mediastinal lymph nodes and fat", "evidence": "Article: en bloc resection of fat and nodes in the upper mediastinum (Figure 2a; Video 2 cited).", "confidence": "low"},
+    {"time_s": null, "instrument": null, "verb": "retract anteriorly", "target": "right upper lobe bronchus stump", "evidence": "Article: for subcarinal dissection the divided bronchus was pushed forward with an endo-instrument or the suction tip. Applies only under the subcarinal hypothesis.", "confidence": "low"}
+  ],
+  "openings": [
+    {"organ": "mediastinal pleura", "instrument": null, "kind": "incision", "site": "above the azygos vein, over the space bounded by RUL bronchus stump, subclavian artery, SVC and trachea", "time_s": null, "evidence": "Article (upper mediastinal step): pleura incised above the azygos. Instrument not named; may already be open at 31 s.", "confidence": "medium", "notes": "Vision decides the cutting tool; the ultrasonic scalpel is the likely one."},
+    {"organ": "mediastinal lymph nodes and fat", "instrument": "ultrasonic_scalpel", "kind": "incision", "site": "dissection planes along the trachea and SVC (or between the main bronchi if subcarinal)", "time_s": null, "evidence": "Nodes/fat removed with the Harmonic scalpel (article); its jaws close on and cut through this tissue. The grasper only grips the surface.", "confidence": "medium"},
+    {"organ": "azygos vein", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "Vessel preserved; no vascular injury reported, blood loss at most 50 mL (article).", "confidence": "high"},
+    {"organ": "superior vena cava", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "As above.", "confidence": "high"},
+    {"organ": "right subclavian artery", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "As above.", "confidence": "high"},
+    {"organ": "trachea", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "No airway injury reported; uneventful recovery (article).", "confidence": "high"},
+    {"organ": "right upper lobe bronchus stump", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "Stapled closed in video 1; not reopened.", "confidence": "high"},
+    {"organ": "right lung (middle and lower lobes)", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "Remaining lobes preserved (article).", "confidence": "high"},
+    {"organ": "esophagus", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "No injury reported.", "confidence": "high"}
+  ],
+  "camera": {
+    "scope": "30-degree 10 mm thoracoscope",
+    "notes": "Article. Inserted through the single 4 cm incision (5th intercostal space, anterior axillary line) with a wound protector; every instrument shares this incision, so shafts enter close together and nearly parallel to the scope (authors note instruments impinging on each other). Scope placed in the anterior part of the incision for the lower mediastinal step and in the centre for the subcarinal step; not stated for the upper mediastinal step. Patient in left lateral decubitus (right side up): gravity points from the right chest wall toward the mediastinum; the image orientation of gravity is unknown. Picture rows 60-417 (data prep)."
+  },
+  "background": [
+    {"name": "staple lines", "sam_prompt": "staples", "source": "text: bronchus, vein, artery branches and fissures were divided with endostaplers in the lobectomy (article)"},
+    {"name": "chest wall", "sam_prompt": "chest wall", "source": "anatomy (thoracoscopic view through an intercostal incision); not in text"},
+    {"name": "loose fat", "sam_prompt": "fat", "source": "text: mediastinal fatty tissue (article); separate from the node block when not attached"},
+    {"name": "blood", "sam_prompt": "blood", "source": "generic default (article: blood loss at most 50 mL)"},
+    {"name": "gauze", "sam_prompt": "gauze", "source": "generic default (not from text)"}
+  ],
+  "physiology": [
+    "one-lung ventilation of the left lung: the right (operated) lung is deflated and shows no breathing motion (article)",
+    "cardiac pulsation transmitted to the SVC, azygos vein and mediastinal fat (anatomy: SVC enters the right atrium; expected, small, periodic; not in text)",
+    "small mediastinal shift with each breath of the ventilated left lung (anatomy; low confidence)",
+    "gravity: left lateral decubitus, so the collapsed right lung and loose tissue sag toward the mediastinum (article position + physics)"
+  ],
+  "uncertain": [
+    "Which nodal station the 31-62 s shot shows (upper mediastinal inferred from the legend order and shot length; subcarinal or hilar possible); this decides which boundary organs (SVC, trachea vs. main bronchi, esophagus) are present.",
+    "Which instruments are in the shot and their roles (ultrasonic scalpel, endo-grasper, suction), how many pass through the single incision, and which one lifts the azygos vein.",
+    "Camera position inside the incision for this step and the direction of gravity in the image; whether the mediastinal pleura is already open at 31 s.",
+    "Shaft diameters of the endo-instruments (scale); only the 10 mm scope is stated.",
+    "How much of the node block is removed inside the window (partial dissection vs. complete en bloc removal)."
+  ]
+}

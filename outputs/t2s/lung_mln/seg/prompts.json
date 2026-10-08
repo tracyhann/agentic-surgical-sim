@@ -1,0 +1,778 @@
+{
+ "clip": "lung_mln",
+ "objects": {
+  "mediastinal lymph nodes and fat": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 110,
+     "pos": [
+      [
+       282,
+       145
+      ],
+      [
+       289,
+       156
+      ]
+     ],
+     "neg": [
+      [
+       235,
+       160
+      ],
+      [
+       340,
+       115
+      ],
+      [
+       305,
+       205
+      ]
+     ]
+    },
+    {
+     "frame": 175,
+     "pos": [
+      [
+       340,
+       40
+      ],
+      [
+       370,
+       70
+      ],
+      [
+       320,
+       90
+      ]
+     ],
+     "neg": [
+      [
+       280,
+       160
+      ],
+      [
+       300,
+       260
+      ],
+      [
+       480,
+       60
+      ]
+     ]
+    },
+    {
+     "frame": 192,
+     "pos": [
+      [
+       420,
+       50
+      ],
+      [
+       440,
+       62
+      ],
+      [
+       400,
+       25
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       110
+      ],
+      [
+       480,
+       160
+      ],
+      [
+       330,
+       250
+      ]
+     ]
+    },
+    {
+     "frame": 256,
+     "pos": [
+      [
+       375,
+       60
+      ],
+      [
+       380,
+       102
+      ]
+     ],
+     "neg": [
+      [
+       280,
+       150
+      ],
+      [
+       300,
+       290
+      ],
+      [
+       200,
+       80
+      ]
+     ]
+    }
+   ],
+   "notes": "Yellow/orange fatty tissue held and lifted by graspers = the node/fat block being dissected. High confidence in shot C2 (frames 175, 192: clearly yellow lobulated fat pulled toward the top right); medium in B (frame 110: small orange piece between grasper jaws, vapour around it) and C3 (frame 256: glistening orange cut tissue edge held by two instruments at the right, partly pleura edge). Probably also present but not identifiable with confidence in A1, A2 (at the instrument tips), C1 (top of the cavity) and C4 (orange fibrous tissue inside the incision channel); not seen in D (likely removed). Its appearance changes between shots (different pieces of the block), so each prompt is per shot."
+  },
+  "mediastinal pleura": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 303,
+     "pos": [
+      [
+       480,
+       50
+      ],
+      [
+       540,
+       110
+      ],
+      [
+       470,
+       310
+      ]
+     ],
+     "neg": [
+      [
+       340,
+       120
+      ],
+      [
+       150,
+       150
+      ],
+      [
+       275,
+       280
+      ]
+     ]
+    },
+    {
+     "frame": 320,
+     "pos": [
+      [
+       480,
+       60
+      ],
+      [
+       545,
+       125
+      ],
+      [
+       430,
+       100
+      ]
+     ],
+     "neg": [
+      [
+       362,
+       100
+      ],
+      [
+       150,
+       150
+      ]
+     ]
+    },
+    {
+     "frame": 375,
+     "pos": [
+      [
+       440,
+       260
+      ],
+      [
+       530,
+       230
+      ],
+      [
+       560,
+       140
+      ]
+     ],
+     "neg": [
+      [
+       305,
+       120
+      ],
+      [
+       200,
+       250
+      ]
+     ]
+    }
+   ],
+   "notes": "Prompted only where it is unambiguous: in shots C4 and D, the intact, translucent membrane with fine surface vessels lying over yellow mediastinal fat to the right of the incision/dissection beds. The mask is the pleura-plus-fat surface (depth = the fat under it); the fat under it may be part of the node block or loose fat - not separable. In shots A2-C3 the smooth pale band arching above the cavity is bounded by what looks like the cut pleural edge, but what lies under it (fat, azygos, SVC or trachea) is unclear, so it was not prompted."
+  },
+  "dissection bed": {
+   "confidence": "high",
+   "prompts": [
+    {
+     "frame": 64,
+     "pos": [
+      [
+       215,
+       205
+      ],
+      [
+       195,
+       275
+      ],
+      [
+       150,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       190,
+       148
+      ],
+      [
+       480,
+       200
+      ],
+      [
+       80,
+       240
+      ]
+     ]
+    },
+    {
+     "frame": 141,
+     "pos": [
+      [
+       280,
+       215
+      ],
+      [
+       210,
+       290
+      ],
+      [
+       300,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       226,
+       186
+      ],
+      [
+       100,
+       100
+      ],
+      [
+       80,
+       220
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       260,
+       250
+      ],
+      [
+       300,
+       215
+      ],
+      [
+       270,
+       290
+      ]
+     ],
+     "neg": [
+      [
+       203,
+       250
+      ],
+      [
+       150,
+       150
+      ],
+      [
+       90,
+       280
+      ]
+     ]
+    },
+    {
+     "frame": 175,
+     "pos": [
+      [
+       260,
+       270
+      ],
+      [
+       330,
+       250
+      ],
+      [
+       300,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       195,
+       310
+      ],
+      [
+       280,
+       150
+      ],
+      [
+       130,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 192,
+     "pos": [
+      [
+       300,
+       250
+      ],
+      [
+       340,
+       290
+      ],
+      [
+       280,
+       310
+      ]
+     ],
+     "neg": [
+      [
+       235,
+       260
+      ],
+      [
+       300,
+       110
+      ],
+      [
+       100,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 256,
+     "pos": [
+      [
+       260,
+       280
+      ],
+      [
+       230,
+       320
+      ],
+      [
+       320,
+       300
+      ]
+     ],
+     "neg": [
+      [
+       175,
+       295
+      ],
+      [
+       260,
+       160
+      ],
+      [
+       80,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 303,
+     "pos": [
+      [
+       260,
+       290
+      ],
+      [
+       245,
+       320
+      ],
+      [
+       290,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       150
+      ],
+      [
+       480,
+       320
+      ],
+      [
+       110,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 320,
+     "pos": [
+      [
+       275,
+       325
+      ],
+      [
+       320,
+       280
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       150
+      ],
+      [
+       480,
+       60
+      ]
+     ]
+    },
+    {
+     "frame": 375,
+     "pos": [
+      [
+       305,
+       120
+      ],
+      [
+       130,
+       250
+      ],
+      [
+       200,
+       250
+      ]
+     ],
+     "neg": [
+      [
+       480,
+       200
+      ],
+      [
+       230,
+       130
+      ],
+      [
+       400,
+       150
+      ]
+     ]
+    }
+   ],
+   "notes": "ADDED. Raw, blood-stained tissue surface exposed by the dissection (the cavity left after node/fat removal). High confidence in A2, C1, C2, C3 (the central red cavity); medium in D (two dark-red raw beds) and C4 (the opened pleural incision channel, raw fat/node tissue being divided). Blood staining is included here; there is no separate pool of blood to segment. Present but unprompted in A1 (blurred close-up) and B/B2 (hidden by instruments and vapour)."
+  },
+  "white curved cord": {
+   "confidence": "high",
+   "prompts": [
+    {
+     "frame": 64,
+     "pos": [
+      [
+       191,
+       142
+      ],
+      [
+       180,
+       165
+      ],
+      [
+       156,
+       201
+      ]
+     ],
+     "neg": [
+      [
+       222,
+       205
+      ],
+      [
+       165,
+       140
+      ]
+     ]
+    },
+    {
+     "frame": 141,
+     "pos": [
+      [
+       236,
+       165
+      ],
+      [
+       226,
+       186
+      ],
+      [
+       205,
+       212
+      ]
+     ],
+     "neg": [
+      [
+       265,
+       215
+      ],
+      [
+       170,
+       200
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       204,
+       228
+      ],
+      [
+       210,
+       252
+      ],
+      [
+       204,
+       275
+      ]
+     ],
+     "neg": [
+      [
+       240,
+       255
+      ],
+      [
+       180,
+       262
+      ]
+     ]
+    },
+    {
+     "frame": 175,
+     "pos": [
+      [
+       205,
+       300
+      ],
+      [
+       217,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       250,
+       300
+      ],
+      [
+       180,
+       320
+      ]
+     ]
+    },
+    {
+     "frame": 192,
+     "pos": [
+      [
+       228,
+       232
+      ],
+      [
+       246,
+       272
+      ],
+      [
+       247,
+       305
+      ]
+     ],
+     "neg": [
+      [
+       280,
+       270
+      ],
+      [
+       215,
+       290
+      ]
+     ]
+    },
+    {
+     "frame": 256,
+     "pos": [
+      [
+       172,
+       262
+      ],
+      [
+       185,
+       290
+      ],
+      [
+       187,
+       320
+      ]
+     ],
+     "neg": [
+      [
+       220,
+       300
+      ],
+      [
+       155,
+       310
+      ]
+     ]
+    }
+   ],
+   "notes": "ADDED. Smooth white glistening cord about 8-15 px wide, curved like a C/J with a hooked upper end, lying on the left side of the cavity in shots A2, B2, C1, C2, C3. It is easy to segment (high mask confidence), but what it is remains unknown (most likely a nerve, e.g. the vagus, left in place; possibly exposed cartilage). Do not give it vessel or airway properties. It is a stable, rigid-looking landmark in 5 of 9 shots, which is why it is worth tracking. Absent in C4; possibly the pale curve at the far left of shot D (not prompted)."
+  }
+ },
+ "not_visible": [
+  "azygos vein",
+  "superior vena cava",
+  "trachea",
+  "right upper lobe bronchus stump",
+  "right subclavian artery",
+  "right main bronchus",
+  "esophagus",
+  "right lung (middle and lower lobes)",
+  "staple lines",
+  "chest wall",
+  "loose fat",
+  "blood",
+  "gauze"
+ ],
+ "added_objects": [
+  "dissection bed: the raw, blood-stained cavity/bed left by node removal; it is the main thing that changes during the clip and makes up the central third of most frames; the 3D model needs it as a separate surface from the fat block that is lifted away",
+  "white curved cord: a distinct white cord-like structure (probably a nerve) in the cavity in 5 shots; a rigid landmark that should not be merged into the fat or the bed"
+ ],
+ "instruments_seen": {
+  "64": [
+   "grasper",
+   "grasper (second jawed instrument, metal shaft; possibly a dissector)"
+  ],
+  "128": [
+   "ultrasonic scalpel (probable: blurred pale shaft running down the centre inside Harmonic vapour; same shaft is labelled HARMONIC in frames 119-121)"
+  ],
+  "192": [
+   "grasper (STORZ-labelled, top right, holding the fat)",
+   "ultrasonic scalpel (motion-blurred pale shaft crossing the right half)"
+  ],
+  "256": [
+   "grasper",
+   "second jawed instrument at the right (likely ultrasonic scalpel)"
+  ],
+  "320": [
+   "ultrasonic scalpel (motion-blurred jaw at the incision line around x 360-400, y 150-230, shaft toward lower right)",
+   "suction/irrigation tip at bottom centre in neighbouring frames 290-354 (only partly visible in 320)"
+  ]
+ },
+ "shot_of_frame": {
+  "64": "A2 (frames 39-96)",
+  "128": "B (frames 97-128; last frame before a jump cut, vapour-obscured, not used for prompts)",
+  "192": "C2 (frames 174-239)",
+  "256": "C3 (frames 240-289)",
+  "320": "C4 (frames 290-365)",
+  "110": "B (non-keyframe prompt frame)",
+  "141": "C1 (frames 138-173; non-keyframe prompt frame)",
+  "168": "C1 (non-keyframe prompt frame)",
+  "175": "C2 (non-keyframe prompt frame)",
+  "303": "C4 (sharpest frame of the shot; non-keyframe prompt frame)",
+  "375": "D (frames 366-384; non-keyframe prompt frame)"
+ },
+ "shots": {
+  "A1": {
+   "frames": [
+    0,
+    38
+   ],
+   "content": "blurred, blood-filled close-up of the dissection; two instruments; not prompted"
+  },
+  "A2": {
+   "frames": [
+    39,
+    96
+   ],
+   "content": "dissection cavity with the white curved cord, two graspers working at its upper edge; dark glossy dome at left edge"
+  },
+  "B": {
+   "frames": [
+    97,
+    128
+   ],
+   "content": "zoomed-out view, Harmonic vapour/smoke; small orange fat piece held in a grasper; keyframe 128 is vapour-obscured"
+  },
+  "B2": {
+   "frames": [
+    129,
+    137
+   ],
+   "content": "short (9 frames) view of the cavity as vapour clears; not prompted"
+  },
+  "C1": {
+   "frames": [
+    138,
+    173
+   ],
+   "content": "cavity + white cord again, STORZ grasper at right, camera moving"
+  },
+  "C2": {
+   "frames": [
+    174,
+    239
+   ],
+   "content": "cavity from another angle; yellow fat block lifted by a grasper at the top right; Harmonic shaft passes through"
+  },
+  "C3": {
+   "frames": [
+    240,
+    289
+   ],
+   "content": "cavity; two instruments at the right lifting the cut tissue edge"
+  },
+  "C4": {
+   "frames": [
+    290,
+    365
+   ],
+   "content": "different field: vertical pleural incision/dissection channel, intact pleura over yellow fat on the right, mottled pink surface on the left; Harmonic + suction tip"
+  },
+  "D": {
+   "frames": [
+    366,
+    384
+   ],
+   "content": "two raw dissection beds; intact pleura over yellow fat on the right; white instrument at the bottom"
+  }
+ },
+ "notes": "SHOT CUTS: besides the data-prep cuts at 96/97, 138 and 366, there are jump cuts (abrupt instrument/view changes between two sharp frames, similar colours so the histogram check missed them) at frames 39, 129, 174, 240 and 290, giving 9 shots (see 'shots'). Keyframes cover only A2, B, C2, C3 and C4, so I added prompts on non-keyframes 110, 141, 168, 175, 303 and 375 (chosen as the sharpest frames, points checked on 2x overlays); each object is prompted in every shot where I could identify it. The tracker will still carry masks across cuts into shots where an object is not prompted: discard or check masks in A1 (0-38) and B2 (129-137) for all objects, the node/fat mask in A2, C1, C4 and D, the cord mask in C4/D, and the pleura mask before frame 290. Frames 0-38 are only reached by backward propagation from frame 64 across a cut. PROCEDURE CONTEXT: the clip looks like one paratracheal/mediastinal node dissection field (A2-C3), then a different field with a fresh pleural incision (C4) and a post-dissection view (D); I could not confirm the station or name any vessel or airway. UNRESOLVED STRUCTURES (not prompted, on purpose): (1) a dark glossy dome with a thin dark curved rim at the left/lower-left edge in A2, B, C1 (e.g. frame 64 x 20-130, y 140-300): either the edge of the collapsed right middle/lower lobe or a specimen bag; (2) the large glossy pink-grey surface at the upper left in A2-C3 and the mottled pink surface with red petechiae and blue-grey streaks left of the incision in C4: lung (visceral pleura), mediastinal pleura or chest wall - cannot tell; the blue-grey band at the far left in C2/C3 could be the SVC seen through pleura, not confirmed; (3) a small dark metallic round object (clip or char) in the C4 channel (around x 270-295, y 200-280). Instruments are moving fast in B, C2 and C4 (heavy motion blur), and B is full of Harmonic vapour."
+}

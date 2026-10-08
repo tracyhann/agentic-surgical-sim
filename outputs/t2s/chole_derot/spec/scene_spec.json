@@ -1,0 +1,132 @@
+{
+  "clip": "chole_derot",
+  "procedure": "laparoscopic cholecystectomy for gallbladder torsion (gangrenous, acalculous gallbladder presenting as acute cholecystitis)",
+  "phase": "derotation (detorsion) of the twisted, free-hanging gallbladder, before decompression",
+  "phase_time_s": [3.7, 23.5],
+  "legend_phase_time_s": [0, 23],
+  "source_video": "data/videos/commons_chole/gallbladder_torsion_S1.mp4",
+  "sources": [
+    "video legend (Commons description = Additional file 1 legend of Boer et al., J Med Case Reports 2011, 5:588)",
+    "article full text PMC3259112: Case presentation, Discussion, Figure 2-4 legends"
+  ],
+  "notes": "phase_time_s is the clip window used by the pipeline; the authors' derotation phase is 0-23 s (legend_phase_time_s). The 0-3.7 s part is excluded by the pipeline (suspected shot change, a data-prep finding, not text). Excluded inputs: the SOURCE.md 'Shots:' line (which instrument touches what in each shot) is a human observation of the frames and was not used. Extra keys added to the schema: instruments[].id (referenced by actions/openings), organs[].sam_prompt_alt (fallback prompts), background[].source.",
+  "patient": {
+    "age": 89,
+    "sex": "female",
+    "condition": "gallbladder torsion: two-fold twist around the cystic duct, strongly hydropic and fully necrotic (gangrenous) gallbladder without stones, gangrene extending into cystic duct and artery; clinically acute cholecystitis (leukocytosis, CRP 48). Prior abdominal surgery decades ago (rectopexy, retropubic bladder suspension, hysterectomy; median laparotomy scar)."
+  },
+  "organs": [
+    {
+      "name": "gallbladder",
+      "sam_prompt": "gallbladder",
+      "sam_prompt_alt": ["green organ", "dark sac"],
+      "role": "primary",
+      "expected_visibility": "most",
+      "pathology": "two-fold torsion about the cystic duct/artery axis; strongly hydropic (distended with fluid); gangrenous wall over the whole organ (dark, necrotic); wall 7 mm on admission ultrasound; no stones; free-floating (not embedded in the liver)",
+      "consistency": "fluid-filled",
+      "expected_motion": "large rotation of the whole organ about the axis of its pedicle (cystic duct + cystic artery) as instruments undo the twist; roughly volume-preserving because it is still full (decompression comes in the next phase); local indentation where grasped; may swing like a pendulum on its pedicle when released",
+      "notes": "Size not given (CT: clearly enlarged, wall thickened). Necrotic wall may be fragile under grasping. CT at presentation: lying next to the lateral abdominal wall, horizontal long axis."
+    },
+    {
+      "name": "cystic duct",
+      "sam_prompt": "cystic duct",
+      "sam_prompt_alt": ["duct", "twisted stalk"],
+      "role": "secondary",
+      "expected_visibility": "partial",
+      "pathology": "gangrene extends into the duct; it is the axis of the two-fold torsion (twisted together with the cystic artery)",
+      "consistency": "tubular",
+      "expected_motion": "untwists (torsion about its own axis) as the gallbladder is derotated; gallbladder end follows the neck, the other end stays anchored at the common hepatic/bile duct",
+      "notes": "Legend says the recording shows the gangrenous aspect of the duct and artery, so at least part of the pedicle is expected in view."
+    },
+    {
+      "name": "cystic artery",
+      "sam_prompt": "artery",
+      "sam_prompt_alt": ["blood vessel", "twisted stalk"],
+      "role": "secondary",
+      "expected_visibility": "partial",
+      "pathology": "gangrenous aspect (legend, Figure 3 legend); twisted with the duct",
+      "consistency": "tubular",
+      "expected_motion": "untwists together with the cystic duct; proximal end anchored at the hepatic artery",
+      "notes": "Duct and artery may not be separable in the image while twisted; the segmentation step may need to treat them as one pedicle."
+    },
+    {
+      "name": "liver",
+      "sam_prompt": "liver",
+      "sam_prompt_alt": ["brown organ"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "solid parenchyma",
+      "expected_motion": "not manipulated according to the text; respiratory motion only",
+      "notes": "Liver function normal. Gallbladder fossa is not occupied by the gallbladder (not embedded). CT: free fluid between right lobe and diaphragm."
+    },
+    {
+      "name": "common hepatic duct",
+      "sam_prompt": "bile duct",
+      "sam_prompt_alt": ["duct"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static anchor of the cystic duct (respiratory motion only)",
+      "notes": "The article says cystic and hepatic duct were both clearly seen (critical view) at some point of the operation; not tied to this phase."
+    }
+  ],
+  "connections": [
+    {"a": "gallbladder", "b": "cystic duct", "type": "suspended by", "evidence": "The gallbladder hung from the cystic duct and artery instead of lying in the liver (article, Case presentation); duct continuous with the gallbladder neck (anatomy).", "confidence": "high"},
+    {"a": "gallbladder", "b": "cystic artery", "type": "suspended by", "evidence": "Same sentence: hanging from the cystic duct and artery (article, Case presentation); Figure 4 legend: rotated around duct and artery.", "confidence": "high"},
+    {"a": "gallbladder", "b": "liver bed", "type": "free", "evidence": "Gallbladder not embedded in the liver (article, Case presentation) = floating gallbladder; Discussion describes this variant as a missing mesentery (general, not stated as proven for this patient). Do NOT attach the gallbladder to the liver.", "confidence": "high"},
+    {"a": "cystic duct", "b": "cystic artery", "type": "adjacent", "evidence": "Both form the pedicle around which the gallbladder twisted two-fold (article, Case presentation; Figure 4 legend). They are wound around each other at the start of this phase.", "confidence": "high"},
+    {"a": "cystic duct", "b": "common hepatic duct", "type": "attached", "evidence": "Normal biliary anatomy (cystic duct joins the hepatic duct to form the common bile duct); article mentions both ducts at the critical view. This is the fixed anchor of the pedicle.", "confidence": "high"},
+    {"a": "cystic artery", "b": "hepatic artery (right)", "type": "attached", "evidence": "Anatomy (cystic artery usually branches from the right hepatic artery; origin varies). Not in the text.", "confidence": "medium"},
+    {"a": "gallbladder", "b": "body wall (lateral abdominal wall)", "type": "adjacent", "evidence": "CT at presentation: hydropic gallbladder next to the lateral abdominal wall (article, Figure 2 legend). Position at laparoscopy may differ.", "confidence": "low"}
+  ],
+  "instruments": [
+    {
+      "id": "grasper",
+      "type": "grasper",
+      "sam_prompt": "grasper",
+      "sam_prompt_alt": ["surgical instrument", "forceps"],
+      "shaft_diameter_mm": 5,
+      "count": null,
+      "evidence": "Legend names a derotation phase; turning a hanging gallbladder implies grasping instrument(s), but no instrument is named for this phase in legend or article. 5 mm is a typical laparoscopic default.",
+      "confidence": "low",
+      "notes": "Type, number and grip points must come from the vision steps."
+    }
+  ],
+  "actions": [
+    {"time_s": [3.7, 23.5], "instrument": "grasper", "verb": "rotate (derotate)", "target": "gallbladder", "evidence": "Legend: derotation of the gallbladder, 0-23 s; article: two-fold torsion around the cystic duct; Discussion: laparoscopy should aim at detorsion and decompression before removal.", "confidence": "high for verb/target/time window; low for the instrument"},
+    {"time_s": [3.7, 23.5], "instrument": null, "verb": "untwist (passively, via the gallbladder rotation)", "target": "cystic duct and cystic artery", "evidence": "Consequence of derotation of a gallbladder twisted about its pedicle (legend + article).", "confidence": "medium"},
+    {"time_s": null, "instrument": null, "verb": "inspect", "target": "gallbladder, cystic duct, cystic artery", "evidence": "Legend: recordings during inspection show the rotated, gangrenous gallbladder, duct and artery; timing relative to derotation not given.", "confidence": "medium"}
+  ],
+  "openings": [
+    {"organ": "gallbladder", "instrument": null, "kind": "none", "site": "-", "time_s": [3.7, 23.5], "evidence": "Decompression, the first step that would open the gallbladder, follows this phase (legend: 24-33 s). Grasping the wall is not an opening.", "confidence": "high"},
+    {"organ": "cystic duct", "instrument": null, "kind": "none", "site": "-", "time_s": [3.7, 23.5], "evidence": "Clipping/division belongs to the cholecystectomy phase (legend: 34-42 s; clips visible at 35 s).", "confidence": "high"},
+    {"organ": "cystic artery", "instrument": null, "kind": "none", "site": "-", "time_s": [3.7, 23.5], "evidence": "As for the cystic duct.", "confidence": "high"},
+    {"organ": "liver", "instrument": null, "kind": "none", "site": "-", "time_s": [3.7, 23.5], "evidence": "No liver manipulation described.", "confidence": "high"}
+  ],
+  "camera": {
+    "scope": "laparoscope; diameter and angle not stated (10 mm, 0 or 30 degree is typical; low confidence)",
+    "notes": "Text gives no port positions or patient position. Video 640x480, picture rows 59-419 (data prep)."
+  },
+  "background": [
+    {"name": "peri-gallbladder fat", "sam_prompt": "fat", "source": "text: CT showed fatty infiltration around the gallbladder (article, Figure 2 legend)"},
+    {"name": "free fluid", "sam_prompt": "fluid", "source": "text: CT/ultrasound showed fluid above and below the liver and around the gallbladder (article); presence at laparoscopy not stated"},
+    {"name": "blood", "sam_prompt": "blood", "source": "generic default (not from text)"},
+    {"name": "gauze", "sam_prompt": "gauze", "source": "generic default (not from text)"}
+  ],
+  "physiology": [
+    "respiration: ventilation moves the liver and the hepatic hilum (the pedicle anchor) through the diaphragm; transmitted to the hanging gallbladder through its pedicle (anatomy, not in text; expected small, periodic)",
+    "heartbeat transmission: negligible in the right upper quadrant (general knowledge)",
+    "passive gravity swing: a gallbladder that hangs only from its pedicle can sway when released (follows from the article's free-floating finding)",
+    "pneumoperitoneum assumed (standard laparoscopy; not stated)"
+  ],
+  "uncertain": [
+    "Which instrument(s) perform the derotation, how many, and where they grip (fundus, body, neck); the text names none.",
+    "Direction of rotation (clockwise/anticlockwise as seen from the hilum) and how much of the two-fold twist (about 720 deg if 'two-fold' means two turns) is undone inside 3.7-23.5 s.",
+    "Whether anything besides the cystic duct and artery attaches to the gallbladder (adhesions, omentum, peritoneal strands); the text only says it is not embedded in the liver, and the patient had earlier abdominal operations.",
+    "Which other organs are visible (liver, hepatic duct, duodenum, omentum) and how the camera is oriented; the text says nothing about the view.",
+    "Laparoscope diameter/angle and instrument shaft diameters (needed for scale); only typical defaults are given.",
+    "Gallbladder size and fill (only 'strongly hydropic' / 'clearly enlarged'); whether the necrotic wall tears or leaks during handling."
+  ]
+}

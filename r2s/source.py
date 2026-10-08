@@ -16,6 +16,8 @@ def frames(clip):
                 continue
             if k > b:
                 break
+            if (k - a) % s.get('stride', 1):           # v2 clips keep every stride-th frame of their window
+                continue
             if 'crop_rows' in s:
                 f = f[s['crop_rows'][0]:s['crop_rows'][1]]
             out.append(np.ascontiguousarray(f[..., :3]))

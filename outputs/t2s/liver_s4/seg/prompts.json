@@ -1,0 +1,335 @@
+{
+ "clip": "liver_s4",
+ "derived_from": "liver_dx/seg/prompts.json (scene 4 frames only, re-indexed: new = (4*old - 904) / 2)",
+ "objects": {
+  "liver": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 44,
+     "pos": [
+      [
+       110,
+       200
+      ],
+      [
+       180,
+       250
+      ],
+      [
+       240,
+       235
+      ]
+     ],
+     "neg": [
+      [
+       300,
+       60
+      ],
+      [
+       370,
+       205
+      ],
+      [
+       450,
+       420
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       90,
+       170
+      ],
+      [
+       170,
+       215
+      ],
+      [
+       275,
+       235
+      ]
+     ],
+     "neg": [
+      [
+       330,
+       40
+      ],
+      [
+       370,
+       180
+      ],
+      [
+       330,
+       380
+      ]
+     ]
+    }
+   ],
+   "notes": "Prompted only where the identity is reasonably clear: scenes S4/S5 (suturing at the liver tip). Points on the maroon-purple glossy left lobe, left of the sutured knob. Not prompted in S1/S2 (see 'purple organ: liver or gallbladder') or S3 (no tissue there is clearly liver). Left out on purpose: the darker purple-grey lobe below it in k310 (30-210, 270-390) and the maroon surface above it in k248/k310 (20-200, 0-130). Both may be liver, but they could also be stomach or diaphragm. Frame 346 is an extra anchor, not a keyframe."
+  },
+  "left triangular ligament": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 44,
+     "pos": [
+      [
+       345,
+       215
+      ],
+      [
+       385,
+       215
+      ]
+     ],
+     "neg": [
+      [
+       290,
+       250
+      ],
+      [
+       360,
+       110
+      ],
+      [
+       455,
+       210
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       365,
+       185
+      ],
+      [
+       395,
+       180
+      ]
+     ],
+     "neg": [
+      [
+       275,
+       240
+      ],
+      [
+       360,
+       90
+      ],
+      [
+       450,
+       190
+      ]
+     ]
+    }
+   ],
+   "notes": "The red lobulated knob at the tip of the left lobe, where the suture goes in (appendix fibrosa at the left end of the ligament, the leak site). Visible from the start of S4 to the end of the clip and tied by frame ~336. The thin membrane part of the ligament, running up to the diaphragm, is not separable in the images; at most it shows as a red crease on the diaphragm above the knob. Its dark red colour could be partly clot, but the needle passes through it, so it is tissue. In S3 the probably-same tissue is prompted separately as 'red leak tissue: ...' because that identification is less certain."
+  },
+  "diaphragm": {
+   "confidence": "medium",
+   "prompts": [
+    {
+     "frame": 44,
+     "pos": [
+      [
+       260,
+       50
+      ],
+      [
+       330,
+       95
+      ],
+      [
+       440,
+       70
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       220
+      ],
+      [
+       370,
+       200
+      ],
+      [
+       460,
+       210
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       280,
+       40
+      ],
+      [
+       350,
+       75
+      ],
+      [
+       470,
+       50
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       200
+      ],
+      [
+       370,
+       180
+      ],
+      [
+       450,
+       190
+      ]
+     ]
+    }
+   ],
+   "notes": "S4/S5: a dome-shaped surface at the top of the image, orange-pink with fine vessels. It is hyperaemic just above the knob and pale lilac/whitish further right, with no edge between the two, so I prompted both as one surface. Not prompted in S1 (the pale pink upper structure there may be diaphragm or liver) or S3 (the pink surfaces there are ambiguous)."
+  },
+  "fat / omentum": {
+   "confidence": "high",
+   "prompts": [
+    {
+     "frame": 44,
+     "pos": [
+      [
+       520,
+       420
+      ],
+      [
+       560,
+       295
+      ],
+      [
+       330,
+       350
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       250
+      ],
+      [
+       460,
+       210
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       250,
+       400
+      ],
+      [
+       480,
+       380
+      ],
+      [
+       580,
+       330
+      ]
+     ],
+     "neg": [
+      [
+       150,
+       200
+      ],
+      [
+       120,
+       330
+      ],
+      [
+       450,
+       190
+      ]
+     ]
+    }
+   ],
+   "notes": "Yellow-orange lobulated fat with glossy surface and small vessels: lower-left of k62 (this part of the wipe frame is the incoming S2 picture), bottom of S2 (anchor frame 80), bottom/right of k248 and k310 (between and below the instrument shafts). In k310 parts of it are bile-tinged yellow-green. Probably greater omentum; could partly be epiploic fat of the colon."
+  },
+  "gauze or sponge at leak site": {
+   "confidence": "low",
+   "prompts": [
+    {
+     "frame": 44,
+     "pos": [
+      [
+       445,
+       205
+      ],
+      [
+       475,
+       225
+      ]
+     ],
+     "neg": [
+      [
+       370,
+       205
+      ],
+      [
+       450,
+       120
+      ],
+      [
+       560,
+       300
+      ]
+     ]
+    },
+    {
+     "frame": 168,
+     "pos": [
+      [
+       440,
+       185
+      ],
+      [
+       470,
+       205
+      ]
+     ],
+     "neg": [
+      [
+       370,
+       180
+      ],
+      [
+       470,
+       50
+      ],
+      [
+       560,
+       280
+      ]
+     ]
+    }
+   ],
+   "notes": "ADDED, low confidence. In S4 a beige, finely porous mass sits just right of the sutured knob (k248 (410-510,170-255), k310 (410-500,150-235)). Its texture is unlike the omentum, and the S3 gauze weave is not visible on it. It is most likely a hemostatic sponge or a gauze piece soaked with bile/blood, and could be fibrin-coated fat. In S5 (~336-373) a dark-red, blood-soaked mass with a crinkled/woven texture and a white-yellow nodule lie at the same site. I could not tell whether that is the same item, so S5 is not prompted for this object."
+  }
+ },
+ "not_visible": [
+  "aberrant bile duct: not seen as a structure. The leak shows only as an intermittent bile drip in S3 from a bile-stained point at the lower edge of the red leak tissue ((328,78) in k124, frames ~118-124 and ~150) and as the site of the sutured knob in S4. Too small to prompt.",
+  "gallbladder: not identifiable with confidence. The S1/S2 purple organ may be a hydropic gallbladder (see added object 'purple organ: liver or gallbladder').",
+  "stomach (pylorus): not identified. The purple-grey lobe below the liver in k310 (30-210, 270-390) could be stomach or liver; not prompted.",
+  "duodenum: not identified. Two unidentified bowel-like structures were not prompted: the pink tubular structure right of the suction cannula in S2 (frame 80, ~(510-620, 130-340)), and the orange structure with a ring-shaped lumen right of the gauze in S3 (k186 (500-620, 220-440); lumen visible ~frames 192-205). Each could be a bowel loop, a fat fold or a drain.",
+  "common bile duct: not seen.",
+  "blood: no free blood pool in the keyframes. There is blood staining on the S3 gauze, and in S5 (~336-373) a dark-red blood-soaked mass/clot at the leak site, which is not prompted (see 'gauze or sponge at leak site')."
+ ],
+ "notes": "IMPORTANT: the clip is not one continuous shot. It is edited with page-curl wipe transitions at about frames 61-66, 97-102, 221-225 and 315-319 (~10, 16, 35.5, 50.5 s), giving five scenes. S1 0-61: view into a recess under/along an organ with a bile pool and a thin cannula. S2 66-97: purple organ over omentum, bile being aspirated. S3 102-221: gauze packed below a red inflamed tissue band that drips bile. S4 225-315: suturing the knob at the tip of the liver's left lobe (liver left, diaphragm top, omentum bottom, two needle holders, blue suture). S5 319-373: after the knot, with a blood-soaked mass at the leak site. The data prep's 'no cuts detected' missed these wipes. Keyframe 62 is mid-wipe: its upper-right is the warped outgoing S1 picture and its lower-left the incoming S2 picture. Because the tracker would otherwise jump across scenes, I added anchor prompts on three non-key frames: 30 (S1), 80 (S2) and 346 (S5). I checked each point on my own 2x grid renders of data/frames.npz, and all points fall inside valid.png. Organ identity is solid only in S4/S5. For S1/S2 and S3 the main tissues are given as explicitly ambiguous added objects instead of guessing a spec name. Instruments are not prompted. The tracker should treat the clip as five scenes: masks will likely drop or jump at each wipe, and objects prompted only in later scenes may be hallucinated in earlier ones."
+}

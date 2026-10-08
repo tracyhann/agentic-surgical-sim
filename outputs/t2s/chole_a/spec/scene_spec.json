@@ -1,0 +1,261 @@
+{
+  "clip": "chole_a",
+  "procedure": "laparoscopic cholecystectomy for gallbladder torsion (gangrenous, acalculous gallbladder presenting as acute cholecystitis)",
+  "phase": "decompression of the distended gallbladder (after derotation, before the cholecystectomy)",
+  "phase_time_s": [
+    23.5,
+    33.5
+  ],
+  "legend_phase_time_s": [
+    24,
+    33
+  ],
+  "source_video": "data/videos/commons_chole/gallbladder_torsion_S1.mp4",
+  "sources": [
+    "video legend (Commons description = Additional file 1 legend of Boer et al., J Med Case Reports 2011, 5:588)",
+    "article full text PMC3259112: Case presentation, Discussion, Figure 2-4 legends"
+  ],
+  "notes": "Control clip (same window as v1 shot A). phase_time_s is the pipeline's shot window (cuts at 23.5 and 33.5 s); the legend gives 24-33 s for decompression. Excluded inputs: the SOURCE.md 'Shots:' line (which instrument touches what) is a human observation of the frames and was not used, so anything v1 modelled from the frames (instrument types in this shot, peritoneal strands / membrane) is NOT in this spec and must come from vision. Extra keys: instruments[].id, organs[].sam_prompt_alt, background[].source.",
+  "patient": {
+    "age": 89,
+    "sex": "female",
+    "condition": "gallbladder torsion: two-fold twist around the cystic duct, strongly hydropic and fully necrotic (gangrenous) gallbladder without stones, gangrene extending into cystic duct and artery; clinically acute cholecystitis. Prior abdominal surgery decades ago (rectopexy, retropubic bladder suspension, hysterectomy; median laparotomy scar)."
+  },
+  "organs": [
+    {
+      "name": "gallbladder",
+      "sam_prompt": "gallbladder",
+      "sam_prompt_alt": [
+        "green organ",
+        "dark sac"
+      ],
+      "role": "primary",
+      "expected_visibility": "most",
+      "pathology": "strongly hydropic (distended with fluid), gangrenous wall over the whole organ, wall 7 mm on admission ultrasound, no stones; free-floating on its pedicle; twist presumably undone in the previous phase",
+      "consistency": "fluid-filled",
+      "expected_motion": "loses volume (deflates) as its contents are drawn off; wall becomes slack and folds; little whole-organ rotation expected (derotation is the previous phase); local deformation at grasp and puncture points",
+      "notes": "Volume is NOT conserved in this clip once the lumen is opened. Contents not described (no stones; necrotic gallbladder fluid may be dark or bloody)."
+    },
+    {
+      "name": "cystic duct",
+      "sam_prompt": "cystic duct",
+      "sam_prompt_alt": [
+        "duct",
+        "stalk"
+      ],
+      "role": "secondary",
+      "expected_visibility": "unknown",
+      "pathology": "gangrene extends into the duct; was the torsion axis",
+      "consistency": "tubular",
+      "expected_motion": "follows the gallbladder neck; anchored at the common hepatic/bile duct",
+      "notes": "Visibility in this window not stated."
+    },
+    {
+      "name": "cystic artery",
+      "sam_prompt": "artery",
+      "sam_prompt_alt": [
+        "blood vessel"
+      ],
+      "role": "secondary",
+      "expected_visibility": "unknown",
+      "pathology": "gangrenous aspect (legend, Figure 3 legend)",
+      "consistency": "tubular",
+      "expected_motion": "follows the gallbladder neck; anchored at the hepatic artery",
+      "notes": "May be indistinguishable from the duct in the image."
+    },
+    {
+      "name": "liver",
+      "sam_prompt": "liver",
+      "sam_prompt_alt": [
+        "brown organ"
+      ],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "solid parenchyma",
+      "expected_motion": "not manipulated according to the text; respiratory motion only",
+      "notes": "The gallbladder does not lie in the liver bed (not embedded)."
+    }
+  ],
+  "connections": [
+    {
+      "a": "gallbladder",
+      "b": "cystic duct",
+      "type": "suspended by",
+      "evidence": "The gallbladder hung from the cystic duct and artery instead of lying in the liver (article, Case presentation).",
+      "confidence": "high"
+    },
+    {
+      "a": "gallbladder",
+      "b": "cystic artery",
+      "type": "suspended by",
+      "evidence": "Same sentence (article, Case presentation); Figure 4 legend: rotated around duct and artery.",
+      "confidence": "high"
+    },
+    {
+      "a": "gallbladder",
+      "b": "liver bed",
+      "type": "free",
+      "evidence": "Not embedded in the liver (article, Case presentation) = floating gallbladder. Do NOT attach it to the liver.",
+      "confidence": "high"
+    },
+    {
+      "a": "cystic duct",
+      "b": "cystic artery",
+      "type": "adjacent",
+      "evidence": "Together they form the pedicle (article); after derotation (legend 0-23 s) they are presumably no longer wound around each other.",
+      "confidence": "medium"
+    },
+    {
+      "a": "cystic duct",
+      "b": "common hepatic duct",
+      "type": "attached",
+      "evidence": "Normal biliary anatomy; fixed anchor of the pedicle. Not described for this window.",
+      "confidence": "high"
+    },
+    {
+      "a": "cystic artery",
+      "b": "hepatic artery (right)",
+      "type": "attached",
+      "evidence": "Anatomy (origin varies); not in text.",
+      "confidence": "medium"
+    }
+  ],
+  "instruments": [
+    {
+      "id": "decompression_device",
+      "type": "unknown",
+      "sam_prompt": "needle",
+      "sam_prompt_alt": [
+        "suction tube",
+        "surgical instrument"
+      ],
+      "shaft_diameter_mm": null,
+      "count": null,
+      "evidence": "Legend: decompression 24-33 s. Neither legend nor article names the device (could be an aspiration needle, a trocar or a suction cannula).",
+      "confidence": "low"
+    },
+    {
+      "id": "grasper",
+      "type": "grasper",
+      "sam_prompt": "grasper",
+      "sam_prompt_alt": [
+        "surgical instrument",
+        "forceps"
+      ],
+      "shaft_diameter_mm": 5,
+      "count": null,
+      "evidence": "Not stated for this window. Graspers are standard in laparoscopic cholecystectomy and were needed for the derotation just before; 5 mm is a typical default.",
+      "confidence": "low"
+    }
+  ],
+  "actions": [
+    {
+      "time_s": [
+        23.5,
+        33.5
+      ],
+      "instrument": "decompression_device",
+      "verb": "decompress (open and empty the lumen)",
+      "target": "gallbladder",
+      "evidence": "Legend: decompression 24-33 s, after derotation; Discussion: decompression and detorsion are the goals of laparoscopy in torsion.",
+      "confidence": "high for verb/target/time; low for the instrument type"
+    }
+  ],
+  "openings": [
+    {
+      "organ": "gallbladder",
+      "instrument": null,
+      "kind": "puncture",
+      "site": "not stated (fundus is the usual site; low confidence)",
+      "time_s": [
+        23.5,
+        33.5
+      ],
+      "evidence": "Decompressing a distended, closed gallbladder requires opening its lumen; legend places decompression at 24-33 s. Method and site are not described.",
+      "confidence": "medium",
+      "notes": "instrument is left null on purpose: the vision/instrument step must name the one tracked tool that enters the lumen; only that tool gets the opening. Puncture must be cut into the mesh at the observed entry point."
+    },
+    {
+      "organ": "cystic duct",
+      "instrument": null,
+      "kind": "none",
+      "site": "-",
+      "time_s": [
+        23.5,
+        33.5
+      ],
+      "evidence": "Clipping/division belongs to the cholecystectomy phase (legend 34-42 s).",
+      "confidence": "high"
+    },
+    {
+      "organ": "cystic artery",
+      "instrument": null,
+      "kind": "none",
+      "site": "-",
+      "time_s": [
+        23.5,
+        33.5
+      ],
+      "evidence": "As for the cystic duct.",
+      "confidence": "high"
+    },
+    {
+      "organ": "liver",
+      "instrument": null,
+      "kind": "none",
+      "site": "-",
+      "time_s": [
+        23.5,
+        33.5
+      ],
+      "evidence": "No liver manipulation described.",
+      "confidence": "high"
+    }
+  ],
+  "camera": {
+    "scope": "laparoscope; diameter and angle not stated (10 mm, 0 or 30 degree is typical; low confidence)",
+    "notes": "Text gives no port positions or patient position. Video 640x480, picture rows 59-419 (data prep)."
+  },
+  "background": [
+    {
+      "name": "gallbladder contents (spilled/aspirated fluid)",
+      "sam_prompt": "fluid",
+      "source": "inferred from text: decompression of a strongly hydropic gallbladder releases fluid; appearance not described"
+    },
+    {
+      "name": "peri-gallbladder fat",
+      "sam_prompt": "fat",
+      "source": "text: CT fatty infiltration around the gallbladder (article, Figure 2 legend)"
+    },
+    {
+      "name": "free fluid",
+      "sam_prompt": "fluid",
+      "source": "text: CT/ultrasound fluid above/below the liver and around the gallbladder (article); presence at laparoscopy not stated"
+    },
+    {
+      "name": "blood",
+      "sam_prompt": "blood",
+      "source": "generic default (not from text)"
+    },
+    {
+      "name": "gauze",
+      "sam_prompt": "gauze",
+      "source": "generic default (not from text)"
+    }
+  ],
+  "physiology": [
+    "respiration: ventilation moves the liver and hilum through the diaphragm and is transmitted to the gallbladder via its pedicle (anatomy, not in text; small, periodic)",
+    "heartbeat transmission: negligible here (general knowledge)",
+    "deflation: the gallbladder volume falls as contents leave; this is caused by the instrument, not physiology, but it is the main non-rigid change to model",
+    "pneumoperitoneum assumed (standard laparoscopy; not stated)"
+  ],
+  "uncertain": [
+    "How decompression is done (needle aspiration, trocar, suction cannula, incision) and with which instrument; where the wall is entered and when inside 23.5-33.5 s.",
+    "Which other instruments are in view and what they touch (holding the gallbladder, retracting tissue); v1's 'probe on peritoneal strands' is a frame observation, not text, and is not encoded here.",
+    "Whether peritoneal strands, adhesions or other membranes attach to the gallbladder (text: only the duct/artery pedicle; prior laparotomies make adhesions possible).",
+    "How much volume is removed in this window and whether contents spill into the field.",
+    "Whether the derotation was complete by 23.5 s (pedicle untwisted) or continues.",
+    "Visibility of duct, artery and liver; laparoscope and shaft diameters (scale)."
+  ]
+}

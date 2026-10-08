@@ -1,0 +1,200 @@
+{
+  "clip": "liver_dx",
+  "procedure": "emergency diagnostic laparoscopy for bile peritonitis, with intracorporeal suture closure of a bile leak at the left triangular ligament of the liver",
+  "phase": "diagnostic laparoscopy and detection of the bile leak at the left triangular ligament (suture closure possibly included)",
+  "phase_time_s": [0.0, 59.9],
+  "legend_phase_time_s": null,
+  "source_video": "data/videos/commons_liver/diagnostic_laparoscopy_S1.mp4",
+  "sources": [
+    "video legend (Commons description = Additional file 1 / Video 1 legend of Kaplan, World J Surg Oncol 2012, 10:142)",
+    "article full text PMC3506572: Case report, Discussion, Figure 1 legend"
+  ],
+  "notes": "One continuous shot (data prep). The legend gives no time stamps; the order of events inside the 60 s is unknown, so all action times are null. The legend only mentions exploration and leak detection; the article cites Video 1 right after saying the leak was closed with a few intracorporeal sutures, so suturing is probably, not certainly, in the clip. Excluded inputs: the SOURCE.md 'Seen in the video' line was not used. Extra keys: instruments[].id, organs[].sam_prompt_alt, background[].source.",
+  "patient": {
+    "age": 58,
+    "sex": "male",
+    "condition": "bile peritonitis (about 1 L of bile aspirated) from an aberrant bile duct that ruptured on its own inside the appendix fibrosa hepatis, at the left end of the left triangular ligament; raised biliary pressure from an ampullary adenocarcinoma diagnosed later; gallbladder hydrops on ultrasound; liver function normal"
+  },
+  "organs": [
+    {
+      "name": "liver",
+      "sam_prompt": "liver",
+      "sam_prompt_alt": ["brown organ", "liver lobe"],
+      "role": "primary",
+      "expected_visibility": "most",
+      "pathology": "no parenchymal disease described (normal liver tests); surface probably bile-stained from the peritonitis (inference); the leak is at the tip of the left lateral lobe region (left triangular ligament)",
+      "consistency": "solid parenchyma",
+      "expected_motion": "respiratory motion; the left lobe is likely lifted or pushed aside to expose the left subphrenic space and the triangular ligament (inference from the leak site, not stated); local indentation under instruments",
+      "notes": "Visibility 'most' because the legend centres the video on the liver's triangular ligament (medium confidence)."
+    },
+    {
+      "name": "left triangular ligament",
+      "sam_prompt": "ligament",
+      "sam_prompt_alt": ["membrane", "fibrous band"],
+      "role": "primary",
+      "expected_visibility": "partial",
+      "pathology": "contains an aberrant bile duct in its fibrous left end (appendix fibrosa hepatis) that perforated spontaneously and leaks bile; closed with a few intracorporeal sutures",
+      "consistency": "thin membrane",
+      "expected_motion": "stretched when the left lobe is moved; pierced and pulled together by the suture (if suturing is in the clip)",
+      "notes": "Includes the appendix fibrosa hepatis (fibrous tip at the ligament's left end)."
+    },
+    {
+      "name": "aberrant bile duct",
+      "sam_prompt": "bile leak",
+      "sam_prompt_alt": ["bile duct", "green fluid"],
+      "role": "secondary",
+      "expected_visibility": "edge",
+      "pathology": "spontaneous perforation (source of the bile leak)",
+      "consistency": "tubular",
+      "expected_motion": "none of its own; bile oozes from the perforation; closed by the suture",
+      "notes": "A small duct inside the ligament; probably seen only as the leak point / bile trickle, not as a tube."
+    },
+    {
+      "name": "diaphragm",
+      "sam_prompt": "diaphragm",
+      "sam_prompt_alt": ["muscle wall"],
+      "role": "secondary",
+      "expected_visibility": "partial",
+      "pathology": null,
+      "consistency": "thin membrane",
+      "expected_motion": "respiratory excursion (moves with ventilation); otherwise static",
+      "notes": "Muscular sheet (closest schema option: thin membrane). Forms the roof of the left subphrenic space where bile kept collecting; the triangular ligament attaches the liver to it."
+    },
+    {
+      "name": "gallbladder",
+      "sam_prompt": "gallbladder",
+      "sam_prompt_alt": ["sac"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": "hydrops on ultrasound; intact (no perforation) at laparoscopy",
+      "consistency": "fluid-filled",
+      "expected_motion": "static apart from respiration; may be pushed during inspection",
+      "notes": "Inspected as a possible leak source; whether inside this clip is not stated."
+    },
+    {
+      "name": "stomach (pylorus)",
+      "sam_prompt": "stomach",
+      "sam_prompt_alt": ["bowel"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": null,
+      "expected_motion": "static; may be moved during inspection",
+      "notes": "Hollow viscus. Pylorus inspected and intact; whether inside this clip is not stated."
+    },
+    {
+      "name": "duodenum",
+      "sam_prompt": "intestine",
+      "sam_prompt_alt": ["duodenum", "bowel"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": null,
+      "consistency": "tubular",
+      "expected_motion": "static; may be moved during inspection",
+      "notes": "Inspected and intact; whether inside this clip is not stated."
+    },
+    {
+      "name": "common bile duct",
+      "sam_prompt": "bile duct",
+      "sam_prompt_alt": ["duct"],
+      "role": "context",
+      "expected_visibility": "unknown",
+      "pathology": "intact at laparoscopy (later dilated by the ampullary tumour on MRCP)",
+      "consistency": "tubular",
+      "expected_motion": "static",
+      "notes": "Inspected as a possible leak source; usually hidden in the hepatoduodenal ligament."
+    }
+  ],
+  "connections": [
+    {"a": "left triangular ligament", "b": "liver", "type": "attached", "evidence": "Anatomy: the left triangular ligament is a peritoneal fold from the left lateral lobe; article puts the leak at its left-end part.", "confidence": "high"},
+    {"a": "left triangular ligament", "b": "diaphragm", "type": "attached", "evidence": "Anatomy: the ligament fixes the left lobe to the undersurface of the diaphragm. Not stated in the text.", "confidence": "high"},
+    {"a": "liver", "b": "diaphragm", "type": "suspended by", "evidence": "Anatomy: liver hangs from the diaphragm/anterior wall by coronary, triangular and falciform ligaments; the left lobe is tethered at its tip by the left triangular ligament.", "confidence": "high"},
+    {"a": "aberrant bile duct", "b": "left triangular ligament", "type": "attached", "evidence": "Article (Case report, Discussion): the leaking aberrant duct lies in the appendix fibrosa hepatis at the left end of the triangular ligament.", "confidence": "high"},
+    {"a": "aberrant bile duct", "b": "liver", "type": "attached", "evidence": "Aberrant ducts (vasa aberrantia) drain liver tissue and may run in the left triangular ligament (article, Discussion).", "confidence": "medium"},
+    {"a": "left triangular ligament", "b": "aberrant bile duct", "type": "sutured", "evidence": "Article: the leak was controlled with a few intracorporeal sutures, citing Video 1. Whether the suturing falls inside this 60 s clip is not certain.", "confidence": "medium"},
+    {"a": "gallbladder", "b": "liver bed", "type": "attached", "evidence": "Normal anatomy; the gallbladder was intact (article). Not otherwise described.", "confidence": "medium"},
+    {"a": "stomach (pylorus)", "b": "duodenum", "type": "attached", "evidence": "Anatomy (continuous); both inspected (article).", "confidence": "high"},
+    {"a": "liver", "b": "stomach (pylorus)", "type": "adjacent", "evidence": "Anatomy (left lobe lies over the stomach); not in text.", "confidence": "medium"}
+  ],
+  "instruments": [
+    {
+      "id": "needle_holder",
+      "type": "needle holder",
+      "sam_prompt": "needle holder",
+      "sam_prompt_alt": ["surgical instrument", "forceps"],
+      "shaft_diameter_mm": 5,
+      "count": null,
+      "evidence": "Article: leak closed with a few intracorporeal sutures (Video 1 cited), which needs a laparoscopic needle holder. 5 mm is a typical default.",
+      "confidence": "medium"
+    },
+    {
+      "id": "suture_needle",
+      "type": "unknown",
+      "sam_prompt": "needle",
+      "sam_prompt_alt": ["suture", "thread"],
+      "shaft_diameter_mm": null,
+      "count": null,
+      "evidence": "Same sentence (intracorporeal sutures). A curved needle with thread, carried by the needle holder; not a rigid shaft instrument.",
+      "confidence": "medium",
+      "notes": "The only object allowed to pass through tissue (see openings)."
+    },
+    {
+      "id": "suction",
+      "type": "suction/irrigation",
+      "sam_prompt": "suction tube",
+      "sam_prompt_alt": ["metal tube", "surgical instrument"],
+      "shaft_diameter_mm": 5,
+      "count": null,
+      "evidence": "Article: about 1 litre of bile was aspirated during the laparoscopy. Use within this clip not stated. Diameter is a default (5 or 10 mm).",
+      "confidence": "low"
+    },
+    {
+      "id": "grasper",
+      "type": "grasper",
+      "sam_prompt": "grasper",
+      "sam_prompt_alt": ["surgical instrument", "forceps"],
+      "shaft_diameter_mm": 5,
+      "count": null,
+      "evidence": "Not stated. Exploration of several organs and intracorporeal knot tying usually need a second instrument (grasper or second needle holder).",
+      "confidence": "low"
+    }
+  ],
+  "actions": [
+    {"time_s": null, "instrument": null, "verb": "explore / inspect", "target": "peritoneal cavity (gallbladder, pylorus, duodenum, common bile duct)", "evidence": "Legend: diagnostic laparoscopy; article: these possible leak sites were checked and found intact. Which of them appear in the clip is not stated.", "confidence": "medium for exploration; low for each organ being in the clip"},
+    {"time_s": null, "instrument": "suction", "verb": "aspirate", "target": "bile in the peritoneal cavity / left subphrenic space", "evidence": "Article: about 1 L of bile aspirated; bile kept collecting in the left subphrenic region.", "confidence": "low (in this clip)"},
+    {"time_s": null, "instrument": null, "verb": "retract / lift", "target": "liver (left lobe)", "evidence": "Inference: the leak lies at the left end of the triangular ligament between the left lobe and diaphragm, which normally must be exposed. Not stated.", "confidence": "low"},
+    {"time_s": null, "instrument": null, "verb": "identify bile leak", "target": "left triangular ligament (appendix fibrosa hepatis)", "evidence": "Legend: the video shows the bile leak detected at the triangular ligament; article: left-end part of the ligament.", "confidence": "high"},
+    {"time_s": null, "instrument": "needle_holder", "verb": "suture (pass needle, tie intracorporeal knots)", "target": "left triangular ligament around the leaking aberrant duct", "evidence": "Article: leak controlled with a few intracorporeal sutures, citing Video 1; legend does not mention suturing.", "confidence": "medium"}
+  ],
+  "openings": [
+    {"organ": "left triangular ligament", "instrument": "suture_needle", "kind": "puncture", "site": "left end of the left triangular ligament (appendix fibrosa hepatis), around the aberrant duct perforation", "time_s": null, "evidence": "Suture closure of the leak (article, Case report); needle bites go through the ligament tissue.", "confidence": "medium", "notes": "Only the needle and thread pass through; the needle-holder jaws and shaft stay outside. Number of bites ('a few') and exact positions from vision."},
+    {"organ": "aberrant bile duct", "instrument": null, "kind": "none", "site": "pre-existing spontaneous perforation at the ligament's left end", "time_s": null, "evidence": "The perforation is a disease lesion (bile source), not an instrument entry (article).", "confidence": "high"},
+    {"organ": "liver", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "No incision or resection of the liver described; instruments only push or lift it.", "confidence": "high", "notes": "Whether suture bites also take liver capsule at the ligament base is not stated."},
+    {"organ": "diaphragm", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "No diaphragm entry described.", "confidence": "medium", "notes": "Suture bites near the ligament's diaphragmatic attachment are possible but not stated."},
+    {"organ": "gallbladder", "instrument": null, "kind": "none", "site": "-", "time_s": null, "evidence": "Gallbladder intact, only inspected (article).", "confidence": "high"}
+  ],
+  "camera": {
+    "scope": "laparoscope; diameter and angle not stated (10 mm, 0 or 30 degree is typical; low confidence)",
+    "notes": "No port or patient position given. Octagonal scope mask, picture rows 12-469 (data prep). View presumably toward the left upper quadrant / left subphrenic space for the leak (inference)."
+  },
+  "background": [
+    {"name": "bile", "sam_prompt": "bile", "source": "text: bile peritonitis with about 1 L bile; continuous bile collection in the left subphrenic region (article)"},
+    {"name": "suture thread", "sam_prompt": "suture", "source": "text: intracorporeal sutures (article)"},
+    {"name": "fat / omentum", "sam_prompt": "fat", "source": "generic default (not from text)"},
+    {"name": "blood", "sam_prompt": "blood", "source": "generic default (not from text)"},
+    {"name": "gauze", "sam_prompt": "gauze", "source": "generic default (not from text)"}
+  ],
+  "physiology": [
+    "respiration: diaphragm excursion moves the liver; strongest near the left triangular ligament, which ties the left lobe to the diaphragm (anatomy, expected, not in text)",
+    "heartbeat transmission: the heart lies just above the left hemidiaphragm, so small cardiac pulsation of the left lobe/diaphragm is possible (anatomy, low confidence)",
+    "bile ooze: bile kept accumulating in the left subphrenic space (article), so a slow bile trickle / pool from the leak point is expected until it is sutured",
+    "pneumoperitoneum assumed (standard laparoscopy; not stated)"
+  ],
+  "uncertain": [
+    "Time course of the 60 s shot: which parts show exploration, bile aspiration, leak exposure and suturing; the legend only mentions exploration and leak detection, so whether suturing is in the clip is uncertain.",
+    "Instruments in view (type, number) and which one retracts or lifts the left lobe; only suturing (needle holder) and bile aspiration (suction) are implied by the text.",
+    "Which organs besides the liver and triangular ligament are visible (gallbladder, pylorus, duodenum, common bile duct were inspected, but not necessarily in this clip), and the 3D layout of the ligament/appendix fibrosa relative to the left lobe and diaphragm.",
+    "Laparoscope type/angle and shaft diameters (scale).",
+    "Whether the aberrant duct is visible as a structure or only as the leak point; amount of bile present in this clip."
+  ]
+}
