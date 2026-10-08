@@ -2,8 +2,8 @@
 
     PYTHONPATH=. .venv/bin/python -m t2s.background <clip> [vNN] [--holdout] [--seg vNN]
 
--> outputs/t2s/<clip>/background/vNN/{model.npz, occupancy.npz, texture.png, background.obj, quality.json, NOTES.md,
-   sheet.jpg, views3d.jpg, canvas.jpg, work/}
+-> outputs/t2s/<clip>/background/vNN/{model.npz, occupancy.npz, texture.png, background.obj, body<i>.obj, quality.json,
+   NOTES.md, sheet.jpg, views3d.jpg, canvas.jpg, work/}      (--refine-cams: optional camera registration experiment)
 
 v1's backdrop (r2s/tissue/backdrop.py, outputs/iter/tissues/backdrop/v08) was a visual-only depth field; the
 gallbladder sank into it in every frame and it had fins at the canvas edge. Here:
@@ -16,13 +16,17 @@ gallbladder sank into it in every frame and it had fins at the canvas edge. Here
               when it protrudes from the surface fitted without it, otherwise it is flat and stays surface texture.
               Motion of every object = optical flow minus the flow the camera alone would cause (median EPE), as a
               ratio to the unlabelled static pixels.
-1. surface    static pixels of all frames -> metric depth -> world -> binned in a virtual reference camera (mean pose,
-              canvas = union of all footprints); per cell robust median over frames, spread = MAD. One sparse solve of
-              a confidence-weighted thin-plate height field over a single hole-free domain (one component by
-              construction) fills the hidden cells; it is constrained to stay >= margin BEHIND the back of every organ
-              in every frame (organ agent's 4D model where one exists, else front depth + thickness from the mask
-              width), so organs cannot start inside it. Meshed as a regular grid; a closed slab (surface + back + side
-              walls, watertight) and a MuJoCo height field are derived from it.
+1. surface    static pixels of all frames (minus pixels whose optical flow disagrees with the camera-only flow:
+              untracked movers) -> metric depth x a per-frame scale that puts each frame's static pixels onto the
+              multi-view median -> world -> binned in a virtual reference camera (mean pose, canvas = union of all
+              footprints); per cell robust median over frames (interior pixels preferred over the image border),
+              spread = MAD. One sparse solve of a confidence-weighted thin-plate height field over a single hole-free
+              domain (one component by construction) fills the hidden cells; it is constrained to stay >= margin
+              BEHIND the back of every organ in every frame (organ agent's 4D model where one exists, else front depth
+              + thickness from the mask's medial axis), so organs cannot start inside it. Visibility check: cells where
+              a visible organ / instrument is repeatedly seen BEHIND the surface lose their static data and are pushed
+              behind it. Meshed as a regular grid; a closed slab (surface + back + side walls, watertight) and 6 x 4
+              MuJoCo height fields (each along the camera ray through its tile, z-buffered) are derived from it.
 2. bodies     each body = 1..k convex pieces (k = smallest number of k-means clusters of its canvas footprint whose 2D
               hulls cover the footprint well), each the convex hull of the fused multi-view front points and the
               surface points under the footprint (closed, sits on the surface). Static unless a per-frame translation

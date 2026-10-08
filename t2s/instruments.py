@@ -655,9 +655,10 @@ def scaled(t, kappa=1.0, jls=1.0):
     return dict(t, radius=t['radius'] * kappa, jaw_len=t['jaw_len'] * kappa * jls)
 
 
-def frame_residuals(t, P, R0, q, idx, ob, cam, cfg, parts=False, kappa=1.0, jls=1.0):
+def frame_residuals(t, P, R0, q, idx, ob, cam, cfg, parts=False, kappa=1.0, jls=1.0, extras=True):
     """Data residuals of N items (frames idx, poses q): dict of (N, ...) arrays, already divided by their sigmas.
-    kappa scales the whole tool (apparent size / nominal), jls the jaw length."""
+    kappa scales the whole tool (apparent size / nominal), jls the jaw length. extras=False skips the scene terms
+    (background, organ coupling: zeros), for the roll / jaw grid."""
     t = scaled(t, kappa, jls)
     pr = project_prims(t, P, R0, q, cam)
     res = {}
@@ -698,10 +699,10 @@ def frame_residuals(t, P, R0, q, idx, ob, cam, cfg, parts=False, kappa=1.0, jls=
         res['outview'] = np.where(ab[:, None] & ins & (din > 0), din + 3.0, 0.0) / 5.0
     else:
         res['outview'] = np.zeros((len(idx), 3 + (pr['XB'].shape[1] - 1) + 1))
-    # hidden length beyond the visible end (tip inside an organ)
+    # hidden length beyond the visible end (tip inside an organ; replaced by the puncture terms when coupled)
     _, s_end = axis_depth(pr['O'], d, cam, ob['endpx'][idx][:, None])
     h = -s_end[:, 0]                                        # tip beyond the visible end along the shaft (m)
-    hp = ob['hid_prior'][idx]
+    hp = ob['hid_prior'][idx] & (ob.get('cpl') is None)
     h0 = ob['h0'][idx] if 'h0' in ob else np.full(len(idx), cfg['hidden_len'])
     hmax = ob['hmax'][idx] if 'hmax' in ob else np.full(len(idx), np.inf)
     res['hidden'] = np.where(hp, (h - h0) / cfg['sig_hidden'], 0.0)
@@ -712,10 +713,124 @@ def frame_residuals(t, P, R0, q, idx, ob, cam, cfg, parts=False, kappa=1.0, jls=
     res['port_out'] = np.where(zP > 0, np.maximum(inside, 0) / 10.0, 0.0)
     res['port_cam'] = np.maximum(0.03 - np.linalg.norm(P[None] - cam['pos'], axis=1), 0) / 0.003
     res['reach'] = (np.maximum(q['L'] - 0.32, 0) + np.maximum(0.05 - q['L'], 0)) / 0.005
+    res.update(scene_residuals(t, P, pr, d, idx, ob, cam, cfg) if extras else scene_zeros(len(idx)))
     if parts:
         res['_pr'] = pr
         res['_h'] = h
     return res
+
+
+BG_STATIONS = np.arange(0.0, 0.2001, 0.005)            # shaft points (m behind the tip point) tested against the background
+SCENE_KEYS = (('bg', len(BG_STATIONS)), ('punct', 1), ('in_lo', 1), ('in_hi', 1), ('enter', 1), ('hid2', 1), ('contact', 1))
+
+
+def scene_zeros(N):
+    return {k: np.zeros((N, w)) for k, w in SCENE_KEYS}
+
+
+def ray_mesh(o, d, Xm, F):
+    """Crossings of the rays o + t d (N, 3) with the triangle meshes Xm[F] (N, Nv, 3): t (N, nf) (nan = no hit), and
+    the barycentric u, v of the hits."""
+    A, B, C = Xm[:, F[:, 0]], Xm[:, F[:, 1]], Xm[:, F[:, 2]]
+    e1, e2 = B - A, C - A
+    h = np.cross(d[:, None], e2)
+    a = (e1 * h).sum(-1)
+    ok = np.abs(a) > 1e-14
+    f = np.where(ok, 1.0 / np.where(ok, a, 1.0), 0.0)
+    sv = o[:, None] - A
+    u = f * (sv * h).sum(-1)
+    qv = np.cross(sv, e1)
+    v = f * (qv * d[:, None]).sum(-1)
+    tt = f * (e2 * qv).sum(-1)
+    hit = ok & (u >= 0) & (v >= 0) & (u + v <= 1)
+    return np.where(hit, tt, np.nan), u, v
+
+
+def exit_distance(S, d, Xm, F, eps=0.0005):
+    """Distance along d from the surface point S to the next crossing of the mesh (the far wall); 0 if none."""
+    tt, _, _ = ray_mesh(S + eps * d, d, Xm, F)
+    tt = np.where(tt > 0, tt, np.nan)
+    with np.errstate(all='ignore'):
+        m = np.nanmin(tt, 1)
+    return np.where(np.isfinite(m), m + eps, 0.0)
+
+
+def bg_distance(bg, idx, X, cam):
+    """Signed distance (m) of points X (N, K, 3) to the background along frame idx's camera rays (> 0: in front;
+    nan: outside the occupancy image or behind the scope). Vectorised Background.ray_distance."""
+    Xc = np.einsum('nij,nkj->nki', cam['R'], X - cam['pos'][:, None])
+    z = Xc[..., 2]
+    zz = np.maximum(z, 1e-4)
+    u = cam['f'][:, None] * Xc[..., 0] / zz + cam['W'] / 2
+    v = cam['f'][:, None] * Xc[..., 1] / zz + cam['H'] / 2
+    s = bg['scale']
+    h, w = bg['occ'].shape[1:]
+    xi, yi = np.floor(u / s).astype(int), np.floor(v / s).astype(int)
+    ok = (xi >= 0) & (xi < w) & (yi >= 0) & (yi < h) & (z > 0.005)
+    kk = np.broadcast_to(idx[:, None], xi.shape)
+    zb = np.full(z.shape, np.nan)
+    zb[ok] = bg['occ'][kk[ok], yi[ok], xi[ok]]
+    return zb - z
+
+
+def scene_residuals(t, P, pr, d, idx, ob, cam, cfg):
+    """Scene consistency: shaft in front of the background, and the organ coupling (puncture: the shaft passes through
+    one material point S of the organ, the tip lies inside the organ beyond S; contact: the jaws are on the organ)."""
+    N = len(idx)
+    out = scene_zeros(N)
+    O = pr['O']
+    if ob.get('bg') is not None and cfg['w_bg'] > 0:
+        X = O[:, None] - BG_STATIONS[None, :, None] * d[:, None]
+        dist = bg_distance(ob['bg'], idx, X, cam)
+        need = t['radius'] + cfg['bg_margin']
+        r = np.where(np.isfinite(dist), np.maximum(need - dist, 0.0), 0.0)
+        out['bg'] = r * ob['bg_w'][idx][:, None] * cfg['w_bg'] / cfg['sig_bg']
+    cp = ob.get('cpl')
+    if cp is None:
+        return out
+    if cp['kind'] == 'puncture':
+        ins = cp['inside'][idx]
+        if ins.any():
+            S = cp['S'][idx]
+            v = S - P[None]
+            w = v - (v * d).sum(1, keepdims=True) * d
+            out['punct'][:, 0] = np.where(ins, np.linalg.norm(w, axis=1), 0.0) / cfg['sig_punct']
+            ii = np.nonzero(ins)[0]
+            if cfg['punct_mode'] == 'point':
+                # depth along the shaft measured from the puncture point S (the line is pulled through S)
+                h = ((O - S) * d).sum(1)
+                room = np.zeros(N)
+                room[ii] = exit_distance(S[ii], d[ii], cp['X4'][idx[ii]], cp['F']) - cp['margin']
+            else:
+                # 'line': from where this frame's shaft line actually enters the organ (first crossing from the port)
+                # to where it leaves it (next crossing); frames whose line misses the organ fall back to S
+                h = ((O - S) * d).sum(1)
+                room = np.zeros(N)
+                tt, _, _ = ray_mesh(np.repeat(P[None], len(ii), 0), d[ii], cp['X4'][idx[ii]], cp['F'])
+                tt = np.sort(np.where(tt > 0, tt, np.inf), 1)
+                hit = np.isfinite(tt[:, 1])
+                Lk = ((O[ii] - P[None]) * d[ii]).sum(1)
+                h[ii[hit]] = Lk[hit] - tt[hit, 0]
+                room[ii[hit]] = tt[hit, 1] - tt[hit, 0] - cp['margin']
+                nohit = ii[~hit]
+                room[nohit] = exit_distance(S[nohit], d[nohit], cp['X4'][idx[nohit]], cp['F']) - cp['margin']
+            lo = cp['h_min']
+            out['in_lo'][:, 0] = np.where(ins, np.maximum(lo - h, 0.0), 0.0) / cfg['sig_inside']
+            out['in_hi'][:, 0] = np.where(ins, np.maximum(h - room, 0.0), 0.0) / cfg['sig_inside']
+            h0 = np.clip(np.minimum(cp['h0'], room), lo, None)
+            out['hid2'][:, 0] = np.where(ins, (h - h0) / cfg['sig_hidden'], 0.0)
+            if cfg['punct_mode'] == 'point':
+                nrm = cp['N'][idx]
+                out['enter'][:, 0] = np.where(ins, np.maximum((d * nrm).sum(1) + cfg['enter_cos'], 0.0), 0.0) / 0.1
+    elif cp['kind'] == 'contact':
+        on = cp['on'][idx]
+        if on.any():
+            tcp = O - cp['tcp_back'] * d
+            ii = np.nonzero(on)[0]
+            Xs = cp['X4'][idx[ii]][:, cp['surf']]
+            dist = np.sqrt(((Xs - tcp[ii, None]) ** 2).sum(-1)).min(1)
+            out['contact'][ii, 0] = np.maximum(dist - cfg['contact_tol'], 0.0) / cfg['sig_contact']
+    return out
 
 
 def _proj1(X, cam):
@@ -725,7 +840,8 @@ def _proj1(X, cam):
     return np.stack([cam['f'] * Xc[:, 0] / zz + cam['W'] / 2, cam['f'] * Xc[:, 1] / zz + cam['H'] / 2], -1), z
 
 
-DATA_KEYS = ('outline', 'model', 'depth', 'free', 'outview', 'hidden', 'hidden_max', 'port_out', 'port_cam', 'reach')
+DATA_KEYS = ('outline', 'model', 'depth', 'free', 'outview', 'hidden', 'hidden_max', 'port_out', 'port_cam', 'reach') + \
+    tuple(k for k, _ in SCENE_KEYS)
 VARS = ('yaw', 'pitch', 'L', 'roll', 'jaw')
 
 
@@ -998,7 +1114,7 @@ def roll_jaw_grid(V, t, ob, Q, R0, cfg, n_roll=12, n_jaw=7, chunk=24):
         ks = np.arange(a, min(n, a + chunk))
         idx = np.repeat(ks, S)
         q = dict(yaw=Q['yaw'][idx], pitch=Q['pitch'][idx], L=Q['L'][idx], roll=np.tile(RR, len(ks)), jaw=np.tile(JJ, len(ks)))
-        r = frame_residuals(t, Q['P'], R0, q, idx, ob, cams_of(V, idx), cfg)
+        r = frame_residuals(t, Q['P'], R0, q, idx, ob, cams_of(V, idx), cfg, extras=False)
         rr = np.concatenate([r['outline'], r['model']], 1)          # tool already scaled above
         C[ks] = (2 * (np.sqrt(1 + rr ** 2) - 1)).sum(1).reshape(len(ks), S)
     C[~ob['vis']] = 0
@@ -1427,7 +1543,10 @@ def mujoco_check(path, every=5):
 
 
 # ================================================================ clip-level driver
-DEFAULT = dict(M=64, Jz=10, Jf=10, min_area=150, blunt_ratio=0.78, sig_b=1.5, sig_m=2.0, sig_z=0.008, w_depth=0.3,
+DEFAULT = dict(w_bg=1.0, bg_margin=0.0005, sig_bg=0.001, sig_punct=0.001, sig_inside=0.0005, enter_cos=0.17,
+               contact_tol=0.0025, sig_contact=0.001, couple=False, organ_version=None, puncture_topk=5,
+               punct_h_min=0.003, punct_wall=0.001, punct_mode='line', sig_kappa_coupled=0.25, contact_gate=0.005, first_frame=0,
+               M=64, Jz=10, Jf=10, min_area=150, blunt_ratio=0.78, sig_b=1.5, sig_m=2.0, sig_z=0.008, w_depth=0.3,
                w_free=1.0, sig_free=0.003, free_tol=0.002, free_off=16, fit_kappa=False, sig_kappa=0.1, kappa_range=(0.6, 1.4),
                kappa_free_q=0.10, kappa_free_min=0.6, kappa_apply_below=0.97,
                fit_jls=True, sig_jls=0.3, jls_range=(0.5, 2.2),
@@ -1520,10 +1639,243 @@ def organ_far_wall(V, clip, Q, R0, ob, log):
     return hmax, used
 
 
+# ================================================================ organ coupling (puncture site / jaws on the organ)
+def load_organ(clip, ver=None):
+    """The primary organ's 4D model (organ agent): newest finished version unless pinned."""
+    sel = json.loads((OUT / clip / 'organs' / 'selection.json').read_text())
+    org = sel['fit'][0]['name']
+    d = OUT / clip / 'organs' / org
+    vs = sorted(p.name for p in d.glob('v[0-9][0-9]') if (p / 'model.npz').exists())
+    ver = ver or vs[-1]
+    z = np.load(d / ver / 'model.npz')
+    F = z['faces'].astype(np.int64)
+    return dict(name=org, version=ver, path=str((d / ver).relative_to(ROOT)), X4=z['verts4d'].astype(np.float64), F=F,
+                rest=z['rest_verts'].astype(np.float64), surf=np.unique(F))
+
+
+def face_normals(X4, F, f):
+    """Outward unit normal of face f in every frame (the organ meshes are oriented outward: positive volume)."""
+    A, B, C = X4[:, F[f, 0]], X4[:, F[f, 1]], X4[:, F[f, 2]]
+    n = np.cross(B - A, C - A)
+    return n / np.linalg.norm(n, axis=1, keepdims=True)
+
+
+def material_point(organ, f, b, frames=None):
+    X4 = organ['X4'] if frames is None else organ['X4'][frames]
+    return np.einsum('j,njk->nk', b, X4[:, organ['F'][f]])
+
+
+def puncture_candidates(organ):
+    """Material points on the organ surface: every face at its centroid and 3 interior barycentric points."""
+    B = np.array([[1 / 3, 1 / 3, 1 / 3], [2 / 3, 1 / 6, 1 / 6], [1 / 6, 2 / 3, 1 / 6], [1 / 6, 1 / 6, 2 / 3]])
+    nf = len(organ['F'])
+    f = np.repeat(np.arange(nf), len(B))
+    b = np.tile(B, (nf, 1))
+    rest = np.einsum('nj,njk->nk', b, organ['rest'][organ['F'][f]])
+    return f, b, rest
+
+
+def puncture_proxy(V, organ, ob, frames, cf, cb):
+    """Per candidate and frame: the image distance (px) of the candidate from the mask's visible end and from the
+    mask's axis line, combined robustly (Cauchy-like rho); summed over `frames`."""
+    cost = np.zeros(len(cf))
+    rho = lambda x: 2 * (np.sqrt(1 + x ** 2) - 1)
+    for k in frames:
+        X = np.einsum('nj,njk->nk', cb, organ['X4'][k][organ['F'][cf]])
+        q, z = V.project(X, k)
+        e, c, dd = ob['endpx'][k], ob['axis_c'][k], ob['axis_d'][k]
+        nrm = np.array([-dd[1], dd[0]])
+        c1 = np.linalg.norm(q - e, axis=1)
+        c2 = np.abs((q - c) @ nrm)
+        cost += rho(c1 / 5.0) + rho(c2 / 2.0) + np.where(z > 0, 0, 100.0)
+    return cost
+
+
+def nms_rest(order, rest, k, min_mm=4.0):
+    out = []
+    for i in order:
+        if all(np.linalg.norm(rest[i] - rest[j]) * 1000 >= min_mm for j in out):
+            out.append(i)
+        if len(out) >= k:
+            break
+    return out
+
+
+def puncture_setup(organ, f, b, inside, t, cfg):
+    n = organ['X4'].shape[0]
+    return dict(kind='puncture', face=int(f), bary=np.asarray(b, float), S=material_point(organ, f, b),
+                N=face_normals(organ['X4'], organ['F'], f), inside=inside, X4=organ['X4'], F=organ['F'],
+                h_min=cfg['punct_h_min'], margin=t['radius'] + cfg['punct_wall'], h0=cfg['hidden_len'], n=n)
+
+
+def pose_through(Q, R0, S, inside, organ, cp, t):
+    """Start poses: in the inside frames the shaft from the port through S, the tip h0 (capped by the far wall)
+    beyond S."""
+    Q = {k: (v.copy() if isinstance(v, np.ndarray) else v) for k, v in Q.items()}
+    ii = np.nonzero(inside)[0]
+    d = S[ii] - Q['P']
+    LS = np.linalg.norm(d, axis=1)
+    d /= LS[:, None]
+    tex = exit_distance(S[ii], d, organ['X4'][ii], organ['F'])
+    h = np.clip(np.minimum(cp['h0'], tex - cp['margin']), cp['h_min'], None)
+    Q['L'][ii] = LS + h
+    Q['yaw'][ii], Q['pitch'][ii] = angles_of(R0, d)
+    return Q
+
+
+def puncture_diagnostics(V, t, organ, cp, Q, R0, ob):
+    """Per frame: distance of the shaft line from the puncture point (mm), tip beyond the puncture (mm), far-wall
+    distance (mm), tip inside the organ (parity test), the entry crossing of the shaft line (port -> tip) and its
+    distance from the puncture in rest coordinates (mm, 'entry wander'), shaft points behind the background."""
+    n = V.n
+    RT = tip_frame(R0, Q['yaw'], Q['pitch'], Q['roll'])
+    d = RT[:, :, 2]
+    P = Q['P']
+    T = P + Q['L'][:, None] * d
+    S = cp['S']
+    v = S - P
+    line = np.linalg.norm(v - (v * d).sum(1, keepdims=True) * d, axis=1) * 1000
+    h = ((T - S) * d).sum(1) * 1000
+    tex = exit_distance(S, d, organ['X4'], organ['F']) * 1000
+    # tip inside: parity of crossings ahead of the tip along the shaft
+    tt, _, _ = ray_mesh(T, d, organ['X4'], organ['F'])
+    inside_geom = (np.nansum(tt > 0, 1) % 2) == 1
+    # entry crossing of the line from the port
+    tt, u, w = ray_mesh(np.repeat(P[None], n, 0), d, organ['X4'], organ['F'])
+    tt = np.where(tt > 0, tt, np.nan)
+    wander = np.full(n, np.nan)
+    entry_world = np.full((n, 3), np.nan)
+    rest_p = np.einsum('j,jk->k', cp['bary'], organ['rest'][organ['F'][cp['face']]])
+    for k in range(n):
+        if not np.isfinite(tt[k]).any():
+            continue
+        fi = int(np.nanargmin(tt[k]))
+        bb = np.array([1 - u[k, fi] - w[k, fi], u[k, fi], w[k, fi]])
+        entry_world[k] = P + tt[k, fi] * d[k]
+        wander[k] = np.linalg.norm(bb @ organ['rest'][organ['F'][fi]] - rest_p) * 1000
+    # along this frame's own line: tip beyond the entry crossing and the organ's thickness there
+    h_line = np.full(n, np.nan)
+    thick = np.full(n, np.nan)
+    ts = np.sort(np.where(np.isfinite(tt), tt, np.inf), 1)
+    hit = np.isfinite(ts[:, 1])
+    h_line[hit] = (Q['L'][hit] - ts[hit, 0]) * 1000
+    thick[hit] = (ts[hit, 1] - ts[hit, 0]) * 1000
+    # organ correction: the vector from the puncture material point to the nearest point of the shaft line (what the
+    # organ model would have to move at the puncture for the line to pass through it)
+    corr = -(v - (v * d).sum(1, keepdims=True) * d)
+    return dict(line_mm=line, h_mm=h, exit_mm=tex, inside_geom=inside_geom, wander_mm=wander, entry_world=entry_world,
+                h_line_mm=h_line, thick_mm=thick, correction=corr)
+
+
+def bg_report(V, bgd, t, Q, R0, frames):
+    """Per frame the smallest distance (mm) of the shaft axis points (tip .. 200 mm back) in front of the background
+    and the distance from the tip (mm) of the first point behind it (nan: none)."""
+    RT = tip_frame(R0, Q['yaw'], Q['pitch'], Q['roll'])
+    d = RT[:, :, 2]
+    T = Q['P'] + Q['L'][:, None] * d
+    X = T[:, None] - BG_STATIONS[None, :, None] * d[:, None]
+    idx = np.arange(V.n)
+    dist = bg_distance(bgd, idx, X, cams_of(V, idx))
+    mind = np.where(np.isfinite(dist).any(1), np.nanmin(np.where(np.isfinite(dist), dist, np.inf), 1), np.nan) * 1000
+    first = np.full(V.n, np.nan)
+    for k in range(V.n):
+        b = np.nonzero(np.isfinite(dist[k]) & (dist[k] < 0))[0]
+        if len(b):
+            first[k] = BG_STATIONS[b[0]] * 1000
+    return dict(min_mm=np.where(frames, mind, np.nan), first_behind_mm=np.where(frames, first, np.nan))
+
+
+def couple_puncture(V, clip, t, ob, cfg, R0, Q, organ, hidden_frames, log):
+    """One puncture site for all insertion phases: choose the organ material point from the masks' visible ends and
+    axes (proxy), refit the K best candidates with the shaft through that point while inside, the tip inside the organ
+    beyond it (hidden-length prior capped by the far wall), the apparent size free (the organ now gives the depth),
+    and keep the best."""
+    n = V.n
+    inside = np.zeros(n, bool)
+    inside[[k for k in hidden_frames if k < n]] = True
+    inside &= ~ob['trimmed']
+    sel = np.nonzero(inside & ob['vis'] & (np.arange(n) >= cfg['first_frame']))[0]
+    cf, cb, crest = puncture_candidates(organ)
+    cost = puncture_proxy(V, organ, ob, sel, cf, cb)
+    # per insertion phase (runs of inside frames), the phase's own best candidate (diagnostic)
+    phases = [(a, b) for a, b in _runs(inside)]
+    per_phase = []
+    for a, b in phases:
+        fr = sel[(sel >= a) & (sel <= b)]
+        if len(fr):
+            cph = puncture_proxy(V, organ, ob, fr, cf, cb)
+            i = int(np.argmin(cph))
+            per_phase.append(dict(frames=[int(a), int(b)], face=int(cf[i]), rest_mm=[round(float(x) * 1000, 2) for x in crest[i]],
+                                  proxy_px_cost=round(float(cph[i] / len(fr)), 3)))
+    sep = (float(np.linalg.norm(np.array(per_phase[0]['rest_mm']) - np.array(per_phase[1]['rest_mm'])))
+           if len(per_phase) >= 2 else None)
+    log(f"  puncture: {len(cf)} candidate material points on {organ['path']}; phase-wise best points "
+        f"{[p['rest_mm'] for p in per_phase]} ({sep if sep is None else round(sep, 1)} mm apart in rest coordinates)")
+    order = np.argsort(cost)
+    top = nms_rest(order, crest, cfg['puncture_topk'])
+    cfgC = dict(cfg, sig_kappa=cfg['sig_kappa_coupled'])
+    best = None
+    tried = []
+    for i in top:
+        cp = puncture_setup(organ, cf[i], cb[i], inside, t, cfg)
+        ob['cpl'] = cp
+        Q0 = pose_through(Q, R0, cp['S'], inside, organ, cp, scaled(t, Q.get('kappa', 1.0)))
+        Qi, ci = Problem(V, t, ob, cfgC, R0, free=('yaw', 'pitch', 'L'), fit_kappa=True).solve(
+            Q0, max_nfev=cfg['max_nfev_c'], log=log, tag=f"puncture cand face {cf[i]} (proxy {cost[i] / max(1, len(sel)):.2f})")
+        tried.append(dict(face=int(cf[i]), bary=[round(float(x), 3) for x in cb[i]], proxy=round(float(cost[i] / max(1, len(sel))), 3),
+                          cost=round(ci, 1), rest_mm=[round(float(x) * 1000, 2) for x in crest[i]]))
+        if best is None or ci < best[1]:
+            best = (Qi, ci, cp, i)
+    Q, c, cp, i = best
+    ob['cpl'] = cp
+    Q, c = Problem(V, t, ob, cfgC, R0, free=('yaw', 'pitch', 'L'), fit_kappa=True).solve(
+        Q, max_nfev=2 * cfg['max_nfev_c'], log=log, tag='puncture final')
+    rest_p = crest[i]
+    nv = organ['surf'][np.argmin(np.linalg.norm(organ['rest'][organ['surf']] - rest_p, axis=1))]
+    info = dict(organ=organ['name'], organ_version=organ['version'], organ_path=organ['path'], face=int(cf[i]),
+                bary=[float(x) for x in cb[i]], rest_m=[float(x) for x in rest_p], nearest_vertex=int(nv),
+                nearest_vertex_dist_mm=round(float(np.linalg.norm(organ['rest'][nv] - rest_p) * 1000), 2),
+                inside_frames=[list(map(int, g)) for g in _runs(inside)], candidates=tried, per_phase=per_phase,
+                phase_separation_mm=sep, kappa=float(Q['kappa']))
+    return Q, cp, info
+
+
+def couple_contact(V, t, ob, cfg, R0, Q, organ, log):
+    """Jaws on the organ: if the organ model reaches the jaws (median distance of the grasp point to the organ surface
+    <= contact_gate), the grasp point is pulled onto the surface in every frame with a mask and the size freed."""
+    n = V.n
+    ts = scaled(t, Q.get('kappa', 1.0), Q.get('jls', 1.0))
+    RT = tip_frame(R0, Q['yaw'], Q['pitch'], Q['roll'])
+    d = RT[:, :, 2]
+    tcp = Q['P'] + (Q['L'][:, None] - 0.35 * ts['jaw_len']) * d
+    Xs = organ['X4'][:, organ['surf']]
+    dist = np.sqrt(((Xs - tcp[:, None]) ** 2).sum(-1)).min(1) * 1000
+    on = ob['vis'] & ~ob['trimmed']
+    info = dict(organ=organ['name'], organ_version=organ['version'], tcp_to_surface_mm_before=summ(dist[on]))
+    if np.median(dist[on]) > cfg['contact_gate'] * 1000:
+        info['applied'] = False
+        info['why'] = (f"grasp point {np.median(dist[on]):.1f} mm (median) from the {organ['name']} {organ['version']} surface "
+                       f"> gate {cfg['contact_gate'] * 1000:.0f} mm: the model does not reach the jaws (no neck)")
+        log(f"  contact: {info['why']}")
+        return Q, None, info
+    cp = dict(kind='contact', on=on, X4=organ['X4'], surf=organ['surf'], tcp_back=0.35 * ts['jaw_len'])
+    ob['cpl'] = cp
+    cfgC = dict(cfg, sig_kappa=cfg['sig_kappa_coupled'])
+    free = tuple(v for v in VARS if not (v == 'roll' and np.ptp(Q['roll']) == 0))
+    Q, c = Problem(V, t, ob, cfgC, R0, free=free, fit_kappa=True).solve(Q, max_nfev=2 * cfg['max_nfev_c'], log=log, tag='contact')
+    ts = scaled(t, Q['kappa'], Q.get('jls', 1.0))
+    RT = tip_frame(R0, Q['yaw'], Q['pitch'], Q['roll'])
+    tcp = Q['P'] + (Q['L'][:, None] - 0.35 * ts['jaw_len']) * RT[:, :, 2]
+    dist2 = np.sqrt(((Xs - tcp[:, None]) ** 2).sum(-1)).min(1) * 1000
+    info.update(applied=True, tcp_to_surface_mm_after=summ(dist2[on]), kappa=float(Q['kappa']))
+    return Q, cp, info
+
+
 def fit_one(V, clip, inst, others, ip, cfg, log):
     t = make_tool(inst['type'], inst['diameter'])
     hidden_frames = hidden_info(clip, ip, inst['key'])
     meas, ob = observations(V, inst['name'], others, cfg, hidden_frames, inst.get('visible_frames'))
+    attach_scene(ob, cfg)
     log(f"[{inst['name']}] type {t['type']} (agent: {inst['agent_type']}), shaft {inst['diameter'] * 1000:.0f} mm "
         f"({inst['diameter_src']}); mask frames {ob['vis'].sum()} / {V.n}; end types "
         f"{ {e: int((ob['end_type'] == e).sum()) for e in ('free', 'blunt', 'cut', 'other', 'inside_organ')} }")
@@ -1612,13 +1964,42 @@ def fit_one(V, clip, inst, others, ip, cfg, log):
         prof2 = port_profile(V, t, ob, cfg, R0, Q, log, freeC)
         prof2['line_search_mm'] = best['offset_mm']
         prof = prof2
+    couple = None
+    if cfg['couple'] and cfg.get('_organ') is not None:
+        if hidden_frames:
+            Q, cp, couple = couple_puncture(V, clip, t, ob, cfg, R0, Q, cfg['_organ'], hidden_frames, log)
+            couple['kind'] = 'puncture'
+        elif t['jawed']:
+            Q, cp, couple = couple_contact(V, t, ob, cfg, R0, Q, cfg['_organ'], log)
+            couple['kind'] = 'contact'
     t_fit = dict(scaled(t, Q['kappa'], Q['jls']), radius_nominal=t['radius'], jaw_len_nominal=t['jaw_len'],
                  kappa=float(Q['kappa']), jls=float(Q['jls']))
     filled, long_gap = gap_flags(ob['vis'] | ob['trimmed'], int(round(cfg['short_gap_s'] * V.fps)))
     Qf = withdraw_long_gaps(V, t_fit, Q, R0, long_gap, ob['vis'])
     return dict(t=t_fit, Q=Qf, Q_fit=Q, R0=R0, ob=ob, meas=meas, filled=filled, long_gap=long_gap, grid=grid,
                 hidden_frames=hidden_frames, organ_used=organ_used, start=tagA, profile=prof, roll_note=roll_note,
-                kappa_info=kinfo)
+                kappa_info=kinfo, couple=couple)
+
+
+def attach_scene(ob, cfg):
+    ob['bg'] = cfg.get('_bg')
+    ob['bg_w'] = (~ob['trimmed']).astype(float)
+
+
+def rebuild_coupling(T, cfg, ob):
+    """Re-create the coupling state of a cached fit (reuse mode)."""
+    c = T.get('couple')
+    if not c or not c.get('kind') or cfg.get('_organ') is None:
+        return
+    org = cfg['_organ']
+    if c['kind'] == 'puncture':
+        inside = np.zeros(len(ob['vis']), bool)
+        for a, b in c['inside_frames']:
+            inside[a:b + 1] = True
+        ob['cpl'] = puncture_setup(org, c['face'], c['bary'], inside, T['t'], cfg)
+    elif c['kind'] == 'contact' and c.get('applied'):
+        ob['cpl'] = dict(kind='contact', on=ob['vis'] & ~ob['trimmed'], X4=org['X4'], surf=org['surf'],
+                         tcp_back=0.35 * T['t']['jaw_len'])
 
 
 def kappa_from_free_space(V, t, ob, cfg, R0, Q):
@@ -1717,6 +2098,18 @@ def run(clip, ver='v01', overrides=None, log=print, reuse=False):
     cfg['sharp'], cfg['sharp_ref'] = sharp, float(np.percentile(sharp, 60))
     out = OUT / clip / 'instruments' / ver
     (out / 'work').mkdir(parents=True, exist_ok=True)
+    cfg['_bg'], cfg['background_version'] = None, None
+    if cfg['w_bg'] > 0 and any((OUT / clip / 'background').glob('v[0-9][0-9]/model.npz')):
+        from .background import Background
+        bgo = Background(clip, cfg.get('background_pin'))
+        cfg['_bg'] = dict(occ=bgo.occ.astype(np.float32), scale=bgo.occ_scale)
+        cfg['background_version'] = bgo.dir.name
+        log(f'[scene] background {bgo.dir.name}: shafts kept in front of it')
+    cfg['_organ'] = None
+    if cfg['couple']:
+        cfg['_organ'] = load_organ(clip, cfg['organ_version'])
+        cfg['organ_used'] = cfg['_organ']['path']
+        log(f"[scene] organ coupling with {cfg['_organ']['path']}")
     insts, ip = instrument_list(clip, V)
     import pickle
     cache = out / 'work' / 'fit.pkl'
@@ -1726,6 +2119,8 @@ def run(clip, ver='v01', overrides=None, log=print, reuse=False):
             others = [o['name'] for o in insts if o['name'] != nm]
             T['meas'], ob = observations(V, nm, others, cfg, T['hidden_frames'], T['inst'].get('visible_frames'))
             ob.update({k: T['ob_extra'][k] for k in T['ob_extra']})
+            attach_scene(ob, cfg)
+            rebuild_coupling(T, cfg, ob)
             T['ob'] = ob
         log('[reuse] fitted poses from work/fit.pkl')
     else:
@@ -1826,6 +2221,50 @@ def write_outputs(V, clip, ver, out, tools, ev, cfg, insts, t0, log, reused=Fals
                   depthmap_over_model_depth=summ(ratio), shaft_behind_tissue=summ(R['shaft_behind_tissue']),
                   jaw_deg=summ(np.degrees(Q['jaw'][use])) if t['jawed'] else None,
                   smooth=sm, bands=band, organ_model_for_hidden_cap=T['organ_used'])
+        # scene: background along the shaft, organ coupling
+        live = ~T['long_gap'] & ~ob['trimmed']
+        if cfg.get('_bg') is not None:
+            br = bg_report(V, cfg['_bg'], t, Q, T['R0'], live)
+            behind = np.isfinite(br['first_behind_mm'])
+            qi['background'] = dict(version=cfg.get('background_version'), frames_checked=int(live.sum()),
+                                    frames_axis_behind=int(behind.sum()), frames_axis_behind_list=[list(map(int, g)) for g in _runs(behind)],
+                                    first_behind_mm_from_tip=summ(br['first_behind_mm']),
+                                    axis_clearance_mm=summ(br['min_mm']),
+                                    frames_surface_within_radius=int(np.nansum(br['min_mm'] < t['radius'] * 1000)))
+            arrays[f'{nm}__bg_clearance_mm'] = br['min_mm']
+        c = T.get('couple')
+        if c:
+            qi['organ_coupling'] = {k: v for k, v in c.items()}
+            if c.get('kind') == 'puncture':
+                cp = T['ob']['cpl']
+                org = cfg['_organ']
+                dg = puncture_diagnostics(V, t, org, cp, Q, T['R0'], ob)
+                ins = cp['inside']
+                win = ins & (np.arange(n) >= cfg['first_frame'])
+                arrays.update({f'{nm}__tip_inside_organ': dg['inside_geom'], f'{nm}__tip_inside_agent': ins,
+                               f'{nm}__puncture_world': cp['S'], f'{nm}__puncture_face': np.int64(cp['face']),
+                               f'{nm}__puncture_bary': cp['bary'], f'{nm}__puncture_rest': np.array(c['rest_m']),
+                               f'{nm}__puncture_vertex': np.int64(c['nearest_vertex']), f'{nm}__puncture_organ': c['organ_path'],
+                               f'{nm}__line_to_puncture_mm': np.where(ins, dg['line_mm'], np.nan),
+                               f'{nm}__tip_beyond_puncture_mm': np.where(ins, dg['h_mm'], np.nan),
+                               f'{nm}__far_wall_mm': np.where(ins, dg['exit_mm'], np.nan),
+                               f'{nm}__entry_wander_mm': np.where(ins, dg['wander_mm'], np.nan)})
+                fail = win & ~dg['inside_geom']
+                qi['organ_coupling'].update(
+                    puncture_world_at_first_inside_frame_mm=[round(float(x) * 1000, 2) for x in cp['S'][np.nonzero(win)[0][0]]],
+                    puncture_world_path_mm=dict(range=[round(float(x), 1) for x in np.ptp(cp['S'][ins], 0) * 1000]),
+                    tip_inside=dict(frames=int(win.sum()), inside=int((win & dg['inside_geom']).sum()),
+                                    outside_frames=[list(map(int, g)) for g in _runs(fail)],
+                                    frames_before_first_frame=[int(k) for k in np.nonzero(ins & (np.arange(n) < cfg['first_frame']))[0]],
+                                    inside_before_first_frame=int((ins & dg['inside_geom'] & (np.arange(n) < cfg['first_frame'])).sum())),
+                    line_to_puncture_mm=summ(dg['line_mm'][win]),
+                    entry_wander_mm=dict(rms=round(float(np.sqrt(np.nanmean(dg['wander_mm'][win] ** 2))), 2),
+                                         max=round(float(np.nanmax(dg['wander_mm'][win])), 2),
+                                         median=round(float(np.nanmedian(dg['wander_mm'][win])), 2)),
+                    tip_beyond_puncture_mm=summ(dg['h_mm'][win]), far_wall_mm=summ(dg['exit_mm'][win]),
+                    tip_past_far_wall_frames=[list(map(int, g)) for g in _runs(win & (dg['h_mm'] > dg['exit_mm']))])
+            elif c.get('kind') == 'contact' and c.get('applied'):
+                pass
         qual['instruments'][nm] = qi
         np.savez_compressed(out / 'work' / f'{nm}_fit.npz', **{f'Q_{k}': (v if isinstance(v, np.ndarray) else np.asarray(v)) for k, v in T['Q_fit'].items()},
                             **{f'ev_{k}': v for k, v in R.items() if k != 'sil'},
@@ -1850,7 +2289,7 @@ def write_outputs(V, clip, ver, out, tools, ev, cfg, insts, t0, log, reused=Fals
         qual['mujoco_check'] = dict(error=repr(e))
     qual['runtime_s'] = round(time.time() - t0, 1)
     qual['reused_fit'] = bool(reused)
-    qual['cfg'] = {k: v for k, v in cfg.items() if k not in ('sharp',)}
+    qual['cfg'] = {k: v for k, v in cfg.items() if k not in ('sharp',) and not k.startswith('_')}
     (out / 'quality.json').write_text(json.dumps(qual, indent=1, default=lambda o: o.tolist() if hasattr(o, 'tolist') else str(o)))
     write_notes(out, qual)
     sheet(V, tools, ev, out / 'sheet.jpg')
@@ -2127,5 +2566,14 @@ if __name__ == '__main__':
     ap.add_argument('clip')
     ap.add_argument('--ver', default='v01')
     ap.add_argument('--reuse', action='store_true', help='re-evaluate the cached fit (work/fit.pkl)')
+    ap.add_argument('--couple', action='store_true', help='couple to the organ model (puncture site / jaws on the organ)')
+    ap.add_argument('--organ', default=None, help='organ model version (default: newest)')
+    ap.add_argument('--first-frame', type=int, default=0, help='first frame the inside-the-organ requirement is reported for')
+    ap.add_argument('--set', nargs='*', default=[], help='cfg overrides key=value (python literals)')
     a = ap.parse_args()
-    run(a.clip, a.ver, reuse=a.reuse)
+    import ast
+    ov = dict(couple=a.couple, organ_version=a.organ, first_frame=a.first_frame)
+    for kv in a.set:
+        k, v = kv.split('=', 1)
+        ov[k] = ast.literal_eval(v)
+    run(a.clip, a.ver, reuse=a.reuse, overrides=ov)

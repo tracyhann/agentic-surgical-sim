@@ -7,7 +7,7 @@ per frame (4D). Generic: works for any organ named in a clip's scene_spec, no pe
 -> outputs/t2s/<clip>/organs/<organ>/vNN/{model.npz, quality.json, NOTES.md, sheet.jpg, views3d.jpg, work/}
    (vNN = method version below, the same for every organ; an organ may start at a later version)
 
-Pipeline (current method v08; CFG below records each version and why)
+Pipeline (current method v15; CFG below records each version and why)
   0. selection  spec organs with role primary / secondary that have a SAM mask (same name, or the prompting agent's
                 notes naming them); thin membranes and tubes are skipped (other agents) and reported, as are context
                 organs. Volume rule from the consistency and the spec's structured fields: fluid-filled -> ~constant
@@ -24,16 +24,20 @@ Pipeline (current method v08; CFG below records each version and why)
                 then each keyframe's rigid pose tracked outward from it, then everything jointly over all keyframes
                 (pose priors on size and change between keyframes; start keyframe = gauge). Video depth is trusted up
                 to a per-frame scale (prior sd 10 %); depth points far behind the surface are taken as seen through
-                it. Unseen thickness: prior radius along the view >= 0.8 x the smaller radius across it.
+                it. Unseen thickness: prior radius along the view >= 0.8 x the smaller radius across it, largest /
+                smallest radius <= 4; where the background agent's surface exists (outputs/t2s/<clip>/background/
+                vNN/occupancy.npz) no surface point may lie behind it (rest fit and 4D).
   3. rest       Bernstein free-form deformation (5^3 control points in the primitive's frame; smoothness + size +
                 thickness priors) on top, same data. Rest shape = the shape at the start keyframe's pose.
   4. tets       uniform BCC tet lattice inside the rest surface (v1 gallbladder v12: no slivers), ~1300 nodes.
   5. 4D         per frame: node positions with tet ARAP + local volume + the global-volume rule + inversion barrier +
                 temporal term + per-frame depth scale, fitted to that frame's silhouette and depth; outward from the
-                start frame; unobserved frames held, re-acquired from the nearest keyframe pose; temporal Gaussian.
+                start frame; unobserved frames held (re-acquired from the nearest keyframe pose after >= 5 of them);
+                temporal Gaussian.
   6. quality    IoU / boundary F / depth residual per third of the clip for the primitive, the static rest shape and
                 the 4D mesh (own masks, raw SAM mask, organ + attached-structure masks); temporal smoothness, volume
-                over time, mesh health, inverted tets (rest, 4D); sheet.jpg (4D over the video), views3d.jpg (rest
+                over time, mesh health, inverted tets (rest, 4D), share of vertices behind the background surface;
+                sheet.jpg (4D over the video), views3d.jpg (rest
                 mesh, 3 directions, attachment hints), work/baselines.jpg (outlines of all three models).
   attach hints  vertices near each attached structure's mask (median distance over frames), the hidden back, and
                 instrument entry points from the instrument agent's 'puncture' record (seg/instrument_prompts.json).
@@ -100,6 +104,12 @@ BASE = dict(
     eval_step=3,
     vol_cumulative=False,       # monotone volume rule against the running extreme (else frame to frame)
     dropout_frac=0.0,           # mask area below this fraction of the clip median = mask dropout (frame unobserved)
+    w_bg=0.0, bg_margin_mm=1.0, # surface samples behind the background agent's surface (+ margin) cost w_bg (mm, rho)
+    reacquire_gap=1,            # unobserved frames in a row after which the 4D restarts from the nearest keyframe pose
+    w_ext=0.0, ext_max=0.6,     # border completion: where the organ mask runs into the image / scope border, an ellipse
+                                # fitted to the rest of its outline continues it outside the view (coverage targets,
+                                # weight w_ext x the coverage weight; at most ext_max x the mask's equivalent diameter)
+    one_opening=False,          # all entry episodes of the instrument agent's puncture record = one opening region
 )
 CFG = {
     'v01': dict(),
@@ -142,6 +152,20 @@ CFG = {
     # same method as v10 / v11, refitted on the repaired segmentation seg/v04 (chole_a, chole_derot; 2026-10-08)
     'v12': dict(merge_parts=False, seg='v04'),
     'v13': dict(merge_parts=True),
+    # background agent (liver_s4 background v08): 20 % of the liver v10 vertices lie up to 24 mm behind the observed
+    # background (right rim, underside) -> the hidden back may not pass behind the background agent's surface (its
+    # per-frame first-hit depth along every camera ray, occupancy.npz) in the rest fit and in 4D. The thickness prior
+    # stays (0.8; with 0.5 the gallbladder thinned to 1.3 cm): where a background lies close behind, its penalty
+    # (w_bg 2, rho in mm) outweighs the thickness prior (w_thick 5 per log^2), so a lobe tip can still be thin
+    'v14': dict(merge_parts=False, w_bg=2.0),
+    # chole_a v14: the 1-frame mask dropout at frame 90 triggered a re-acquisition from the keyframe pose at frame 89
+    # (vertex jump 4.7 mm / frame) -> re-acquire only after a gap of >= reacquire_gap frames
+    'v15': dict(reacquire_gap=5),
+    # coordinator / assembly r03: the gallbladder ends where the image ends (8.8 ml, all outlines run along the bottom
+    # edge; hydropic per the spec, v1 template ~28 ml) -> border completion (pixels outside the image / scope area were
+    # already unknown, but nothing asked the shape to continue there); one shared puncture region; neck hint at the
+    # grasper's jaw tip (instrument agent v01)
+    'v16': dict(w_ext=0.5, one_opening=True),
 }
 
 
@@ -385,6 +409,47 @@ def prepare_masks(V, organ, others, see_through, c, log, merge=(), junction=()):
                                junction_unknown=list(junction))
 
 
+def border_completion(body_k, valid, unk_k, ext_max=0.6, step=3):
+    """Pixels OUTSIDE the image / scope area (x, y may be < 0 or >= W, H) where the organ continues: if the organ's
+    outline runs into the image or scope border, an ellipse fitted to the rest of the outline (points away from the
+    border, the scope edge and unknown pixels) is continued outside; kept only if the ellipse explains the visible
+    mask (IoU > 0.6) and only up to ext_max x the mask's equivalent diameter beyond the border. (N, 2) or None."""
+    H, W = body_k.shape
+    b = body_k.astype(np.uint8)
+    if b.sum() < 200:
+        return None
+    cnts = cv2.findContours(b, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
+    pts = max(cnts, key=len)[:, 0]
+    edge = np.zeros((H, W), np.uint8)
+    edge[:3], edge[-3:], edge[:, :3], edge[:, -3:] = 1, 1, 1, 1
+    open_ = cv2.dilate((edge.astype(bool) | ~valid).astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool)
+    unk = cv2.dilate(unk_k.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool)
+    at_border = open_[pts[:, 1], pts[:, 0]]
+    closed = pts[~at_border & ~unk[pts[:, 1], pts[:, 0]]]
+    if at_border.sum() < 10 or len(closed) < 20:
+        return None
+    (cx, cy), (a1, a2), ang = cv2.fitEllipse(closed.astype(np.float32))
+    pad = int(max(H, W))
+    canvas = np.zeros((H + 2 * pad, W + 2 * pad), np.uint8)
+    cv2.ellipse(canvas, ((cx + pad, cy + pad), (a1, a2), ang), 1, -1)
+    inside = canvas[pad:pad + H, pad:pad + W].astype(bool) & valid
+    vis = body_k.astype(bool)
+    iou = (inside & vis).sum() / max((inside | vis).sum() - (inside & unk_k).sum(), 1)
+    if iou < 0.6:
+        return None
+    region = canvas.astype(bool)
+    region[pad:pad + H, pad:pad + W] &= ~valid                 # only where the view does not reach
+    far = ext_max * 2 * np.sqrt(vis.sum() / np.pi)
+    inview = np.zeros_like(canvas)
+    inview[pad:pad + H, pad:pad + W] = valid
+    dist = cv2.distanceTransform((1 - inview).astype(np.uint8), cv2.DIST_L2, 5)
+    region &= dist <= far
+    ys, xs = np.nonzero(region[::step, ::step])
+    if len(xs) < 5:
+        return None
+    return np.c_[xs * step - pad, ys * step - pad].astype(np.float32)
+
+
 class OwnMasks:
     """Views proxy: mask('own') = body, occluders() = unknown (for r2s.quality and contact sheets)."""
 
@@ -406,7 +471,8 @@ class Obs:
     """Camera, distance to the allowed region (body | unknown), measured depth, body pixels (coverage) and visible
     body points at their measured depth (world, mm). use_depth=False: see-through organ, no depth points."""
 
-    def __init__(self, V, k, body, unknown, n_cov=800, n_pts=500, erode=3, use_depth=True, seed=0, see_mm=10.0):
+    def __init__(self, V, k, body, unknown, n_cov=800, n_pts=500, erode=3, use_depth=True, seed=0, see_mm=10.0,
+                 bg=None, bg_margin=1.0, ext=None):
         rng = np.random.default_rng(seed + k)
         self.k = k
         self.R, self.pos, self.f = T(V.R[k]), T(V.pos[k] * 1000), float(V.f[k])
@@ -425,6 +491,15 @@ class Obs:
         i = rng.choice(len(xs), min(n_pts, len(xs)), replace=False) if len(xs) and use_depth else np.zeros(0, int)
         self.pts = T(V.unproject(xs[i], ys[i], V.depth(k)[ys[i], xs[i]], k) * 1000) if len(i) else torch.zeros(0, 3)
         self.see_mm = see_mm
+        self.ext = None               # border completion targets (pixels outside the view)
+        if ext is not None and ext[k] is not None and len(ext[k]):
+            e = ext[k]
+            self.ext = T(e[rng.choice(len(e), min(n_cov // 2, len(e)), replace=False)])
+        self.B = None                 # background first-hit depth (mm) along this frame's rays, coarse grid
+        if bg is not None:
+            b = np.asarray(bg[k], np.float32) * 1000
+            self.B = T(np.where(np.isfinite(b), b, 1e6))[None, None]
+            self.bg_margin = bg_margin
         self.zmed = float(np.median(D[body[k]])) if body[k].any() else 80.0
         self.px2mm = self.zmed / self.f
 
@@ -436,6 +511,25 @@ class Obs:
     def sample(self, img, u, v):
         g = torch.stack([u / (self.W - 1) * 2 - 1, v / (self.H - 1) * 2 - 1], -1)[None, None]
         return torch.nn.functional.grid_sample(img, g, align_corners=True, padding_mode='border')[0, 0, 0]
+
+    def ext_loss(self, S):
+        """Coverage of the border completion targets by projected surface samples (any sample in front of the camera)."""
+        if self.ext is None:
+            return S.sum() * 0
+        u, v, z = self.project(S)
+        q = torch.stack([u[z > 1], v[z > 1]], 1)
+        return rho(torch.relu(torch.cdist(self.ext, q).min(1)[0] - 3.0) * self.px2mm).mean()
+
+    def bg_loss(self, S):
+        """Surface samples (all, hidden ones included) behind the background surface + margin (mm, rho, mean)."""
+        if self.B is None:
+            return S.sum() * 0
+        u, v, z = self.project(S)
+        inside = (u >= 0) & (u <= self.W - 1) & (v >= 0) & (v <= self.H - 1) & (z > 1)
+        g = torch.stack([u / self.W * 2 - 1, v / self.H * 2 - 1], -1)[None, None]
+        with torch.no_grad():
+            zb = torch.nn.functional.grid_sample(self.B, g, mode='nearest', align_corners=False, padding_mode='border')[0, 0, 0]
+        return (rho(torch.relu(z - zb - self.bg_margin)) * inside).mean()
 
     def losses(self, S, Nrm, hidden_mm=8.0, ls=None):
         """S (M, 3) surface samples (mm), Nrm (M, 3) outward normals -> (outside, coverage, depth), mm.
@@ -472,6 +566,10 @@ def data_loss(obs, S, N, c, use_depth=True, ls=None):
     for o in obs:
         lo, lc, ld = o.losses(S, N, c['hidden_mm'], ls)
         tot = tot + c['w_sil'] * (lo + c['w_cov'] * lc) + (c['w_depth'] * ld if use_depth else 0.0)
+        if o.B is not None and c['w_bg'] > 0:
+            tot = tot + c['w_bg'] * o.bg_loss(S)
+        if o.ext is not None and c['w_ext'] > 0:
+            tot = tot + c['w_sil'] * c['w_cov'] * c['w_ext'] * o.ext_loss(S)
         parts += [float(lo), float(lc), float(ld)]
     return tot / len(obs), parts / len(obs)
 
@@ -753,7 +851,7 @@ def surface_volume(X, F):
 
 
 def fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init_pose=None, use_depth=True, ls_keys=None,
-           observed=None, reacquire=None):
+           observed=None, reacquire=None, bg=None, ext=None):
     """verts4d (n, N, 3) m, per-frame data parts, per-frame log depth scale. ls_keys: (keyframes, log scales) from
     the rest fit: prior centre of each frame's depth scale (interpolated)."""
     from scipy.ndimage import gaussian_filter1d
@@ -774,21 +872,23 @@ def fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init_pose=
     for seq, sgn in ((list(range(start, V.n)), 1), (list(range(start, -1, -1)), -1)):
         prev = prev2 = None
         vprev = vext = None
-        gap = False
+        gap = 0
         for k in seq:
             if not observed[k] and prev is not None:     # mask dropout: hold the shape, no data
                 out[k] = prev.numpy() / 1000
                 ls_out[k] = ls_out[k - sgn] if 0 <= k - sgn < V.n else 0.0
                 parts[k] = np.nan
-                gap = True
+                gap += 1
                 continue
             o = Obs(V, k, body, unknown, n_cov=c['n_cov4d'], n_pts=c['n_pts4d'], erode=c['depth_erode'],
-                    use_depth=use_depth, see_mm=c['see_mm'])
-            if gap and reacquire is not None:              # after a dropout: start again from the rest fit's pose
+                    use_depth=use_depth, see_mm=c['see_mm'], bg=bg, bg_margin=c['bg_margin_mm'], ext=ext)
+            if gap >= c['reacquire_gap'] and reacquire is not None:   # after a long dropout: restart from the rest fit
                 prev = prev2 = None
                 Xs = reacquire(k)
-                log(f'[4d] frame {k}: re-acquired after a mask dropout')
-            gap = False
+                log(f'[4d] frame {k}: re-acquired after a mask dropout of {gap} frames')
+            elif gap:
+                prev2 = None                                  # short gap: continue from the held shape, no extrapolation
+            gap = 0
             init = Xs.clone() if prev is None else (prev.clone() if prev2 is None else prev + 0.5 * (prev - prev2))
             X = init.clone().requires_grad_(True)
             ls = torch.tensor(float(ls_c[k]), requires_grad=use_ds)
@@ -801,6 +901,10 @@ def fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init_pose=
                 S, N = surf(X)
                 lo, lc, ld = o.losses(S, N, c['hidden_mm'], ls if use_ds else None)
                 L = c['w_sil'] * (lo + c['w_cov'] * lc) + (c['w_depth'] * ld if use_depth else 0.0)
+                if o.B is not None and c['w_bg'] > 0:
+                    L = L + c['w_bg'] * o.bg_loss(S)
+                if o.ext is not None and c['w_ext'] > 0:
+                    L = L + c['w_sil'] * c['w_cov'] * c['w_ext'] * o.ext_loss(S)
                 ea, ev = arap(X)
                 L = L + c['w_arap'] * ea + vr['w_vol'] * ev + c['w_barrier'] * arap.barrier_sum
                 if prev is not None:
@@ -1006,6 +1110,35 @@ def evaluate(V, rest, faces, tets, verts4d, body, unknown, raw, prim_static, pri
     return q, per, frames
 
 
+def behind_background(V, clip, verts4d, faces, log, tol_mm=1.0):
+    """Share of surface vertices more than tol_mm behind the newest background surface along the camera rays (the
+    background agent's check), per third of the clip: mean / max share and the deepest vertex (mm)."""
+    vers = sorted(p_.parent.name for p_ in (OUT / clip / 'background').glob('v*/occupancy.npz'))
+    if not vers:
+        return None
+    o_ = np.load(OUT / clip / 'background' / vers[-1] / 'occupancy.npz')
+    zb_all, sc = o_['bg_depth'], int(o_['scale'])
+    surf = np.unique(faces)
+    share, deep = np.full(V.n, np.nan), np.full(V.n, np.nan)
+    for k in range(V.n):
+        q_, z = V.project(verts4d[k][surf], k)
+        xi, yi = np.floor(q_[:, 0] / sc).astype(int), np.floor(q_[:, 1] / sc).astype(int)
+        ok = (xi >= 0) & (xi < zb_all.shape[2]) & (yi >= 0) & (yi < zb_all.shape[1])
+        zb = np.full(len(z), np.nan)
+        zb[ok] = zb_all[k, yi[ok], xi[ok]].astype(float)
+        d = (zb - z) * 1000
+        fin = np.isfinite(d)
+        if fin.any():
+            share[k] = float((d[fin] < -tol_mm).mean())
+            deep[k] = float(-d[fin].min())
+    out = dict(background_version=vers[-1], tol_mm=tol_mm,
+               per_third={f'{a}-{b}': dict(share_mean=round(float(np.nanmean(share[a:b + 1])), 4),
+                                           share_max=round(float(np.nanmax(share[a:b + 1])), 4),
+                                           deepest_mm=round(float(np.nanmax(deep[a:b + 1])), 2)) for a, b in thirds(V.n)})
+    log(f'[quality] behind background {vers[-1]} (> {tol_mm} mm): {out["per_third"]}')
+    return out
+
+
 # ---------------------------------------------------------------- attachments
 def attach_hints(V, spec, organ, masks, desc, rest, faces, verts4d, frames, log, thr_mm=5.0, n_min=8, merged=()):
     """Surface vertices facing each connected structure that has a mask (spec connections other than 'free'):
@@ -1067,7 +1200,7 @@ def attach_hints(V, spec, organ, masks, desc, rest, faces, verts4d, frames, log,
     return np.array(idx, np.int32), np.array(to), notes
 
 
-def opening_hints(V, clip, organ_name, mask, rest, faces, verts4d, log, radius_mm=4.0):
+def opening_hints(V, clip, organ_name, mask, rest, faces, verts4d, log, radius_mm=4.0, one=False):
     """Surface vertices at an instrument entry the instrument agent recorded (seg/instrument_prompts.json 'puncture':
     instrument, frame ranges, per-frame entry pixel track): in each tracked frame the front-facing surface vertex
     whose projection is nearest the entry pixel; the hint = rest vertices within radius_mm of the median of those
@@ -1081,6 +1214,8 @@ def opening_hints(V, clip, organ_name, mask, rest, faces, verts4d, log, radius_m
         return np.zeros(0, np.int32), np.zeros(0, str), []
     surf = np.unique(faces)
     eps = [tuple(pu['frames'])] + ([tuple(pu['reinsertion']['frames'])] if pu.get('reinsertion') else [])
+    if one and len(eps) > 1:          # one puncture site entered in several episodes (instrument agent)
+        eps = [(min(a for a, _ in eps), max(b for _, b in eps))]
     idx, to, notes = [], [], []
     for j, (a, b) in enumerate(eps):
         hits = []
@@ -1109,6 +1244,68 @@ def opening_hints(V, clip, organ_name, mask, rest, faces, verts4d, log, radius_m
     for s_ in notes:
         log(f'[attach] {s_}')
     return np.array(idx, np.int32), np.array(to), notes
+
+
+def instrument_contact_hints(V, clip, rest, faces, verts4d, log, near_mm=12.0, radius_mm=4.0):
+    """Surface vertices at the jaw tip of an instrument that stays at the organ (instrument agent's model: newest
+    outputs/t2s/<clip>/instruments/vNN/model.npz '<name>__jaw_tip', world m): per frame the surface vertex nearest the
+    jaw tip; if that distance is < near_mm in >= half the frames, the hint = rest vertices within radius_mm of the
+    median of those vertices' rest positions. Label 'neck:<instrument>' when the instrument agent's notes say it holds
+    the neck, else 'grasp:<instrument>' for graspers, else 'contact:<instrument>'."""
+    from scipy.spatial import cKDTree
+    vers = sorted((OUT / clip / 'instruments').glob('v*/model.npz'))
+    if not vers:
+        return np.zeros(0, np.int32), np.zeros(0, str), []
+    m = np.load(vers[-1], allow_pickle=True)
+    ip = OUT / clip / 'seg' / 'instrument_prompts.json'
+    notes_ = json.loads(ip.read_text()).get('instruments', {}) if ip.exists() else {}
+    surf = np.unique(faces)
+    idx, to, notes = [], [], []
+    for key in m.files:
+        if not key.endswith('__jaw_tip'):
+            continue
+        name = key[:-len('__jaw_tip')]
+        tip = m[key]
+        hits, dist = [], []
+        for k in range(0, V.n, 3):
+            if not np.isfinite(tip[k]).all():
+                continue
+            d, i = cKDTree(verts4d[k][surf]).query(tip[k])
+            dist.append(d * 1000)
+            hits.append(surf[i])
+        dist = np.array(dist)
+        if not len(dist) or np.mean(dist < near_mm) < 0.5:
+            continue
+        txt = json.dumps(notes_.get(name.replace('instrument_', ''), {})).lower()
+        kind = 'neck' if 'neck' in txt else ('grasp' if 'grasp' in name or 'grasp' in txt else 'contact')
+        c0 = np.median(rest[hits], 0)
+        sel = surf[np.linalg.norm(rest[surf] - c0, axis=1) < radius_mm / 1000]
+        lab = f'{kind}:{name}'
+        idx += sel.tolist()
+        to += [lab] * len(sel)
+        th = np.array_split(dist, 3)
+        notes.append(f"{lab}: {len(sel)} vertices within {radius_mm} mm of the surface point nearest the jaw tip "
+                     f"({vers[-1].parent.name}); jaw tip to surface median per third "
+                     f"{[round(float(np.median(t)), 1) for t in th]} mm")
+    for s_ in notes:
+        log(f'[attach] {s_}')
+    return np.array(idx, np.int32), np.array(to), notes
+
+
+def unseen_volume(V, verts4d, tets):
+    """Share of the volume (tets by centroid) that is outside the scope's view area in every frame."""
+    valid = getattr(V, 'valid', np.ones((V.H, V.W), bool))
+    seen = np.zeros(len(tets), bool)
+    for k in range(0, V.n, 2):
+        c_ = verts4d[k][tets].mean(1)
+        q_, z = V.project(c_, k)
+        x, y = np.round(q_[:, 0]).astype(int), np.round(q_[:, 1]).astype(int)
+        ok = (x >= 0) & (x < V.W) & (y >= 0) & (y < V.H) & (z > 0)
+        ok[ok] = valid[y[ok], x[ok]]
+        seen |= ok
+    P = verts4d[0][tets]
+    vol = np.abs(np.linalg.det(np.stack([P[:, 1] - P[:, 0], P[:, 2] - P[:, 0], P[:, 3] - P[:, 0]], -1))) / 6
+    return float(vol[~seen].sum() / vol.sum())
 
 
 # ---------------------------------------------------------------- driver
@@ -1162,8 +1359,23 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
     log(f'[masks] body area fraction per keyframe {np.round(area[::10], 3).tolist()}; {len(keys)} keyframes used')
     np.savez_compressed(out_dir / 'work' / 'masks.npz', body=np.packbits(body, axis=-1), unknown=np.packbits(unknown, axis=-1),
                         shape=np.array(body.shape))
+    bg, bg_ver = None, None
+    if c['w_bg'] > 0:
+        vers = sorted(p_.parent.name for p_ in (OUT / clip / 'background').glob('v*/occupancy.npz'))
+        if vers:
+            bg_ver = vers[-1]
+            o_ = np.load(OUT / clip / 'background' / bg_ver / 'occupancy.npz')
+            bg = o_['bg_depth'].astype(np.float32)
+            log(f'[background] {bg_ver}: first-hit depth {bg.shape} (1/{int(o_["scale"])} res.); samples behind it + '
+                f'{c["bg_margin_mm"]} mm cost w_bg {c["w_bg"]}')
+    ext = None
+    if c['w_ext'] > 0:
+        ext = [border_completion(body[k], valid, unknown[k], c['ext_max']) if observed[k] else None for k in range(V.n)]
+        n_ext = sum(e is not None for e in ext)
+        log(f'[masks] border completion: ellipse continuation outside the view in {n_ext} / {V.n} frames '
+            f'(median {np.median([len(e) for e in ext if e is not None]) * 9 if n_ext else 0:.0f} px)')
     obs = [Obs(V, k, body, unknown, n_cov=800, n_pts=500, erode=c['depth_erode'], use_depth=use_depth,
-               see_mm=c['see_mm']) for k in keys]
+               see_mm=c['see_mm'], bg=bg, bg_margin=c['bg_margin_mm'], ext=ext) for k in keys]
     if not use_depth:                     # pose initialisation still needs points: the (untrusted) video depth
         for o, k in zip(obs, keys):
             o.pts_init = Obs(V, k, body, unknown, n_pts=300, erode=c['depth_erode']).pts
@@ -1188,7 +1400,7 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
         with torch.no_grad():
             return Posed.offset(T(nodes * 1000), T(ffd['t']), T(ffd['dR'][jk]), T(ffd['dT'][jk]))
     verts4d, parts, ls4d = fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init, use_depth,
-                                  (np.array(keys), ffd['ls']), observed, reacquire)
+                                  (np.array(keys), ffd['ls']), observed, reacquire, bg, ext)
     log(f'[4d] {time.time() - t1:.0f} s')
     assert np.isfinite(verts4d).all()
     prim_static, prim_faces = primitive_mesh(prim, 4, static=False)
@@ -1206,7 +1418,9 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
     mask_names = list(V.names)
     idx, to, notes = attach_hints(V, spec, org['name'], mask_names, desc, nodes, faces, verts4d, frames[::2], log,
                                   merged=merge)
-    oi, ot, on = opening_hints(V, clip, org['name'], name, nodes, faces, verts4d, log)
+    oi, ot, on = opening_hints(V, clip, org['name'], name, nodes, faces, verts4d, log, one=c['one_opening'])
+    ni, nt, nn = instrument_contact_hints(V, clip, nodes, faces, verts4d, log)
+    oi, ot, on = np.r_[oi, ni].astype(np.int32), np.r_[ot, nt], on + nn
     idx, to, notes = np.r_[idx, oi].astype(np.int32), np.r_[to, ot], notes + on
     r2 = lambda a, d=2: [round(float(x), d) for x in np.ravel(a)]
     pe = dict(radii_mm=r2(np.exp(prim['s'])), exponents=r2(prim['e'], 3),
@@ -1223,6 +1437,12 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
                         depth_scale=np.exp(ls4d).astype(np.float32), keyframe_depth_scale=np.exp(ffd['ls']).astype(np.float32),
                         fit_parts_mm=parts.astype(np.float32))
     q['unobserved_frames'] = np.nonzero(~observed)[0].tolist()
+    q['behind_background'] = behind_background(V, clip, verts4d, faces, log)
+    q['unseen_volume_share'] = round(unseen_volume(V, verts4d, tets), 4)
+    ext_r = np.ptp((nodes - nodes.mean(0)) @ np.linalg.svd(nodes - nodes.mean(0), full_matrices=False)[2].T, 0) * 1000
+    q['rest_extents_mm'] = [round(float(x), 1) for x in ext_r]
+    log(f"[quality] rest extents {q['rest_extents_mm']} mm (principal axes); volume outside the view in every frame: "
+        f"{q['unseen_volume_share'] * 100:.1f} %")
     q['segmentation'] = dict(version=seg_version(clip, V.names) if clip in OUT.name or (OUT / clip).exists() else None,
                              objects=list(V.names), note='matched by object list against seg/vNN/qc.json')
     q.update(clip=clip, organ=org['name'], mask=name, version=ver, role=org['role'], consistency=org['consistency'],
@@ -1306,7 +1526,8 @@ def write_notes(out_dir, q, org, ver):
   {p['keyframe_offsets_deg_max']} deg / {p['keyframe_offsets_mm_max']} mm; FFD max offset {p['ffd_max_offset_mm']} mm.
 - Tets: {q['tets']['n_nodes']} nodes / {q['tets']['n_tets']} tets / {mh['n_faces']} surface faces, mean ratio min
   {q['tets']['mean_ratio']['min']:.3f} (p1 {q['tets']['mean_ratio']['p1']:.3f}), min dihedral {q['tets']['min_dihedral_deg']['min']:.1f} deg;
-  rest volume {v['rest_ml']} ml, watertight {mh['watertight']}.
+  rest volume {v['rest_ml']} ml, watertight {mh['watertight']}; extents (principal axes) {q.get('rest_extents_mm')} mm;
+  share of the volume outside the view in every frame {q.get('unseen_volume_share')}.
 - 4D from frame {q['start_frame']}; video depth scale fitted per frame {q['primitive'].get('video_depth_scale_range')};
   unobserved frames (mask dropout, excluded from the metrics): {len(q.get('unobserved_frames', []))};
   segmentation conflicts (another mask covers > 30 % of the organ's): {({o: len(v) for o, v in q['masks'].get('overlap_frames', {}).items()})}.
@@ -1320,6 +1541,8 @@ def write_notes(out_dir, q, org, ver):
 
 {other}
 ## 4D health
+- Behind the background surface ({(q.get('behind_background') or {}).get('background_version')}, vertices > 1 mm behind along the
+  camera rays, per third): {(q.get('behind_background') or {}).get('per_third')}
 - Temporal: vertex speed max {t['max_vertex_speed_mm_per_frame']} / p99 {t['p99_vertex_speed_mm_per_frame']} mm per frame,
   acceleration max {t['max_vertex_accel_mm_per_frame2']} / p99 {t['p99_vertex_accel_mm_per_frame2']}; centroid path {t['centroid_path_mm']} mm.
 - Volume / rest: {v['ratio_min']} - {v['ratio_max']} (per third {v['ratio_per_band']}).

@@ -98,3 +98,111 @@ port scale together, kappa).
 - lung_mln seg v03 (per-shot tracking, memory reset at the 9 cuts, 4 instruments + QA repairs): no carry-over across
   cuts any more (pleura only in C4 / D: 25 % of frames; lymph nodes / fat 37 %; dissection bed 82 %; shot D's bed split
   in two); instruments present only in their shots (Harmonic 93 %, temporal IoU 0.72). Lung stays perception-only.
+
+## r02 background agent (t2s/background.py, v08 per clip)
+Roles decided automatically (spec + mask area + a motion test: optical flow minus the camera-induced flow): organs
+excluded and filled behind; large static items -> surface (liver in the chole clips; diaphragm + omentum in
+liver_s4, kept as surface labels = attachment targets); small items -> closed bodies only if they stand out of the
+surface and their carved shape reproduces their own mask (IoU >= 0.3). Surface: static pixels fused in a reference
+camera (per-frame depth scale onto the multi-view median), one thin-plate height field without holes, kept 3 mm
+behind the back of every organ's 4D model in every frame; collision = 24 per-tile height fields along camera rays
+(early ray hits <= 0.1 %) + a watertight slab; query helper Background(clip).ray_distance(X, k).
+| clip | coverage | depth residual median per third mm | held-out photometric NCC (local) | in front of organs (median / p90) | organ vertices behind surface | bodies |
+|---|---|---|---|---|---|---|
+| chole_a | 1.00 | 3.96 / 3.40 / 3.61 | 0.940 (0.585) | 1.0 % / 23 % | 0 % every frame (v1: 15-24 %) | oval organ (IoU 0.81), blood (0.72), red strand band (0.57) |
+| liver_s4 | 1.00 | 5.50 / 3.09 / 2.05 | 0.915 (0.442) | 0.04 % / 2.3 % | liver v10: 20 % up to 24 mm (too thick) | gauze (0.64) |
+| chole_derot | - | 10.7 (surface ~10 mm behind video depth) | local NCC 0.17 | 0.06 % | 26 % | fat (0.30, unreliable) |
+- chole_derot is limited by its cameras and depth (per-frame depth scale 0.74-1.27 needed vs 0.95-1.05 in chole_a;
+  textured surface off by several px even at keyframes; re-registering the cameras to the background did not
+  converge) - the second independent agent to flag this clip's geometry (instrument agent: depth ~35 % too near).
+  -> r03: geometry agent for chole_derot (same video and scope as chole_a: focal can be fixed; denser wide-baseline
+  matching on the static liver; stronger shaft rulers; per-frame scale prior).
+- liver_s4: the organ agent's liver v10 (a 35 mm deep primitive for a thin lobe tip) goes through observed background
+  (20 % of vertices) -> feedback to the organ agent.
+
+## r03 assembly (t2s/assemble.py) on chole_a: building a scene where only the spec's connections hold the organ
+Scene: gallbladder (organ agent v10: 1278 nodes / 5828 tets, E 1.2 kPa / nu 0.45 from the spec's "fluid-filled"),
+the two instruments driven through their ports (instrument agent v01: tips follow their fits to 0.5-0.7 mm), the
+background as static collision (background agent v08) and its three convex bodies. Rules from the spec + attach
+hints only: 8 pedicle vertices -> springs to their first-frame positions ("suspended by cystic duct / artery");
+25 opening vertices -> the suction cannula does not collide with the gallbladder (declared puncture); closed
+grasper jaws at the first frame hold the nearest organ vertices (the jaws hold the neck, which has no model: the
+nearest gallbladder vertices are 6.4 mm away). Frames 9-250 (0-8: camera error at keyframe 0).
+Debugging (all logged as runs in the session, numbers here):
+- MuJoCo 3.x flex-heightfield collision does not work (a tet block falls 9 mm through an hfield; a box or plane
+  holds it) -> the background is 500-800 thin boxes tangent to the fused surface near the organ, each pushed back
+  until no first-frame organ vertex lies behind its face (unpushed boxes shoved the organ 2.8 mm during settling).
+- The agent's rest shape is not the first frame's shape: released from it, the free organ springs back and drifts
+  9 mm in 20 frames -> the first simulated frame is the stress-free state (rest='start').
+- With only the pedicle springs and the grasp, the organ still drifts 10-15 mm over 60 frames although its 4D
+  moves 3.5 mm: nothing holds a free organ against small persistent pushes. Replacing the grasper's along-view
+  motion by the held tissue's (its depth is the weakest part of the tool fit) did not help (13 vs 12.5 mm).
+  An elastic foundation under the unseen back (the 224 'hidden_back' vertices; surrounding organs in reality),
+  springs to the first frame, k >= 0.5 N/m: the drift is gone but the organ then barely moves (0.1-0.3 mm vs the
+  4D's 3.5 mm). -> r03 sweep: foundation stiffness 0.05 / 0.2 / 0.5 N/m, soft vs rigid grasp of the neck.
+- r03 sweep (frames 9-250; foundation 0.05 / 0.2 / 0.5 N/m; soft vs rigid grasp): sim IoU 0.73-0.74 (2D 0.77-0.78; the
+  organ's own 4D 0.82), organ behind background 0 % in every frame (v1: 15-24 %), no illegal tool-in-organ frames
+  with the soft grasp (3 with the rigid one, plus 84 inverted tets), but motion explained ~0 (-0.02..+0.01).
+- Visual QA r03 (independent, images + its own renders): "stable, clean shape, but nothing physical happens":
+  (1) the organ never moves (centroid <= 0.2 mm; the foundation springs act as a liver bed, contradicting the spec);
+  (2) the grasper holds nothing: the closed jaws are 6.4 mm (later 10-12 mm) above the organ - the neck between is
+  not modelled; (3) the cannula is a ghost (no collision): in 17 frames of phase 1 it exits through the far wall,
+  the entry point wanders 6.3 mm rms, and in phase 2 the input tip (instruments v01, capped against organ v09) is
+  outside the organ; (4) the organ is 9.2 ml (v1's template fit: ~28 ml) and its fundus is cut off at the image
+  edge; (5) gaps in the box support. Also: Q.signed_distance gave false 'inside' hits on a body (use winding).
+  -> sent to the organ agent (neck up to the jaws, complete the fundus, one puncture site) and the instrument
+  agent (v02: cannula refit jointly with the organ, one shared puncture point, shafts in front of the background).
+- Assembly change for r04: the puncture as a trocar-like coupling - while the tool is inside, the opening vertices
+  near its shaft are pulled toward the shaft axis (perpendicular springs, k_puncture), so the wall moves with the
+  tool's sideways motion and lets it slide in and out.
+
+## r04 puncture coupling (chole_a, frames 9-250)
+| foundation N/m, puncture N/m, grasp tc | sim IoU (2D) | err vs 4D mm | motion explained | inverted tets (max of 5828) | illegal tool-in-organ frames |
+|---|---|---|---|---|---|
+| 0.2, 0 (r03) | 0.734 (0.776) | 3.99 | +0.002 | 2 | 0 |
+| 0.2, 2 | 0.714 (0.777) | 4.16 | -0.041 | 1076 | 1 |
+| 0.05, 2 | 0.675 (0.746) | 4.26 | -0.067 | 1116 | 0 |
+| 0.05, 10 | 0.650 (0.742) | 4.35 | -0.090 | 1128 | 2 |
+| 0.2, 2, grasp tc 0.02 | 0.714 (0.770) | 4.02 | -0.006 | 1316 | 0 |
+- Negative: pulling the opening vertices toward the shaft axis (which runs inside the organ beyond the puncture)
+  drags surface vertices into the interior: ~1100-1300 inverted tets, worse fit, the organ moves but not like the
+  video. Reverted (k_puncture 0). The puncture needs a proper hole / a coupling at the entry point only, and an
+  instrument fit consistent with the organ (agents asked, r05).
+
+## r05 organ agent hand-back (t2s/organ.py: primitive -> FFD -> uniform tet lattice -> 4D) and the neck link
+Generic fitter: organs = spec primary / secondary with a mask (tubes and membranes listed, not fitted); volume rule
+from the spec (fluid-filled: near-constant, 'drained' allowed only if the spec declares an opening / drain action);
+unknown pixels = instruments, objects in front, see-through objects, junction bands; superquadric fitted to all
+keyframes with tracked keyframe poses, thickness prior + aspect cap (unconstrained it collapsed to a plate), FFD;
+video depth trusted only up to a per-frame scale (0.86-1.13 needed on chole_a, 0.89-1.12 liver, 0.78-1.12 derot);
+background surface as a back limit. Self-test: synthetic deforming superquadric, 4D IoU 0.92, ~1 mm error.
+| clip / organ | 4D IoU per third (own masks) | static rest | primitive alone | depth residual mm | volume | inverted tets |
+|---|---|---|---|---|---|---|
+| chole_a gallbladder v15 | 0.826 / 0.836 / 0.918 | 0.617 / 0.537 / 0.769 | 0.553 / 0.455 / 0.713 | 4.3 / 5.8 / 2.2 (0.7 / 1.7 / 0.4 after scale) | 8.8 ml, 1.04-0.98 of rest | 0 |
+| liver_s4 liver v14 | 0.841 / 0.885 / 0.852 | 0.577 / 0.715 / 0.667 | 0.534 / 0.675 / 0.650 | 2.5 / 2.9 / 3.7 | 6.4 ml wedge (v10: 15.3 ml) | 0 |
+| chole_derot gallbladder v12 (provisional) | 0.740 / 0.698 / 0.768 | 0.11 / 0.50 / 0.55 | 0.12 / 0.48 / 0.56 | 1.9 / 2.4 / 13.2 | 28.9 ml (+-1 %) | 0 |
+- chole_a vs v1 (v1's bands, own masks; different masks and geometry, indicative): v2 primitive 0.841 / 0.830 /
+  0.887 vs v1 template 0.832 / 0.824 / 0.859 -> the primitive-initialised fit is at least as good as the template.
+- liver v14 answers the background feedback: vertices behind the background 20-25 % (v10) -> 1.6-1.8 %.
+- The agent kept the neck out of the closed volume (a merged gallbladder + neck_pedicle fit was worse on every
+  metric: own IoU 0.76 vs 0.83) -> assembly models the short neck between the jaws and the organ as a link:
+  spatial-tendon springs (k_neck) from the grasper tip to the organ's 8 nearest vertices (7.3 mm long).
+- Assembly: elastic foundation under the unseen back only as the spec allows: 'free' organs (gallbladder: "free of
+  the liver bed", high) get a weak one (k_foundation_free, surrounding tissue), embedded organs (liver) a normal one.
+- Short test (chole_a v15, frames 9-69): with the neck link the organ now moves with the grasper (0.3-0.8 mm) but
+  less than its 4D (1.0-2.7 mm); error 1.0-2.7 mm (= roughly the 4D's own motion).
+- Still open: chole_a's organ is the visible part only (8.8 ml; v1 template ~28 ml; fundus cut at the image edge)
+  -> asked for v16 with the out-of-image part as unknown + smooth extension.
+- r05 chole_a sweep (gallbladder v15, frames 9-250, neck link, weak foundation for the 'free' organ):
+  | k_neck N/m, foundation N/m | sim IoU (2D) | err vs 4D mm | motion explained | inverted | organ behind bg | illegal |
+  |---|---|---|---|---|---|---|
+  | 2, 0.05 | 0.723 (0.782) | 2.89 | **+0.084** | 4 | 0 % | 0 |
+  | 10, 0.05 | 0.725 (0.781) | 2.91 | +0.079 | 24 | 0 % | 0 |
+  | 10, 0.02 | 0.720 (0.769) | 2.96 | +0.061 | 22 | 0 % | 0 |
+  | 10, 0 | 0.658 (0.688) | 7.20 | -1.28 (drifts away) | 25 | 0 % | 0 |
+  First positive motion explained in v2 (the 4D's own IoU here 0.80). Without any support the free organ drifts
+  (-1.28): the surrounding tissue is a real part of the boundary condition, but weak (0.05 N/m per vertex).
+- Session restart (2026-10-08 ~10:00): background jobs and agents were stopped; resumed the geometry agent
+  (chole_derot: focal fixed to chole_a's, 84k wide matches, held-out long-range error 10 px vs 224 px, ruler
+  residual 0.15 vs 0.30 in its r1), the organ agent (v16: fundus beyond the image edge) and the instrument agent
+  (v02 done: grasper IoU 0.92, size 5.04 mm; cannula refit in progress); liver_s4 r05 sweep restarted.
