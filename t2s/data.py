@@ -31,6 +31,11 @@ CLIPS = {
                      crop_rows=(12, 468), text='data/videos/commons_liver/SOURCE.md'),
     'lung_mln': dict(video='data/videos/commons_lung/vats_lobectomy_S2.mp4', frames=(783, 1552), stride=2,
                      crop_rows=(60, 420), text='data/videos/commons_lung/SOURCE.md'),
+    # lung_mln is 9 shots (prompting agent, r01); shot C2 (lung_mln frames 174-239, 5.3 s: the cavity with the lymph-node /
+    # fat block lifted by the grasper, the Harmonic shaft passing through) is the one continuous view that holds the
+    # spec's primary organ - used for the 3D reconstruction of the lung video's objects (after r10)
+    'lung_c2': dict(video='data/videos/commons_lung/vats_lobectomy_S2.mp4', frames=(783 + 2 * 174, 783 + 2 * 239), stride=2,
+                    crop_rows=(60, 420), text='data/videos/commons_lung/SOURCE.md'),
 }
 
 

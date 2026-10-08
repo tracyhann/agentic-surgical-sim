@@ -380,3 +380,38 @@ def qa_strips(clip, ver, n=12):
     path = D.OUT / clip / 'seg' / ver / 'strips.jpg'
     cv2.imwrite(str(path), cv2.cvtColor(np.concatenate(rows, 0), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 85])
     return path
+
+
+def subclip(src, dst, a, b, src_ver, dst_ver='v01', min_area=0.002):
+    """One shot of a segmented multi-shot clip as its own clip (after r10: lung_mln frames 174-239 -> lung_c2, so that
+    the lung video's objects can go through the 3D steps): the masks of frames a..b for the objects present in them,
+    with the prompting agent's texts and the scene spec carried over.  python -m t2s.seg3 subclip <src> <dst> <a> <b> <src_ver>"""
+    S, Dd = D.OUT / src / 'seg', D.OUT / dst / 'seg'
+    q = json.loads((S / src_ver / 'qc.json').read_text())
+    W = q['width']
+    z = np.load(S / src_ver / 'masks.npz')
+    keep = {}
+    for nm in q['objects']:
+        m = z[nm][a:b + 1]
+        if np.unpackbits(m, axis=-1)[..., :W].mean() >= min_area:
+            keep[nm] = m
+    (Dd / dst_ver).mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(Dd / dst_ver / 'masks.npz', **keep)
+    qc = dict(clip=dst, version=dst_ver, source=dict(clip=src, version=src_ver, frames=[a, b]), n=b - a + 1, width=W, objects=list(keep),
+              confidence={k: v for k, v in q.get('confidence', {}).items() if k in keep})
+    (Dd / dst_ver / 'qc.json').write_text(json.dumps(qc, indent=1, ensure_ascii=False))
+    pr = json.loads((S / 'prompts.json').read_text())
+    pr.update(clip=dst, objects={k: v for k, v in pr.get('objects', {}).items() if k in keep},
+              note_subclip=f'frames {a}-{b} of {src} ({src_ver}); prompt frame numbers are those of {src}')
+    (Dd / 'prompts.json').write_text(json.dumps(pr, indent=1, ensure_ascii=False))
+    ip = json.loads((S / 'instrument_prompts.json').read_text())
+    ip.update(clip=dst, instruments={k: {kk: vv for kk, vv in v.items() if kk != 'visible_frames'} for k, v in ip.get('instruments', {}).items()
+                                     if f'instrument_{k}' in keep})
+    ip.pop('puncture', None)
+    (Dd / 'instrument_prompts.json').write_text(json.dumps(ip, indent=1, ensure_ascii=False))
+    sp = json.loads((D.OUT / src / 'spec' / 'scene_spec.json').read_text())
+    sp['clip'] = dst
+    (D.OUT / dst / 'spec').mkdir(parents=True, exist_ok=True)
+    (D.OUT / dst / 'spec' / 'scene_spec.json').write_text(json.dumps(sp, indent=1, ensure_ascii=False))
+    print(f'[subclip] {src} {src_ver} frames {a}-{b} -> {dst} {dst_ver}: {list(keep)}')
+    return list(keep)
