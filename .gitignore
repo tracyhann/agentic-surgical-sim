@@ -1,6 +1,6 @@
 # environment, weights and third-party code (see README / third_party/README.md for how to get them)
-.venv/
-models/
+.venv
+models
 third_party/vggt/
 .claude/
 __pycache__/
@@ -37,3 +37,12 @@ archive/**/*.stl
 archive/**/*.mtl
 data/videos/commons_lung/*.ogv
 data/videos/commons_liver/*.ogv
+
+# v2 (text-guided) run artefacts: same rule as v1
+outputs/t2s/**/*.npz
+outputs/t2s/**/*.npy
+outputs/t2s/**/*.mp4
+outputs/t2s/**/*.png
+outputs/t2s/**/*.xml
+outputs/t2s/**/*.obj
+outputs/t2s/**/frames/

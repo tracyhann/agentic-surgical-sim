@@ -5,8 +5,8 @@ geometry with the video's own texture, a deformable organ, and the instruments r
 video. The scene can then be re-simulated with other instrument motions (data for surgical world models), and every
 reconstruction is scored against the video it came from.
 
-Current best method (per-tissue models + 4D simulation, 2026-10-08): **[PIPELINE.md](PIPELINE.md)**; round log
-`outputs/iter/LOG.md`.
+Branch `v2-text2sim`: text-guided, SAM 3, primitive-initialised organ modelling, plan in **[PLAN_V2.md](PLAN_V2.md)**,
+code in `t2s/`, results in `outputs/t2s/`. The v1 method (branch `main`): [PIPELINE.md](PIPELINE.md), `outputs/iter/LOG.md`.
 
 ```
 r2s/            the pipeline (config-driven; see r2s/README.md)
