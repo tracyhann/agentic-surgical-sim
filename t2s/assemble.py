@@ -30,7 +30,8 @@ from .checks import seg_tri_hits
 ROOT = Path(__file__).resolve().parents[1]
 PARAMS = dict(ts=6.25e-5, settle=0.3, vertex_mass=6e-5, damping=0.002, solref=0.01, friction=0.3, k_anchor=2.0, k_foundation=0.5, k_foundation_free=0.05, k_neck=2.0, neck_n=8,
               grasp_r=0.004, grasp_reach_mm=10.0, grasp_soft_tc=0.1, hold_depth='organ', k_puncture=0.0, puncture_r_mm=6.0, grasp_n=40, grasp_ramp=0.25, bg_patches=800, bg_patch_mm=3.0, bg_thick_mm=3.0,
-              bg_reach_mm=30.0, rest='start', gravcomp=1, drag=0.0, first_frame=0, last_frame=-1, world_scale=1.0)
+              bg_reach_mm=30.0, rest='start', gravcomp=1, drag=0.0, first_frame=0, last_frame=-1, world_scale=1.0,
+              young_scale=1.0)       # r07: x the material table's Young's modulus (a tense fluid-filled sac is not a 1 kPa gel)
 MATERIAL = {'fluid-filled': (1200.0, 0.45), 'solid parenchyma': (3000.0, 0.45), 'spongy/air-filled': (400.0, 0.3),
             'fatty': (800.0, 0.4), None: (1500.0, 0.4)}
 
@@ -152,6 +153,7 @@ def build(clip, spec, organs, ins, bg, P, f0):
         rest = X0.copy() if P['rest'] == 'start' else z['rest_verts'].astype(float) * s
         rules = organ_rules(spec, name, z)
         E, nu = MATERIAL.get(organ_specs.get(name, {}).get('consistency'), MATERIAL[None])
+        E *= P['young_scale']
         free_organ = any(c.get('type') == 'free' and name in (str(c.get('a', '')) + str(c.get('b', ''))).lower()
                          for c in spec.get('connections', []))
         k_found = P['k_foundation_free'] if free_organ else P['k_foundation']   # surrounding tissue / embedding

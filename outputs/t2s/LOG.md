@@ -238,4 +238,64 @@ background surface as a back limit. Self-test: synthetic deforming superquadric,
   focal length assumed from chole_a, absolute scale without an error bar, correction grid read centre-aligned but
   fitted corner-aligned (~4 % median depth difference), and it had been checked by numbers only.
   t2s/geomfix.py on disk is the r2 code and does not reproduce sift2_r1 (see its docstring and geometry/NOTES.md).
+- First picture of the new geometry and a decision on the jitter (t2s/geomcheck.py: lean comparison, ~2 GB;
+  `t2s.geomfix eval` grew to 31 GB in one process and was killed - do not use it). Cameras low-passed over time
+  (`t2s.geomfix smooth`, Gaussian on centre + rotation vector together):
+  | geometry | probe px, keyframe gap 1-2 / >= 10 | static NCC k->k+10 (local) | depth scale p5-p95 | jitter mm, deg / frame^2 | scope path mm |
+  |---|---|---|---|---|---|
+  | sift (old) | 3.6 / 170.9 | 0.819 (0.158) | 0.823-1.249 | 0 (interpolated) | 139 |
+  | sift2_r1 | 3.1 / 5.4 | 0.884 (0.458) | 0.936-1.036 | 1.20, 0.79 | 332 |
+  | sift2_r1s2 (sigma 2 frames) | 4.0 / 8.5 | 0.875 (0.402) | 0.948-1.036 | 0.21, 0.11 | 169 |
+  | sift2_r1s4 (sigma 4 frames) | 6.4 / 13.0 | 0.865 (0.309) | 0.949-1.034 | 0.09, 0.05 | 122 |
+  Smoothing costs static consistency, so part of the "jitter" is real scope motion or compensates per-frame depth
+  errors; sigma 2 removes 5/6 of it for ~1 px. Adopted for the clip: **sift2_r1s2** (t2s/views2.py GEOMETRY; Views
+  now carry `.geometry`). Warp checker (geometry/warp_checker.jpg: frame k warped into frame j, checkerboarded with the
+  real frame): with the new geometries the static anatomy lines up across 100 frames; the old one has almost no
+  valid overlap at that distance. No gross error seen.
+- Workspace: the clip's models fitted on the old geometry (organs v06 / v12, instruments v01, background v03-v08)
+  moved to outputs/t2s/chole_derot/_geom_sift/; new-geometry versions: instruments v02, organ v15, background v09.
+- Instruments v02 (chole_derot, new geometry; t2s.instruments unchanged, 112 s): the instrument agent's own free-space
+  test now passes without any size scaling - grasper 0 % of shaft samples behind the tissue beside it (implied scale
+  1.00; old geometry: kappa 0.64), dissector 15 % (implied 0.97; old 54 %). Grasper IoU 0.90, tip 1.4 px; dissector
+  IoU 0.84, tip 3.0 px. Independent confirmation that the ~35 % scale error is gone.
+- Organ v15 (chole_derot gallbladder, new geometry; t2s.organ unchanged, v15 settings, no background model yet so
+  w_bg inactive; 721 s, 1.7 GB): 4D IoU 0.79 / 0.80 / 0.79 (old geometry v12: 0.74 / 0.70 / 0.77), depth residual
+  4.2 mm mean / 0.8 mm median, rest volume 22.2 ml (58 x 37 x 21 mm; old geometry 28.9 ml at the wrong scale), volume
+  kept within 0.994-1.003, 1 inverted tet in one frame, keyframe rotations up to 96 deg relative to the start frame
+  (110). Static rest shape alone: IoU 0.54 - the motion matters in this clip. Attachments from the spec: liver bed
+  'free' -> none; pedicle (cystic duct + artery) 8 vertices; hidden back 277 vertices.
+- Background v09 (= v08 settings, new geometry, with organ v15 and instruments v02; 2 min, 3.5 GB): one connected
+  surface, 0 cells contradicted by visible organs / instruments after 2 rounds, 1 body (peri-gallbladder fat).
+  Against the old-geometry v08 (same code): fused-surface depth error median 10.5 -> 2.3 mm per frame, local photometric
+  NCC of the re-rendered static scene 0.17 -> 0.48, organ-model vertices behind the background 26 % -> 6 %,
+  instrument pixels in front-of-surface conflict 1.6 % -> 0 % (medians over frames). The background agent's and the
+  instrument agent's own tests, which first exposed the scale problem, both pass now.
+- First assembly of chole_derot (r06; organ v15, instruments v02, background v09; frames 0-246, 8 min per run):
+  | pedicle anchor N/m | sim IoU (2D) | 4D's own IoU | err vs 4D mm | motion explained | inverted | organ behind bg | illegal tip-in-organ frames |
+  |---|---|---|---|---|---|---|---|
+  | 2 | 0.441 (0.518) | 0.739 | 8.28 | -0.005 | 208 | 6.8 % | 6 |
+  | 20 | 0.440 (0.517) | 0.739 | 8.30 | -0.009 | 195 | 6.7 % | 5 |
+  NEGATIVE: the simulated gallbladder stays where it started (centroid moves 0.4-2.2 mm; in the 4D it moves 4-10 mm
+  and turns by up to 96 deg), IoU by thirds 0.57 / 0.36 / 0.37. No grasp and no neck link formed (no closed jaw on
+  or near the organ in frame 0; the tools push in this clip). So far the answer to "does the free gallbladder's
+  rotation follow from the physics" is no.
+- Why (new check t2s/recon_check.py: the fitted instruments against the fitted organ 4D, before any simulation;
+  inside test by winding number - r2s.quality.signed_distance mis-signs points far from the surface, an earlier
+  reading of "4 cm inside" was that artefact): the RECONSTRUCTION is not consistent between agents. Frames where
+  the shaft is inside the organ model although no opening is declared:
+  | clip, instruments | instrument | inside / frames seen | max depth mm | within 2 mm of the surface | median gap otherwise mm |
+  |---|---|---|---|---|---|
+  | chole_derot v02 | grasper | 11 / 36 | 11.7 | 3 | 5.3 |
+  | chole_derot v02 | dissector | 18 / 44 | 9.2 | 9 | 6.5 |
+  | chole_a v02 | grasper | 1 / 51 | 1.1 | 8 | 3.7 |
+  | chole_a v02 | suction cannula | 41 / 50 (opening declared) | 10.1 | 4 | 2.5 |
+  | liver_s4 v01 | needle holder R | 0 / 35 | - | 0 | 20.9 |
+  | liver_s4 v01 | needle holder L | 2 / 20 | 2.2 | 3 | 12.3 |
+  An instrument's depth along the view is only weakly observed (silhouette + fixed port), so its shaft ends up
+  through the organ in a third of the frames (chole_derot) or far in front of it (liver). The assembly then asks
+  MuJoCo to resolve an impossible start instead of a push.
+- Fix in the instrument fit (t2s/instruments.py, `organ_solid`, default on): at the pixels where an instrument is
+  SEEN it occludes what is behind it, so the first surface behind its shaft is min(background, front of the organ
+  models) there (organ fronts rasterised per frame at the occupancy resolution); skipped for an instrument with a
+  declared opening (chole_a's cannula). Uses the existing background term, no new solver terms.
 

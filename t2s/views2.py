@@ -3,22 +3,33 @@ cameras, metric depth, project / unproject, points, occluders), built from the c
 scene stage: instruments are the instrument agent's job in v2).
 
     from t2s import views2
-    V = views2.load('chole_derot')          # geometry 'sift' (keyframe bundle adjustment + SIFT)
+    V = views2.load('chole_derot')          # the clip's geometry (GEOMETRY; default 'sift' = keyframe BA + SIFT)
     V.mask('gallbladder'); V.depth(k); V.project(X, k); V.valid (scope image area)
 """
 from functools import lru_cache
 
 import numpy as np
 
+from r2s import config as _RC
 from r2s.config import Clip
 from r2s import source, perception
 from . import data as D
 from .geom import r2s_name
 
 
+# Geometry per clip. chole_derot (r06): the geometry agent's re-solve sift2_r1 (t2s.geomfix; fixed focal length, wide
+# matches, per-frame poses and depth) with its cameras low-passed over 2 frames (sift2_r1s2: jitter 1.2 -> 0.2 mm per
+# frame^2 for ~1 px more static reprojection error; outputs/t2s/chole_derot/geometry/check_r06.json). Models fitted
+# on the old 'sift' geometry of this clip are in outputs/t2s/chole_derot/_geom_sift/.
+GEOMETRY = {'chole_derot': 'sift2_r1s2'}
+for _t in set(GEOMETRY.values()) | {'sift2_r1'}:
+    _RC.VARIANTS.setdefault(_t, {'multiview': 'geomfix'})            # only needs to be truthy for metric_depth
+    _RC.VARIANT_TITLES.setdefault(_t, _t)
+
+
 class Views:
     def __init__(self, clip, geometry='sift'):
-        self.name = clip
+        self.name, self.geometry = clip, geometry
         self.clip = Clip(r2s_name(clip))
         self.gclip = Clip(f'{r2s_name(clip)}+{geometry}') if geometry != 'single' else self.clip
         self.cam = self.clip.camera()
@@ -66,5 +77,5 @@ class Views:
 
 
 @lru_cache(maxsize=4)
-def load(clip, geometry='sift'):
-    return Views(clip, geometry)
+def load(clip, geometry=None):
+    return Views(clip, geometry or GEOMETRY.get(clip, 'sift'))

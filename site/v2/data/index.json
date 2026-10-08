@@ -27,9 +27,10 @@
  },
  {
   "name": "chole_derot",
-  "title": "胆囊复位（暂定）",
+  "title": "胆囊复位",
   "conditions": [
-   "recon4d"
+   "recon4d",
+   "sim4d"
   ],
   "steps": 247,
   "size": [

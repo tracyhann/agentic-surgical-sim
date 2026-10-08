@@ -1548,7 +1548,7 @@ def mujoco_check(path, every=5):
 
 
 # ================================================================ clip-level driver
-DEFAULT = dict(w_bg=1.0, bg_margin=0.0005, sig_bg=0.001, sig_punct=0.001, sig_inside=0.0005, enter_cos=0.17,
+DEFAULT = dict(organ_solid=True, w_bg=1.0, bg_margin=0.0005, sig_bg=0.001, sig_punct=0.001, sig_inside=0.0005, enter_cos=0.17,
                contact_tol=0.0025, sig_contact=0.001, couple=False, organ_version=None, puncture_topk=5,
                punct_h_min=0.003, punct_wall=0.001, punct_mode='line', sig_kappa_coupled=0.25, contact_gate=0.005, first_frame=0,
                M=64, Jz=10, Jf=10, min_area=150, blunt_ratio=0.78, sig_b=1.5, sig_m=2.0, sig_z=0.008, w_depth=0.3,
@@ -1880,7 +1880,7 @@ def fit_one(V, clip, inst, others, ip, cfg, log):
     t = make_tool(inst['type'], inst['diameter'])
     hidden_frames = hidden_info(clip, ip, inst['key'])
     meas, ob = observations(V, inst['name'], others, cfg, hidden_frames, inst.get('visible_frames'))
-    attach_scene(ob, cfg)
+    attach_scene(ob, cfg, V, inst['name'], opening=bool(hidden_frames))
     log(f"[{inst['name']}] type {t['type']} (agent: {inst['agent_type']}), shaft {inst['diameter'] * 1000:.0f} mm "
         f"({inst['diameter_src']}); mask frames {ob['vis'].sum()} / {V.n}; end types "
         f"{ {e: int((ob['end_type'] == e).sum()) for e in ('free', 'blunt', 'cut', 'other', 'inside_organ')} }")
@@ -1986,9 +1986,43 @@ def fit_one(V, clip, inst, others, ip, cfg, log):
                 kappa_info=kinfo, couple=couple)
 
 
-def attach_scene(ob, cfg):
+def organ_fronts(V, clip, scale, pin=None, log=print):
+    """Front depth (m, inf where none) of the clip's organ models (organ agent, newest finished version of each)
+    along every frame's camera rays, min-pooled to the occupancy resolution: (n, h, w), and the versions used."""
+    from r2s.tissue.gallbladder import raster_depth
+    h, w = int(np.ceil(V.H / scale)), int(np.ceil(V.W / scale))
+    front, used = np.full((V.n, h, w), np.inf, np.float32), {}
+    for d in sorted((OUT / clip / 'organs').glob('*/')):
+        vs = sorted(q.name for q in d.glob('v[0-9][0-9]') if (q / 'model.npz').exists())
+        if not vs:
+            continue
+        ver = pin if pin in vs else vs[-1]
+        z = np.load(d / ver / 'model.npz')
+        X4, F = z['verts4d'].astype(np.float64), z['faces'].astype(np.int64)
+        for k in range(V.n):
+            zb = np.full((h * scale, w * scale), np.inf, np.float32)
+            zb[:V.H, :V.W] = raster_depth(V, X4[k], F, k)
+            front[k] = np.minimum(front[k], zb.reshape(h, scale, w, scale).min((1, 3)))
+        used[d.name] = ver
+    return front, used
+
+
+def attach_scene(ob, cfg, V=None, name=None, opening=False):
+    """Scene the shaft has to stay in front of: the background agent's surface and (r06) - at the pixels where this
+    instrument is SEEN, so it occludes whatever lies behind - the front of the organ models, unless the instrument has
+    a declared opening into an organ (its tip is then inside by the spec: puncture coupling)."""
     ob['bg'] = cfg.get('_bg')
     ob['bg_w'] = (~ob['trimmed']).astype(float)
+    fr = cfg.get('_organ_front')
+    if fr is None or V is None or opening:
+        return
+    sc = fr['scale']
+    n, h, w = fr['depth'].shape
+    m = np.zeros((n, h * sc, w * sc), bool)
+    m[:, :V.H, :V.W] = V.mask(name)
+    seen = m.reshape(n, h, sc, w, sc).any((2, 4))
+    occ = ob['bg']['occ'] if ob['bg'] is not None else np.full(fr['depth'].shape, np.inf, np.float32)
+    ob['bg'] = dict(occ=np.where(seen, np.minimum(occ, fr['depth']), occ).astype(np.float32), scale=sc)
 
 
 def rebuild_coupling(T, cfg, ob):
@@ -2110,6 +2144,15 @@ def run(clip, ver='v01', overrides=None, log=print, reuse=False):
         cfg['_bg'] = dict(occ=bgo.occ.astype(np.float32), scale=bgo.occ_scale)
         cfg['background_version'] = bgo.dir.name
         log(f'[scene] background {bgo.dir.name}: shafts kept in front of it')
+    cfg['_organ_front'], cfg['organ_front_versions'] = None, None
+    if cfg['organ_solid'] and cfg['w_bg'] > 0 and any((OUT / clip / 'organs').glob('*/v[0-9][0-9]/model.npz')):
+        sc = cfg['_bg']['scale'] if cfg['_bg'] is not None else 4
+        front, used = organ_fronts(V, clip, sc, cfg['organ_version'], log)
+        if cfg['_bg'] is not None and cfg['_bg']['occ'].shape != front.shape:
+            log(f"[scene] organ fronts {front.shape} do not match the background occupancy {cfg['_bg']['occ'].shape}: skipped")
+        else:
+            cfg['_organ_front'], cfg['organ_front_versions'] = dict(depth=front, scale=sc), used
+            log(f'[scene] organ models {used}: a shaft is kept in front of them where it is seen (no declared opening)')
     cfg['_organ'] = None
     if cfg['couple']:
         cfg['_organ'] = load_organ(clip, cfg['organ_version'])
@@ -2124,7 +2167,7 @@ def run(clip, ver='v01', overrides=None, log=print, reuse=False):
             others = [o['name'] for o in insts if o['name'] != nm]
             T['meas'], ob = observations(V, nm, others, cfg, T['hidden_frames'], T['inst'].get('visible_frames'))
             ob.update({k: T['ob_extra'][k] for k in T['ob_extra']})
-            attach_scene(ob, cfg)
+            attach_scene(ob, cfg, V, nm, opening=bool(T['hidden_frames']))
             rebuild_coupling(T, cfg, ob)
             T['ob'] = ob
         log('[reuse] fitted poses from work/fit.pkl')

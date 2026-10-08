@@ -123,6 +123,10 @@ VERSIONS = {
     # worst in chole_derot) and taken from the mean, not the maximum, of the organ / instrument fronts seen behind
     'v08': dict(BASE, lam2=30.0, scale_iters=2, border_in=24, flow_reject=True, flow_k=2.0, fs_iters=3, body_min_iou=0.3,
                 fs_instruments=True, fs_min_push=True, fs_mean=True, fs_smooth=True),
+    # v09 = v08's settings; the name marks models fitted on a clip's NEW geometry (r06: chole_derot on sift2_r1s2, see
+    # t2s.views2.GEOMETRY; the old-geometry models of that clip are in outputs/t2s/chole_derot/_geom_sift/)
+    'v09': dict(BASE, lam2=30.0, scale_iters=2, border_in=24, flow_reject=True, flow_k=2.0, fs_iters=3, body_min_iou=0.3,
+                fs_instruments=True, fs_min_push=True, fs_mean=True, fs_smooth=True),
 }
 
 
