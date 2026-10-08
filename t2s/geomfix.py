@@ -4,6 +4,17 @@ t2s.views2.load(clip, 'sift2') reads it (importing this module registers the var
 
     PYTHONPATH=. .venv/bin/python -m t2s.geomfix solve <clip> [--tag sift2] [--holdout-far 100]
     PYTHONPATH=. .venv/bin/python -m t2s.geomfix eval <clip> [tags ...]     -> outputs/t2s/<clip>/geometry/
+    PYTHONPATH=. .venv/bin/python -m t2s.geomfix smooth <clip> <src> <dst> <sigma>   (r06: low-pass the cameras)
+    PYTHONPATH=. .venv/bin/python -m t2s.geomfix figures <clip> [tags ...]  -> warp_checker.jpg, static_scale.png
+
+STATE 2026-10-08 - read before re-running. The geometry in use, outputs/variants/chole_derot_t2s+sift2_r1, was
+produced by an EARLIER state of this file (see outputs/t2s/chole_derot/geometry/NOTES.md). Added after it and never
+run to completion (two runs were killed after round 0's keyframe bundle adjustment when the machine restarted / ran
+out of memory), so UNTESTED end to end: smooth_frames (joint temporal smoothing of the per-frame poses, CFG['smooth']),
+the forward-backward-checked motion_reject, the 1/4-resolution correction grid written by write_frames (fine_corr),
+and the --holdout-far option; in evaluate: the mutual-nearest-neighbour check of probe_matches, jitter, per-instrument
+free space and the held-out SIFT probe. `solve` as it stands therefore does NOT reproduce sift2_r1.
+Memory: one sample of `eval chole_derot` showed ~10 GB resident (cause not found); run it alone.
 
 What differs from r2s.multiview mode 'sift' (r02 findings on chole_derot; r2s itself is not changed):
  1. Static pixels. The r2s config written by t2s.geom marks every spec organ as 'strand' (moving) and every other
@@ -26,7 +37,9 @@ What differs from r2s.multiview mode 'sift' (r02 findings on chole_derot; r2s it
  6. Every frame gets its own pose and depth affine (+ smooth correction grid), fitted to the static structure of the
     two bracketing keyframes (flow tracks from both, reprojection + relative depth), instead of interpolating poses
     and the depth affine between keyframes (Depth Anything's normalisation changes from frame to frame when the large
-    gallbladder turns: that interpolation is what made the per-frame depth scale spread 0.74-1.27).
+    gallbladder turns: that interpolation is what made the per-frame depth scale spread 0.74-1.27). Solved frame by
+    frame the poses jitter (rotation against translation, sift2_r1: 1.2 mm / 0.8 deg per frame^2); smooth_frames
+    (untested, see STATE) adds an acceleration prior for that.
 
 Evaluation (eval): every geometry is read through its frames.npz + the shared Depth Anything output (what the other
 agents load), on one common static mask (labels only: liver + unlabelled minus dilated movers), keyframes every 10
@@ -64,9 +77,15 @@ ROOT = Path(__file__).resolve().parents[1]
 VARIANT = 'sift2'
 RC.VARIANTS.setdefault(VARIANT, {'multiview': 'geomfix'})       # read by r2s.perception.metric_depth (truthy)
 RC.VARIANT_TITLES.setdefault(VARIANT, '多视角·SIFT2 (t2s.geomfix)')
-for _t in ('sift2_holdout', 'sift2_r1', 'sift2_r2'):              # diagnostic variants of the same solve
-    RC.VARIANTS.setdefault(_t, {'multiview': 'geomfix'})
-    RC.VARIANT_TITLES.setdefault(_t, _t)
+
+
+def register(tag):
+    RC.VARIANTS.setdefault(tag, {'multiview': 'geomfix'})
+    RC.VARIANT_TITLES.setdefault(tag, tag)
+
+
+for _t in ('sift2_holdout', 'sift2_r1', 'sift2_r2', 'sift2_r1s2', 'sift2_r1s4'):   # diagnostic variants of the same solve
+    register(_t)
 
 CFG = dict(every=5, window=4, n_pts=500, dil_px=15, grid=(4, 6), focal_from='chole_a', motion_ratio=1.5,
            sift_nf=6000, sift_ct=0.01, ratio=0.8, f_thresh=1.5, min_inliers=15, guided_radius=12.0, guided_ratio=0.85,
@@ -173,17 +192,22 @@ class Sol:
     """Cameras x_k = R_k X + t_k (X in keyframe-0 / frame-0 camera coordinates), one focal length, and the depth model
     1/z = a_k d + b_k times exp(bilinear corr_k) on the Depth Anything output d, for frames `idx`."""
 
-    def __init__(self, idx, R, t, f, a, b, corr, disp, W, H):
+    def __init__(self, idx, R, t, f, a, b, corr, disp, W, H, stored=False):
         self.idx, self.R, self.t, self.f, self.a, self.b, self.corr = list(idx), R, t, float(f), a, b, corr
         self.disp, self.W, self.H = disp, W, H
         self.pos = {k: i for i, k in enumerate(self.idx)}
+        self.stored = stored            # read from a frames.npz: the depth is what r2s.multiview.depth_frames gives
 
     def depth(self, k):
         i = self.pos[k]
         z = 1.0 / np.clip(self.a[i] * self.disp[k] + self.b[i], 1.0, None)
         c = self.corr[i]
         if c.shape[0] > 1:
-            z = z * np.exp(corr_field(c, self.H, self.W))
+            # a stored geometry is evaluated exactly as t2s.views2 loads it (cv2.resize of the grid, whatever its
+            # size); only a solution still being solved uses the bundle adjustment's corner-aligned grid
+            F = (cv2.resize(c.astype(np.float32), (self.W, self.H), interpolation=cv2.INTER_LINEAR) if self.stored
+                 else corr_field(c, self.H, self.W))
+            z = z * np.exp(F)
         return z
 
     def transfer(self, k, j, P, z=None):
@@ -196,7 +220,8 @@ class Sol:
         return np.stack([self.f * y[:, 0] / y[:, 2] + self.W / 2, self.f * y[:, 1] / y[:, 2] + self.H / 2], 1), y[:, 2]
 
     def scaled(self, s):
-        return Sol(self.idx, self.R, self.t * s, self.f, self.a / s, self.b / s, self.corr, self.disp, self.W, self.H)
+        return Sol(self.idx, self.R, self.t * s, self.f, self.a / s, self.b / s, self.corr, self.disp, self.W, self.H,
+                   stored=self.stored)
 
 
 def sol_from_frames(path, disp, W, H, cam):
@@ -208,7 +233,7 @@ def sol_from_frames(path, disp, W, H, cam):
     c = (pos - pos[0]) @ R_w[0].T                                        # centres in frame-0 camera coordinates
     t = -np.einsum('kij,kj->ki', R, c)
     corr = z['corr'] if z['corr'].shape[1] > 1 else np.zeros((n, 1, 1))
-    return Sol(range(n), R, t, float(np.median(z['f'])), z['a'], z['b'], corr, disp, W, H)
+    return Sol(range(n), R, t, float(np.median(z['f'])), z['a'], z['b'], corr, disp, W, H, stored=True)
 
 
 # ------------------------------------------------------------------ correspondences
@@ -754,6 +779,32 @@ def solve(clip, tag=VARIANT, holdout_far=None, rounds=None, log=log):
 
 
 # ------------------------------------------------------------------ evaluation
+def smooth_variant(clip, src, dst, sigma):
+    """r06: a stored geometry with its per-frame cameras low-passed over time (Gaussian, sigma in frames, on the
+    centre and on the rotation vector relative to frame 0 together, so that the frame-to-frame trade of rotation
+    against translation cancels instead of being split); focal length and depth model unchanged. A cheap stand-in for
+    smooth_frames (the joint solve that never completed)."""
+    from scipy.ndimage import gaussian_filter1d
+    register(dst)
+    a, b = RC.Clip(f'{r2s_name(clip)}+{src}'), RC.Clip(f'{r2s_name(clip)}+{dst}')
+    (b.prep / 'multiview').mkdir(parents=True, exist_ok=True)
+    for f in a.prep.iterdir():
+        if f.name != 'multiview' and not (b.prep / f.name).exists():
+            (b.prep / f.name).symlink_to(f.resolve())
+    z = dict(np.load(a.prep / 'multiview' / 'frames.npz'))
+    R, pos = z['R'].astype(float), z['pos'].astype(float)
+    rv = Rot.from_matrix(np.einsum('kij,lj->kil', R, R[0])).as_rotvec()          # R_k R_0^T
+    before = jitter(rv, pos)
+    rv_s = gaussian_filter1d(rv, sigma, axis=0, mode='nearest')
+    z['pos'] = gaussian_filter1d(pos, sigma, axis=0, mode='nearest')
+    z['R'] = np.einsum('kij,jl->kil', Rot.from_rotvec(rv_s).as_matrix(), R[0])
+    np.savez(b.prep / 'multiview' / 'frames.npz', **z)
+    rep = json.loads((a.prep / 'multiview' / 'report.json').read_text())
+    rep['smoothed_from'] = dict(src=src, sigma_frames=sigma, jitter_before=before, jitter_after=jitter(rv_s, z['pos']))
+    RC.save_json(b.prep / 'multiview' / 'report.json', rep)
+    log(f'[smooth] {clip} {src} -> {dst} (sigma {sigma} frames): {before} -> {rep["smoothed_from"]["jitter_after"]}')
+
+
 def load_geometry(clip, tag, ctx):
     g = RC.Clip(f'{r2s_name(clip)}+{tag}')
     return sol_from_frames(g.prep / 'multiview' / 'frames.npz', ctx.disp, ctx.W, ctx.H, ctx.cam)
@@ -1058,6 +1109,8 @@ def main(argv):
         tag = argv[argv.index('--tag') + 1] if '--tag' in argv else VARIANT
         hf = int(argv[argv.index('--holdout-far') + 1]) if '--holdout-far' in argv else None
         solve(clip, tag, holdout_far=hf)
+    elif cmd == 'smooth':                      # smooth <clip> <src tag> <dst tag> <sigma frames>
+        smooth_variant(clip, argv[2], argv[3], float(argv[4]))
     elif cmd == 'eval':
         tags = [a for a in argv[2:] if not a.startswith('--')] or ['sift', VARIANT]
         res, scales = evaluate(clip, tags)

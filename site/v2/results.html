@@ -1,0 +1,147 @@
+  <section>
+    <div class="answers">
+      <div class="answer">
+        <h3>感知和重建这几步已经能自动跑通</h3>
+        <p>四段视频（胆囊减压、胆囊复位、肝缝合、肺纵隔清扫）都由 agent 自己读文字、看关键帧给点、让 SAM 3 跟踪。器官从椭球出发拟合，胆囊的 4D 拟合 IoU 0.83–0.92，不比 v1 用解剖模板差。器械的刚体模型和掩码重合 0.79–0.92。</p>
+      </div>
+      <div class="answer">
+        <h3>物理仿真是干净的，但器官还动得太少</h3>
+        <p>胆囊减压这段，仿真里没有器械非法穿进器官，胆囊也不再陷进背景（v1 每帧有 15–24% 的表面陷进去）。但胆囊跟着器械动的幅度只有重建的三分之一左右，运动解释率刚转正（+0.08）。肝那段的第一次仿真是坏的。</p>
+      </div>
+      <div class="answer">
+        <h3>文字确实避免了 v1 的解剖错误</h3>
+        <p>文字解析读出了"胆囊是游离的，只吊在胆囊管和动脉上"和"这一段在减压，有穿刺口"。v1 把胆囊固定在肝床上，把吸引管当成探针，这两个错这次都没有再犯。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">对比视频</div>
+      <h2>胆囊减压（镜头 A，10 秒）</h2>
+    </div>
+    <figure>
+      <video src="media/chole_a.mp4" poster="media/chole_a_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>上排：原视频；SAM 3 跟踪的 8 个对象。中排：4D 重建按内镜相机渲染（黄色是胆囊，红色是背景里建成实体的血块、条索和一个没认出来的器官，灰色是抓钳和吸引管）；重建叠在视频上。下排：物理仿真，同样的两种显示。</figcaption>
+    </figure>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>步骤</th><th>结果</th></tr></thead>
+        <tbody>
+          <tr><td>分割</td><td>8 个对象每帧都在，相邻帧 IoU 0.86–0.96；抓钳和 v1 手工提示的掩码重合 0.93</td></tr>
+          <tr><td>相机</td><td>26 个关键帧联合求解，重投影误差 6.0 → 2.5 px</td></tr>
+          <tr><td>胆囊（从椭球出发）</td><td>4D 拟合 IoU 0.83 / 0.84 / 0.92（前、中、后三段）；没有翻转的四面体；体积 8.8 ml，只覆盖画面里看得到的部分</td></tr>
+          <tr><td>器械</td><td>抓钳 IoU 0.92，尖端误差 1.4 px；吸引管 IoU 0.90。识别出细直器械是带侧孔的吸引管，大部分时间插在胆囊里</td></tr>
+          <tr><td>背景</td><td>可碰撞表面，胆囊在任何一帧都不陷进去；3 个凸起建成独立实体</td></tr>
+          <tr><td>物理仿真（第 5 轮）</td><td>轮廓 IoU 0.72（不切深度 0.78；重建本身 0.80）；运动解释率 +0.08；器械非法进入器官 0 帧；翻转四面体 4 个</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">仿真里胆囊右侧有一个尖角，是已知缺陷。胆囊模型的底部被画面边缘截掉，正在补。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">对比视频</div>
+      <h2>肝左叶尖端缝合（14 秒）</h2>
+    </div>
+    <figure>
+      <video src="media/liver_s4.mp4" poster="media/liver_s4_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>上排：原视频；SAM 3 跟踪的 7 个对象（肝、三角韧带、膈肌、网膜、纱布、两把持针器）。下排：4D 重建（黄色是肝左叶尖端，红色是纱布，灰色是持针器）和它叠在视频上的样子。</figcaption>
+    </figure>
+    <ul class="plain">
+      <li>原视频其实是 5 个场景，用翻页转场连起来。提示 agent 看图发现了这一点，自动切换检测没查出来。这里用的是最长的连续场景。</li>
+      <li>肝的 4D 拟合 IoU 0.84 / 0.89 / 0.85。按背景 agent 的反馈把模型改薄后，陷进背景的顶点从 20–25% 降到 1.6–1.8%。</li>
+      <li>两把持针器 IoU 都是 0.90。这一段是在给之前缝好的一针打结，没有进针。</li>
+      <li>第一次物理仿真是坏的：轮廓 IoU 只有 0.46–0.51，上千个四面体翻转，持针器有 8–22 帧穿进肝里。这一段还没有可用的仿真，对比视频里没有放；上面三维场景的"物理仿真"按钮放的就是这次坏的结果，可以直接看它是怎么坏的。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">对比视频 · 暂定</div>
+      <h2>胆囊复位（20 秒）</h2>
+    </div>
+    <figure>
+      <video src="media/chole_derot.mp4" poster="media/chole_derot_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>上排：原视频；SAM 3 跟踪的 6 个对象。下排：4D 重建和它叠在视频上的样子。这一版用的是旧的相机和深度，尺度不对，器械看起来偏粗，胆囊轮廓也偏大。</figcaption>
+    </figure>
+    <ul class="plain">
+      <li>器械 agent 和背景 agent 各自独立发现这一段的深度整体偏近约 35%。原因是胆囊一直在翻转，画面里静止的结构太少，原来的求解找不到远距离匹配。</li>
+      <li>几何 agent 重新求解后（焦距固定为同一视频里另一段求出的值，远距离匹配从 0 增加到 8.4 万对），每帧深度尺度的波动降到和镜头 A 同一水平（0.94–1.04，原来 0.82–1.25）；远距离探针误差的中位数从 224 px 降到 10 px，但这不是严格的留出检验，第 90 百分位仍有 245 px。</li>
+      <li>新几何还有缺陷：相机是逐帧求解的，有抖动（每帧约 1.2 mm）；器械杆仍有 24% 的采样点落在组织后面（原来 68%）；目前只看过数字，还没有人看过渲染图。器官、器械、背景都要在新几何上重做，上面三维场景里放的还是旧几何的版本。</li>
+      <li>旧几何上胆囊的 4D 拟合 IoU 是 0.74 / 0.70 / 0.77，体积 28.9 ml。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">视频 + 分割</div>
+      <h2>肺纵隔淋巴结清扫（31 秒，只做到分割）</h2>
+    </div>
+    <figure>
+      <video src="media/lung_mln.mp4" poster="media/lung_mln_poster.jpg" controls muted loop playsinline preload="metadata"></video>
+      <figcaption>左：原视频。右：SAM 3 按镜头分段跟踪的对象（纵隔胸膜、清扫面、淋巴结和脂肪、一条白色条索、4 把器械）。</figcaption>
+    </figure>
+    <p>这 31 秒里有 9 个镜头，最长的连续片段只有约 6 秒，不够做多视角三维重建和动力学，所以只保留分割。有名字的血管和气道，提示 agent 都认不出来，没有硬猜。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">流程</div>
+      <h2>每一步做到哪了</h2>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>步骤</th><th>状态</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>文字 → 场景说明</td><td><span class="st ok">完成</span></td><td>器官、连接关系、器械、手术阶段、开口，每条带出处和把握程度</td></tr>
+          <tr><td>分割</td><td><span class="st ok">完成</span></td><td>SAM 3 的文字提示认不出器官（胆囊、肝在关键帧上 0/5 检出），改成 agent 看图给点、SAM 3 跟踪；经一轮视觉检查修复</td></tr>
+          <tr><td>相机和深度</td><td><span class="st part">3 段中 2 段可用</span></td><td>胆囊复位段已重新求解，下游还没跟上</td></tr>
+          <tr><td>器官拟合</td><td><span class="st part">基本完成</span></td><td>从椭球出发，不用解剖模板；镜头 A 的胆囊缺画面外的部分</td></tr>
+          <tr><td>器械</td><td><span class="st ok">完成</span></td><td>刚体模型库（抓钳、分离钳、持针器、吸引管），每把器械一个固定穿刺点</td></tr>
+          <tr><td>背景</td><td><span class="st ok">完成</span></td><td>可碰撞的表面，加上凸起组织的独立实体</td></tr>
+          <tr><td>物理仿真</td><td><span class="st part">1 段可跑</span></td><td>镜头 A 干净但运动偏小；肝还不可用；复位段还没开始</td></tr>
+          <tr><td>每轮检查</td><td><span class="st ok">在用</span></td><td>独立的视觉检查 agent，加三维穿插检查</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">迭代记录</div>
+      <h2>前 5 轮</h2>
+    </div>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>轮</th><th>做了什么</th><th>结果</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>文字解析、SAM 3 分割、相机</td><td>文字提示认不出器官，改成 agent 给点；发现肝视频是 5 个场景、肺视频是 9 个镜头；视觉检查逐帧列出分割问题</td></tr>
+          <tr><td class="n">2</td><td>按视觉检查修分割；器械和背景建模</td><td>只给负点的提示会让 SAM 3 丢掉对象，改成自动补正点；两个 agent 各自查出复位段的尺度问题</td></tr>
+          <tr><td class="n">3</td><td>第一次物理整合（镜头 A）</td><td>没有非法穿插，但胆囊完全不动；视觉检查指出抓钳没夹到东西、吸引管像幽灵一样穿过去、胆囊太小</td></tr>
+          <tr><td class="n">4</td><td>把穿刺口建成"抓住吸引管"</td><td>负结果：上千个四面体翻转，已回退</td></tr>
+          <tr><td class="n">5</td><td>器官 agent 交回结果；加胆囊颈连接；肝第一次仿真</td><td>镜头 A 运动解释率第一次为正；肝的仿真是坏的</td></tr>
+        </tbody>
+      </table>
+      <p class="tcap">完整记录在仓库的 outputs/t2s/LOG.md。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">接下来</div>
+      <h2>剩下 5 轮</h2>
+    </div>
+    <ul class="plain">
+      <li>镜头 A：换上补全的胆囊（含画面外的底部）和重新拟合的吸引管，让胆囊跟着器械动起来。</li>
+      <li>胆囊复位段：在新几何上重做器官、器械、背景，然后检验游离胆囊的整体转动能不能由物理算出来。这是这次方法最想回答的问题。</li>
+      <li>肝：修持针器和肝之间的接触，得到第一版可用的仿真。</li>
+      <li>最后两轮：三段视频的结果对比，和 v1 在镜头 A 上直接比。</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div>视频来源：Wikimedia Commons 上三篇开放获取论文的补充视频（CC BY 2.0）：胆囊扭转（J Med Case Reports 2011, 5:588），壶腹部肿瘤病例的诊断性腹腔镜（World J Surg Oncol 2012, 10:142），单孔胸腔镜右上肺叶切除（J Cardiothorac Surg 2014, 9:66）。</div>
+    <div>分割模型 SAM 3（Meta）；深度 Depth Anything V2；物理 MuJoCo。</div>
+  </footer>

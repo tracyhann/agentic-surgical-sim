@@ -1,0 +1,40 @@
+[
+ {
+  "name": "chole_a",
+  "title": "胆囊减压（镜头 A）",
+  "conditions": [
+   "recon4d",
+   "sim4d"
+  ],
+  "steps": 251,
+  "size": [
+   640,
+   360
+  ]
+ },
+ {
+  "name": "liver_s4",
+  "title": "肝左叶尖端缝合",
+  "conditions": [
+   "recon4d",
+   "sim4d"
+  ],
+  "steps": 177,
+  "size": [
+   640,
+   456
+  ]
+ },
+ {
+  "name": "chole_derot",
+  "title": "胆囊复位（暂定）",
+  "conditions": [
+   "recon4d"
+  ],
+  "steps": 247,
+  "size": [
+   640,
+   360
+  ]
+ }
+]

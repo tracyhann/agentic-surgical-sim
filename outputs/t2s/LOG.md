@@ -217,3 +217,25 @@ background surface as a back limit. Self-test: synthetic deforming superquadric,
 - Result page for v2 (video + reconstruction per clip): t2s/report.py -> site/v2/media/<clip>.mp4 (video | SAM 3 masks |
   4D reconstruction rendered through the scope camera | on video | simulation for chole_a); published as a new
   artifact https://claude.ai/artifact/82NXJveVMwHGb1eLWCdqHc (v1).
+- Result page rebuilt as an interactive 3D viewer (the user asked for the reconstruction itself, interactive, not
+  rendered videos): t2s/export_viewer.py writes each clip in the v1 viewer's scene format (site/v2/data/<clip>:
+  background agent surface + its bodies as convex pieces, organ surface with its 4D ('recon4d') and the round's
+  simulation ('sim4d'), instruments posed per frame about their ports, scope camera per frame, the video);
+  site/v2/build_page.py patches the v1 viewer (site/viewer/index.html) for these scenes and appends the results
+  (site/v2/results.html). Scenes: chole_a (4D + r05 sim), liver_s4 (4D + the broken r05 sim, shown as such),
+  chole_derot (4D on the old geometry, provisional). Checked in a local preview (all three scenes, both layers,
+  scope view against the video frame, shape mode, no console errors). Published as version 2 of
+  https://claude.ai/artifact/82NXJveVMwHGb1eLWCdqHc.
+
+## r06 (2026-10-08)
+- Geometry agent hand-back for chole_derot: use `sift2_r1` (outputs/variants/chole_derot_t2s+sift2_r1; r2 and the
+  strict hold-out solve never completed). Same evaluation for old / new / chole_a (control): per-frame static depth
+  scale p5-p95 0.82-1.25 -> 0.94-1.04 (chole_a 0.95-1.05); ORB probe error at >= 10 keyframes 224 -> 10 px (chole_a
+  6 px); static surface depth 53 -> 73 mm; shaft samples behind tissue 68 % -> 24 % (chole_a 17 % by the same test).
+  Corrections to the earlier entry: "10 px vs 224 px" is NOT a strict hold-out (ORB on the same static pixels the
+  solve matched; 157 matches, p90 still 245 px); the signed ruler residual ~0 is by construction (the solve rescales
+  to it). Known defects: per-frame poses jitter (median 1.2 mm and 0.79 deg per frame^2; scope path 332 mm vs 139 mm),
+  focal length assumed from chole_a, absolute scale without an error bar, correction grid read centre-aligned but
+  fitted corner-aligned (~4 % median depth difference), and it had been checked by numbers only.
+  t2s/geomfix.py on disk is the r2 code and does not reproduce sift2_r1 (see its docstring and geometry/NOTES.md).
+

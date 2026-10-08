@@ -1,76 +1,216 @@
+<meta charset="utf-8">
 <title>文字引导的器官 4D 重建</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87,500;87,650&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
+  /* one deliberate look: a dark stage, like the monitor of an endoscopy tower */
   :root {
-    --bg: #F3F5F5; --surface: #FFFFFF; --ink: #172022; --muted: #5B686B; --rule: #D6DDDE;
-    --accent: #A8394E; --steel: #2E6A6E; --good: #2F7A4F; --warn: #9A6A0B; --bad: #A8394E; --row: #EEF3F3;
+    color-scheme: dark;
+    --bg: #0C1112; --stage: #070A0B; --surface: #131B1D; --raise: #1A2427; --ink: #E3EAEA; --muted: #8FA0A2;
+    --rule: #26312F; --accent: #E06A80; --steel: #7DB7BA; --steel-dim: #3E6366; --good: #9CCB8A; --warn: #E2B55A;
     --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
     --body: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0F1415; --surface: #161E20; --ink: #E4EBEB; --muted: #93A3A5; --rule: #2A3537;
-      --accent: #E06A80; --steel: #7DB7BA; --good: #8FCB9F; --warn: #E2B55A; --bad: #E06A80; --row: #1B2527;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0F1415; --surface: #161E20; --ink: #E4EBEB; --muted: #93A3A5; --rule: #2A3537;
-    --accent: #E06A80; --steel: #7DB7BA; --good: #8FCB9F; --warn: #E2B55A; --bad: #E06A80; --row: #1B2527;
-    color-scheme: dark;
-  }
   * { box-sizing: border-box; }
-  body { background: var(--bg); color: var(--ink); font: 15.5px/1.65 var(--body); margin: 0; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 72px; display: grid; gap: 44px; }
-  header { display: grid; gap: 14px; }
+  [hidden] { display: none !important; }
+  body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); margin: 0; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 18px; }
+  @media (max-width: 560px) { .wrap { padding-inline: 16px; } }
+  header { display: grid; gap: 8px; }
   .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--steel); }
-  h1 { font: 650 clamp(30px, 5vw, 44px)/1.1 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
-  h2 { font: 650 24px/1.25 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; }
-  h3 { font: 600 15px/1.4 var(--body); margin: 0; }
-  p { margin: 0; max-width: 70ch; }
-  .lead { font-size: 17px; }
-  .muted { color: var(--muted); }
-  section { display: grid; gap: 16px; }
-  .sec-head { display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 22px; }
-  .tag { font: 500 12px/1 var(--mono); color: var(--accent); letter-spacing: .06em; }
-  figure { margin: 0; display: grid; gap: 8px; }
-  video { width: 100%; max-width: 100%; height: auto; display: block; background: #000; border-radius: 4px; }
-  figcaption { font-size: 13.5px; color: var(--muted); max-width: 84ch; }
-  .answers { display: grid; gap: 12px; }
-  .answer { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 18px; display: grid; gap: 6px; }
-  .links { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 14.5px; }
-  a { color: var(--steel); font-weight: 500; }
-  ul.plain { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 76ch; }
-  ul.plain li::marker { color: var(--steel); }
-  .ledger { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; font-size: 14px; }
-  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  th { font: 500 12px/1.3 var(--mono); color: var(--muted); letter-spacing: .03em; white-space: nowrap; }
-  tr:last-child td { border-bottom: 0; }
-  td.n, th.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
-  .tcap { font-size: 13px; color: var(--muted); padding: 10px 14px 12px; border-top: 1px solid var(--rule); max-width: none; }
-  .st { font: 500 12px/1 var(--mono); padding: 3px 7px; border-radius: 3px; white-space: nowrap; border: 1px solid currentColor; }
-  .st.ok { color: var(--good); } .st.part { color: var(--warn); } .st.no { color: var(--bad); }
-  footer { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 4px; }
-  code { font: 13px/1 var(--mono); }
+  h1 { font: 650 clamp(28px, 4.4vw, 40px)/1.1 var(--display); font-stretch: 87%; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+  .lead { margin: 0; max-width: 74ch; color: var(--muted); }
+  .lead b { color: var(--ink); font-weight: 500; }
+
+  .stage { position: relative; width: 100%; max-width: 100%; aspect-ratio: var(--ar, 16 / 9); background: var(--stage); border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); touch-action: none; --wipe: 50%; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .stage video { position: absolute; display: block; background: #000; pointer-events: none; }
+  .stage.free video { right: 12px; bottom: 12px; width: 28%; aspect-ratio: var(--ar, 16 / 9); border-radius: 4px; border: 1px solid var(--rule); box-shadow: 0 6px 24px rgba(0,0,0,.5); }
+  .stage.scope video { inset: 0; width: 100%; height: 100%; clip-path: inset(0 calc(100% - var(--wipe)) 0 0); }
+  .stage.novideo video { visibility: hidden; }
+  .pip-label { position: absolute; right: 18px; bottom: calc(12px + 28% + 6px); font: 500 11px/1 var(--mono); color: var(--ink); background: rgba(7,10,11,.7); padding: 4px 6px; border-radius: 3px; pointer-events: none; }
+  .stage.scope .pip-label, .stage.novideo .pip-label { display: none; }
+  .wipe { position: absolute; top: 0; bottom: 0; left: var(--wipe); width: 0; display: none; }
+  .stage.scope:not(.novideo) .wipe { display: block; }
+  .wipe::before { content: ""; position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; background: var(--ink); opacity: .85; }
+  .wipe-handle { position: absolute; top: 50%; left: -16px; width: 32px; height: 32px; margin-top: -16px; border-radius: 50%; border: 2px solid var(--ink); background: rgba(7,10,11,.75); color: var(--ink); cursor: ew-resize; padding: 0; display: grid; place-items: center; }
+  .wipe-label { position: absolute; top: 12px; font: 500 11px/1 var(--mono); letter-spacing: .04em; padding: 4px 6px; border-radius: 3px; background: rgba(7,10,11,.7); white-space: nowrap; }
+  .wipe-label.l { right: 10px; } .wipe-label.r { left: 10px; }
+  .hud { position: absolute; font: 500 12px/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); background: rgba(7,10,11,.62); padding: 6px 8px; border-radius: 4px; pointer-events: none; display: flex; gap: 12px; }
+  .hud.tl { left: 12px; top: 12px; }
+  .stage.scope .hud.tl { top: auto; bottom: 12px; }
+  .hud.tr { right: 12px; top: 12px; color: var(--steel); }
+  .stage.scope:not(.novideo) .hud.tr { display: none; }
+  .loading { position: absolute; inset: 0; display: grid; place-items: center; font: 500 13px/1 var(--mono); color: var(--muted); background: var(--stage); }
+  .heat { position: absolute; left: 12px; bottom: 12px; background: rgba(7,10,11,.72); padding: 8px 10px 6px; border-radius: 4px; display: grid; gap: 4px; width: min(240px, 46%); pointer-events: none; }
+  .stage.scope .heat { bottom: 46px; }
+  .heat .bar { height: 8px; border-radius: 2px; background: linear-gradient(90deg, #1b1f3a 0%, #5a2d6e 25%, #c2456d 50%, #f39a5b 75%, #fbe9b0 100%); }
+  .heat .ticks { display: flex; justify-content: space-between; font: 500 10.5px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .heat .cap { font: 500 11px/1.2 var(--mono); color: var(--ink); }
+
+  .transport { display: flex; align-items: center; gap: 12px; }
+  .btn { font: 500 13px/1 var(--body); color: var(--ink); background: var(--raise); border: 1px solid var(--rule); border-radius: 5px; padding: 8px 12px; cursor: pointer; }
+  .btn:hover { border-color: var(--steel-dim); }
+  .btn.icon { width: 40px; height: 36px; padding: 0; display: grid; place-items: center; flex: none; }
+  .btn svg { width: 16px; height: 16px; fill: currentColor; }
+  .scrub { flex: 1; min-width: 0; display: grid; gap: 4px; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+  .ticks-row { display: flex; justify-content: space-between; font: 500 10.5px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; padding-inline: 2px; }
+  select { font: 500 13px/1 var(--mono); color: var(--ink); background: var(--raise); border: 1px solid var(--rule); border-radius: 5px; padding: 8px 8px; flex: none; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-start; }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 6px; min-width: 0; }
+  legend { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0; margin-bottom: 6px; }
+  .seg { display: inline-flex; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 3px; gap: 2px; }
+  .seg button { font: 500 13px/1 var(--body); color: var(--muted); background: transparent; border: 0; border-radius: 4px; padding: 8px 11px; cursor: pointer; white-space: nowrap; }
+  .seg button:hover:not(:disabled) { color: var(--ink); }
+  .seg button:disabled { opacity: .35; cursor: not-allowed; }
+  .seg button[aria-pressed="true"] { background: var(--raise); color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+  .checks { display: flex; flex-wrap: wrap; gap: 6px 14px; padding-top: 6px; }
+  .checks label { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--ink); cursor: pointer; white-space: nowrap; }
+  .checks input { accent-color: var(--accent); width: 15px; height: 15px; margin: 0; }
   :focus-visible { outline: 2px solid var(--steel); outline-offset: 2px; }
+
+  .metrics { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow-x: auto; }
+  .metrics table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 560px; }
+  .metrics th, .metrics td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  .metrics th { font: 500 11px/1.3 var(--mono); color: var(--muted); letter-spacing: .04em; }
+  .metrics td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .metrics tr:last-child td { border-bottom: 0; }
+  .metrics tr.sel td { background: var(--raise); }
+  .metrics tr.sel td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+  .metrics .best { color: var(--good); }
+  .mcap { font-size: 12.5px; color: var(--muted); padding: 8px 12px 10px; border-top: 1px solid var(--rule); }
+
+  .notes { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; border-top: 1px solid var(--rule); padding-top: 18px; margin-top: 6px; }
+  @media (max-width: 760px) { .notes { grid-template-columns: 1fr; } }
+  .notes h2 { font: 650 18px/1.3 var(--display); font-stretch: 87%; margin: 0 0 8px; }
+  .notes ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .notes li { display: grid; grid-template-columns: 14px 1fr; gap: 10px; align-items: baseline; color: var(--muted); font-size: 14px; }
+  .notes li b { color: var(--ink); font-weight: 500; }
+  .chip { width: 12px; height: 12px; border-radius: 2px; transform: translateY(1px); }
+  .key { font: 500 12px/1 var(--mono); color: var(--ink); background: var(--raise); border: 1px solid var(--rule); border-radius: 3px; padding: 2px 5px; }
+  .foot { font-size: 13px; color: var(--muted); }
+  .foot a { color: var(--steel); }
+  .err { color: var(--accent); }
+  .res { display: grid; gap: 14px; border-top: 1px solid var(--rule); padding-top: 20px; margin-top: 10px; }
+  .sec-head { display: grid; gap: 6px; }
+  footer { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 12.5px; color: var(--muted); display: grid; gap: 4px; }
+  .res h2 { font: 650 22px/1.25 var(--display); font-stretch: 87%; margin: 0; text-wrap: balance; }
+  .res h3 { font: 600 15px/1.4 var(--body); margin: 0; }
+  .res p { margin: 0; max-width: 74ch; color: var(--muted); }
+  .res p b, .res li b { color: var(--ink); font-weight: 500; }
+  .tag { font: 500 12px/1 var(--mono); color: var(--accent); letter-spacing: .06em; }
+  .res figure { margin: 0; display: grid; gap: 8px; }
+  .res video { width: 100%; max-width: 100%; height: auto; display: block; background: #000; border-radius: 4px; border: 1px solid var(--rule); }
+  .res figcaption { font-size: 13px; color: var(--muted); max-width: 86ch; }
+  .answers { display: grid; gap: 10px; }
+  .answer { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 12px 16px; display: grid; gap: 4px; }
+  .res ul.plain { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 78ch; color: var(--muted); list-style: disc; }
+  .res ul.plain li { display: list-item; }
+  .ledger { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow-x: auto; }
+  .ledger table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  .ledger th, .ledger td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .ledger th { font: 500 11px/1.3 var(--mono); color: var(--muted); letter-spacing: .04em; white-space: nowrap; }
+  .ledger tr:last-child td { border-bottom: 0; }
+  .ledger td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tcap { font-size: 12.5px; color: var(--muted); padding: 8px 12px 10px; border-top: 1px solid var(--rule); margin: 0; max-width: none !important; }
+  .st { font: 500 11.5px/1 var(--mono); padding: 3px 6px; border-radius: 3px; white-space: nowrap; border: 1px solid currentColor; }
+  .st.ok { color: var(--good); } .st.part { color: var(--warn); } .st.no { color: var(--accent); }
 </style>
 
 <div class="wrap">
   <header>
     <div class="eyebrow">medical-agentic-sim · v2 · 第 5 轮 / 共 10 轮 · 2026-10-08</div>
     <h1>文字引导的器官 4D 重建</h1>
-    <p class="lead">新方法的进行中记录。每段手术视频先读它配套的文字，再由一组 agent 分工：定位并分割器官和器械、求相机和深度、从基本几何体拟合器官、给器械建刚体模型、重建可碰撞的背景，最后合成物理场景。全程没有人工点提示，也不用解剖模板。</p>
-    <div class="links">
-      <a href="https://claude.ai/artifact/VT6cePMUES9nUifUZ8cv2y" target="_blank" rel="noopener">上一版方法（v1）的报告 →</a>
-      <a href="https://github.com/tracyhann/agentic-surgical-sim/tree/v2-text2sim" target="_blank" rel="noopener">代码和逐轮记录（分支 v2-text2sim）→</a>
-    </div>
+    <p class="lead">新方法的进行中记录。每段手术视频先读它配套的文字，再由一组 agent 分工：定位并分割器官和器械、求相机和深度、从基本几何体拟合器官、给器械建刚体模型、重建可碰撞的背景，最后合成物理场景。<b>下面的三维场景就是重建本身</b>：拖动旋转，滚轮缩放，右键平移；切到内镜视角可以和真实视频左右对比。</p>
+    <p class="foot"><a href="https://claude.ai/artifact/VT6cePMUES9nUifUZ8cv2y" target="_blank" rel="noopener">上一版方法（v1）的报告</a> · <a href="https://github.com/tracyhann/agentic-surgical-sim/tree/v2-text2sim" target="_blank" rel="noopener">代码和逐轮记录（分支 v2-text2sim）</a></p>
   </header>
 
-  <section>
+  <div class="stage free" id="stage">
+    <canvas id="gl" aria-label="重建场景的三维视图"></canvas>
+    <video id="vid" muted playsinline loop preload="auto"></video>
+    <span class="pip-label">真实视频</span>
+    <div class="wipe" id="wipe">
+      <span class="wipe-label l">真实视频</span><span class="wipe-label r" id="wipeR">重建</span>
+      <button class="wipe-handle" id="wipeHandle" aria-label="左右拖动，对比真实视频和仿真"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M6 3 1 8l5 5V3zm4 0v10l5-5-5-5z" fill="currentColor"/></svg></button>
+    </div>
+    <div class="hud tl"><span id="tc">t 0.00 s</span><span id="fr">帧 0</span></div>
+    <div class="hud tr" id="viewLabel">自由视角</div>
+    <div class="heat" id="heatLegend" hidden>
+      <span class="cap">相对第 0 帧的位移</span>
+      <div class="bar"></div>
+      <div class="ticks"><span>0</span><span>5</span><span>10</span><span>15 mm</span></div>
+    </div>
+    <div class="loading" id="loading">载入重建数据…</div>
+  </div>
+
+  <div class="transport">
+    <button class="btn icon" id="play" aria-label="播放"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="playIcon" d="M4 2.5v11l9-5.5z"/></svg></button>
+    <div class="scrub">
+      <input type="range" id="scrub" min="0" max="6" step="0.01" value="0" aria-label="时间">
+      <div class="ticks-row" id="ticks" aria-hidden="true"></div>
+    </div>
+    <select id="rate" aria-label="播放速度"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option></select>
+  </div>
+
+  <div class="controls">
+    <fieldset><legend>视频</legend><div class="seg" id="segScene"></div></fieldset>
+    <fieldset><legend>显示</legend>
+      <div class="seg" id="segCond">
+        <button data-v="recon4d" aria-pressed="true">4D 重建</button><button data-v="sim4d" aria-pressed="false">物理仿真</button>
+      </div>
+    </fieldset>
+    <fieldset><legend>视角</legend>
+      <div class="seg" id="segView"><button data-v="free" aria-pressed="true">自由视角</button><button data-v="scope" aria-pressed="false">内镜视角</button></div>
+    </fieldset>
+    <fieldset><legend>外观</legend>
+      <div class="seg" id="segMode"><button data-v="photo" aria-pressed="true">照片纹理</button><button data-v="shape" aria-pressed="false">几何形状</button><button data-v="heat" aria-pressed="false">形变热图</button></div>
+    </fieldset>
+    <fieldset><legend>叠加</legend>
+      <div class="checks">
+        <label><input type="checkbox" id="cVideo" checked> 真实视频</label>
+        <label><input type="checkbox" id="cWire"> 网格线</label>
+        <label><input type="checkbox" id="cGizmo" checked> 内镜与穿刺点</label>
+        <label><input type="checkbox" id="cBack" checked> 背景表面</label>
+        <label><input type="checkbox" id="cBodies" checked> 背景实体</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="metrics">
+    <table>
+      <thead><tr><th>结果</th><th>轮廓 IoU ↑</th><th>不切深度 ↑</th><th>运动解释率 ↑</th><th>翻转四面体 ↓</th><th>最大位移</th></tr></thead>
+      <tbody id="mbody"></tbody>
+    </table>
+    <div class="mcap" id="mcap">物理仿真一行来自最近一轮整合；轮廓 IoU 是仿真的器官投影和 SAM 3 掩码的重合（每 10 帧一次）。没有仿真的场景只有 4D 重建一行。</div>
+  </div>
+
+  <section class="notes">
+    <div>
+      <h2>画面里是什么</h2>
+      <ul>
+        <li><span class="chip" style="background:#D9B840"></span><span><b>器官</b>：从椭球出发、多视角多帧拟合出来的四面体体（胆囊或肝左叶尖端）。"4D 重建"播放逐帧拟合的形状，"物理仿真"播放 MuJoCo 算出来的形状。</span></li>
+        <li><span class="chip" style="background:#9E6BB8"></span><span><b>背景里的小实体</b>：血块、条索、纱布、没认出来的器官，各自建成封闭的凸体。</span></li>
+        <li><span class="chip" style="background:#9C8A86"></span><span><b>背景表面</b>：所有帧融合出来的静态表面，贴视频纹理，仿真里参与碰撞。</span></li>
+        <li><span class="chip" style="background:#C9CFD1"></span><span><b>器械</b>：刚体模型，每把绕一个固定的穿刺点（红点）运动，位姿逐帧拟合。</span></li>
+        <li><span class="chip" style="background:#7DB7BA"></span><span><b>内镜</b>：青色线框是内镜视野，位置和朝向来自多视角联合求解。</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>怎么用</h2>
+      <ul>
+        <li><span></span><span>拖动旋转，滚轮或双指缩放，右键或双指拖动平移。</span></li>
+        <li><span></span><span>"几何形状"下最容易看清三维形状；"形变热图"显示相对第一帧的位移。</span></li>
+        <li><span></span><span>内镜视角下拖动中间的竖线，左边真实视频，右边重建。</span></li>
+        <li><span></span><span><span class="key">空格</span> 播放 / 暂停，<span class="key">←</span> <span class="key">→</span> 逐帧，<span class="key">V</span> 切换视角。</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="res">
     <div class="answers">
       <div class="answer">
         <h3>感知和重建这几步已经能自动跑通</h3>
@@ -87,9 +227,9 @@
     </div>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
-      <div class="tag">视频 + 重建</div>
+      <div class="tag">对比视频</div>
       <h2>胆囊减压（镜头 A，10 秒）</h2>
     </div>
     <figure>
@@ -112,9 +252,9 @@
     </div>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
-      <div class="tag">视频 + 重建</div>
+      <div class="tag">对比视频</div>
       <h2>肝左叶尖端缝合（14 秒）</h2>
     </div>
     <figure>
@@ -125,13 +265,13 @@
       <li>原视频其实是 5 个场景，用翻页转场连起来。提示 agent 看图发现了这一点，自动切换检测没查出来。这里用的是最长的连续场景。</li>
       <li>肝的 4D 拟合 IoU 0.84 / 0.89 / 0.85。按背景 agent 的反馈把模型改薄后，陷进背景的顶点从 20–25% 降到 1.6–1.8%。</li>
       <li>两把持针器 IoU 都是 0.90。这一段是在给之前缝好的一针打结，没有进针。</li>
-      <li>第一次物理仿真是坏的：轮廓 IoU 只有 0.46–0.51，上千个四面体翻转，持针器有 8–22 帧穿进肝里。这一段还没有可用的仿真，所以视频里没有放。</li>
+      <li>第一次物理仿真是坏的：轮廓 IoU 只有 0.46–0.51，上千个四面体翻转，持针器有 8–22 帧穿进肝里。这一段还没有可用的仿真，对比视频里没有放；上面三维场景的"物理仿真"按钮放的就是这次坏的结果，可以直接看它是怎么坏的。</li>
     </ul>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
-      <div class="tag">视频 + 重建 · 暂定</div>
+      <div class="tag">对比视频 · 暂定</div>
       <h2>胆囊复位（20 秒）</h2>
     </div>
     <figure>
@@ -140,12 +280,13 @@
     </figure>
     <ul class="plain">
       <li>器械 agent 和背景 agent 各自独立发现这一段的深度整体偏近约 35%。原因是胆囊一直在翻转，画面里静止的结构太少，原来的求解找不到远距离匹配。</li>
-      <li>几何 agent 重新求解后（焦距固定为同一视频里另一段求出的值，远距离匹配从 0 增加到 8.4 万对），留出帧上的远距离误差从 224 px 降到 10 px。器官、器械、背景还没有在新几何上重做。</li>
+      <li>几何 agent 重新求解后（焦距固定为同一视频里另一段求出的值，远距离匹配从 0 增加到 8.4 万对），每帧深度尺度的波动降到和镜头 A 同一水平（0.94–1.04，原来 0.82–1.25）；远距离探针误差的中位数从 224 px 降到 10 px，但这不是严格的留出检验，第 90 百分位仍有 245 px。</li>
+      <li>新几何还有缺陷：相机是逐帧求解的，有抖动（每帧约 1.2 mm）；器械杆仍有 24% 的采样点落在组织后面（原来 68%）；目前只看过数字，还没有人看过渲染图。器官、器械、背景都要在新几何上重做，上面三维场景里放的还是旧几何的版本。</li>
       <li>旧几何上胆囊的 4D 拟合 IoU 是 0.74 / 0.70 / 0.77，体积 28.9 ml。</li>
     </ul>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
       <div class="tag">视频 + 分割</div>
       <h2>肺纵隔淋巴结清扫（31 秒，只做到分割）</h2>
@@ -157,7 +298,7 @@
     <p>这 31 秒里有 9 个镜头，最长的连续片段只有约 6 秒，不够做多视角三维重建和动力学，所以只保留分割。有名字的血管和气道，提示 agent 都认不出来，没有硬猜。</p>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
       <div class="tag">流程</div>
       <h2>每一步做到哪了</h2>
@@ -179,7 +320,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
       <div class="tag">迭代记录</div>
       <h2>前 5 轮</h2>
@@ -199,7 +340,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="res">
     <div class="sec-head">
       <div class="tag">接下来</div>
       <h2>剩下 5 轮</h2>
@@ -216,4 +357,286 @@
     <div>视频来源：Wikimedia Commons 上三篇开放获取论文的补充视频（CC BY 2.0）：胆囊扭转（J Med Case Reports 2011, 5:588），壶腹部肿瘤病例的诊断性腹腔镜（World J Surg Oncol 2012, 10:142），单孔胸腔镜右上肺叶切除（J Cardiothorac Surg 2014, 9:66）。</div>
     <div>分割模型 SAM 3（Meta）；深度 Depth Anything V2；物理 MuJoCo。</div>
   </footer>
+
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var stage = $('stage'), canvas = $('gl'), vid = $('vid'), loadingEl = $('loading');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COND_NAMES = { recon4d: '4D 重建', sim4d: '物理仿真' };
+  var S = { t: 0, playing: false, view: 'free', mode: 'photo', cond: 'recon4d', scene: null, rate: 1, wipe: 0.5 };
+  var INDEX, D, cache = {}, flex = {}, base = {}, dt, TMAX, NS, NR, lo, span;
+
+  if (!window.THREE || !THREE.OrbitControls) { loadingEl.innerHTML = '<span class="err">三维库没有载入，请刷新页面重试。</span>'; return; }
+  if (THREE.ColorManagement) THREE.ColorManagement.legacyMode = false;
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color('#070A0B');
+  var camFree = new THREE.PerspectiveCamera(42, 16 / 9, 0.002, 4);
+  camFree.up.set(0, 0, 1);
+  var camEndo = new THREE.PerspectiveCamera(47, 16 / 9, 0.002, 4);
+  var controls = new THREE.OrbitControls(camFree, canvas);
+  controls.enableDamping = true; controls.dampingFactor = 0.12; controls.zoomSpeed = 0.9; controls.minDistance = 0.01; controls.maxDistance = 0.8;
+  scene.add(new THREE.AmbientLight(0xffffff, 0.38));
+  var hemi = new THREE.HemisphereLight(0xfff2ee, 0x2a1d1d, 0.35); hemi.position.set(0, 0, 1); scene.add(hemi);
+  var head = new THREE.DirectionalLight(0xffffff, 0.95); scene.add(head); scene.add(head.target);
+  function resize() { var w = stage.clientWidth, h = stage.clientHeight; if (w && h) renderer.setSize(w, h, false); }
+  new ResizeObserver(resize).observe(stage); resize();
+  var loader = new THREE.TextureLoader();
+  function tex(url) { var t = loader.load(url); t.encoding = THREE.sRGBEncoding; t.anisotropy = 4; return t; }
+
+  var heatStops = [[0, [0x1b, 0x1f, 0x3a]], [0.25, [0x5a, 0x2d, 0x6e]], [0.5, [0xc2, 0x45, 0x6d]], [0.75, [0xf3, 0x9a, 0x5b]], [1, [0xfb, 0xe9, 0xb0]]];
+  function heat(x, out, o) {
+    x = Math.max(0, Math.min(1, x));
+    for (var i = 1; i < heatStops.length; i++) if (x <= heatStops[i][0]) {
+      var a = heatStops[i - 1], b = heatStops[i], w = (x - a[0]) / (b[0] - a[0]);
+      for (var c = 0; c < 3; c++) out[o + c] = Math.pow((a[1][c] + (b[1][c] - a[1][c]) * w) / 255, 2.2);
+      return;
+    }
+  }
+  function dynGeom(n, uv, index) {
+    var g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+    g.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uv), 2));
+    g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+    g.setIndex(index);
+    return g;
+  }
+
+  // per-scene objects (rebuilt on scene change)
+  var root = null, M = {}, G = {}, insts = [], gizmo, frustum, ports;
+  function clearScene() { if (root) { scene.remove(root); root.traverse(function (o) { if (o.geometry) o.geometry.dispose(); }); } root = new THREE.Group(); scene.add(root); M = {}; G = {}; insts = []; }
+
+  function buildScene() {
+    clearScene();
+    var P = 'data/' + D.name + '/';
+    var ds = THREE.DoubleSide;
+    var tB = tex(P + 'tex_back.jpg'), tT = tex(P + 'tex_tissue.jpg'), tR = tex(P + 'tex_ribbon.jpg');
+    var gb = new THREE.BufferGeometry();
+    gb.setAttribute('position', new THREE.BufferAttribute(new Float32Array(D.backdrop.pos), 3));
+    gb.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(D.backdrop.uv), 2));
+    gb.setIndex(D.backdrop.index); gb.computeVertexNormals();
+    M.back = { photo: new THREE.MeshBasicMaterial({ map: tB, side: ds }), shape: new THREE.MeshStandardMaterial({ color: '#9C8A86', roughness: 0.85, side: ds }), heat: new THREE.MeshStandardMaterial({ color: '#242B2D', roughness: 0.9, side: ds }) };
+    G.back = new THREE.Mesh(gb, M.back.photo); root.add(G.back);
+    G.backWire = new THREE.Mesh(gb, new THREE.MeshBasicMaterial({ wireframe: true, color: '#E3EAEA', transparent: true, opacity: 0.07 })); root.add(G.backWire);
+    M.organ = { photo: new THREE.MeshBasicMaterial({ map: tT, side: ds }), shape: new THREE.MeshStandardMaterial({ color: '#D9B840', roughness: 0.5, side: ds }), heat: new THREE.MeshBasicMaterial({ vertexColors: true, side: ds }) };
+    M.ribbon = { photo: new THREE.MeshStandardMaterial({ map: tR, roughness: 0.6, side: ds }), shape: new THREE.MeshStandardMaterial({ color: '#9E6BB8', roughness: 0.55, side: ds }), heat: new THREE.MeshBasicMaterial({ vertexColors: true, side: ds }) };
+    G.wireMat = new THREE.MeshBasicMaterial({ wireframe: true, color: '#F2F6F6', transparent: true, opacity: 0.28 });
+    G.ribbons = D.ribbons.map(function (R) {
+      var g = dynGeom(R.n, R.uv, R.index), m = new THREE.Mesh(g, M.ribbon.photo), w = new THREE.Mesh(g, G.wireMat);
+      m.frustumCulled = w.frustumCulled = false; m.renderOrder = 1; root.add(m); root.add(w); return { mesh: m, wire: w, n: R.n };
+    });
+    NR = D.ribbons.reduce(function (a, R) { return a + R.n; }, 0);
+    gizmo = new THREE.Group();
+    var fr = new THREE.BufferGeometry(), c = [[-1, -1], [1, -1], [1, 1], [-1, 1]], p = [];
+    c.forEach(function (q, i) { var r = c[(i + 1) % 4]; p.push(0, 0, 0, q[0], q[1], -1, q[0], q[1], -1, r[0], r[1], -1); });
+    fr.setAttribute('position', new THREE.BufferAttribute(new Float32Array(p), 3));
+    frustum = new THREE.LineSegments(fr, new THREE.LineBasicMaterial({ color: '#7DB7BA' }));
+    var body = new THREE.Mesh(new THREE.CylinderGeometry(0.004, 0.004, 0.06, 24), new THREE.MeshStandardMaterial({ color: '#3E6366', metalness: 0.2, roughness: 0.4, transparent: true, opacity: 0.85 }));
+    body.geometry.rotateX(Math.PI / 2); body.position.set(0, 0, 0.031);
+    gizmo.add(frustum); gizmo.add(body); gizmo.position.fromArray(D.endo.pos); root.add(gizmo);
+    ports = new THREE.Group();
+    D.ports.forEach(function (q) { var s = new THREE.Mesh(new THREE.SphereGeometry(0.0035, 20, 14), new THREE.MeshBasicMaterial({ color: '#E06A80' })); s.position.fromArray(q); ports.add(s); });
+    root.add(ports);
+    if (D.view.up) { camFree.up.fromArray(D.view.up); controls.dispose(); controls = new THREE.OrbitControls(camFree, canvas); controls.enableDamping = true; controls.dampingFactor = 0.12; controls.zoomSpeed = 0.9; controls.minDistance = 0.01; controls.maxDistance = 0.8; controls.enabled = S.view === 'free'; }
+    camFree.position.fromArray(D.view.position); controls.target.fromArray(D.view.target); controls.update();
+    stage.style.setProperty('--ar', D.size[0] + ' / ' + D.size[1]);
+    camFree.aspect = camEndo.aspect = D.size[0] / D.size[1]; camFree.updateProjectionMatrix(); camEndo.updateProjectionMatrix();
+    vid.src = P + 'video.mp4';
+    dt = D.dt; TMAX = (D.steps - 1) * dt; lo = D.quant[0]; span = D.quant[1] - D.quant[0];
+    $('scrub').max = TMAX.toFixed(2);
+    var tk = []; for (var s = 0; s <= Math.floor(TMAX); s++) tk.push('<span>' + s + (s === 0 || s === Math.floor(TMAX) ? ' s' : '') + '</span>');
+    $('ticks').innerHTML = tk.join('');
+    applyOverlays();
+  }
+
+  function buildCondition() {
+    if (G.organ) { root.remove(G.organ); root.remove(G.organWire); G.organ.geometry.dispose(); }
+    insts.forEach(function (o) { root.remove(o); o.geometry.dispose(); }); insts = [];
+    var C = D.conditions[S.cond]; NS = C.n_surface;
+    var g = dynGeom(NS, C.uv, C.index);
+    G.organ = new THREE.Mesh(g, M.organ[S.mode]); G.organWire = new THREE.Mesh(g, G.wireMat);
+    G.organ.frustumCulled = G.organWire.frustumCulled = false; root.add(G.organ); root.add(G.organWire);
+    C.geoms.forEach(function (gi) {
+      var s = gi.size, g3;
+      if (gi.type === 'cylinder') { g3 = new THREE.CylinderGeometry(s[0], s[0], 2 * s[1], 28); g3.rotateX(Math.PI / 2); }
+      else if (gi.type === 'capsule') { g3 = new THREE.CapsuleGeometry(s[0], 2 * s[1], 6, 20); g3.rotateX(Math.PI / 2); }
+      else if (gi.type === 'box') g3 = new THREE.BoxGeometry(2 * s[0], 2 * s[1], 2 * s[2]);
+      else { g3 = new THREE.SphereGeometry(s[0], 16, 12); }
+      var col = new THREE.Color().setRGB(gi.rgba[0], gi.rgba[1], gi.rgba[2], THREE.SRGBColorSpace || 'srgb');
+      var mesh = new THREE.Mesh(g3, new THREE.MeshStandardMaterial({ color: col, metalness: 0.25, roughness: 0.38 }));
+      root.add(mesh); insts.push(mesh);
+    });
+    applyOverlays(); setMode(S.mode);
+  }
+
+  function deq(v) { return (v + 32768) / 65535 * span + lo; }
+  function loadFlex(key, file) {
+    if (flex[key]) return Promise.resolve(flex[key]);
+    return fetch(file).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (s) {
+      var bin = atob(s.trim()), u8 = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+      var F = new Int16Array(u8.buffer), n = F.length / D.conditions[S.cond].steps, b0 = new Float32Array(n);
+      for (var j = 0; j < n; j++) b0[j] = deq(F[j]);
+      flex[key] = F; base[key] = b0; return F;
+    });
+  }
+
+  var qa = new THREE.Quaternion(), qb = new THREE.Quaternion(), va = new THREE.Vector3(), vb = new THREE.Vector3();
+  function apply(t) {
+    var key = D.name + '/' + S.cond, F = flex[key], B = base[key]; if (!F) return;
+    var C = D.conditions[S.cond], n = C.steps, NV = NS + NR;
+    var kf = Math.max(0, Math.min(n - 1, t / dt)), k0 = Math.floor(kf), k1 = Math.min(k0 + 1, n - 1), w = kf - k0;
+    var o0 = k0 * NV * 3, o1 = k1 * NV * 3, doHeat = S.mode === 'heat';
+    var targets = [{ mesh: G.organ, n: NS }].concat(G.ribbons), off = 0;
+    targets.forEach(function (T) {
+      var pa = T.mesh.geometry.attributes.position.array, ca = T.mesh.geometry.attributes.color.array;
+      for (var i = 0; i < T.n * 3; i += 3) {
+        var gi = off + i, dd = 0;
+        for (var c = 0; c < 3; c++) { var v = deq(F[o0 + gi + c]) * (1 - w) + deq(F[o1 + gi + c]) * w; pa[i + c] = v; var e = v - B[gi + c]; dd += e * e; }
+        if (doHeat) heat(Math.sqrt(dd) * 1000 / 15, ca, i);
+      }
+      var g = T.mesh.geometry; g.attributes.position.needsUpdate = true;
+      if (doHeat) g.attributes.color.needsUpdate = true;
+      if (S.mode !== 'heat') g.computeVertexNormals();
+      off += T.n * 3;
+    });
+    var tr = C.geom_traj, ng = insts.length, row = ng * 7;
+    for (var gI = 0; gI < ng; gI++) {
+      var a = k0 * row + gI * 7, b = k1 * row + gI * 7;
+      va.set(tr[a], tr[a + 1], tr[a + 2]); vb.set(tr[b], tr[b + 1], tr[b + 2]); insts[gI].position.copy(va.lerp(vb, w));
+      qa.set(tr[a + 3], tr[a + 4], tr[a + 5], tr[a + 6]); qb.set(tr[b + 3], tr[b + 4], tr[b + 5], tr[b + 6]); insts[gI].quaternion.copy(qa.slerp(qb, w));
+    }
+    var Q = D.endo.quat, ke0 = Math.min(k0, D.steps - 1), ke1 = Math.min(k1, D.steps - 1);
+    qa.set(Q[ke0 * 4], Q[ke0 * 4 + 1], Q[ke0 * 4 + 2], Q[ke0 * 4 + 3]); qb.set(Q[ke1 * 4], Q[ke1 * 4 + 1], Q[ke1 * 4 + 2], Q[ke1 * 4 + 3]); qa.slerp(qb, w);
+    var fov = D.endo.fov[ke0] * (1 - w) + D.endo.fov[ke1] * w;
+    var EP = D.endo.pos;
+    if (EP.length > 3) { va.fromArray(EP, ke0 * 3); vb.fromArray(EP, ke1 * 3); va.lerp(vb, w); } else va.fromArray(EP);   // per-step scope position (multi-view cameras)
+    camEndo.position.copy(va); camEndo.quaternion.copy(qa); camEndo.fov = fov; camEndo.updateProjectionMatrix();
+    gizmo.position.copy(va); gizmo.quaternion.copy(qa);
+    var th = Math.tan(fov * Math.PI / 360) * 0.025; frustum.scale.set(th * D.size[0] / D.size[1], th, 0.025);
+    $('tc').textContent = 't ' + t.toFixed(2) + ' s';
+    $('fr').textContent = '帧 ' + Math.round(t * D.fps) + ' / ' + Math.round(TMAX * D.fps);
+    $('scrub').value = t.toFixed(2);
+  }
+
+  function metricsTable() {
+    var conds = Object.keys(D.conditions);
+    var f = function (v, d) { return v == null ? '–' : (typeof v === 'number' ? v.toFixed(d) : v); };
+    $('mbody').innerHTML = conds.map(function (c) {
+      var m = D.conditions[c].metrics || {};
+      return '<tr class="' + (c === S.cond ? 'sel' : '') + '"><td>' + COND_NAMES[c] + '</td><td class="n">' + f(m.sim_iou != null ? m.sim_iou : m.recon_iou, 2) + '</td><td class="n">' + f(m.sim_iou_2d, 2) +
+        '</td><td class="n">' + (m.motion_explained == null ? '–' : (m.motion_explained > 0 ? '+' : '') + m.motion_explained.toFixed(2)) + '</td><td class="n">' + f(m.inverted_tets_max, 0) + '</td><td class="n">' + D.conditions[c].max_disp_mm.toFixed(1) + ' mm</td></tr>';
+    }).join('');
+    var NOTES = { chole_a: '这一段的物理仿真是第 5 轮最好的一次：没有非法穿插，但胆囊跟着器械动的幅度只有重建的三分之一左右。',
+      liver_s4: '这一段的物理仿真是坏的（上千个四面体翻转，持针器穿进肝里），放在这里是为了能直接看到它怎么坏。4D 重建是可用的。',
+      chole_derot: '这一段还是旧的相机和深度（尺度偏近约 35%），所以器械偏粗、胆囊偏大；新几何上的重建和仿真还没做。' };
+    $('mcap').textContent = (NOTES[D.name] || '') + ' 轮廓 IoU 是仿真的器官投影和 SAM 3 掩码的重合（每 10 帧一次）；"不切深度"是同一个数但不按深度裁剪被遮挡的部分。4D 重建一行没有仿真指标。';
+  }
+
+  function setMode(m) {
+    S.mode = m;
+    G.back.material = M.back[m]; if (G.organ) G.organ.material = M.organ[m];
+    G.ribbons.forEach(function (r) { r.mesh.material = M.ribbon[m]; });
+    $('heatLegend').hidden = m !== 'heat'; apply(S.t);
+  }
+  function applyOverlays() {
+    if (!gizmo) return;
+    var wire = $('cWire').checked, back = $('cBack').checked;
+    if (G.organWire) G.organWire.visible = wire;
+    var bodies = $('cBodies').checked; (G.ribbons || []).forEach(function (r) { r.mesh.visible = bodies; r.wire.visible = wire && bodies; });
+    G.back.visible = back; G.backWire.visible = wire && back;
+    gizmo.visible = $('cGizmo').checked && S.view === 'free'; ports.visible = $('cGizmo').checked;
+  }
+  function setView(v) {
+    S.view = v; stage.classList.toggle('free', v === 'free'); stage.classList.toggle('scope', v === 'scope');
+    controls.enabled = v === 'free'; applyOverlays(); $('viewLabel').textContent = v === 'free' ? '自由视角' : '内镜视角';
+  }
+  function pressSeg(id, v) { Array.prototype.forEach.call($(id).querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b.dataset.v === v ? 'true' : 'false'); }); }
+  function seg(id, fn) { $(id).addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b || b.disabled) return; pressSeg(id, b.dataset.v); fn(b.dataset.v); }); }
+
+  function setCondition(c) {
+    var prev = S.cond; S.cond = c; $('wipeR').textContent = COND_NAMES[c]; loadingEl.hidden = false; loadingEl.textContent = '载入' + COND_NAMES[c] + '…';
+    loadFlex(D.name + '/' + c, 'data/' + D.name + '/' + D.conditions[c].file).then(function () { buildCondition(); metricsTable(); loadingEl.hidden = true; apply(S.t); })
+      .catch(function () { S.cond = prev; pressSeg('segCond', prev); loadingEl.innerHTML = '<span class="err">这一层的数据没有载入，请重试。</span>'; });
+  }
+  function setScene(name) {
+    var was = S.playing; setPlaying(false); loadingEl.hidden = false; loadingEl.textContent = '载入场景…';
+    (cache[name] ? Promise.resolve(cache[name]) : fetch('data/' + name + '/scene.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }))
+      .then(function (d) {
+        cache[name] = d; D = d; S.scene = name; buildScene();
+        var conds = Object.keys(D.conditions);
+        Array.prototype.forEach.call($('segCond').querySelectorAll('button'), function (b) { b.disabled = conds.indexOf(b.dataset.v) < 0; });
+        var c = conds.indexOf(S.cond) >= 0 ? S.cond : conds[0]; pressSeg('segCond', c);
+        S.t = 0; setCondition(c); if (was || (!reduce && S.firstPlay !== false)) { S.firstPlay = false; setPlaying(true); }
+      }).catch(function () { loadingEl.innerHTML = '<span class="err">场景数据没有载入（data/' + name + '/scene.json），请刷新重试。</span>'; });
+  }
+
+  function setPlaying(p) {
+    S.playing = p;
+    $('playIcon').setAttribute('d', p ? 'M3.5 2.5h3.2v11H3.5zm5.8 0h3.2v11H9.3z' : 'M4 2.5v11l9-5.5z');
+    $('play').setAttribute('aria-label', p ? '暂停' : '播放');
+    if (p) { vid.playbackRate = S.rate; var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); } else vid.pause();
+  }
+  function seek(t) { S.t = Math.max(0, Math.min(TMAX, t)); try { vid.currentTime = Math.min(S.t, (vid.duration || TMAX) - 0.01); } catch (e) {} apply(S.t); }
+
+  var last = performance.now(), lastKick = 0;
+  function frame(now) {
+    var dtf = Math.min(0.1, (now - last) / 1000); last = now;
+    if (S.playing && D && G.organ) {
+      if (!vid.paused && vid.readyState >= 2) S.t = Math.min(vid.currentTime, TMAX);
+      else {
+        S.t += dtf * S.rate; if (S.t > TMAX) S.t = 0;
+        // the video is the clock once it runs; until then (new source, autoplay refused) nudge it once a second
+        if (vid.readyState >= 1 && now - lastKick > 1000) {
+          lastKick = now;
+          try { vid.currentTime = Math.min(S.t, (vid.duration || TMAX) - 0.01); vid.playbackRate = S.rate; var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {}
+        }
+      }
+      apply(S.t);
+    }
+    if (S.view === 'free') controls.update();
+    var cam = S.view === 'free' ? camFree : camEndo;
+    head.position.copy(cam.position); cam.getWorldDirection(va); head.target.position.copy(cam.position).add(va);
+    renderer.render(scene, cam);
+    requestAnimationFrame(frame);
+  }
+
+  (function () {
+    var drag = false;
+    function at(e) { var r = stage.getBoundingClientRect(); S.wipe = Math.max(0.02, Math.min(0.98, (e.clientX - r.left) / r.width)); stage.style.setProperty('--wipe', (S.wipe * 100).toFixed(2) + '%'); }
+    $('wipeHandle').addEventListener('pointerdown', function (e) { drag = true; e.preventDefault(); try { e.target.setPointerCapture(e.pointerId); } catch (x) {} });
+    window.addEventListener('pointermove', function (e) { if (drag) at(e); });
+    window.addEventListener('pointerup', function () { drag = false; });
+    stage.addEventListener('pointerdown', function (e) { if (S.view === 'scope' && !stage.classList.contains('novideo') && e.target === canvas) { drag = true; at(e); } });
+    $('wipeHandle').addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); S.wipe = Math.max(0.02, Math.min(0.98, S.wipe + (e.key === 'ArrowLeft' ? -0.05 : 0.05))); stage.style.setProperty('--wipe', (S.wipe * 100).toFixed(2) + '%'); } });
+  })();
+
+  $('play').addEventListener('click', function () { setPlaying(!S.playing); });
+  $('scrub').addEventListener('pointerdown', function () { if (S.playing) setPlaying(false); });
+  $('scrub').addEventListener('input', function () { seek(parseFloat(this.value)); });
+  $('rate').addEventListener('change', function () { S.rate = parseFloat(this.value); vid.playbackRate = S.rate; });
+  seg('segView', setView); seg('segMode', setMode); seg('segCond', setCondition); seg('segScene', setScene);
+  $('cVideo').addEventListener('change', function () { stage.classList.toggle('novideo', !this.checked); });
+  ['cWire', 'cGizmo', 'cBack', 'cBodies'].forEach(function (id) { $(id).addEventListener('change', applyOverlays); });
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target.tagName || '').toLowerCase(); if (tag === 'input' || tag === 'select' || !D) return;
+    if (e.key === ' ' && tag !== 'button') { e.preventDefault(); setPlaying(!S.playing); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); setPlaying(false); seek(S.t + (e.key === 'ArrowRight' ? 1 : -1) / D.fps); }
+    else if (e.key === 'v' || e.key === 'V') { var v = S.view === 'free' ? 'scope' : 'free'; pressSeg('segView', v); setView(v); }
+  });
+
+  fetch('data/index.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (idx) {
+    INDEX = idx;
+    $('segScene').innerHTML = idx.map(function (s, i) { return '<button data-v="' + s.name + '" aria-pressed="' + (i === 0) + '">' + s.title + '</button>'; }).join('');
+    requestAnimationFrame(frame);
+    setScene(idx[0].name);
+  }).catch(function () { loadingEl.innerHTML = '<span class="err">场景列表没有载入（data/index.json），请刷新重试。</span>'; });
+})();
+</script>
