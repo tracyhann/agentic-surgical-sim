@@ -796,6 +796,7 @@ def scene_residuals(t, P, pr, d, idx, ob, cam, cfg):
             w = v - (v * d).sum(1, keepdims=True) * d
             out['punct'][:, 0] = np.where(ins, np.linalg.norm(w, axis=1), 0.0) / cfg['sig_punct']
             ii = np.nonzero(ins)[0]
+            nohit = np.zeros(0, int)
             if cfg['punct_mode'] == 'point':
                 # depth along the shaft measured from the puncture point S (the line is pulled through S)
                 h = ((O - S) * d).sum(1)
@@ -816,6 +817,10 @@ def scene_residuals(t, P, pr, d, idx, ob, cam, cfg):
                 room[nohit] = exit_distance(S[nohit], d[nohit], cp['X4'][idx[nohit]], cp['F']) - cp['margin']
             lo = cp['h_min']
             out['in_lo'][:, 0] = np.where(ins, np.maximum(lo - h, 0.0), 0.0) / cfg['sig_inside']
+            if cfg['punct_mode'] != 'point' and len(nohit):
+                # the line misses the organ in a frame where the tip must be inside: pull it onto the puncture point
+                dist = np.linalg.norm(w[nohit], axis=1)
+                out['in_lo'][nohit, 0] = (dist + lo) / cfg['sig_inside']
             out['in_hi'][:, 0] = np.where(ins, np.maximum(h - room, 0.0), 0.0) / cfg['sig_inside']
             h0 = np.clip(np.minimum(cp['h0'], room), lo, None)
             out['hid2'][:, 0] = np.where(ins, (h - h0) / cfg['sig_hidden'], 0.0)

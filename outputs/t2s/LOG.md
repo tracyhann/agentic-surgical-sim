@@ -206,3 +206,14 @@ background surface as a back limit. Self-test: synthetic deforming superquadric,
   (chole_derot: focal fixed to chole_a's, 84k wide matches, held-out long-range error 10 px vs 224 px, ruler
   residual 0.15 vs 0.30 in its r1), the organ agent (v16: fundus beyond the image edge) and the instrument agent
   (v02 done: grasper IoU 0.92, size 5.04 mm; cannula refit in progress); liver_s4 r05 sweep restarted.
+- liver_s4 r05 (first assembly; liver v14, two needle holders, background v08; frames 0-174): broken - sim IoU
+  0.46-0.51 (the organ's own 4D 0.83), motion explained -0.16..-0.29, 1000-1500 inverted tets, tools inside the
+  organ in 8-22 frames, organ behind background <= 0.7 %. The needle holders work in contact with the lobe tip and
+  the knot; as rigid colliders they plough through the wedge. To fix in r06 (tool-organ contact at the suture
+  site, where the spec declares the suture as the only opening).
+- RAM: the machine (51 GB) ran out of memory twice during r02-r05 (three to four fitting agents + SAM 3 tracking +
+  4-job sweeps at once). From now on: one heavy job at a time (one agent, sweeps with <= 2 jobs), a watchdog
+  (t2s/memguard.py, stops this project's largest job below 8 GB free).
+- Result page for v2 (video + reconstruction per clip): t2s/report.py -> site/v2/media/<clip>.mp4 (video | SAM 3 masks |
+  4D reconstruction rendered through the scope camera | on video | simulation for chole_a); published as a new
+  artifact https://claude.ai/artifact/82NXJveVMwHGb1eLWCdqHc (v1).
