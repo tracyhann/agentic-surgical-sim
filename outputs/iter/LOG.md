@@ -570,3 +570,26 @@ every 4D frame, the shift blended out over the first 3 segments (rest of the cen
   mem_young 3000 (sheet IoU over the study: 0.34 r01 -> 0.65 r06 -> 0.68 r16 -> 0.70 r19 -> 0.73 r30 -> 0.75 r31).
 - This closes the v1 (per-tissue, hand-prompted) study; the text-guided v2 experiment continues on branch
   v2-text2sim (separate worktree).
+
+## after-close QA of the final v1 scene (r31 mem_young 3000): interpenetration check + visual QA agent
+Interpenetration (t2s/checks.py on branch v2-text2sim; 41 frames, tolerance 1 mm, no openings declared):
+- gallbladder surface > 3 mm behind the background surface along view rays: every frame, 15 % median / 24 % max of
+  its surface vertices (the background is static and does not collide; the organ sinks into liver / fat);
+- grasper shaft crosses the background: 11 frames; probe crosses the sheet: 6 frames (probe-sheet collision was
+  switched off in r06); instruments inside the gallbladder: probe 4 frames up to 3.4 mm, grasper 5 frames up to
+  2.7 mm (planned poses; ~1 mm may be tracking lag / soft contact); duct / sheet nodes inside the gallbladder:
+  3 frames, <= 6 %.
+Visual QA agent (independent, images only, given the scene description but no metrics), top problems:
+1. gallbladder sinks into the background (high) - agrees with the check;
+2. no tent: the sheet is a crumpled wad at the jaws or lies flat on the gallbladder in every frame (high);
+3. the probe does not pass under the sheet into the neck: it presses bare gallbladder or ends on / in the sheet (medium);
+4. 2D agreement hides 3D errors: the sheet outline matches the video although it is collapsed in 3D; the ducts look
+   replayed from the reconstruction (they are 5 of 13 nodes driven, so nearly so) (medium);
+5. duct / fibre gaps at the neck in some views, duct colour too pink, floating background slivers (medium-low).
+Check of item 2 (it was missed by every metric): in the 4D reconstruction itself the free sheet lies 1.4-2.5 mm
+(median) above the gallbladder, max 4-8.5 mm, and even the held row is only 5-11 mm above it; the sim is similar
+(2-6 mm). The "lift" of 18 mm in the sheet track's quality.json is apex-to-base distance along the sheet, not
+height. Cause: the sheet is translucent, so the video depth on its pixels is the gallbladder behind it; the sheet
+was fitted to that depth. The tent was never reconstructed. Lessons carried into v2: depth of see-through tissue
+must not be trusted (shape from the jaw position, the outline and physics instead), add a tent-height metric, and
+make the visual QA agent and the interpenetration check mandatory every round.

@@ -1,0 +1,448 @@
+{
+ "run": "outputs/iter/rounds/r31/render=0_mem_young=3000",
+ "tolerance_mm": 1.0,
+ "openings_declared": [],
+ "summary": {
+  "instrument_in_organ": {
+   "frames_with_violation": 9,
+   "of_frames_checked": 41,
+   "grasper_left": {
+    "frames": 5,
+    "max_depth_mm": 2.71,
+    "median_depth_mm": 1.87
+   },
+   "probe_right": {
+    "frames": 4,
+    "max_depth_mm": 3.4,
+    "median_depth_mm": 1.94
+   },
+   "first_last_frame": [
+    50,
+    250
+   ]
+  },
+  "instrument_through_sheet": {
+   "frames_with_violation": 6,
+   "of_frames_checked": 41,
+   "probe_right": {
+    "frames": 6
+   },
+   "first_last_frame": [
+    38,
+    244
+   ]
+  },
+  "instrument_through_backdrop": {
+   "frames_with_violation": 12,
+   "of_frames_checked": 41,
+   "grasper_left": {
+    "frames": 11
+   },
+   "probe_right": {
+    "frames": 1
+   },
+   "first_last_frame": [
+    0,
+    250
+   ]
+  },
+  "organ_in_organ": {
+   "frames_with_violation": 2,
+   "of_frames_checked": 41,
+   "duct nodes in gallbladder": {
+    "frames": 2,
+    "max_fraction": 0.062,
+    "median_fraction": 0.0415
+   },
+   "sheet in gallbladder": {
+    "frames": 1,
+    "max_fraction": 0.05,
+    "median_fraction": 0.05
+   },
+   "first_last_frame": [
+    162,
+    200
+   ]
+  },
+  "organ_through_backdrop": {
+   "frames_with_violation": 41,
+   "of_frames_checked": 41,
+   "gallbladder surface behind background": {
+    "frames": 41,
+    "max_fraction": 0.238,
+    "median_fraction": 0.152
+   },
+   "first_last_frame": [
+    0,
+    250
+   ]
+  }
+ },
+ "events": {
+  "instrument_in_organ": [
+   {
+    "frame": 50,
+    "instrument": "grasper_left",
+    "organ": "gallbladder",
+    "depth_mm": 1.13,
+    "n_points": 1
+   },
+   {
+    "frame": 56,
+    "instrument": "grasper_left",
+    "organ": "gallbladder",
+    "depth_mm": 1.87,
+    "n_points": 3
+   },
+   {
+    "frame": 69,
+    "instrument": "grasper_left",
+    "organ": "gallbladder",
+    "depth_mm": 1.37,
+    "n_points": 1
+   },
+   {
+    "frame": 75,
+    "instrument": "grasper_left",
+    "organ": "gallbladder",
+    "depth_mm": 2.71,
+    "n_points": 6
+   },
+   {
+    "frame": 81,
+    "instrument": "grasper_left",
+    "organ": "gallbladder",
+    "depth_mm": 2.13,
+    "n_points": 3
+   },
+   {
+    "frame": 88,
+    "instrument": "probe_right",
+    "organ": "gallbladder",
+    "depth_mm": 1.65,
+    "n_points": 2
+   },
+   {
+    "frame": 162,
+    "instrument": "probe_right",
+    "organ": "gallbladder",
+    "depth_mm": 1.34,
+    "n_points": 2
+   },
+   {
+    "frame": 169,
+    "instrument": "probe_right",
+    "organ": "gallbladder",
+    "depth_mm": 3.4,
+    "n_points": 1
+   },
+   {
+    "frame": 250,
+    "instrument": "probe_right",
+    "organ": "gallbladder",
+    "depth_mm": 2.23,
+    "n_points": 7
+   }
+  ],
+  "instrument_through_sheet": [
+   {
+    "frame": 38,
+    "instrument": "probe_right"
+   },
+   {
+    "frame": 50,
+    "instrument": "probe_right"
+   },
+   {
+    "frame": 81,
+    "instrument": "probe_right"
+   },
+   {
+    "frame": 231,
+    "instrument": "probe_right"
+   },
+   {
+    "frame": 238,
+    "instrument": "probe_right"
+   },
+   {
+    "frame": 244,
+    "instrument": "probe_right"
+   }
+  ],
+  "instrument_through_backdrop": [
+   {
+    "frame": 0,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 81,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 88,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 94,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 100,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 106,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 112,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 119,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 125,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 200,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 206,
+    "instrument": "grasper_left"
+   },
+   {
+    "frame": 250,
+    "instrument": "probe_right"
+   }
+  ],
+  "organ_in_organ": [
+   {
+    "frame": 162,
+    "what": "duct nodes in gallbladder",
+    "fraction": 0.021
+   },
+   {
+    "frame": 162,
+    "what": "sheet in gallbladder",
+    "fraction": 0.05
+   },
+   {
+    "frame": 200,
+    "what": "duct nodes in gallbladder",
+    "fraction": 0.062
+   }
+  ],
+  "organ_through_backdrop": [
+   {
+    "frame": 0,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.029
+   },
+   {
+    "frame": 6,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.033
+   },
+   {
+    "frame": 12,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.054
+   },
+   {
+    "frame": 19,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.049
+   },
+   {
+    "frame": 25,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.049
+   },
+   {
+    "frame": 31,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.051
+   },
+   {
+    "frame": 38,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.073
+   },
+   {
+    "frame": 44,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.132
+   },
+   {
+    "frame": 50,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.142
+   },
+   {
+    "frame": 56,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.207
+   },
+   {
+    "frame": 62,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.181
+   },
+   {
+    "frame": 69,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.179
+   },
+   {
+    "frame": 75,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.158
+   },
+   {
+    "frame": 81,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.152
+   },
+   {
+    "frame": 88,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.206
+   },
+   {
+    "frame": 94,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.197
+   },
+   {
+    "frame": 100,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.171
+   },
+   {
+    "frame": 106,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.173
+   },
+   {
+    "frame": 112,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.186
+   },
+   {
+    "frame": 119,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.238
+   },
+   {
+    "frame": 125,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.162
+   },
+   {
+    "frame": 131,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.152
+   },
+   {
+    "frame": 138,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.126
+   },
+   {
+    "frame": 144,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.145
+   },
+   {
+    "frame": 150,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.152
+   },
+   {
+    "frame": 156,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.155
+   },
+   {
+    "frame": 162,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.173
+   },
+   {
+    "frame": 169,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.183
+   },
+   {
+    "frame": 175,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.162
+   },
+   {
+    "frame": 181,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.173
+   },
+   {
+    "frame": 188,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.183
+   },
+   {
+    "frame": 194,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.186
+   },
+   {
+    "frame": 200,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.186
+   },
+   {
+    "frame": 206,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.168
+   },
+   {
+    "frame": 212,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.148
+   },
+   {
+    "frame": 219,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.127
+   },
+   {
+    "frame": 225,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.117
+   },
+   {
+    "frame": 231,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.14
+   },
+   {
+    "frame": 238,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.144
+   },
+   {
+    "frame": 244,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.142
+   },
+   {
+    "frame": 250,
+    "what": "gallbladder surface behind background",
+    "fraction": 0.14
+   }
+  ]
+ }
+}
