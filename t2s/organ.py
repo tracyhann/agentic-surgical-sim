@@ -82,6 +82,7 @@ BASE = dict(
     # depth extent (unseen back): the radius along the mean view direction may not fall below thick_ratio x the
     # smaller in-plane radius (round cross-section; data alone prefer a plate on the visible surface)
     w_thick=0.0, thick_ratio=0.8,
+    thick_ratio_fluid=None,     # thick_ratio for organs whose spec consistency is 'fluid-filled' (None = thick_ratio)
     w_aspect=0.0, max_aspect=4.0,   # largest / smallest radius above max_aspect costs w_aspect per log^2 (no plates)
     w_pose=0.1, pose_r_deg=10.0, pose_t_mm=5.0, w_pose_smooth=0.3,
     pose_track=False,           # shape from a window around the start keyframe, keyframe poses tracked outward from
@@ -110,6 +111,9 @@ BASE = dict(
                                 # fitted to the rest of its outline continues it outside the view (coverage targets,
                                 # weight w_ext x the coverage weight; at most ext_max x the mask's equivalent diameter)
     one_opening=False,          # all entry episodes of the instrument agent's puncture record = one opening region
+    ins_version=None,           # instrument model version for w_ins (None = newest)
+    w_ins=0.0, ins_margin_mm=0.5,   # surface samples inside an instrument's shaft (the instrument agent's per-frame
+                                # pose, frames where it is seen; instruments with a puncture record excepted) cost w_ins
 )
 CFG = {
     'v01': dict(),
@@ -166,6 +170,23 @@ CFG = {
     # already unknown, but nothing asked the shape to continue there); one shared puncture region; neck hint at the
     # grasper's jaw tip (instrument agent v01)
     'v16': dict(w_ext=0.5, one_opening=True),
+    # r06 visual QA (chole_derot v15): the organ is 15-50 px too big exactly where instruments hide it (those pixels are
+    # 'unknown', so the model grows into them for free and the shafts end up inside it in a third of the frames), and
+    # the dark neck bulb both instruments work on after frame 180 is not in the model -> the organ may not occupy an
+    # instrument's shaft (w_ins), parts merged (neck_pedicle); v16's border completion / single opening stay off
+    # (never run to completion)
+    'v17': dict(w_ext=0.0, one_opening=False, merge_parts=True, w_ins=2.0),
+    # v17 (chole_derot): shafts still inside in a third of the frames - its w_ins looked at surface samples inside the
+    # shaft, and a shaft buried in the model has none -> the term is now along the camera rays (where an instrument is
+    # seen, the organ's front surface is behind it). And the organ came out as a 12.8 mm plate (11.8 ml; v15 without a
+    # background: 20.7 mm, 22 ml): the background behind a free-hanging organ is never seen, the background agent fills
+    # it from the previous organ model's back, and w_bg then squeezes the next organ against that fill (a ratchet) ->
+    # w_bg off again here; for a fluid-filled (tense) organ the thickness prior asks for a round cross-section
+    'v18': dict(w_bg=0.0, thick_ratio_fluid=1.0),
+    # r09 (user: every part SAM 3 segmented has to be reconstructed in 3D): the moving structures the selection skips
+    # as tubular / membrane (neck_pedicle, left triangular ligament) get the generic volumetric fit too (--mask); v15's
+    # settings without the experiments of v16-v18 and without the background term (the ratchet, see v18)
+    'v20': dict(merge_parts=False, w_ins=0.0, w_bg=0.0, thick_ratio_fluid=None, w_ext=0.0, one_opening=False),
 }
 
 
@@ -472,9 +493,11 @@ class Obs:
     body points at their measured depth (world, mm). use_depth=False: see-through organ, no depth points."""
 
     def __init__(self, V, k, body, unknown, n_cov=800, n_pts=500, erode=3, use_depth=True, seed=0, see_mm=10.0,
-                 bg=None, bg_margin=1.0, ext=None):
+                 bg=None, bg_margin=1.0, ext=None, tools=None):
         rng = np.random.default_rng(seed + k)
         self.k = k
+        # instrument shafts seen in this frame: (tip mm, unit axis towards the tip, radius mm, length mm)
+        self.tools = [(T(t['tip'][k] * 1000), T(t['dir'][k]), t['radius'] * 1000, 200.0) for t in (tools or []) if t['vis'][k]]
         self.R, self.pos, self.f = T(V.R[k]), T(V.pos[k] * 1000), float(V.f[k])
         self.H, self.W = V.H, V.W
         allowed = body[k] | unknown[k]
@@ -519,6 +542,28 @@ class Obs:
         u, v, z = self.project(S)
         q = torch.stack([u[z > 1], v[z > 1]], 1)
         return rho(torch.relu(torch.cdist(self.ext, q).min(1)[0] - 3.0) * self.px2mm).mean()
+
+    def ins_loss(self, S, Nrm, margin=0.5):
+        """Where an instrument is seen it is in front of the organ: front-facing surface samples whose camera ray
+        passes through a shaft (within its radius) must lie behind the shaft's axis (+ margin) along that ray
+        (mm, rho; x 100 / M so that a few samples count). Volumetric by construction: a shaft buried in the model
+        has the model's front surface in front of it."""
+        tot = S.sum() * 0
+        ray = S - self.pos
+        s = ray.norm(dim=1)
+        w = ray / s[:, None]
+        with torch.no_grad():
+            front = (Nrm * w).sum(1) < 0
+        for tip, d, r, L in self.tools:
+            with torch.no_grad():
+                e = -d                                                   # along the shaft, away from the tip
+                b, dd, ee = w @ e, w @ (self.pos - tip), (self.pos - tip) @ e
+                tc = ((ee - b * dd) / (1 - b * b).clamp(min=1e-6)).clamp(0.0, L)   # closest axis point to the ray
+                A = tip + tc[:, None] * e
+                sc = ((A - self.pos) * w).sum(1)                         # its distance along the ray
+                hit = ((self.pos + sc[:, None] * w - A).norm(dim=1) < r) & front & (sc > 1.0)
+            tot = tot + (rho(torch.relu(sc + margin - s)) * hit).sum() * 100.0 / max(len(S), 1)
+        return tot
 
     def bg_loss(self, S):
         """Surface samples (all, hidden ones included) behind the background surface + margin (mm, rho, mean)."""
@@ -568,6 +613,8 @@ def data_loss(obs, S, N, c, use_depth=True, ls=None):
         tot = tot + c['w_sil'] * (lo + c['w_cov'] * lc) + (c['w_depth'] * ld if use_depth else 0.0)
         if o.B is not None and c['w_bg'] > 0:
             tot = tot + c['w_bg'] * o.bg_loss(S)
+        if o.tools and c['w_ins'] > 0:
+            tot = tot + c['w_ins'] * o.ins_loss(S, N, c['ins_margin_mm'])
         if o.ext is not None and c['w_ext'] > 0:
             tot = tot + c['w_sil'] * c['w_cov'] * c['w_ext'] * o.ext_loss(S)
         parts += [float(lo), float(lc), float(ld)]
@@ -851,7 +898,7 @@ def surface_volume(X, F):
 
 
 def fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init_pose=None, use_depth=True, ls_keys=None,
-           observed=None, reacquire=None, bg=None, ext=None):
+           observed=None, reacquire=None, bg=None, ext=None, tools=None):
     """verts4d (n, N, 3) m, per-frame data parts, per-frame log depth scale. ls_keys: (keyframes, log scales) from
     the rest fit: prior centre of each frame's depth scale (interpolated)."""
     from scipy.ndimage import gaussian_filter1d
@@ -881,7 +928,7 @@ def fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init_pose=
                 gap += 1
                 continue
             o = Obs(V, k, body, unknown, n_cov=c['n_cov4d'], n_pts=c['n_pts4d'], erode=c['depth_erode'],
-                    use_depth=use_depth, see_mm=c['see_mm'], bg=bg, bg_margin=c['bg_margin_mm'], ext=ext)
+                    use_depth=use_depth, see_mm=c['see_mm'], bg=bg, bg_margin=c['bg_margin_mm'], ext=ext, tools=tools)
             if gap >= c['reacquire_gap'] and reacquire is not None:   # after a long dropout: restart from the rest fit
                 prev = prev2 = None
                 Xs = reacquire(k)
@@ -903,6 +950,8 @@ def fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init_pose=
                 L = c['w_sil'] * (lo + c['w_cov'] * lc) + (c['w_depth'] * ld if use_depth else 0.0)
                 if o.B is not None and c['w_bg'] > 0:
                     L = L + c['w_bg'] * o.bg_loss(S)
+                if o.tools and c['w_ins'] > 0:
+                    L = L + c['w_ins'] * o.ins_loss(S, N, c['ins_margin_mm'])
                 if o.ext is not None and c['w_ext'] > 0:
                     L = L + c['w_sil'] * c['w_cov'] * c['w_ext'] * o.ext_loss(S)
                 ea, ev = arap(X)
@@ -1337,6 +1386,8 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
     t00 = time.time()
     name = org['mask']
     rule = org['volume_rule']
+    if c.get('thick_ratio_fluid') and (org.get('consistency') or '').lower() == 'fluid-filled':
+        c['thick_ratio'] = c['thick_ratio_fluid']
     use_depth = not org.get('see_through', False)
     log(f"[{clip}/{org['name']} {ver}] mask {name}, role {org['role']}, consistency {org['consistency']} -> volume "
         f"rule {rule} ({'; '.join(org['volume_why'])}), video depth {'used' if use_depth else 'NOT used (see-through)'}")
@@ -1374,8 +1425,26 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
         n_ext = sum(e is not None for e in ext)
         log(f'[masks] border completion: ellipse continuation outside the view in {n_ext} / {V.n} frames '
             f'(median {np.median([len(e) for e in ext if e is not None]) * 9 if n_ext else 0:.0f} px)')
+    tools = None
+    if c['w_ins'] > 0:
+        iv = sorted(p_.parent.name for p_ in (OUT / clip / 'instruments').glob('v[0-9][0-9]/model.npz'))
+        ipp = OUT / clip / 'seg' / 'instrument_prompts.json'
+        pu = (json.loads(ipp.read_text()).get('puncture') or {}) if ipp.exists() else {}
+        if iv:
+            if c['ins_version'] in iv:
+                iv = [c['ins_version']]
+            zi = np.load(OUT / clip / 'instruments' / iv[-1] / 'model.npz')
+            tools = []
+            for nm in [str(x) for x in zi['names']]:
+                if pu.get('instrument') and nm.endswith(str(pu['instrument'])):      # declared opening: may be inside
+                    continue
+                dr = zi[f'{nm}__dir'].astype(float)
+                tools.append(dict(name=nm, tip=zi[f'{nm}__tip'].astype(float), dir=dr / np.linalg.norm(dr, axis=1, keepdims=True),
+                                  vis=zi[f'{nm}__visible'].astype(bool), radius=float(json.loads(str(zi[f'{nm}__params']))['radius'])))
+            log(f"[instruments] {iv[-1]}: the organ may not occupy the shafts of {[t['name'] for t in tools]} where they are seen "
+                f"(w_ins {c['w_ins']}, margin {c['ins_margin_mm']} mm)")
     obs = [Obs(V, k, body, unknown, n_cov=800, n_pts=500, erode=c['depth_erode'], use_depth=use_depth,
-               see_mm=c['see_mm'], bg=bg, bg_margin=c['bg_margin_mm'], ext=ext) for k in keys]
+               see_mm=c['see_mm'], bg=bg, bg_margin=c['bg_margin_mm'], ext=ext, tools=tools) for k in keys]
     if not use_depth:                     # pose initialisation still needs points: the (untrusted) video depth
         for o, k in zip(obs, keys):
             o.pts_init = Obs(V, k, body, unknown, n_pts=300, erode=c['depth_erode']).pts
@@ -1400,7 +1469,7 @@ def build(V, clip, org, ver, spec, prompts, out_dir, overrides=None, log_print=T
         with torch.no_grad():
             return Posed.offset(T(nodes * 1000), T(ffd['t']), T(ffd['dR'][jk]), T(ffd['dT'][jk]))
     verts4d, parts, ls4d = fit_4d(V, body, unknown, nodes, tets, faces, c, rule, log, start, init, use_depth,
-                                  (np.array(keys), ffd['ls']), observed, reacquire, bg, ext)
+                                  (np.array(keys), ffd['ls']), observed, reacquire, bg, ext, tools)
     log(f'[4d] {time.time() - t1:.0f} s')
     assert np.isfinite(verts4d).all()
     prim_static, prim_faces = primitive_mesh(prim, 4, static=False)
@@ -1556,7 +1625,7 @@ def write_notes(out_dir, q, org, ver):
     (out_dir / 'NOTES.md').write_text(txt)
 
 
-def run(clip, organs=None, ver='v01', overrides=None):
+def run(clip, organs=None, ver='v01', overrides=None, force_masks=()):
     from t2s import views2
     c = cfg_of(ver)
     V = views2.load(clip)
@@ -1564,6 +1633,14 @@ def run(clip, organs=None, ver='v01', overrides=None):
     print(f'[select] fit: {[(o["name"], o["mask"], o["volume_rule"]) for o in fit]}')
     for s in skipped:
         print(f"[select] skip {s['name']} (mask {s['mask']}): {s['reason']}")
+    for m in force_masks:              # a SAM object without a model: generic volumetric fit, named after its mask
+        if any(o['mask'] == m for o in fit) or m not in V.names:
+            continue
+        src = [k for k in skipped if k.get('mask') == m]
+        fit.append(dict(name=m, role='secondary', consistency=src[0]['consistency'] if src else None, mask=m, volume_rule='solid',
+                        volume_why=[f"generic fit of SAM object '{m}' (spec: {[k['name'] for k in src] or 'not an organ of the spec'}; "
+                                    f"no tube / membrane agent)"], see_through=False, generic=True))
+        organs = list(organs or []) + [m]
     sel = {'clip': clip, 'fit': fit, 'skipped': skipped}
     (OUT / clip / 'organs').mkdir(parents=True, exist_ok=True)
     (OUT / clip / 'organs' / 'selection.json').write_text(json.dumps(sel, indent=1))
@@ -1693,4 +1770,14 @@ if __name__ == '__main__':
         i = a.index('--ver')
         ver = a[i + 1]
         a = a[:i] + a[i + 2:]
-    run(a[0], a[1:] or None, ver)
+    ov = None
+    if '--ins' in a:                      # instrument model version for the w_ins term
+        i = a.index('--ins')
+        ov = dict(ins_version=a[i + 1])
+        a = a[:i] + a[i + 2:]
+    fm = []
+    while '--mask' in a:                  # --mask "<SAM object>": fit this object although the selection skips it
+        i = a.index('--mask')
+        fm.append(a[i + 1])
+        a = a[:i] + a[i + 2:]
+    run(a[0], a[1:] or (fm if fm else None), ver, ov, fm)

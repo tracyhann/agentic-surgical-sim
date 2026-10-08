@@ -31,7 +31,12 @@ ROOT = Path(__file__).resolve().parents[1]
 PARAMS = dict(ts=6.25e-5, settle=0.3, vertex_mass=6e-5, damping=0.002, solref=0.01, friction=0.3, k_anchor=2.0, k_foundation=0.5, k_foundation_free=0.05, k_neck=2.0, neck_n=8,
               grasp_r=0.004, grasp_reach_mm=10.0, grasp_soft_tc=0.1, hold_depth='organ', k_puncture=0.0, puncture_r_mm=6.0, grasp_n=40, grasp_ramp=0.25, bg_patches=800, bg_patch_mm=3.0, bg_thick_mm=3.0,
               bg_reach_mm=30.0, rest='start', gravcomp=1, drag=0.0, first_frame=0, last_frame=-1, world_scale=1.0,
+              tool_depth='model',    # 'contact': r09 diagnostic, see contact_consistent_joints
+              body_collide=1,        # 0: the background agent's convex bodies are not collidable
               young_scale=1.0)       # r07: x the material table's Young's modulus (a tense fluid-filled sac is not a 1 kPa gel)
+# instrument types whose closed jaws hold TISSUE (a needle holder holds the needle / the thread: liver_s4 r05 had it
+# 'grasp' 19 liver vertices and drag the lobe tip, r08)
+HOLDS_TISSUE = ('grasper', 'dissector')
 MATERIAL = {'fluid-filled': (1200.0, 0.45), 'solid parenchyma': (3000.0, 0.45), 'spongy/air-filled': (400.0, 0.3),
             'fatty': (800.0, 0.4), None: (1500.0, 0.4)}
 
@@ -108,15 +113,17 @@ def background_boxes(bg, organ_pts, P, start_pts, rng=np.random.default_rng(0)):
     return geoms, len(idx)
 
 
-def body_geoms(bg):
-    """The background agent's convex bodies as static mesh geoms (each convex piece its own mesh)."""
+def body_geoms(bg, collide=True):
+    """The background agent's convex bodies as static mesh geoms (each convex piece its own mesh); collide=False:
+    shown only (r07: chole_derot's 'fat' body is a scene-wide wedge under the organ, visual QA)."""
+    ct, ca = (4, 1) if collide else (0, 0)
     assets, geoms = [], []
     for i, name in enumerate(bg.get('body_names', [])):
         Xb, Fb, pc = bg[f'body{i}_verts'], bg[f'body{i}_faces'], bg[f'body{i}_piece']
         for p in np.unique(pc):
             vi = np.nonzero(pc == p)[0]
             assets.append(f'<mesh name="b{i}_{p}" vertex="{" ".join(f"{v:.5f}" for v in Xb[vi].ravel())}"/>')
-            geoms.append(f'<geom name="body{i}_{p}" type="mesh" mesh="b{i}_{p}" rgba="0.7 0.3 0.3 0.6" contype="4" conaffinity="1"/>')
+            geoms.append(f'<geom name="body{i}_{p}" type="mesh" mesh="b{i}_{p}" rgba="0.7 0.3 0.3 0.6" contype="{ct}" conaffinity="{ca}"/>')
     return assets, geoms
 
 
@@ -186,7 +193,8 @@ def build(clip, spec, organs, ins, bg, P, f0):
     tendons, link_info = [], {}
     for nm in names:
         J = np.asarray(ins[f'{nm}__joints'], float)
-        if not INS.tool_from_npz(ins, nm)['jawed'] or J[f0, 4] > 0.35 or P['k_neck'] <= 0:
+        tl = INS.tool_from_npz(ins, nm)
+        if not tl['jawed'] or tl.get('type') not in HOLDS_TISSUE or J[f0, 4] > 0.35 or P['k_neck'] <= 0:
             continue
         tip = np.asarray(ins[f'{nm}__tip'], float)[f0] * s
         for name, pr in parts.items():
@@ -205,7 +213,7 @@ def build(clip, spec, organs, ins, bg, P, f0):
     pts = np.concatenate([np.concatenate([z['verts4d'][::10].reshape(-1, 3) * s for z in organs.values()])])
     start_pts = np.concatenate([z['verts4d'][f0].astype(float) * s for z in organs.values()])
     bgeoms, nbox = background_boxes(dict(bg, rest_verts=bg['rest_verts'] * s, ref_pos=bg['ref_pos'] * s), pts, P, start_pts)
-    bassets, bbodies = body_geoms({k: (v * s if k.endswith('_verts') else v) for k, v in bg.items()})
+    bassets, bbodies = body_geoms({k: (v * s if k.endswith('_verts') else v) for k, v in bg.items()}, bool(P['body_collide']))
     xml = f"""<mujoco model="t2s {clip}">
   <compiler angle="radian"/>
   <option timestep="{P['ts']}" integrator="Euler" gravity="0 0 -9.81"/>
@@ -259,6 +267,55 @@ def hold_consistent_joints(ins, names, tools, organs, V, f0, P):
     return out
 
 
+def contact_consistent_joints(ins, names, organs, V, skip, step=0.02, lam_min=0.5):
+    """tool_depth='contact' (r09 diagnostic): an instrument's depth along the line of sight is what its fit knows
+    least, and t2s.recon_check finds its shaft inside the organ's 4D in a third of the frames of chole_derot. For a
+    tool seen in a frame whose shaft would be inside an organ (no opening declared), slide its tip towards the scope
+    along its line of sight - image position and port unchanged, so its projected shaft line is unchanged - until
+    the shaft clears the organ by its radius; the slide factor is min-filtered and smoothed over time. This uses the
+    organ's RECONSTRUCTION for the one tool coordinate the image does not give (as hold_consistent_joints does for a
+    holding tool): it tests whether the physics follows once the contact geometry is consistent, it is not a
+    prediction from the instruments alone."""
+    from scipy.ndimage import gaussian_filter1d, minimum_filter1d
+    from .recon_check import inside
+    out, info = {}, {}
+    n = V.n
+    sdf = {}
+    for nm in names:
+        if any(o in nm for o in skip):
+            continue
+        J = np.asarray(ins[f'{nm}__joints'], float).copy()
+        tip = np.asarray(ins[f'{nm}__tip'], float)
+        vis = np.asarray(ins[f'{nm}__visible'], bool)
+        port, R0 = np.asarray(ins[f'{nm}__port'], float), np.asarray(ins[f'{nm}__R0'], float)
+        rad = float(json.loads(str(ins[f'{nm}__params']))['radius'])
+        lam = np.ones(n)
+        for k in np.nonzero(vis)[0]:
+            for name, z in organs.items():
+                X, F = z['verts4d'][k].astype(float), z['faces']
+                if (name, k) not in sdf:
+                    sdf[(name, k)] = Q.signed_distance(X, F)
+                for l in np.arange(1.0, lam_min - 1e-9, -step):
+                    T = V.pos[k] + l * (tip[k] - V.pos[k])
+                    d = (T - port) / np.linalg.norm(T - port)
+                    S = T - np.linspace(0, 0.06, 25)[:, None] * d
+                    if not inside(X, F, S).any() and np.abs(sdf[(name, k)](S)).min() >= rad:
+                        break
+                lam[k] = min(lam[k], l)
+        ls = np.minimum(gaussian_filter1d(minimum_filter1d(lam, 5, mode='nearest'), 1.5, mode='nearest'), lam)
+        new = V.pos + ls[:, None] * (tip - V.pos)
+        dvec = new - port
+        ln = np.linalg.norm(dvec, axis=1)
+        yaw, pitch = INS.angles_of(R0, dvec / ln[:, None])
+        J[:, 0], J[:, 1], J[:, 2] = yaw, pitch, ln
+        out[nm] = J
+        sl = np.linalg.norm(new - tip, axis=1) * 1000
+        info[nm] = dict(frames_slid=int((lam[vis] < 1).sum()), frames_seen=int(vis.sum()), at_limit=int((lam <= lam_min + 1e-9).sum()),
+                        slide_mm_median_when_slid=round(float(np.median(sl[lam < 1])), 1) if (lam < 1).any() else 0.0,
+                        slide_mm_max=round(float(sl.max()), 1))
+    return out, info
+
+
 def simulate(clip, spec, organs, ins, bg, P, V, log=print):
     n = V.n
     f0 = int(P['first_frame'])
@@ -270,6 +327,10 @@ def simulate(clip, spec, organs, ins, bg, P, V, log=print):
     tools = {nm: INS.tool_from_npz(ins, nm) for nm in names}
     if P['hold_depth'] == 'organ':
         joints.update(hold_consistent_joints(ins, names, tools, organs, V, f0, P))
+    if P['tool_depth'] == 'contact':
+        cj, info['tool_depth_contact'] = contact_consistent_joints(ins, names, organs, V, {o for p_ in parts.values() for o in p_['rules']['_openings']})
+        joints.update(cj)
+        log(f"[assemble] tool depth from contact: {info['tool_depth_contact']}")
 
     def set_instruments(k, ctrl_only=False):
         for nm in names:
@@ -295,7 +356,7 @@ def simulate(clip, spec, organs, ins, bg, P, V, log=print):
     # grasp: closed jaws on tissue in the first frame hold the organ vertices under them
     grasp, eq_used = {}, 0
     for nm in names:
-        if not tools[nm]['jawed'] or joints[nm][f0, 4] > 0.35:
+        if not tools[nm]['jawed'] or tools[nm].get('type') not in HOLDS_TISSUE or joints[nm][f0, 4] > 0.35:
             continue
         tip = d.site(f'{nm}_tip').xpos.copy()
         rl = m.body(f'{nm}_roll_link').id
